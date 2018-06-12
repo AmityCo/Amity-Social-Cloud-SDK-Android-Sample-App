@@ -1,0 +1,20 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="compose"
+        android:enabled="true"
+        android:icon="@drawable/ic_chat_black_24dp"
+        android:shortcutShortLabel="@string/chatkit_shortcut_short_label"
+        android:shortcutLongLabel="@string/chatkit_shortcut_long_label"
+        android:shortcutDisabledMessage="@string/chatkit_shortcut_disabled_text">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.ekoapp.simplechat"
+            android:targetClass="com.ekoapp.simplechat.chatkit.ChatKitChannelListActivity" />
+
+        <categories android:name="android.shortcut.conversation" />
+
+    </shortcut>
+
+</shortcuts>
