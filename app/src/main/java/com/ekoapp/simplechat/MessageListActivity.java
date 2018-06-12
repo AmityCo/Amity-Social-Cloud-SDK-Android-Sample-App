@@ -1,5 +1,6 @@
 package com.ekoapp.simplechat;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,14 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.EkoMessageRepository;
+import com.ekoapp.ekosdk.exception.EkoError;
 import com.ekoapp.simplechat.intent.ViewMessagesIntent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
 public class MessageListActivity extends BaseActivity {
@@ -65,6 +69,15 @@ public class MessageListActivity extends BaseActivity {
             messageRepository.createMessage(channelId)
                     .text(text)
                     .send()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError(t -> {
+                        EkoError ekoError = EkoError.from(t);
+                        if (ekoError.is(EkoError.USER_IS_BANNED)) {
+                            Activity activity = MessageListActivity.this;
+                            messageEditText.post(Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT)::show);
+                            messageEditText.postDelayed(this::finish, 500);
+                        }
+                    })
                     .doOnComplete(this::scrollToBottom)
                     .subscribe();
         }
