@@ -130,6 +130,8 @@ public class ChannelListActivity extends BaseActivity {
                 .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("MUTE", EkoChannel.Type.STANDARD)))
                 .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("RATE_LIMIT", EkoChannel.Type.STANDARD)))
                 .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("BAN", EkoChannel.Type.STANDARD)))
+                .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("1", EkoChannel.Type.STANDARD)))
+                .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("2", EkoChannel.Type.STANDARD)))
                 .subscribe();
     }
 }
