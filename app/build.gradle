@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+def ekoSdkVersion = '0.11.6'
+
 android {
     compileSdkVersion 27
 
@@ -10,7 +12,7 @@ android {
         targetSdkVersion 27
 
         versionCode 1
-        versionName "0.11.5"
+        versionName ekoSdkVersion
 
         multiDexEnabled true
 
@@ -46,7 +48,7 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
-    implementation 'com.ekoapp.ekosdk:ekosdk:0.11.5'
+    implementation "com.ekoapp.ekosdk:ekosdk:${ekoSdkVersion}"
 
     implementation 'com.github.stfalcon:chatkit:0.2.2'
 
