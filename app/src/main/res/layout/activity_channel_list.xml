@@ -15,10 +15,17 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/toolbar" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/channel_list_recyclerview"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/spinner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.ekoapp.simplechat.ChannelListActivity"
