@@ -3,7 +3,7 @@ package com.ekoapp.simplechat.chatkit;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.ekoapp.ekosdk.EkoChannelQueryMode;
+import com.ekoapp.ekosdk.EkoChannelFilter;
 import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.simplechat.BaseActivity;
@@ -32,7 +32,7 @@ public class ChatKitChannelListActivity extends BaseActivity {
         EkoClient.registerDevice(SimpleConfig.DEFAULT_USER_ID, "ChatKit");
 
         DialogsListAdapter<ChatKitChannel> adapter = new DialogsListAdapter<>(null);
-        channelRepository.getChannelCollection(EkoChannelQueryMode.MEMBER)
+        channelRepository.getChannelCollection(EkoChannelFilter.MEMBER)
                 .observe(this, channels -> {
                     if (channels != null) {
                         List<ChatKitChannel> ckc = Lists.transform(channels, ChatKitChannel::from);

@@ -20,7 +20,7 @@ import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ekoapp.ekosdk.EkoChannel;
-import com.ekoapp.ekosdk.EkoChannelQueryMode;
+import com.ekoapp.ekosdk.EkoChannelFilter;
 import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.sdk.BuildConfig;
@@ -77,9 +77,9 @@ public class ChannelListActivity extends BaseActivity {
         channelListRecyclerView.setAdapter(adapter);
 
         String[] modes = new String[]{
-                EkoChannelQueryMode.ALL.getApiKey(),
-                EkoChannelQueryMode.MEMBER.getApiKey(),
-                EkoChannelQueryMode.NOT_MEMBER.getApiKey(),
+                EkoChannelFilter.ALL.getApiKey(),
+                EkoChannelFilter.MEMBER.getApiKey(),
+                EkoChannelFilter.NOT_MEMBER.getApiKey(),
         };
 
         spinner.setAdapter(new ArrayAdapter<>(this,
@@ -92,7 +92,7 @@ public class ChannelListActivity extends BaseActivity {
                 if (channels != null) {
                     channels.removeObservers(ChannelListActivity.this);
                 }
-                channels = channelRepository.getChannelCollection(EkoChannelQueryMode.fromApiKey(modes[position]));
+                channels = channelRepository.getChannelCollection(EkoChannelFilter.fromApiKey(modes[position]));
                 channels.observe(ChannelListActivity.this, adapter::submitList);
             }
 

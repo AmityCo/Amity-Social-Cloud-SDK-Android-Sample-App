@@ -60,7 +60,8 @@ public class MessageListActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         if (channelId != null) {
-            channelRepository.startReading(channelId);
+            channelRepository.membership(channelId)
+                    .startReading();
         }
     }
 
@@ -68,7 +69,8 @@ public class MessageListActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         if (channelId != null) {
-            channelRepository.stopReading(channelId);
+            channelRepository.membership(channelId)
+                    .stopReading();
         }
     }
 
