@@ -41,6 +41,10 @@ public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
                     .append(channel.getDisplayName())
                     .append("\nmember count: ")
                     .append(channel.getMemberCount())
+                    .append("\nunread count: ")
+                    .append(channel.getUnreadCount())
+                    .append("\nmessage count: ")
+                    .append(channel.getMessageCount())
                     .toString();
 
             holder.channelId = channel.getChannelId();

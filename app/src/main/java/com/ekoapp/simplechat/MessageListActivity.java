@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.EkoMessageRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
@@ -32,16 +33,18 @@ public class MessageListActivity extends BaseActivity {
     @BindView(R.id.message_send_button)
     Button sendButton;
 
+    private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
     private final EkoMessageRepository messageRepository = EkoClient.newMessageRepository();
     private final MessageListAdapter adapter = new MessageListAdapter();
 
+    private String channelId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         setContentView(R.layout.activity_message_list);
 
-        final String channelId = ViewMessagesIntent.getChannelId(getIntent());
+        channelId = ViewMessagesIntent.getChannelId(getIntent());
         setTitle(channelId);
 
         if (channelId != null) {
@@ -50,6 +53,22 @@ public class MessageListActivity extends BaseActivity {
                     .observe(this, adapter::submitList);
 
             ItemInsertedDataObserver.create(adapter);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (channelId != null) {
+            channelRepository.startReading(channelId);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (channelId != null) {
+            channelRepository.stopReading(channelId);
         }
     }
 
