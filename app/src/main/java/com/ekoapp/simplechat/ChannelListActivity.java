@@ -1,5 +1,7 @@
 package com.ekoapp.simplechat;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -11,9 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ekoapp.ekosdk.EkoChannel;
+import com.ekoapp.ekosdk.EkoChannelFilter;
 import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.sdk.BuildConfig;
@@ -31,11 +38,16 @@ public class ChannelListActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.spinner)
+    Spinner spinner;
+
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
     @BindView(R.id.channel_list_recyclerview)
     RecyclerView channelListRecyclerView;
+
+    private LiveData<PagedList<EkoChannel>> channels;
 
     private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
 
@@ -64,8 +76,31 @@ public class ChannelListActivity extends BaseActivity {
         ChannelListAdapter adapter = new ChannelListAdapter();
         channelListRecyclerView.setAdapter(adapter);
 
-        channelRepository.getChannelCollection()
-                .observe(this, adapter::submitList);
+        String[] modes = new String[]{
+                EkoChannelFilter.ALL.getApiKey(),
+                EkoChannelFilter.MEMBER.getApiKey(),
+                EkoChannelFilter.NOT_MEMBER.getApiKey(),
+        };
+
+        spinner.setAdapter(new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                modes));
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (channels != null) {
+                    channels.removeObservers(ChannelListActivity.this);
+                }
+                channels = channelRepository.getChannelCollection(EkoChannelFilter.fromApiKey(modes[position]));
+                channels.observe(ChannelListActivity.this, adapter::submitList);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
