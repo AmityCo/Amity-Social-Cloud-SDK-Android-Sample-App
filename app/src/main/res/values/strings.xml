@@ -7,4 +7,6 @@
     <string name="chatkit_shortcut_short_label">ChatKit</string>
     <string name="chatkit_shortcut_long_label">Open Eko SDK with ChatKit</string>
     <string name="chatkit_shortcut_disabled_text">ChatKit disabled</string>
+
+    <string name="total_unread_d">Total unread: %d</string>
 </resources>

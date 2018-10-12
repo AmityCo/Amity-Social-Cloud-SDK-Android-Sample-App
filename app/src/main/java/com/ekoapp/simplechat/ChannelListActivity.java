@@ -1,8 +1,10 @@
 package com.ekoapp.simplechat;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.paging.PagedList;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ekoapp.ekosdk.EkoChannel;
@@ -38,7 +41,10 @@ public class ChannelListActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.spinner)
+    @BindView(R.id.total_unread_textview)
+    TextView totalUnreadTextView;
+
+    @BindView(R.id.membership_spinner)
     Spinner spinner;
 
     @BindView(R.id.fab)
@@ -75,6 +81,13 @@ public class ChannelListActivity extends BaseActivity {
 
         ChannelListAdapter adapter = new ChannelListAdapter();
         channelListRecyclerView.setAdapter(adapter);
+
+        Resources resources = getResources();
+        LiveDataReactiveStreams.fromPublisher(channelRepository.getTotalUnreadCount())
+                .observe(this, totalUnreadCount -> {
+                    String totalUnreadCountString = resources.getString(R.string.total_unread_d, totalUnreadCount);
+                    totalUnreadTextView.setText(totalUnreadCountString);
+                });
 
         String[] modes = new String[]{
                 EkoChannelFilter.ALL.getApiKey(),
