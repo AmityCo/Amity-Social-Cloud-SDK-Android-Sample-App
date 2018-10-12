@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def ekoSdkVersion = '1.1.0'
+def ekoSdkVersion = '1.1.2'
 
 android {
     compileSdkVersion 27
