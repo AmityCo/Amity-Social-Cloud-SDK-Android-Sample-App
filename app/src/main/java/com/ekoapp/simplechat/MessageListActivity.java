@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
 public class MessageListActivity extends BaseActivity {
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.message_list_recyclerview)
     RecyclerView messageListRecyclerView;
@@ -45,7 +49,7 @@ public class MessageListActivity extends BaseActivity {
         setContentView(R.layout.activity_message_list);
 
         channelId = ViewMessagesIntent.getChannelId(getIntent());
-        setTitle(channelId);
+        toolbar.setTitle(channelId);
 
         if (channelId != null) {
             messageListRecyclerView.setAdapter(adapter);
@@ -53,6 +57,11 @@ public class MessageListActivity extends BaseActivity {
                     .observe(this, adapter::submitList);
 
             ItemInsertedDataObserver.create(adapter);
+
+            channelRepository.getChannel(channelId)
+                    .observe(this, channel -> toolbar.setSubtitle(String.format("members:%s messages:%s",
+                            channel.getMemberCount(),
+                            channel.getMessageCount())));
         }
     }
 
