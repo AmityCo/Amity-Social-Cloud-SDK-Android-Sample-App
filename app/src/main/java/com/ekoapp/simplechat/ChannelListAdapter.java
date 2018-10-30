@@ -11,6 +11,9 @@ import com.ekoapp.ekosdk.EkoChannel;
 import com.ekoapp.ekosdk.EkoObjects;
 import com.ekoapp.ekosdk.adapter.EkoChannelAdapter;
 import com.ekoapp.simplechat.intent.ViewMessagesIntent;
+import com.google.common.base.Joiner;
+
+import java.net.URLDecoder;
 
 import butterknife.BindView;
 
@@ -34,6 +37,14 @@ public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
             holder.channelId = null;
             holder.channelIdTextView.setText("loading...");
         } else {
+            String tags;
+
+            try {
+                tags = URLDecoder.decode(Joiner.on(", ").join(channel.getTags()), "UTF-8");
+            } catch (Exception e) {
+                tags = "";
+            }
+
             String text = new StringBuilder()
                     .append("id: ")
                     .append(channel.getChannelId())
@@ -45,6 +56,8 @@ public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
                     .append(channel.getUnreadCount())
                     .append("\nmessage count: ")
                     .append(channel.getMessageCount())
+                    .append("\ntags: ")
+                    .append(tags)
                     .toString();
 
             holder.channelId = channel.getChannelId();
