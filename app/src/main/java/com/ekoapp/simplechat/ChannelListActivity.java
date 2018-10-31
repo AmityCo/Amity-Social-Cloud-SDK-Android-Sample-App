@@ -36,13 +36,10 @@ import com.google.common.collect.Sets;
 
 import org.bson.types.ObjectId;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.Set;
 
 import butterknife.BindView;
 import io.reactivex.Completable;
-import timber.log.Timber;
 
 public class ChannelListActivity extends BaseActivity {
 
@@ -164,18 +161,12 @@ public class ChannelListActivity extends BaseActivity {
                 EkoClient.setup(newApiKey);
             });
         } else if (id == R.id.action_change_tags) {
-            String prefill = Joiner.on(",").join(tags.get());
-            try {
-                prefill = URLDecoder.decode(prefill, "UTF-8");
-            } catch (Exception e) {
-                Timber.e(e);
-            }
-            showDialog(R.string.change_tags, "bnk48,football,concert", prefill, true, (dialog, input) -> {
+            showDialog(R.string.change_tags, "bnk48,football,concert", Joiner.on(",").join(tags.get()), true, (dialog, input) -> {
                 Set<String> set = Sets.newConcurrentHashSet();
                 for (String tag : String.valueOf(input).split(",")) {
                     if (tag.length() > 0) {
                         try {
-                            set.add(URLEncoder.encode(tag, "UTF-8"));
+                            set.add(tag);
                         } catch (Exception e) {
                             set.add(tag);
                         }
