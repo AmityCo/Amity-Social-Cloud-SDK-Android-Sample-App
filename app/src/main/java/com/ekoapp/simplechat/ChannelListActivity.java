@@ -165,11 +165,7 @@ public class ChannelListActivity extends BaseActivity {
                 Set<String> set = Sets.newConcurrentHashSet();
                 for (String tag : String.valueOf(input).split(",")) {
                     if (tag.length() > 0) {
-                        try {
-                            set.add(tag);
-                        } catch (Exception e) {
-                            set.add(tag);
-                        }
+                        set.add(tag);
                     }
                 }
                 tags.set(set);
