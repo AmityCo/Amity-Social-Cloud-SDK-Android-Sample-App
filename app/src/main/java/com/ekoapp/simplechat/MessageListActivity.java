@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -72,6 +74,24 @@ public class MessageListActivity extends BaseActivity {
             channelRepository.membership(channelId)
                     .stopReading();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_message_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_leave_channel) {
+            channelRepository.leaveChannel(channelId)
+                    .doOnComplete(this::finish)
+                    .subscribe();
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @OnTextChanged(R.id.message_edittext)

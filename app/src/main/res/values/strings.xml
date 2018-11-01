@@ -5,6 +5,7 @@
     <string name="join_channel">Join Channel</string>
     <string name="change_api_key">Change API Key</string>
     <string name="change_tags">Change Tags</string>
+    <string name="leave_channel">Leave Channel</string>
     <string name="chatkit_shortcut_short_label">ChatKit</string>
     <string name="chatkit_shortcut_long_label">Open Eko SDK with ChatKit</string>
     <string name="chatkit_shortcut_disabled_text">ChatKit disabled</string>
