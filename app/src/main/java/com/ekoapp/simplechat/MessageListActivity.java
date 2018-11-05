@@ -31,7 +31,6 @@ public class MessageListActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-
     @BindView(R.id.message_list_recyclerview)
     RecyclerView messageListRecyclerView;
 
