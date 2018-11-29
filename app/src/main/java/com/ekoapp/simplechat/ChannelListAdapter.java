@@ -11,6 +11,7 @@ import com.ekoapp.ekosdk.EkoChannel;
 import com.ekoapp.ekosdk.EkoObjects;
 import com.ekoapp.ekosdk.adapter.EkoChannelAdapter;
 import com.ekoapp.simplechat.intent.ViewMessagesIntent;
+import com.google.common.base.Joiner;
 
 import butterknife.BindView;
 
@@ -45,6 +46,8 @@ public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
                     .append(channel.getUnreadCount())
                     .append("\nmessage count: ")
                     .append(channel.getMessageCount())
+                    .append("\ntags: ")
+                    .append(Joiner.on(", ").join(channel.getTags()))
                     .toString();
 
             holder.channelId = channel.getChannelId();

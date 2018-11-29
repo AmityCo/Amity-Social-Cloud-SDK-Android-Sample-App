@@ -3,8 +3,8 @@
     package="com.ekoapp.simplechat">
 
     <application
-        android:allowBackup="true"
         android:name=".SimpleChatApp"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -26,12 +26,13 @@
 
         <activity
             android:name=".MessageListActivity"
-            android:label="Messages" />
+            android:label="Messages"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".chatkit.ChatKitChannelListActivity"
-            android:label="@string/app_name"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/app_name" />
 
     </application>
 

@@ -26,15 +26,21 @@ import com.ekoapp.ekosdk.EkoChannel;
 import com.ekoapp.ekosdk.EkoChannelFilter;
 import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
+import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.sdk.BuildConfig;
 import com.ekoapp.simplechat.chatkit.ChatKitChannelListActivity;
 import com.f2prateek.rx.preferences2.Preference;
+import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
+import com.google.common.collect.Sets;
 
 import org.bson.types.ObjectId;
 
+import java.util.Set;
+
 import butterknife.BindView;
 import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ChannelListActivity extends BaseActivity {
 
@@ -57,6 +63,12 @@ public class ChannelListActivity extends BaseActivity {
 
     private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
 
+    private ChannelListAdapter adapter;
+
+    private EkoChannelFilter filter;
+
+    private Preference<Set<String>> tags = SimplePreferences.getTags();
+
 
     @Override
     protected void onCreate(Bundle savedState) {
@@ -72,15 +84,15 @@ public class ChannelListActivity extends BaseActivity {
         String userId = MoreObjects.firstNonNull(EkoClient.getUserId(), SimpleConfig.DEFAULT_USER_ID);
         String displayName = MoreObjects.firstNonNull(EkoClient.getDisplayName(), "Android " + ObjectId.get());
 
-        register(userId, displayName);
+        register(userId, displayName)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete(this::setupChannelList)
+                .subscribe();
 
         fab.setOnClickListener(view ->
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null)
                         .show());
-
-        ChannelListAdapter adapter = new ChannelListAdapter();
-        channelListRecyclerView.setAdapter(adapter);
 
         Resources resources = getResources();
         LiveDataReactiveStreams.fromPublisher(channelRepository.getTotalUnreadCount())
@@ -88,6 +100,11 @@ public class ChannelListActivity extends BaseActivity {
                     String totalUnreadCountString = resources.getString(R.string.total_unread_d, totalUnreadCount);
                     totalUnreadTextView.setText(totalUnreadCountString);
                 });
+    }
+
+    private void setupChannelList() {
+        adapter = new ChannelListAdapter();
+        channelListRecyclerView.setAdapter(adapter);
 
         String[] modes = new String[]{
                 EkoChannelFilter.ALL.getApiKey(),
@@ -102,11 +119,8 @@ public class ChannelListActivity extends BaseActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (channels != null) {
-                    channels.removeObservers(ChannelListActivity.this);
-                }
-                channels = channelRepository.getChannelCollection(EkoChannelFilter.fromApiKey(modes[position]));
-                channels.observe(ChannelListActivity.this, adapter::submitList);
+                filter = EkoChannelFilter.fromApiKey(modes[position]);
+                observeChannelCollection();
             }
 
             @Override
@@ -127,30 +141,44 @@ public class ChannelListActivity extends BaseActivity {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_change_user_id) {
-            showDialog(R.string.change_user_id, EkoClient.getUserId(), (dialog, input) -> {
+            showDialog(R.string.change_user_id, "", EkoClient.getUserId(), false, (dialog, input) -> {
                 String userId = String.valueOf(input);
-                register(userId, userId);
+                register(userId, userId)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete(this::observeChannelCollection)
+                        .subscribe();
             });
             return true;
         } else if (id == R.id.action_change_display_name) {
-            showDialog(R.string.change_display_name, EkoClient.getDisplayName(), (dialog, input) -> {
+            showDialog(R.string.change_display_name, "", EkoClient.getDisplayName(), false, (dialog, input) -> {
                 String displayName = String.valueOf(input);
                 EkoClient.setDisplayName(displayName)
                         .subscribe();
             });
             return true;
         } else if (id == R.id.action_join_channel) {
-            showDialog(R.string.join_channel, "", (dialog, input) -> {
+            showDialog(R.string.join_channel, "", "", false, (dialog, input) -> {
                 String channelId = String.valueOf(input);
                 channelRepository.getOrCreateById(channelId, EkoChannel.Type.STANDARD);
             });
             return true;
         } else if (id == R.id.action_change_api_key) {
             Preference<String> apiKeyStore = SimplePreferences.getApiKey();
-            showDialog(R.string.change_api_key, apiKeyStore.get(), (dialog, input) -> {
+            showDialog(R.string.change_api_key, "", apiKeyStore.get(), false, (dialog, input) -> {
                 final String newApiKey = String.valueOf(input);
                 apiKeyStore.set(newApiKey);
                 EkoClient.setup(newApiKey);
+            });
+        } else if (id == R.id.action_change_tags) {
+            showDialog(R.string.change_tags, "bnk48,football,concert", Joiner.on(",").join(tags.get()), true, (dialog, input) -> {
+                Set<String> set = Sets.newConcurrentHashSet();
+                for (String tag : String.valueOf(input).split(",")) {
+                    if (tag.length() > 0) {
+                        set.add(tag);
+                    }
+                }
+                tags.set(set);
+                observeChannelCollection();
             });
         } else if (id == R.id.action_chatkit) {
             Intent chatKit = new Intent(this, ChatKitChannelListActivity.class);
@@ -159,27 +187,23 @@ public class ChannelListActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showDialog(@StringRes int title, CharSequence prefill, MaterialDialog.InputCallback callback) {
+    private void observeChannelCollection() {
+        if (channels != null) {
+            channels.removeObservers(ChannelListActivity.this);
+        }
+        channels = channelRepository.getChannelCollectionByTags(filter, new EkoTags(tags.get()));
+        channels.observe(ChannelListActivity.this, adapter::submitList);
+    }
+
+    private void showDialog(@StringRes int title, CharSequence hint, CharSequence prefill, boolean allowEmptyInput, MaterialDialog.InputCallback callback) {
         new MaterialDialog.Builder(this)
                 .title(title)
                 .inputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
-                .input(null, prefill, false, callback)
+                .input(hint, prefill, allowEmptyInput, callback)
                 .show();
     }
 
-    private void register(String userId, String displayName) {
-        EkoClient.registerDevice(userId, displayName)
-                .andThen(Completable.fromAction(() -> {
-                    String publicChannel = "public_eko";
-                    channelRepository.getOrCreateById(publicChannel, EkoChannel.Type.STANDARD);
-                    channelRepository.setDisplayName(publicChannel, "Public Eko standard channel");
-                }))
-                .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("MUTE_ENTIRE_CHANNEL", EkoChannel.Type.STANDARD)))
-                .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("MUTE", EkoChannel.Type.STANDARD)))
-                .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("RATE_LIMIT", EkoChannel.Type.STANDARD)))
-                .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("BAN", EkoChannel.Type.STANDARD)))
-                .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("1", EkoChannel.Type.STANDARD)))
-                .andThen(Completable.fromAction(() -> channelRepository.getOrCreateById("2", EkoChannel.Type.STANDARD)))
-                .subscribe();
+    private Completable register(String userId, String displayName) {
+        return EkoClient.registerDevice(userId, displayName);
     }
 }
