@@ -14,9 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
+import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoMessageRepository;
+import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
 import com.ekoapp.simplechat.intent.ViewMessagesIntent;
 
@@ -24,6 +27,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import timber.log.Timber;
 
 public class MessageListActivity extends BaseActivity {
@@ -42,9 +46,13 @@ public class MessageListActivity extends BaseActivity {
 
     private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
     private final EkoMessageRepository messageRepository = EkoClient.newMessageRepository();
+    private final EkoUserRepository userRepository = EkoClient.newUserRepository();
     private final MessageListAdapter adapter = new MessageListAdapter();
 
     private String channelId;
+
+    private final CompositeDisposable disposable = new CompositeDisposable();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedState) {
@@ -59,6 +67,10 @@ public class MessageListActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         if (channelId != null) {
+            disposable.add(adapter.getOnLongClickFlowable()
+                    .doOnNext(this::flag)
+                    .subscribe());
+
             messageListRecyclerView.setAdapter(adapter);
             messageRepository.getMessageCollection(channelId)
                     .observe(this, adapter::submitList);
@@ -89,6 +101,12 @@ public class MessageListActivity extends BaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.clear();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_message_list, menu);
         return true;
@@ -104,6 +122,47 @@ public class MessageListActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void flag(EkoMessage message) {
+        new MaterialDialog.Builder(this)
+                .items("flag a message", "flag a sender")
+                .itemsCallback((dialog, itemView, position, text) -> {
+                    if (position == 0) {
+                        flagMessage(message.getMessageId());
+                    } else {
+                        flagUser(message.getUserId());
+                    }
+                })
+                .show();
+    }
+
+    private void flagMessage(String messageId) {
+        new MaterialDialog.Builder(this)
+                .content("flag/un-flag a message")
+                .positiveText("flag")
+                .onPositive((dialog, which) -> disposable.add(messageRepository.flag(messageId)
+                        .flag()
+                        .subscribe()))
+                .negativeText("un-flag")
+                .onNegative((dialog, which) -> disposable.add(messageRepository.flag(messageId)
+                        .unflag()
+                        .subscribe()))
+                .show();
+    }
+
+    private void flagUser(String userId) {
+        new MaterialDialog.Builder(this)
+                .content("flag/un-flag a sender")
+                .positiveText("flag")
+                .onPositive((dialog, which) -> disposable.add(userRepository.flag(userId)
+                        .flag()
+                        .subscribe()))
+                .negativeText("un-flag")
+                .onNegative((dialog, which) -> disposable.add(userRepository.flag(userId)
+                        .unflag()
+                        .subscribe()))
+                .show();
     }
 
     @OnTextChanged(R.id.message_edittext)

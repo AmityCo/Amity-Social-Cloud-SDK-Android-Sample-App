@@ -21,10 +21,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.subjects.PublishSubject;
 
 import static com.ekoapp.simplechat.MessageListAdapter.MessageViewHolder;
 
 public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
+
+    private final PublishSubject<EkoMessage> onLongClickSubject = PublishSubject.create();
+
 
     @NonNull
     @Override
@@ -63,6 +69,14 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             }
         }
 
+        holder.itemView.setOnLongClickListener(v -> {
+            onLongClickSubject.onNext(m);
+            return true;
+        });
+    }
+
+    Flowable<EkoMessage> getOnLongClickFlowable() {
+        return onLongClickSubject.toFlowable(BackpressureStrategy.BUFFER);
     }
 
 
