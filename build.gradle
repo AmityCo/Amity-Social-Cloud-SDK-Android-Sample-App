@@ -18,6 +18,7 @@ buildscript {
 allprojects {
     repositories {
         //maven { url 'https://dl.bintray.com/eko/sdk' }
+        maven { url 'https://dl.bintray.com/panin/eko-sdk' }
         google()
         jcenter()
     }

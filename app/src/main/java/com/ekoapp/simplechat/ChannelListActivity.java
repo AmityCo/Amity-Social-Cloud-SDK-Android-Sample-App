@@ -50,7 +50,7 @@ public class ChannelListActivity extends BaseActivity {
     @BindView(R.id.total_unread_textview)
     TextView totalUnreadTextView;
 
-    @BindView(R.id.membership_spinner)
+    @BindView(R.id.filter_spinner)
     Spinner spinner;
 
     @BindView(R.id.fab)
