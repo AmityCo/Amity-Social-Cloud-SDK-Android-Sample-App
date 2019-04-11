@@ -14,18 +14,11 @@
         android:elevation="8dp"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <Spinner
-        android:id="@+id/filter_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_below="@id/toolbar"
-        android:layout_alignParentRight="true" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/channel_membership_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/filter_spinner"
+        android:layout_below="@id/toolbar"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         tools:context="com.ekoapp.simplechat.ChannelMembershipActivity"
         tools:showIn="@layout/activity_channel_membership_list" />

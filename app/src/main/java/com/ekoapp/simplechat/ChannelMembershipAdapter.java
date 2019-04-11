@@ -28,12 +28,17 @@ public class ChannelMembershipAdapter extends EkoChannelMembershipAdapter<EkoUse
             holder.textView.setText("loading...");
         } else {
             holder.textView.setText(new StringBuilder()
-                    .append("id: ")
+                    .append(position + 1)
+                    .append("\nid: ")
                     .append(channelMembership.getUserId())
                     .append("\ndisplay name: ")
                     .append(channelMembership.getUser() != null ? channelMembership.getUser().getDisplayName() : "null")
                     .append("\nmembership: ")
                     .append(channelMembership.getMembership())
+                    .append("\nis muted: ")
+                    .append(channelMembership.isMuted())
+                    .append("\nis banned: ")
+                    .append(channelMembership.isBanned())
                     .toString());
         }
     }
