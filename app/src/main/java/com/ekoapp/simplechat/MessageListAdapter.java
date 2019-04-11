@@ -44,7 +44,7 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         EkoMessage m = getItem(position);
 
-        ButterKnife.Setter<View,Integer> visibility = (view, value, index) -> view.setVisibility(value);
+        ButterKnife.Setter<View, Integer> visibility = (view, value, index) -> view.setVisibility(value);
 
         if (EkoObjects.isProxy(m)) {
             ButterKnife.apply(holder.optionalViews, visibility, View.GONE);
@@ -57,13 +57,24 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             EkoUser sender = m.getUser();
             DateTime created = m.getCreatedAt();
 
-            holder.messageIdTextView.setText(String.format("%s: %s", m.getChannelSegment(), m.getMessageId()));
-            holder.senderTextView.setText(String.format("uid: %s (%s)", senderId, sender != null ? sender.getDisplayName() : ""));
+            holder.messageIdTextView.setText(String.format("%s: %s",
+                    m.getChannelSegment(),
+                    m.getMessageId()));
+
+            holder.senderTextView.setText(String.format("uid: %s (%s) %s:%s",
+                    senderId,
+                    sender != null ? sender.getDisplayName() : "",
+                    sender != null && sender.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
+                    sender != null ? sender.getFlagCount() : 0));
+
             holder.syncStateTextview.setText(m.getSyncState().name());
             holder.timeTextview.setText(created.toString(DateTimeFormat.longDateTime()));
 
             if ("text".equalsIgnoreCase(type)) {
-                holder.dataTextview.setText(m.getData(TextData.class).getText());
+                holder.dataTextview.setText(String.format("%s %s:%s",
+                        m.getData(TextData.class).getText(),
+                        m.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
+                        m.getFlagCount()));
             } else {
                 holder.dataTextview.setText(String.format("data type: %s", type));
             }
@@ -90,11 +101,16 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         })
         List<View> optionalViews;
 
-        @BindView(R.id.message_id_textview) TextView messageIdTextView;
-        @BindView(R.id.sender_textview) TextView senderTextView;
-        @BindView(R.id.data_textview) TextView dataTextview;
-        @BindView(R.id.sync_state_textview) TextView syncStateTextview;
-        @BindView(R.id.time_textview) TextView timeTextview;
+        @BindView(R.id.message_id_textview)
+        TextView messageIdTextView;
+        @BindView(R.id.sender_textview)
+        TextView senderTextView;
+        @BindView(R.id.data_textview)
+        TextView dataTextview;
+        @BindView(R.id.sync_state_textview)
+        TextView syncStateTextview;
+        @BindView(R.id.time_textview)
+        TextView timeTextview;
 
 
         MessageViewHolder(View itemView) {

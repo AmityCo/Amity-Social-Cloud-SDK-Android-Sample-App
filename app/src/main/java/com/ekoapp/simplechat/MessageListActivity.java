@@ -19,6 +19,7 @@ import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoMessageRepository;
+import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
 import com.ekoapp.simplechat.intent.ViewMessagesIntent;
@@ -129,40 +130,56 @@ public class MessageListActivity extends BaseActivity {
                 .items("flag a message", "flag a sender")
                 .itemsCallback((dialog, itemView, position, text) -> {
                     if (position == 0) {
-                        flagMessage(message.getMessageId());
+                        flagMessage(message);
                     } else {
-                        flagUser(message.getUserId());
+                        flagUser(message.getUser());
                     }
                 })
                 .show();
     }
 
-    private void flagMessage(String messageId) {
-        new MaterialDialog.Builder(this)
-                .content("flag/un-flag a message")
-                .positiveText("flag")
-                .onPositive((dialog, which) -> disposable.add(messageRepository.report(messageId)
-                        .flag()
-                        .subscribe()))
-                .negativeText("un-flag")
-                .onNegative((dialog, which) -> disposable.add(messageRepository.report(messageId)
-                        .unflag()
-                        .subscribe()))
-                .show();
+    private void flagMessage(EkoMessage message) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
+        if (message.isFlaggedByMe()) {
+            builder.content("un-flag a message")
+                    .positiveText("un-flag")
+                    .onPositive((dialog, which) -> disposable.add(messageRepository.report(message.getMessageId())
+                            .unflag()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnComplete(() -> Toast.makeText(this, "successfully un-flagged a message", Toast.LENGTH_SHORT).show())
+                            .subscribe()));
+        } else {
+            builder.content("flag a message")
+                    .positiveText("flag")
+                    .onPositive((dialog, which) -> disposable.add(messageRepository.report(message.getMessageId())
+                            .flag()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnComplete(() -> Toast.makeText(this, "successfully flagged the a message", Toast.LENGTH_SHORT).show())
+                            .subscribe()));
+        }
+        builder.show();
     }
 
-    private void flagUser(String userId) {
-        new MaterialDialog.Builder(this)
-                .content("flag/un-flag a sender")
-                .positiveText("flag")
-                .onPositive((dialog, which) -> disposable.add(userRepository.report(userId)
-                        .flag()
-                        .subscribe()))
-                .negativeText("un-flag")
-                .onNegative((dialog, which) -> disposable.add(userRepository.report(userId)
-                        .unflag()
-                        .subscribe()))
-                .show();
+    private void flagUser(EkoUser user) {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
+        if (user.isFlaggedByMe()) {
+            builder.content("un-flag a sender")
+                    .positiveText("un-flag")
+                    .onPositive((dialog, which) -> disposable.add(userRepository.report(user.getUserId())
+                            .unflag()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnComplete(() -> Toast.makeText(this, "successfully un-flagged a sender", Toast.LENGTH_SHORT).show())
+                            .subscribe()));
+        } else {
+            builder.content("flag a sender")
+                    .positiveText("flag")
+                    .onPositive((dialog, which) -> disposable.add(userRepository.report(user.getUserId())
+                            .flag()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .doOnComplete(() -> Toast.makeText(this, "successfully flagged a sender", Toast.LENGTH_SHORT).show())
+                            .subscribe()));
+        }
+        builder.show();
     }
 
     @OnTextChanged(R.id.message_edittext)
