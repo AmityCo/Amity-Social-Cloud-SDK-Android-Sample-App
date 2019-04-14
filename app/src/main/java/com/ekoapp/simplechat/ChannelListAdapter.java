@@ -60,7 +60,7 @@ public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
 
         String channelId;
 
-        @BindView(R.id.channel_id_textview)
+        @BindView(R.id.channel_textview)
         TextView channelIdTextView;
 
 

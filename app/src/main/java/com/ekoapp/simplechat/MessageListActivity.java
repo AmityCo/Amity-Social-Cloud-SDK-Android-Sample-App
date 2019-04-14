@@ -22,6 +22,7 @@ import com.ekoapp.ekosdk.EkoMessageRepository;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
+import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.ekoapp.simplechat.intent.ViewMessagesIntent;
 
 import butterknife.BindView;
@@ -115,7 +116,10 @@ public class MessageListActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_leave_channel) {
+        if (item.getItemId() == R.id.action_channel_membership) {
+            startActivity(new ViewChannelMembershipsIntent(this, channelId));
+            return true;
+        } else if (item.getItemId() == R.id.action_leave_channel) {
             channelRepository.leaveChannel(channelId)
                     .doOnComplete(this::finish)
                     .subscribe();

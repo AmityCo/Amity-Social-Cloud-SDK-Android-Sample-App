@@ -101,7 +101,7 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         })
         List<View> optionalViews;
 
-        @BindView(R.id.message_id_textview)
+        @BindView(R.id.message_textview)
         TextView messageIdTextView;
         @BindView(R.id.sender_textview)
         TextView senderTextView;

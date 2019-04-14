@@ -26,7 +26,10 @@
 
         <activity
             android:name=".MessageListActivity"
-            android:label="Messages"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".ChannelMembershipActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
