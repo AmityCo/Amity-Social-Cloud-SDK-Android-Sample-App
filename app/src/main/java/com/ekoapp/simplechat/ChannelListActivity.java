@@ -67,7 +67,8 @@ public class ChannelListActivity extends BaseActivity {
 
     private EkoChannelFilter filter;
 
-    private Preference<Set<String>> tags = SimplePreferences.getTags();
+    private Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
+    private Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
 
 
     @Override
@@ -169,15 +170,26 @@ public class ChannelListActivity extends BaseActivity {
                 apiKeyStore.set(newApiKey);
                 EkoClient.setup(newApiKey);
             });
-        } else if (id == R.id.action_change_tags) {
-            showDialog(R.string.change_tags, "bnk48,football,concert", Joiner.on(",").join(tags.get()), true, (dialog, input) -> {
+        } else if (id == R.id.action_with_tags) {
+            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags.get()), true, (dialog, input) -> {
                 Set<String> set = Sets.newConcurrentHashSet();
                 for (String tag : String.valueOf(input).split(",")) {
                     if (tag.length() > 0) {
                         set.add(tag);
                     }
                 }
-                tags.set(set);
+                includingTags.set(set);
+                observeChannelCollection();
+            });
+        } else if (id == R.id.action_without_tags) {
+            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags.get()), true, (dialog, input) -> {
+                Set<String> set = Sets.newConcurrentHashSet();
+                for (String tag : String.valueOf(input).split(",")) {
+                    if (tag.length() > 0) {
+                        set.add(tag);
+                    }
+                }
+                excludingTags.set(set);
                 observeChannelCollection();
             });
         } else if (id == R.id.action_chatkit) {
@@ -191,7 +203,7 @@ public class ChannelListActivity extends BaseActivity {
         if (channels != null) {
             channels.removeObservers(ChannelListActivity.this);
         }
-        channels = channelRepository.getChannelCollectionByTags(filter, new EkoTags(tags.get()));
+        channels = channelRepository.getChannelCollectionByTags(filter, new EkoTags(includingTags.get()), new EkoTags(excludingTags.get()));
         channels.observe(ChannelListActivity.this, adapter::submitList);
     }
 

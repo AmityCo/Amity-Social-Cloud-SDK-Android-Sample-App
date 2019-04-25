@@ -12,7 +12,8 @@ import java.util.Set;
 public class SimplePreferences {
 
     private static final String API_KEY_KEY = "API_KEY_KEY";
-    private static final String TAGS_KEY = "TAGS_KEY";
+    private static final String INCLUDING_TAGS_KEY = "INCLUDING_TAGS_KEY";
+    private static final String EXCLUDING_TAGS_KEY = "EXCLUDING_TAGS_KEY";
 
 
     private static class SimplePreferencesHolder {
@@ -33,7 +34,11 @@ public class SimplePreferences {
         return get().getString(API_KEY_KEY, SimpleConfig.DEFAULT_API_KEY);
     }
 
-    public static Preference<Set<String>> getTags() {
-        return get().getStringSet(TAGS_KEY, Collections.EMPTY_SET);
+    public static Preference<Set<String>> getIncludingTags() {
+        return get().getStringSet(INCLUDING_TAGS_KEY, Collections.EMPTY_SET);
+    }
+
+    public static Preference<Set<String>> getExcludingTags() {
+        return get().getStringSet(EXCLUDING_TAGS_KEY, Collections.EMPTY_SET);
     }
 }
