@@ -158,10 +158,12 @@ public class ChannelListActivity extends BaseActivity {
             });
             return true;
         } else if (id == R.id.action_join_channel) {
-            showDialog(R.string.join_channel, "", "", false, (dialog, input) -> {
-                String channelId = String.valueOf(input);
-                channelRepository.getOrCreateById(channelId, EkoChannel.Type.STANDARD);
-            });
+            new MaterialDialog.Builder(this)
+                    .items("standard", "broadcast", "conversation")
+                    .itemsCallback((dialog, itemView, position, text) -> showDialog(R.string.join_channel, "", "", false, (d, input) -> {
+                        String channelId = String.valueOf(input);
+                        channelRepository.getOrCreateById(channelId, EkoChannel.Type.fromJson(text.toString()));
+                    })).show();
             return true;
         } else if (id == R.id.action_change_api_key) {
             Preference<String> apiKeyStore = SimplePreferences.getApiKey();
