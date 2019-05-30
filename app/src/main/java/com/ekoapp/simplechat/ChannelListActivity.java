@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -205,7 +206,9 @@ public class ChannelListActivity extends BaseActivity {
                             return;
                         }
 
-                        EkoClient.registerDeviceForPushNotification(task.getResult().getToken())
+                        String token = task.getResult().getToken();
+                        Log.e("fcm_token", token);
+                        EkoClient.registerDeviceForPushNotification(token)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .doOnComplete(() -> Toast.makeText(this, String.format("enable push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
                                 .subscribeOn(Schedulers.io())
