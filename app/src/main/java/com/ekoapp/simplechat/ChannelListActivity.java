@@ -20,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ekoapp.ekosdk.EkoChannel;
@@ -33,6 +34,7 @@ import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Sets;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.bson.types.ObjectId;
 
@@ -41,6 +43,7 @@ import java.util.Set;
 import butterknife.BindView;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ChannelListActivity extends BaseActivity {
 
@@ -194,6 +197,26 @@ public class ChannelListActivity extends BaseActivity {
                 excludingTags.set(set);
                 observeChannelCollection();
             });
+        } else if (id == R.id.action_enable_push) {
+            FirebaseInstanceId.getInstance()
+                    .getInstanceId()
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+
+                        EkoClient.registerDeviceForPushNotification(task.getResult().getToken())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnComplete(() -> Toast.makeText(this, String.format("enable push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
+                                .subscribeOn(Schedulers.io())
+                                .subscribe();
+                    });
+        } else if (id == R.id.action_disable_push) {
+            EkoClient.unregisterDeviceForPushNotification(EkoClient.getUserId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete(() -> Toast.makeText(this, String.format("disable push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
         } else if (id == R.id.action_chatkit) {
             Intent chatKit = new Intent(this, ChatKitChannelListActivity.class);
             startActivity(chatKit);

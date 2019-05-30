@@ -8,6 +8,8 @@
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
     <string name="leave_channel">Leave Channel</string>
+    <string name="enable_push">Enable Push</string>
+    <string name="disable_push">Disable Push</string>
     <string name="chatkit_shortcut_short_label">ChatKit</string>
     <string name="chatkit_shortcut_long_label">Open Eko SDK with ChatKit</string>
     <string name="chatkit_shortcut_disabled_text">ChatKit disabled</string>

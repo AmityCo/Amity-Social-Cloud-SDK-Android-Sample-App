@@ -40,8 +40,20 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_chatkit"
+        android:id="@+id/action_enable_push"
         android:orderInCategory="700"
+        android:title="@string/enable_push"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_disable_push"
+        android:orderInCategory="800"
+        android:title="@string/disable_push"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_chatkit"
+        android:orderInCategory="900"
         android:title="@string/chatkit_shortcut_short_label"
         app:showAsAction="never" />
 
