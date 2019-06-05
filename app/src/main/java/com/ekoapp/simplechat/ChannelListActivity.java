@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ekoapp.ekosdk.EkoChannel;
@@ -33,6 +35,7 @@ import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Sets;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.bson.types.ObjectId;
 
@@ -194,6 +197,31 @@ public class ChannelListActivity extends BaseActivity {
                 excludingTags.set(set);
                 observeChannelCollection();
             });
+        } else if (id == R.id.action_register_push) {
+            FirebaseInstanceId.getInstance()
+                    .getInstanceId()
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+
+                        String token = task.getResult().getToken();
+                        Log.e("fcm_token", token);
+                        EkoClient.registerDeviceForPushNotification(token)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnComplete(() -> Toast.makeText(this, String.format("register push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
+                                .subscribe();
+                    });
+        } else if (id == R.id.action_unregister_push) {
+            EkoClient.unregisterDeviceForPushNotification(EkoClient.getUserId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete(() -> Toast.makeText(this, String.format("un-register push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
+                    .subscribe();
+        } else if (id == R.id.action_unregister_push_for_all) {
+            EkoClient.unregisterDeviceForPushNotification()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete(() -> Toast.makeText(this, "un-register push for all users", Toast.LENGTH_SHORT).show())
+                    .subscribe();
         } else if (id == R.id.action_chatkit) {
             Intent chatKit = new Intent(this, ChatKitChannelListActivity.class);
             startActivity(chatKit);

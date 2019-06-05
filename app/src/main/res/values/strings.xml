@@ -8,9 +8,11 @@
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
     <string name="leave_channel">Leave Channel</string>
+    <string name="register_push">Register Push</string>
+    <string name="unregister_push">Un-register Push</string>
+    <string name="unregister_push_for_all">Un-register Push for All Users</string>
     <string name="chatkit_shortcut_short_label">ChatKit</string>
     <string name="chatkit_shortcut_long_label">Open Eko SDK with ChatKit</string>
     <string name="chatkit_shortcut_disabled_text">ChatKit disabled</string>
-
     <string name="total_unread_d">Total unread: %d</string>
 </resources>

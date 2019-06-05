@@ -40,8 +40,26 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_chatkit"
+        android:id="@+id/action_register_push"
         android:orderInCategory="700"
+        android:title="@string/register_push"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_unregister_push"
+        android:orderInCategory="800"
+        android:title="@string/unregister_push"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_unregister_push_for_all"
+        android:orderInCategory="900"
+        android:title="@string/unregister_push_for_all"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_chatkit"
+        android:orderInCategory="1000"
         android:title="@string/chatkit_shortcut_short_label"
         app:showAsAction="never" />
 
