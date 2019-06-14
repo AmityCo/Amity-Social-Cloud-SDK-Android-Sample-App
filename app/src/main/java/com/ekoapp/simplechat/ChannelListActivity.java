@@ -222,6 +222,8 @@ public class ChannelListActivity extends BaseActivity {
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete(() -> Toast.makeText(this, "un-register push for all users", Toast.LENGTH_SHORT).show())
                     .subscribe();
+        } else if (id == R.id.action_notification_for_current_user) {
+
         } else if (id == R.id.action_chatkit) {
             Intent chatKit = new Intent(this, ChatKitChannelListActivity.class);
             startActivity(chatKit);

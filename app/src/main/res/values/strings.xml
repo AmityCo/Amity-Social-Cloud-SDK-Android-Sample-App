@@ -11,6 +11,8 @@
     <string name="register_push">Register Push</string>
     <string name="unregister_push">Un-register Push</string>
     <string name="unregister_push_for_all">Un-register Push for All Users</string>
+    <string name="notification_for_current_user">Notification For Current User</string>
+    <string name="notification_for_current_channel">Notification For Current Channel</string>
     <string name="chatkit_shortcut_short_label">ChatKit</string>
     <string name="chatkit_shortcut_long_label">Open Eko SDK with ChatKit</string>
     <string name="chatkit_shortcut_disabled_text">ChatKit disabled</string>

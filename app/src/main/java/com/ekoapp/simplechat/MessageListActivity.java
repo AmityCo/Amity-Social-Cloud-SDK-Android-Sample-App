@@ -125,6 +125,8 @@ public class MessageListActivity extends BaseActivity {
                     .subscribe();
 
             return true;
+        } else if (item.getItemId() == R.id.action_notification_for_current_channel) {
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
