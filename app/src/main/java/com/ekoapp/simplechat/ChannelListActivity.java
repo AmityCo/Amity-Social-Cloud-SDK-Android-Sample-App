@@ -44,6 +44,7 @@ import java.util.Set;
 import butterknife.BindView;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ChannelListActivity extends BaseActivity {
 
@@ -223,7 +224,21 @@ public class ChannelListActivity extends BaseActivity {
                     .doOnComplete(() -> Toast.makeText(this, "un-register push for all users", Toast.LENGTH_SHORT).show())
                     .subscribe();
         } else if (id == R.id.action_notification_for_current_user) {
-
+            EkoClient.notification()
+                    .isAllowed()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSuccess(allowed -> new MaterialDialog.Builder(this)
+                            .title("notification")
+                            .checkBoxPrompt("allow notification for current user", allowed, null)
+                            .positiveText("save")
+                            .onPositive((dialog, which) -> EkoClient.notification()
+                                    .setAllowed(dialog.isPromptCheckBoxChecked())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe())
+                            .negativeText("discard")
+                            .show())
+                    .subscribe();
         } else if (id == R.id.action_chatkit) {
             Intent chatKit = new Intent(this, ChatKitChannelListActivity.class);
             startActivity(chatKit);
