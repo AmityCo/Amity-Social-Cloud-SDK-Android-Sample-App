@@ -30,6 +30,7 @@ import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class MessageListActivity extends BaseActivity {
@@ -122,6 +123,24 @@ public class MessageListActivity extends BaseActivity {
         } else if (item.getItemId() == R.id.action_leave_channel) {
             channelRepository.leaveChannel(channelId)
                     .doOnComplete(this::finish)
+                    .subscribe();
+
+            return true;
+        } else if (item.getItemId() == R.id.action_notification_for_current_channel) {
+            channelRepository.notification(channelId)
+                    .isAllowed()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSuccess(allowed -> new MaterialDialog.Builder(this)
+                            .title("Notification Settings")
+                            .checkBoxPrompt("allow notification for current channel", allowed, null)
+                            .positiveText("save change")
+                            .onPositive((dialog, which) -> channelRepository.notification(channelId)
+                                    .setAllowed(dialog.isPromptCheckBoxChecked())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe())
+                            .negativeText("discard")
+                            .show())
                     .subscribe();
 
             return true;

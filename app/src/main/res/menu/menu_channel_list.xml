@@ -58,8 +58,14 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_chatkit"
+        android:id="@+id/action_notification_for_current_user"
         android:orderInCategory="1000"
+        android:title="@string/notification_for_current_user"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_chatkit"
+        android:orderInCategory="1100"
         android:title="@string/chatkit_shortcut_short_label"
         app:showAsAction="never" />
 

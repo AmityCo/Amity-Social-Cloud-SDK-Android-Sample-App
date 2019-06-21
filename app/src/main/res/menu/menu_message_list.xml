@@ -15,4 +15,10 @@
         android:title="@string/leave_channel"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_notification_for_current_channel"
+        android:orderInCategory="300"
+        android:title="@string/notification_for_current_channel"
+        app:showAsAction="never" />
+
 </menu>
