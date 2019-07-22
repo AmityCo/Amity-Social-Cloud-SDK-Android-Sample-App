@@ -4,68 +4,74 @@
     tools:context="com.ekoapp.simplechat.ChannelListActivity">
 
     <item
-        android:id="@+id/action_change_user_id"
+        android:id="@+id/action_register"
         android:orderInCategory="100"
-        android:title="@string/change_user_id"
+        android:title="@string/register"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_unregister"
+        android:orderInCategory="200"
+        android:title="@string/unregister"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_change_display_name"
-        android:orderInCategory="200"
+        android:orderInCategory="300"
         android:title="@string/change_display_name"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_join_channel"
-        android:orderInCategory="300"
+        android:orderInCategory="400"
         android:title="@string/join_channel"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_change_api_key"
-        android:orderInCategory="400"
+        android:orderInCategory="500"
         android:title="@string/change_api_key"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_with_tags"
-        android:orderInCategory="500"
+        android:orderInCategory="600"
         android:title="@string/with_tag"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_without_tags"
-        android:orderInCategory="600"
+        android:orderInCategory="700"
         android:title="@string/without_tag"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_register_push"
-        android:orderInCategory="700"
+        android:orderInCategory="800"
         android:title="@string/register_push"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_unregister_push"
-        android:orderInCategory="800"
+        android:orderInCategory="900"
         android:title="@string/unregister_push"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_unregister_push_for_all"
-        android:orderInCategory="900"
+        android:orderInCategory="1000"
         android:title="@string/unregister_push_for_all"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_notification_for_current_user"
-        android:orderInCategory="1000"
+        android:orderInCategory="1100"
         android:title="@string/notification_for_current_user"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_chatkit"
-        android:orderInCategory="1100"
+        android:orderInCategory="1200"
         android:title="@string/chatkit_shortcut_short_label"
         app:showAsAction="never" />
 

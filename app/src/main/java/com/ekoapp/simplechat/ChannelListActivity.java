@@ -145,14 +145,18 @@ public class ChannelListActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_change_user_id) {
-            showDialog(R.string.change_user_id, "", EkoClient.getUserId(), false, (dialog, input) -> {
+        if (id == R.id.action_register) {
+            showDialog(R.string.register, "", EkoClient.getUserId(), false, (dialog, input) -> {
                 String userId = String.valueOf(input);
                 register(userId, userId)
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnComplete(this::observeChannelCollection)
                         .subscribe();
             });
+            return true;
+        } else if (id == R.id.action_unregister) {
+            EkoClient.unregisterDevice()
+                    .subscribe();
             return true;
         } else if (id == R.id.action_change_display_name) {
             showDialog(R.string.change_display_name, "", EkoClient.getDisplayName(), false, (dialog, input) -> {
