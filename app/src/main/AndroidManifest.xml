@@ -29,11 +29,6 @@
             android:name=".ChannelMembershipActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".chatkit.ChatKitChannelListActivity"
-            android:exported="true"
-            android:label="@string/app_name" />
-
         <service
             android:name=".SimpleFirebaseMessagingService"
             android:exported="false">
