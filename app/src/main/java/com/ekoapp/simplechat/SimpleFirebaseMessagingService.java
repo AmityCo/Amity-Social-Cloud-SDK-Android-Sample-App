@@ -33,10 +33,6 @@ public class SimpleFirebaseMessagingService extends FirebaseMessagingService {
         Log.e("fcm_new_token", token);
         EkoFcm.create()
                 .setup(token)
-                .subscribe(() -> {
-
-                }, throwable -> {
-
-                });
+                .subscribe();
     }
 }

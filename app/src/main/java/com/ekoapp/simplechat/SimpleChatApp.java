@@ -17,11 +17,7 @@ public class SimpleChatApp extends MultiDexApplication {
 
         EkoClient.setup(SimplePreferences.getApiKey().get())
                 .andThen(EkoBaidu.create(this).setup("BZ2CnTh6qphSUl66c16Xk7AG"))
-                .subscribe(() -> {
-
-                }, throwable -> {
-
-                });
+                .subscribe();
     }
 
 
