@@ -18,9 +18,12 @@ buildscript {
 
 allprojects {
     repositories {
-        //maven { url 'https://dl.bintray.com/eko/sdk' }
         google()
         jcenter()
+        maven {
+            url "https://jitpack.io"
+            credentials { username authToken }
+        }
     }
 }
 

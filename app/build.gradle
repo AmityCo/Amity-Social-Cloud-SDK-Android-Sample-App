@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def ekoSdkVersion = '1.10.0'
+def ekoSdkVersion = '1.12.0.12'
 
 android {
     compileSdkVersion 27
@@ -32,6 +32,17 @@ android {
         }
     }
 
+    flavorDimensions "push"
+
+    productFlavors {
+        fcm {
+            dimension "push"
+        }
+        fcm_or_baidu {
+            dimension "push"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -47,10 +58,10 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
 
     implementation 'com.android.support:multidex:1.0.3'
-
-    implementation "com.ekoapp.ekosdk:ekosdk:${ekoSdkVersion}"
-
-    implementation 'com.github.stfalcon:chatkit:0.2.2'
+    
+    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
+    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
+    fcm_or_baiduImplementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
 
     implementation 'com.google.firebase:firebase-core:16.0.9'
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
