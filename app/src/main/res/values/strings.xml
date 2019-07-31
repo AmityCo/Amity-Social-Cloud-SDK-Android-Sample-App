@@ -13,8 +13,6 @@
     <string name="unregister_push_for_all">Un-register Push for All Users</string>
     <string name="notification_for_current_user">Notification Settings</string>
     <string name="notification_for_current_channel">Notification Settings</string>
-    <string name="chatkit_shortcut_short_label">ChatKit</string>
-    <string name="chatkit_shortcut_long_label">Open Eko SDK with ChatKit</string>
-    <string name="chatkit_shortcut_disabled_text">ChatKit disabled</string>
+    <string name="request_write_settings_permissions">Request Write Settings Permission</string>
     <string name="total_unread_d">Total unread: %d</string>
 </resources>
