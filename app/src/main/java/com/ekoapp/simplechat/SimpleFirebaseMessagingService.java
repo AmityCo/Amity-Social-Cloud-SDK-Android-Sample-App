@@ -2,6 +2,7 @@ package com.ekoapp.simplechat;
 
 import android.util.Log;
 
+import com.ekoapp.push.EkoFcm;
 import com.google.common.collect.Maps;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -30,5 +31,8 @@ public class SimpleFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String token) {
         Log.e("fcm_new_token", token);
+        EkoFcm.create()
+                .setup(token)
+                .subscribe();
     }
 }

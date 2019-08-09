@@ -70,9 +70,9 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_chatkit"
+        android:id="@+id/action_notification_request_write_settings_permission"
         android:orderInCategory="1200"
-        android:title="@string/chatkit_shortcut_short_label"
+        android:title="@string/request_write_settings_permissions"
         app:showAsAction="never" />
 
 </menu>

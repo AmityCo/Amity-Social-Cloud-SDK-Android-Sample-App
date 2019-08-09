@@ -5,6 +5,8 @@ import android.arch.lifecycle.LiveDataReactiveStreams;
 import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,12 +31,10 @@ import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.sdk.BuildConfig;
-import com.ekoapp.simplechat.chatkit.ChatKitChannelListActivity;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Sets;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.bson.types.ObjectId;
 
@@ -203,20 +202,10 @@ public class ChannelListActivity extends BaseActivity {
                 observeChannelCollection();
             });
         } else if (id == R.id.action_register_push) {
-            FirebaseInstanceId.getInstance()
-                    .getInstanceId()
-                    .addOnCompleteListener(task -> {
-                        if (!task.isSuccessful()) {
-                            return;
-                        }
-
-                        String token = task.getResult().getToken();
-                        Log.e("fcm_token", token);
-                        EkoClient.registerDeviceForPushNotification(token)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .doOnComplete(() -> Toast.makeText(this, String.format("register push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
-                                .subscribe();
-                    });
+            EkoClient.registerDeviceForPushNotification()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete(() -> Toast.makeText(this, String.format("register push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
+                    .subscribe();
         } else if (id == R.id.action_unregister_push) {
             EkoClient.unregisterDeviceForPushNotification(EkoClient.getUserId())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -243,9 +232,14 @@ public class ChannelListActivity extends BaseActivity {
                             .negativeText("discard")
                             .show())
                     .subscribe();
-        } else if (id == R.id.action_chatkit) {
-            Intent chatKit = new Intent(this, ChatKitChannelListActivity.class);
-            startActivity(chatKit);
+        } else if (id == R.id.action_notification_request_write_settings_permission) {
+            // required for baidu push
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
