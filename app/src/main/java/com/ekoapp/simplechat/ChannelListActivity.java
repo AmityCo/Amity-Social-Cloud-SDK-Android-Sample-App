@@ -1,19 +1,19 @@
 package com.ekoapp.simplechat;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.LiveDataReactiveStreams;
-import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +32,8 @@ import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.sdk.BuildConfig;
 import com.f2prateek.rx.preferences2.Preference;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Sets;

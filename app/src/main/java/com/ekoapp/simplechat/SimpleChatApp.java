@@ -1,6 +1,6 @@
 package com.ekoapp.simplechat;
 
-import android.support.multidex.MultiDexApplication;
+import androidx.multidex.MultiDexApplication;
 
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.push.EkoBaidu;

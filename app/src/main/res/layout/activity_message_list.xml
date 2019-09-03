@@ -11,7 +11,7 @@
         android:layout_alignParentBottom="true"
         android:padding="8dp">
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/message_send_button"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
@@ -19,7 +19,7 @@
             android:enabled="false"
             android:text="Send" />
 
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/message_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -36,7 +36,7 @@
         android:elevation="8dp"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,11 +1,12 @@
 package com.ekoapp.simplechat;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoObjects;
@@ -20,7 +21,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
-import butterknife.ButterKnife;
+import butterknife.Setter;
+import butterknife.ViewCollections;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.subjects.PublishSubject;
@@ -44,13 +46,13 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         EkoMessage m = getItem(position);
 
-        ButterKnife.Setter<View, Integer> visibility = (view, value, index) -> view.setVisibility(value);
+        Setter<View, Integer> visibility = (view, value, index) -> view.setVisibility(value);
 
         if (EkoObjects.isProxy(m)) {
-            ButterKnife.apply(holder.optionalViews, visibility, View.GONE);
+            ViewCollections.set(holder.optionalViews, visibility, View.GONE);
             holder.messageIdTextView.setText(String.format("loading adapter position: %s", position));
         } else {
-            ButterKnife.apply(holder.optionalViews, visibility, View.VISIBLE);
+            ViewCollections.set(holder.optionalViews, visibility, View.VISIBLE);
             Context context = holder.itemView.getContext();
             String type = m.getType();
             String senderId = m.getUserId();
