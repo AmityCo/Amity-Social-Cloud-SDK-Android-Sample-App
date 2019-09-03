@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
 import androidx.paging.PagedList;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -59,7 +60,10 @@ public class MessageListActivity extends BaseActivity {
     private String channelId;
 
     private LiveData<PagedList<EkoMessage>> messages;
+
     private MessageListAdapter adapter;
+
+    private boolean stackFromEnd = true;
 
     private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
     private final EkoMessageRepository messageRepository = EkoClient.newMessageRepository();
@@ -84,10 +88,18 @@ public class MessageListActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         if (channelId != null) {
+            setupMessageList();
             observeMessageCollection();
             channelRepository.getChannel(channelId)
                     .observe(this, channel -> toolbar.setSubtitle(String.format("unreadCount: %s messageCount:%s", channel.getUnreadCount(), channel.getMessageCount())));
         }
+    }
+
+    private void setupMessageList() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(stackFromEnd);
+        layoutManager.setReverseLayout(false);
+        messageListRecyclerView.setLayoutManager(layoutManager);
     }
 
     @Override
@@ -245,7 +257,7 @@ public class MessageListActivity extends BaseActivity {
                 .doOnNext(this::flag)
                 .subscribe());
 
-        messages = messageRepository.getMessageCollectionByTags(channelId, new EkoTags(includingTags.get()), new EkoTags(excludingTags.get()));
+        messages = messageRepository.getMessageCollectionByTags(channelId, new EkoTags(includingTags.get()), new EkoTags(excludingTags.get()), stackFromEnd);
         messages.observe(this, adapter::submitList);
     }
 
