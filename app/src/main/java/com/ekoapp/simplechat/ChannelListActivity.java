@@ -62,8 +62,9 @@ public class ChannelListActivity extends BaseActivity {
     @BindView(R.id.channel_list_recyclerview)
     RecyclerView channelListRecyclerView;
 
-    private LiveData<PagedList<EkoChannel>> channels;
     private EkoChannelFilter filter = EkoChannelFilter.ALL;
+
+    private LiveData<PagedList<EkoChannel>> channels;
 
     private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
 
