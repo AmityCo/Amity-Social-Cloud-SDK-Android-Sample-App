@@ -2,6 +2,7 @@ package com.ekoapp.simplechat;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,10 +10,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LiveData;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -20,11 +23,17 @@ import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoMessageRepository;
+import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.ekoapp.simplechat.intent.ViewMessagesIntent;
+import com.f2prateek.rx.preferences2.Preference;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Sets;
+
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -32,7 +41,6 @@ import butterknife.OnTextChanged;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 public class MessageListActivity extends BaseActivity {
 
@@ -48,14 +56,19 @@ public class MessageListActivity extends BaseActivity {
     @BindView(R.id.message_send_button)
     Button sendButton;
 
+    private String channelId;
+
+    private LiveData<PagedList<EkoMessage>> messages;
+    private MessageListAdapter adapter;
+
     private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
     private final EkoMessageRepository messageRepository = EkoClient.newMessageRepository();
     private final EkoUserRepository userRepository = EkoClient.newUserRepository();
-    private final MessageListAdapter adapter = new MessageListAdapter();
 
-    private String channelId;
+    private Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
+    private Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
 
-    private final CompositeDisposable disposable = new CompositeDisposable();
+    private CompositeDisposable disposable = new CompositeDisposable();
 
 
     @Override
@@ -71,16 +84,7 @@ public class MessageListActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         if (channelId != null) {
-            disposable.add(adapter.getOnLongClickFlowable()
-                    .doOnNext(this::flag)
-                    .subscribe());
-
-            messageListRecyclerView.setAdapter(adapter);
-            messageRepository.getMessageCollection(channelId)
-                    .observe(this, adapter::submitList);
-
-            ItemInsertedDataObserver.create(adapter);
-
+            observeMessageCollection();
             channelRepository.getChannel(channelId)
                     .observe(this, channel -> toolbar.setSubtitle(String.format("unreadCount: %s messageCount:%s", channel.getUnreadCount(), channel.getMessageCount())));
         }
@@ -127,6 +131,28 @@ public class MessageListActivity extends BaseActivity {
                     .subscribe();
 
             return true;
+        } else if (item.getItemId() == R.id.action_with_tags) {
+            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags.get()), true, (dialog, input) -> {
+                Set<String> set = Sets.newConcurrentHashSet();
+                for (String tag : String.valueOf(input).split(",")) {
+                    if (tag.length() > 0) {
+                        set.add(tag);
+                    }
+                }
+                includingTags.set(set);
+                observeMessageCollection();
+            });
+        } else if (item.getItemId() == R.id.action_without_tags) {
+            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags.get()), true, (dialog, input) -> {
+                Set<String> set = Sets.newConcurrentHashSet();
+                for (String tag : String.valueOf(input).split(",")) {
+                    if (tag.length() > 0) {
+                        set.add(tag);
+                    }
+                }
+                excludingTags.set(set);
+                observeMessageCollection();
+            });
         } else if (item.getItemId() == R.id.action_notification_for_current_channel) {
             channelRepository.notification(channelId)
                     .isAllowed()
@@ -206,6 +232,31 @@ public class MessageListActivity extends BaseActivity {
         builder.show();
     }
 
+    private void observeMessageCollection() {
+        if (messages != null) {
+            messages.removeObservers(this);
+        }
+
+        adapter = new MessageListAdapter();
+        messageListRecyclerView.setAdapter(adapter);
+
+        disposable.clear();
+        disposable.add(adapter.getOnLongClickFlowable()
+                .doOnNext(this::flag)
+                .subscribe());
+
+        messages = messageRepository.getMessageCollectionByTags(channelId, new EkoTags(includingTags.get()), new EkoTags(excludingTags.get()));
+        messages.observe(this, adapter::submitList);
+    }
+
+    private void showDialog(@StringRes int title, CharSequence hint, CharSequence prefill, boolean allowEmptyInput, MaterialDialog.InputCallback callback) {
+        new MaterialDialog.Builder(this)
+                .title(title)
+                .inputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
+                .input(hint, prefill, allowEmptyInput, callback)
+                .show();
+    }
+
     @OnTextChanged(R.id.message_edittext)
     void onMessageTextChanged(CharSequence input) {
         String text = String.valueOf(input).trim();
@@ -245,30 +296,5 @@ public class MessageListActivity extends BaseActivity {
             int lastPosition = adapter.getItemCount() - 1;
             messageListRecyclerView.scrollToPosition(lastPosition);
         }, 10);
-    }
-
-
-    private static class ItemInsertedDataObserver extends RecyclerView.AdapterDataObserver {
-
-        final RecyclerView.Adapter adapter;
-
-
-        private ItemInsertedDataObserver(@NonNull RecyclerView.Adapter adapter) {
-            this.adapter = adapter;
-            adapter.registerAdapterDataObserver(this);
-        }
-
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            Timber.e("ui: onItemRangeInserted: positionStart: %s itemCount: %s lastInsertPos: %s",
-                    positionStart, itemCount, positionStart + itemCount);
-            Timber.e("ui: -->: adapter.getItemCount(): %s",
-                    adapter.getItemCount());
-        }
-
-
-        public static ItemInsertedDataObserver create(@NonNull RecyclerView.Adapter adapter) {
-            return new ItemInsertedDataObserver(adapter);
-        }
     }
 }

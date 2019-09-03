@@ -5,15 +5,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.StringRes;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.LiveDataReactiveStreams;
-import androidx.paging.PagedList;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ekoapp.ekosdk.EkoChannel;
@@ -43,7 +42,6 @@ import org.bson.types.ObjectId;
 import java.util.Set;
 
 import butterknife.BindView;
-import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -65,12 +63,9 @@ public class ChannelListActivity extends BaseActivity {
     RecyclerView channelListRecyclerView;
 
     private LiveData<PagedList<EkoChannel>> channels;
+    private EkoChannelFilter filter = EkoChannelFilter.ALL;
 
     private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
-
-    private ChannelListAdapter adapter;
-
-    private EkoChannelFilter filter;
 
     private Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
     private Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
@@ -90,7 +85,7 @@ public class ChannelListActivity extends BaseActivity {
         String userId = MoreObjects.firstNonNull(EkoClient.getUserId(), SimpleConfig.DEFAULT_USER_ID);
         String displayName = MoreObjects.firstNonNull(EkoClient.getDisplayName(), "Android " + ObjectId.get());
 
-        register(userId, displayName)
+        EkoClient.registerDevice(userId, displayName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(this::setupChannelList)
                 .subscribe();
@@ -109,9 +104,6 @@ public class ChannelListActivity extends BaseActivity {
     }
 
     private void setupChannelList() {
-        adapter = new ChannelListAdapter();
-        channelListRecyclerView.setAdapter(adapter);
-
         String[] modes = new String[]{
                 EkoChannelFilter.ALL.getApiKey(),
                 EkoChannelFilter.MEMBER.getApiKey(),
@@ -149,7 +141,7 @@ public class ChannelListActivity extends BaseActivity {
         if (id == R.id.action_register) {
             showDialog(R.string.register, "", EkoClient.getUserId(), false, (dialog, input) -> {
                 String userId = String.valueOf(input);
-                register(userId, userId)
+                EkoClient.registerDevice(userId, userId)
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnComplete(this::observeChannelCollection)
                         .subscribe();
@@ -248,10 +240,14 @@ public class ChannelListActivity extends BaseActivity {
 
     private void observeChannelCollection() {
         if (channels != null) {
-            channels.removeObservers(ChannelListActivity.this);
+            channels.removeObservers(this);
         }
+
+        ChannelListAdapter adapter = new ChannelListAdapter();
+        channelListRecyclerView.setAdapter(adapter);
+
         channels = channelRepository.getChannelCollectionByTags(filter, new EkoTags(includingTags.get()), new EkoTags(excludingTags.get()));
-        channels.observe(ChannelListActivity.this, adapter::submitList);
+        channels.observe(this, adapter::submitList);
     }
 
     private void showDialog(@StringRes int title, CharSequence hint, CharSequence prefill, boolean allowEmptyInput, MaterialDialog.InputCallback callback) {
@@ -260,9 +256,5 @@ public class ChannelListActivity extends BaseActivity {
                 .inputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
                 .input(hint, prefill, allowEmptyInput, callback)
                 .show();
-    }
-
-    private Completable register(String userId, String displayName) {
-        return EkoClient.registerDevice(userId, displayName);
     }
 }
