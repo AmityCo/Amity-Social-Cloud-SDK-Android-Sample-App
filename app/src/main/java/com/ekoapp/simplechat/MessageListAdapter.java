@@ -57,9 +57,11 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             EkoUser sender = m.getUser();
             DateTime created = m.getCreatedAt();
 
-            holder.messageIdTextview.setText(String.format("\uD83D\uDC8C️: %s (%s)",
+            holder.messageIdTextview.setText(String.format("\uD83D\uDC8C️: %s (%s) %s=%s",
                     m.getChannelSegment(),
-                    m.getMessageId()));
+                    m.getMessageId(),
+                    m.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
+                    m.getFlagCount()));
 
             holder.senderTextview.setText(String.format("\uD83C\uDF85: %s (%s) %s=%s",
                     sender != null ? sender.getDisplayName() : "",
@@ -71,10 +73,7 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             holder.tagsTextview.setText(String.format("\uD83C\uDFF7️: %s", Joiner.on(", ").join(m.getTags())));
 
             if ("text".equalsIgnoreCase(type)) {
-                holder.dataTextview.setText(String.format("%s %s=%s",
-                        m.getData(TextData.class).getText(),
-                        m.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
-                        m.getFlagCount()));
+                holder.dataTextview.setText(String.format("%s", m.getData(TextData.class).getText()));
             } else {
                 holder.dataTextview.setText(String.format("data type: %s", type));
             }
