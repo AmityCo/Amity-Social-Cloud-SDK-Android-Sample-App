@@ -174,6 +174,7 @@ public class ChannelListActivity extends BaseActivity {
                 apiKeyStore.set(newApiKey);
                 EkoClient.setup(newApiKey);
             });
+            return true;
         } else if (id == R.id.action_with_tags) {
             showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags.get()), true, (dialog, input) -> {
                 Set<String> set = Sets.newConcurrentHashSet();
@@ -185,6 +186,7 @@ public class ChannelListActivity extends BaseActivity {
                 includingTags.set(set);
                 observeChannelCollection();
             });
+            return true;
         } else if (id == R.id.action_without_tags) {
             showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags.get()), true, (dialog, input) -> {
                 Set<String> set = Sets.newConcurrentHashSet();
@@ -196,21 +198,25 @@ public class ChannelListActivity extends BaseActivity {
                 excludingTags.set(set);
                 observeChannelCollection();
             });
+            return true;
         } else if (id == R.id.action_register_push) {
             EkoClient.registerDeviceForPushNotification()
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete(() -> Toast.makeText(this, String.format("register push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
                     .subscribe();
+            return true;
         } else if (id == R.id.action_unregister_push) {
             EkoClient.unregisterDeviceForPushNotification(EkoClient.getUserId())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete(() -> Toast.makeText(this, String.format("un-register push for %s", EkoClient.getUserId()), Toast.LENGTH_SHORT).show())
                     .subscribe();
+            return true;
         } else if (id == R.id.action_unregister_push_for_all) {
             EkoClient.unregisterDeviceForPushNotification()
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete(() -> Toast.makeText(this, "un-register push for all users", Toast.LENGTH_SHORT).show())
                     .subscribe();
+            return true;
         } else if (id == R.id.action_notification_for_current_user) {
             EkoClient.notification()
                     .isAllowed()
@@ -227,6 +233,7 @@ public class ChannelListActivity extends BaseActivity {
                             .negativeText("discard")
                             .show())
                     .subscribe();
+            return true;
         } else if (id == R.id.action_notification_request_write_settings_permission) {
             // required for baidu push
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -235,6 +242,7 @@ public class ChannelListActivity extends BaseActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

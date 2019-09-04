@@ -12,6 +12,7 @@ import com.ekoapp.ekosdk.EkoObjects;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.adapter.EkoMessageAdapter;
 import com.ekoapp.ekosdk.messaging.data.TextData;
+import com.google.common.base.Joiner;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -49,7 +50,7 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
 
         if (EkoObjects.isProxy(m)) {
             ViewCollections.set(holder.optionalViews, visibility, View.GONE);
-            holder.messageIdTextView.setText(String.format("loading adapter position: %s", position));
+            holder.messageIdTextview.setText(String.format("loading adapter position: %s", position));
         } else {
             ViewCollections.set(holder.optionalViews, visibility, View.VISIBLE);
             String type = m.getType();
@@ -57,17 +58,18 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             EkoUser sender = m.getUser();
             DateTime created = m.getCreatedAt();
 
-            holder.messageIdTextView.setText(String.format("%s: %s",
+            holder.messageIdTextview.setText(String.format("%s: %s",
                     m.getChannelSegment(),
                     m.getMessageId()));
 
-            holder.senderTextView.setText(String.format("uid: %s (%s) %s:%s",
+            holder.senderTextview.setText(String.format("uid: %s (%s) %s:%s",
                     senderId,
                     sender != null ? sender.getDisplayName() : "",
                     sender != null && sender.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                     sender != null ? sender.getFlagCount() : 0));
 
             holder.commentTextview.setText(String.format("\uD83D\uDCAC: %s", m.getChildrenNumber()));
+            holder.tagsTextview.setText(String.format("tags: %s", Joiner.on(", ").join(m.getTags())));
 
             if ("text".equalsIgnoreCase(type)) {
                 holder.dataTextview.setText(String.format("%s %s:%s",
@@ -112,13 +114,15 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         List<View> optionalViews;
 
         @BindView(R.id.message_textview)
-        TextView messageIdTextView;
+        TextView messageIdTextview;
         @BindView(R.id.sender_textview)
-        TextView senderTextView;
+        TextView senderTextview;
         @BindView(R.id.data_textview)
         TextView dataTextview;
         @BindView(R.id.comment_count_textview)
         TextView commentTextview;
+        @BindView(R.id.tags_textview)
+        TextView tagsTextview;
         @BindView(R.id.sync_state_textview)
         TextView syncStateTextview;
         @BindView(R.id.time_textview)

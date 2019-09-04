@@ -28,8 +28,14 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_notification_for_current_channel"
+        android:id="@+id/action_set_tags"
         android:orderInCategory="500"
+        android:title="@string/set_tags"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_notification_for_current_channel"
+        android:orderInCategory="600"
         android:title="@string/notification_for_current_channel"
         app:showAsAction="never" />
 

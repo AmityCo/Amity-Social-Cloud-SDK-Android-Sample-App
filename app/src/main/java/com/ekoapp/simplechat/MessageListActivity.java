@@ -15,15 +15,19 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.ekoapp.ekosdk.EkoChannel;
 import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
+import com.ekoapp.ekosdk.EkoLiveData;
 import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoMessageRepository;
+import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
@@ -163,6 +167,26 @@ public abstract class MessageListActivity extends BaseActivity {
                 observeMessageCollection();
             });
             return true;
+        } else if (item.getItemId() == R.id.action_set_tags) {
+            EkoLiveData<EkoChannel> liveData = channelRepository.getChannel(getChannelId());
+            liveData.observeForever(new Observer<EkoChannel>() {
+                @Override
+                public void onChanged(EkoChannel channel) {
+                    liveData.removeObserver(this);
+                    showDialog(R.string.set_tags, "bnk48,football,concert", Joiner.on(",").join(channel.getTags()), true, (dialog, input) -> {
+                        Set<String> set = Sets.newConcurrentHashSet();
+                        for (String tag : String.valueOf(input).split(",")) {
+                            if (tag.length() > 0) {
+                                set.add(tag);
+                            }
+                        }
+                        channelRepository.setTags(channel.getChannelId(), new EkoTags(set))
+                                .subscribeOn(Schedulers.io())
+                                .subscribe();
+                    });
+                }
+            });
+            return true;
         } else if (item.getItemId() == R.id.action_notification_for_current_channel) {
             channelRepository.notification(getChannelId())
                     .isAllowed()
@@ -184,14 +208,16 @@ public abstract class MessageListActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void flag(EkoMessage message) {
+    private void onLongClick(EkoMessage message) {
         new MaterialDialog.Builder(this)
-                .items("flag a message", "flag a sender")
+                .items("flag a message", "flag a sender", "set tag(s)")
                 .itemsCallback((dialog, itemView, position, text) -> {
                     if (position == 0) {
                         flagMessage(message);
-                    } else {
+                    } else if (position == 1) {
                         flagUser(message.getUser());
+                    } else {
+                        setTags(message);
                     }
                 })
                 .show();
@@ -241,6 +267,20 @@ public abstract class MessageListActivity extends BaseActivity {
         builder.show();
     }
 
+    private void setTags(EkoMessage message) {
+        showDialog(R.string.set_tags, "bnk48,football,concert", Joiner.on(",").join(message.getTags()), true, (dialog, input) -> {
+            Set<String> set = Sets.newConcurrentHashSet();
+            for (String tag : String.valueOf(input).split(",")) {
+                if (tag.length() > 0) {
+                    set.add(tag);
+                }
+            }
+            messageRepository.setTags(message.getMessageId(), new EkoTags(set))
+                    .subscribeOn(Schedulers.io())
+                    .subscribe();
+        });
+    }
+
     private void setupMessageList() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(isStackFromEnd());
@@ -259,7 +299,7 @@ public abstract class MessageListActivity extends BaseActivity {
         disposable.clear();
 
         disposable.add(adapter.getOnLongClickFlowable()
-                .doOnNext(this::flag)
+                .doOnNext(this::onLongClick)
                 .subscribe());
 
         disposable.add(adapter.getOnClickFlowable()

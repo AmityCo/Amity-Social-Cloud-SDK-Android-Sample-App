@@ -8,6 +8,7 @@
     <string name="member">Member</string>
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
+    <string name="set_tags">Set Tag(s)</string>
     <string name="leave_channel">Leave Channel</string>
     <string name="register_push">Register Push</string>
     <string name="unregister_push">Un-register Push</string>

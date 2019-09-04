@@ -35,14 +35,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/data_textview"
-        android:maxLines="3"
+        android:maxLines="1"
         tools:text="Comment" />
+
+    <TextView
+        android:id="@+id/tags_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_count_textview"
+        android:maxLines="1"
+        tools:text="Tag" />
 
     <TextView
         android:id="@+id/time_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/comment_count_textview"
+        android:layout_below="@id/tags_textview"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:maxLines="1"
@@ -52,7 +60,7 @@
         android:id="@+id/sync_state_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/comment_count_textview"
+        android:layout_below="@id/tags_textview"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_toStartOf="@id/time_textview"
