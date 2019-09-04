@@ -24,12 +24,10 @@ import com.ekoapp.ekosdk.EkoChannelRepository;
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoMessageRepository;
-import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
-import com.ekoapp.simplechat.intent.ViewMessagesIntent;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
@@ -39,11 +37,12 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MessageListActivity extends BaseActivity {
+public abstract class MessageListActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -57,67 +56,65 @@ public class MessageListActivity extends BaseActivity {
     @BindView(R.id.message_send_button)
     Button sendButton;
 
-    private String channelId;
-
     private LiveData<PagedList<EkoMessage>> messages;
 
     private MessageListAdapter adapter;
 
-    private boolean stackFromEnd = true;
+    final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
+    final EkoMessageRepository messageRepository = EkoClient.newMessageRepository();
+    final EkoUserRepository userRepository = EkoClient.newUserRepository();
 
-    private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
-    private final EkoMessageRepository messageRepository = EkoClient.newMessageRepository();
-    private final EkoUserRepository userRepository = EkoClient.newUserRepository();
-
-    private Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
-    private Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
+    Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
+    Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
+    abstract String getChannelId();
+
+    abstract int getMenu();
+
+    abstract LiveData<PagedList<EkoMessage>> getMessageCollection();
+
+    abstract boolean isStackFromEnd();
+
+    abstract void setTitleName();
+
+    abstract void setSubtitleName();
+
+    abstract void startReading();
+
+    abstract void stopReading();
+
+    abstract void onClick(EkoMessage message);
+
+    abstract Completable createMessage(String text);
 
     @Override
     protected void onCreate(@Nullable Bundle savedState) {
         super.onCreate(savedState);
         setContentView(R.layout.activity_message_list);
 
-        channelId = ViewMessagesIntent.getChannelId(getIntent());
-
-        toolbar.setTitle(channelId);
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white));
         setSupportActionBar(toolbar);
 
-        if (channelId != null) {
-            setupMessageList();
-            observeMessageCollection();
-            channelRepository.getChannel(channelId)
-                    .observe(this, channel -> toolbar.setSubtitle(String.format("unreadCount: %s messageCount:%s", channel.getUnreadCount(), channel.getMessageCount())));
-        }
-    }
+        setTitleName();
+        setSubtitleName();
 
-    private void setupMessageList() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(stackFromEnd);
-        layoutManager.setReverseLayout(false);
-        messageListRecyclerView.setLayoutManager(layoutManager);
+        setupMessageList();
+        observeMessageCollection();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (channelId != null) {
-            channelRepository.membership(channelId)
-                    .startReading();
-        }
+        startReading();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (channelId != null) {
-            channelRepository.membership(channelId)
-                    .stopReading();
-        }
+        stopReading();
     }
 
     @Override
@@ -128,20 +125,19 @@ public class MessageListActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_message_list, menu);
+        getMenuInflater().inflate(getMenu(), menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_channel_membership) {
-            startActivity(new ViewChannelMembershipsIntent(this, channelId));
+            startActivity(new ViewChannelMembershipsIntent(this, getChannelId()));
             return true;
         } else if (item.getItemId() == R.id.action_leave_channel) {
-            channelRepository.leaveChannel(channelId)
+            channelRepository.leaveChannel(getChannelId())
                     .doOnComplete(this::finish)
                     .subscribe();
-
             return true;
         } else if (item.getItemId() == R.id.action_with_tags) {
             showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags.get()), true, (dialog, input) -> {
@@ -154,6 +150,7 @@ public class MessageListActivity extends BaseActivity {
                 includingTags.set(set);
                 observeMessageCollection();
             });
+            return true;
         } else if (item.getItemId() == R.id.action_without_tags) {
             showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags.get()), true, (dialog, input) -> {
                 Set<String> set = Sets.newConcurrentHashSet();
@@ -165,8 +162,9 @@ public class MessageListActivity extends BaseActivity {
                 excludingTags.set(set);
                 observeMessageCollection();
             });
+            return true;
         } else if (item.getItemId() == R.id.action_notification_for_current_channel) {
-            channelRepository.notification(channelId)
+            channelRepository.notification(getChannelId())
                     .isAllowed()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -174,14 +172,13 @@ public class MessageListActivity extends BaseActivity {
                             .title("Notification Settings")
                             .checkBoxPrompt("allow notification for current channel", allowed, null)
                             .positiveText("save change")
-                            .onPositive((dialog, which) -> channelRepository.notification(channelId)
+                            .onPositive((dialog, which) -> channelRepository.notification(getChannelId())
                                     .setAllowed(dialog.isPromptCheckBoxChecked())
                                     .subscribeOn(Schedulers.io())
                                     .subscribe())
                             .negativeText("discard")
                             .show())
                     .subscribe();
-
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -244,6 +241,13 @@ public class MessageListActivity extends BaseActivity {
         builder.show();
     }
 
+    private void setupMessageList() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(isStackFromEnd());
+        layoutManager.setReverseLayout(false);
+        messageListRecyclerView.setLayoutManager(layoutManager);
+    }
+
     private void observeMessageCollection() {
         if (messages != null) {
             messages.removeObservers(this);
@@ -253,11 +257,16 @@ public class MessageListActivity extends BaseActivity {
         messageListRecyclerView.setAdapter(adapter);
 
         disposable.clear();
+
         disposable.add(adapter.getOnLongClickFlowable()
                 .doOnNext(this::flag)
                 .subscribe());
 
-        messages = messageRepository.getMessageCollectionByTags(channelId, new EkoTags(includingTags.get()), new EkoTags(excludingTags.get()), stackFromEnd);
+        disposable.add(adapter.getOnClickFlowable()
+                .doOnNext(this::onClick)
+                .subscribe());
+
+        messages = getMessageCollection();
         messages.observe(this, adapter::submitList);
     }
 
@@ -277,30 +286,20 @@ public class MessageListActivity extends BaseActivity {
 
     @OnClick(R.id.message_send_button)
     void onSendClick() {
-        final String channelId = ViewMessagesIntent.getChannelId(getIntent());
-        if (channelId != null) {
-            String text = String.valueOf(messageEditText.getText()).trim();
-            messageEditText.setText(null);
-
-            messageRepository.createMessage(channelId)
-                    .text(text)
-                    .send()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnError(t -> {
-                        EkoError ekoError = EkoError.from(t);
-                        if (ekoError.is(EkoError.USER_IS_BANNED)) {
-                            Activity activity = MessageListActivity.this;
-                            messageEditText.post(Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT)::show);
-                            messageEditText.postDelayed(this::finish, 500);
-                        }
-                    })
-                    .doOnComplete(this::scrollToBottom)
-                    .subscribe();
-        }
-    }
-
-    void scrollToBottomIfAtBottom() {
-        scrollToBottom();
+        String text = String.valueOf(messageEditText.getText()).trim();
+        messageEditText.setText(null);
+        createMessage(text)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnError(t -> {
+                    EkoError ekoError = EkoError.from(t);
+                    if (ekoError.is(EkoError.USER_IS_BANNED)) {
+                        Activity activity = MessageListActivity.this;
+                        messageEditText.post(Toast.makeText(activity, t.getMessage(), Toast.LENGTH_SHORT)::show);
+                        messageEditText.postDelayed(this::finish, 500);
+                    }
+                })
+                .doOnComplete(this::scrollToBottom)
+                .subscribe();
     }
 
     void scrollToBottom() {

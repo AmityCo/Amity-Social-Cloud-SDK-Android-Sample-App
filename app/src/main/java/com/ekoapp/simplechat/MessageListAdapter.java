@@ -1,6 +1,5 @@
 package com.ekoapp.simplechat;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,13 +31,13 @@ import static com.ekoapp.simplechat.MessageListAdapter.MessageViewHolder;
 public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
 
     private final PublishSubject<EkoMessage> onLongClickSubject = PublishSubject.create();
+    private final PublishSubject<EkoMessage> onClickSubject = PublishSubject.create();
 
 
     @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_message, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false);
         return new MessageViewHolder(view);
     }
 
@@ -53,7 +52,6 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             holder.messageIdTextView.setText(String.format("loading adapter position: %s", position));
         } else {
             ViewCollections.set(holder.optionalViews, visibility, View.VISIBLE);
-            Context context = holder.itemView.getContext();
             String type = m.getType();
             String senderId = m.getUserId();
             EkoUser sender = m.getUser();
@@ -69,8 +67,7 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
                     sender != null && sender.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                     sender != null ? sender.getFlagCount() : 0));
 
-            holder.syncStateTextview.setText(m.getSyncState().name());
-            holder.timeTextview.setText(created.toString(DateTimeFormat.longDateTime()));
+            holder.commentTextview.setText(String.format("\uD83D\uDCAC: %s", m.getChildrenNumber()));
 
             if ("text".equalsIgnoreCase(type)) {
                 holder.dataTextview.setText(String.format("%s %s:%s",
@@ -80,16 +77,27 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             } else {
                 holder.dataTextview.setText(String.format("data type: %s", type));
             }
+
+            holder.syncStateTextview.setText(m.getSyncState().name());
+            holder.timeTextview.setText(created.toString(DateTimeFormat.longDateTime()));
         }
 
         holder.itemView.setOnLongClickListener(v -> {
             onLongClickSubject.onNext(m);
             return true;
         });
+
+        holder.itemView.setOnClickListener(v -> {
+            onClickSubject.onNext(m);
+        });
     }
 
     Flowable<EkoMessage> getOnLongClickFlowable() {
         return onLongClickSubject.toFlowable(BackpressureStrategy.BUFFER);
+    }
+
+    Flowable<EkoMessage> getOnClickFlowable() {
+        return onClickSubject.toFlowable(BackpressureStrategy.BUFFER);
     }
 
 
@@ -109,6 +117,8 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         TextView senderTextView;
         @BindView(R.id.data_textview)
         TextView dataTextview;
+        @BindView(R.id.comment_count_textview)
+        TextView commentTextview;
         @BindView(R.id.sync_state_textview)
         TextView syncStateTextview;
         @BindView(R.id.time_textview)
