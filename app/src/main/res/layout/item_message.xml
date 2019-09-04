@@ -10,7 +10,7 @@
         android:id="@+id/message_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
+        android:maxLines="2"
         android:textSize="14sp"
         tools:text="1337: ms91d" />
 
@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/message_textview"
-        android:maxLines="1"
+        android:maxLines="2"
         tools:text="DisplayName (uid)" />
 
     <TextView

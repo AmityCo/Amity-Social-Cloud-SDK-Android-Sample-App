@@ -54,25 +54,24 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         } else {
             ViewCollections.set(holder.optionalViews, visibility, View.VISIBLE);
             String type = m.getType();
-            String senderId = m.getUserId();
             EkoUser sender = m.getUser();
             DateTime created = m.getCreatedAt();
 
-            holder.messageIdTextview.setText(String.format("%s: %s",
+            holder.messageIdTextview.setText(String.format("\uD83D\uDC8C️: %s (%s)",
                     m.getChannelSegment(),
                     m.getMessageId()));
 
-            holder.senderTextview.setText(String.format("uid: %s (%s) %s:%s",
-                    senderId,
+            holder.senderTextview.setText(String.format("\uD83C\uDF85: %s (%s) %s=%s",
                     sender != null ? sender.getDisplayName() : "",
+                    sender != null ? sender.getUserId() : "",
                     sender != null && sender.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                     sender != null ? sender.getFlagCount() : 0));
 
-            holder.commentTextview.setText(String.format("\uD83D\uDCAC: %s", m.getChildrenNumber()));
-            holder.tagsTextview.setText(String.format("tags: %s", Joiner.on(", ").join(m.getTags())));
+            holder.commentTextview.setText(String.format("\uD83D\uDCAC=%s", m.getChildrenNumber()));
+            holder.tagsTextview.setText(String.format("\uD83C\uDFF7️: %s", Joiner.on(", ").join(m.getTags())));
 
             if ("text".equalsIgnoreCase(type)) {
-                holder.dataTextview.setText(String.format("%s %s:%s",
+                holder.dataTextview.setText(String.format("%s %s=%s",
                         m.getData(TextData.class).getText(),
                         m.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                         m.getFlagCount()));
