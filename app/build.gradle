@@ -62,9 +62,9 @@ dependencies {
 
     implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
 
-    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}-beta03"
-    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}-beta03"
-    fcm_or_baiduImplementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}-beta03"
+    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}-beta04"
+    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}-beta04"
+    fcm_or_baiduImplementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}-beta04"
 
     implementation 'com.google.code.gson:gson:2.8.5'
 
