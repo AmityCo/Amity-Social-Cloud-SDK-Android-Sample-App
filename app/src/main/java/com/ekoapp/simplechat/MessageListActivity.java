@@ -71,8 +71,8 @@ public abstract class MessageListActivity extends BaseActivity {
     final Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
     final Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
 
-    private final Preference<Boolean> stackFromEnd = SimplePreferences.getStackFromEnd(getClass().getName(), isStackFromEnd());
-    private final Preference<Boolean> revertLayout = SimplePreferences.getRevertLayout(getClass().getName(), isRevertLayout());
+    final Preference<Boolean> stackFromEnd = SimplePreferences.getStackFromEnd(getClass().getName(), getDefaultStackFromEnd());
+    final Preference<Boolean> revertLayout = SimplePreferences.getRevertLayout(getClass().getName(), getDefaultRevertLayout());
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -82,9 +82,9 @@ public abstract class MessageListActivity extends BaseActivity {
 
     abstract LiveData<PagedList<EkoMessage>> getMessageCollection();
 
-    abstract boolean isStackFromEnd();
+    abstract boolean getDefaultStackFromEnd();
 
-    abstract boolean isRevertLayout();
+    abstract boolean getDefaultRevertLayout();
 
     abstract void setTitleName();
 

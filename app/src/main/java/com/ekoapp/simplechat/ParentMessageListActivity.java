@@ -39,16 +39,16 @@ public class ParentMessageListActivity extends MessageListActivity {
     LiveData<PagedList<EkoMessage>> getMessageCollection() {
         return messageRepository.getMessageCollectionByTags(getChannelId(),
                 new EkoTags(includingTags.get()),
-                new EkoTags(excludingTags.get()), isStackFromEnd());
+                new EkoTags(excludingTags.get()), stackFromEnd.get());
     }
 
     @Override
-    boolean isStackFromEnd() {
+    boolean getDefaultStackFromEnd() {
         return true;
     }
 
     @Override
-    boolean isRevertLayout() {
+    boolean getDefaultRevertLayout() {
         return false;
     }
 

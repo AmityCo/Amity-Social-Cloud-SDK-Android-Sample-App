@@ -44,16 +44,16 @@ public class ChildMessageListActivity extends MessageListActivity {
         return messageRepository.getMessageCollectionByTags(getChannelId(),
                 getChannelId(),
                 new EkoTags(includingTags.get()),
-                new EkoTags(excludingTags.get()), isStackFromEnd());
+                new EkoTags(excludingTags.get()), stackFromEnd.get());
     }
 
     @Override
-    boolean isStackFromEnd() {
+    boolean getDefaultStackFromEnd() {
         return false;
     }
 
     @Override
-    boolean isRevertLayout() {
+    boolean getDefaultRevertLayout() {
         return false;
     }
 
