@@ -39,4 +39,16 @@
         android:title="@string/notification_for_current_channel"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_stack_from_end"
+        android:orderInCategory="700"
+        android:title="@string/stack_from_end"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_revert_layout"
+        android:orderInCategory="800"
+        android:title="@string/revert_layout"
+        app:showAsAction="never" />
+
 </menu>

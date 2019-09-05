@@ -15,4 +15,16 @@
         android:title="@string/without_tag"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_stack_from_end"
+        android:orderInCategory="300"
+        android:title="@string/stack_from_end"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_revert_layout"
+        android:orderInCategory="400"
+        android:title="@string/revert_layout"
+        app:showAsAction="never" />
+
 </menu>

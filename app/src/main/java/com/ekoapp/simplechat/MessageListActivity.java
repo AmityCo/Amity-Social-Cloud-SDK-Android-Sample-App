@@ -68,8 +68,11 @@ public abstract class MessageListActivity extends BaseActivity {
     final EkoMessageRepository messageRepository = EkoClient.newMessageRepository();
     final EkoUserRepository userRepository = EkoClient.newUserRepository();
 
-    Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
-    Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
+    final Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
+    final Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
+
+    private final Preference<Boolean> stackFromEnd = SimplePreferences.getStackFromEnd(getClass().getName(), isStackFromEnd());
+    private final Preference<Boolean> revertLayout = SimplePreferences.getRevertLayout(getClass().getName(), isRevertLayout());
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
@@ -80,6 +83,8 @@ public abstract class MessageListActivity extends BaseActivity {
     abstract LiveData<PagedList<EkoMessage>> getMessageCollection();
 
     abstract boolean isStackFromEnd();
+
+    abstract boolean isRevertLayout();
 
     abstract void setTitleName();
 
@@ -105,7 +110,6 @@ public abstract class MessageListActivity extends BaseActivity {
         setTitleName();
         setSubtitleName();
 
-        setupMessageList();
         observeMessageCollection();
     }
 
@@ -193,7 +197,6 @@ public abstract class MessageListActivity extends BaseActivity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSuccess(allowed -> new MaterialDialog.Builder(this)
-                            .title("Notification Settings")
                             .checkBoxPrompt("allow notification for current channel", allowed, null)
                             .positiveText("save change")
                             .onPositive((dialog, which) -> channelRepository.notification(getChannelId())
@@ -203,6 +206,28 @@ public abstract class MessageListActivity extends BaseActivity {
                             .negativeText("discard")
                             .show())
                     .subscribe();
+            return true;
+        } else if (item.getItemId() == R.id.action_stack_from_end) {
+            new MaterialDialog.Builder(this)
+                    .checkBoxPrompt(getString(R.string.stack_from_end), stackFromEnd.get(), null)
+                    .positiveText("save change")
+                    .onPositive((dialog, which) -> {
+                        stackFromEnd.set(dialog.isPromptCheckBoxChecked());
+                        observeMessageCollection();
+                    })
+                    .negativeText("discard")
+                    .show();
+            return true;
+        } else if (item.getItemId() == R.id.action_revert_layout) {
+            new MaterialDialog.Builder(this)
+                    .checkBoxPrompt(getString(R.string.revert_layout), revertLayout.get(), null)
+                    .positiveText("save change")
+                    .onPositive((dialog, which) -> {
+                        revertLayout.set(dialog.isPromptCheckBoxChecked());
+                        observeMessageCollection();
+                    })
+                    .negativeText("discard")
+                    .show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -281,17 +306,15 @@ public abstract class MessageListActivity extends BaseActivity {
         });
     }
 
-    private void setupMessageList() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(isStackFromEnd());
-        layoutManager.setReverseLayout(false);
-        messageListRecyclerView.setLayoutManager(layoutManager);
-    }
-
     private void observeMessageCollection() {
         if (messages != null) {
             messages.removeObservers(this);
         }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(stackFromEnd.get());
+        layoutManager.setReverseLayout(revertLayout.get());
+        messageListRecyclerView.setLayoutManager(layoutManager);
 
         adapter = new MessageListAdapter();
         messageListRecyclerView.setAdapter(adapter);

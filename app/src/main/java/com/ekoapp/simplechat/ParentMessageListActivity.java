@@ -48,6 +48,11 @@ public class ParentMessageListActivity extends MessageListActivity {
     }
 
     @Override
+    boolean isRevertLayout() {
+        return false;
+    }
+
+    @Override
     void startReading() {
         channelRepository.membership(getChannelId()).startReading();
     }

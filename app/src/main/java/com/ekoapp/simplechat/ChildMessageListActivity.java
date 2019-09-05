@@ -53,6 +53,11 @@ public class ChildMessageListActivity extends MessageListActivity {
     }
 
     @Override
+    boolean isRevertLayout() {
+        return false;
+    }
+
+    @Override
     void startReading() {
 
     }
