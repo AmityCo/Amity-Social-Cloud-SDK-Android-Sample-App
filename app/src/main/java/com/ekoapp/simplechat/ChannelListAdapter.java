@@ -46,7 +46,7 @@ public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
                     .append(channel.getUnreadCount())
                     .append("\nmessage count: ")
                     .append(channel.getMessageCount())
-                    .append("\n\uD83C\uDFF7: ")
+                    .append("\ntags: ")
                     .append(Joiner.on(", ").join(channel.getTags()))
                     .append("\ntype: ")
                     .append(channel.getChannelType())
