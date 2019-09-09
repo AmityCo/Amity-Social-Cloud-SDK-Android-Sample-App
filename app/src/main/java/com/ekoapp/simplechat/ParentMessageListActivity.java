@@ -38,6 +38,7 @@ public class ParentMessageListActivity extends MessageListActivity {
     @Override
     LiveData<PagedList<EkoMessage>> getMessageCollection() {
         return messageRepository.getMessageCollectionByTags(getChannelId(),
+                null,
                 new EkoTags(includingTags.get()),
                 new EkoTags(excludingTags.get()), stackFromEnd.get());
     }
