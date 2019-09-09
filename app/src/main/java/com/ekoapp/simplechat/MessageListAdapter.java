@@ -64,10 +64,10 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
                     m.getChannelSegment()));
 
             holder.senderTextview.setText(String.format("id: %s %s: %s\ndisplay name: %s",
-                    sender != null ? sender.getDisplayName() : "",
+                    sender != null ? sender.getUserId() : "",
                     sender != null && sender.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                     sender != null ? sender.getFlagCount() : 0,
-                    sender != null ? sender.getUserId() : ""));
+                    sender != null ? sender.getDisplayName() : ""));
 
             holder.commentTextview.setText(String.format("comment count: %s", m.getChildrenNumber()));
             holder.tagsTextview.setText(String.format("tags️: %s", Joiner.on(", ").join(m.getTags())));
