@@ -110,12 +110,13 @@ public abstract class MessageListActivity extends BaseActivity {
         setTitleName();
         setSubtitleName();
 
-        observeMessageCollection();
+        initialMessageCollection();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        observeMessageCollection();
         startReading();
     }
 
@@ -156,6 +157,7 @@ public abstract class MessageListActivity extends BaseActivity {
                     }
                 }
                 includingTags.set(set);
+                initialMessageCollection();
                 observeMessageCollection();
             });
             return true;
@@ -168,6 +170,7 @@ public abstract class MessageListActivity extends BaseActivity {
                     }
                 }
                 excludingTags.set(set);
+                initialMessageCollection();
                 observeMessageCollection();
             });
             return true;
@@ -213,6 +216,7 @@ public abstract class MessageListActivity extends BaseActivity {
                     .positiveText("save change")
                     .onPositive((dialog, which) -> {
                         stackFromEnd.set(dialog.isPromptCheckBoxChecked());
+                        initialMessageCollection();
                         observeMessageCollection();
                     })
                     .negativeText("discard")
@@ -224,6 +228,7 @@ public abstract class MessageListActivity extends BaseActivity {
                     .positiveText("save change")
                     .onPositive((dialog, which) -> {
                         revertLayout.set(dialog.isPromptCheckBoxChecked());
+                        initialMessageCollection();
                         observeMessageCollection();
                     })
                     .negativeText("discard")
@@ -306,11 +311,7 @@ public abstract class MessageListActivity extends BaseActivity {
         });
     }
 
-    private void observeMessageCollection() {
-        if (messages != null) {
-            messages.removeObservers(this);
-        }
-
+    private void initialMessageCollection() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setStackFromEnd(stackFromEnd.get());
         layoutManager.setReverseLayout(revertLayout.get());
@@ -328,6 +329,12 @@ public abstract class MessageListActivity extends BaseActivity {
         disposable.add(adapter.getOnClickFlowable()
                 .doOnNext(this::onClick)
                 .subscribe());
+    }
+
+    private void observeMessageCollection() {
+        if (messages != null) {
+            messages.removeObservers(this);
+        }
 
         messages = getMessageCollection();
         messages.observe(this, adapter::submitList);
