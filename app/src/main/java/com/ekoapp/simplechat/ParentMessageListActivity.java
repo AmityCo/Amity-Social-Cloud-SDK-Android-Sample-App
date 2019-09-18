@@ -68,7 +68,9 @@ public class ParentMessageListActivity extends MessageListActivity {
         ViewChildMessagesIntent intent = new ViewChildMessagesIntent(this,
                 message.getChannelId(),
                 message.getMessageId(),
-                message.getData().get("text").getAsString());
+                message.getData().has("text") ?
+                        message.getData().get("text").getAsString() :
+                        "image");
 
         startActivity(intent);
     }
