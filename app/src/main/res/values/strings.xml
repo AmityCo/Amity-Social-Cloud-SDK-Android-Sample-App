@@ -8,6 +8,7 @@
     <string name="member">Member</string>
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
+    <string name="set_tags">Set Tag(s)</string>
     <string name="leave_channel">Leave Channel</string>
     <string name="register_push">Register Push</string>
     <string name="unregister_push">Un-register Push</string>
@@ -15,5 +16,7 @@
     <string name="notification_for_current_user">Notification Settings</string>
     <string name="notification_for_current_channel">Notification Settings</string>
     <string name="request_write_settings_permissions">Request Write Settings Permission</string>
+    <string name="stack_from_end">Stack From End</string>
+    <string name="revert_layout">Revert Layout</string>
     <string name="total_unread_d">Total unread: %d</string>
 </resources>

@@ -14,7 +14,8 @@ public class SimplePreferences {
     private static final String API_KEY_KEY = "API_KEY_KEY";
     private static final String INCLUDING_TAGS_KEY = "INCLUDING_TAGS_KEY";
     private static final String EXCLUDING_TAGS_KEY = "EXCLUDING_TAGS_KEY";
-
+    private static final String STACK_FROM_END_KEY = "STACK_FROM_END_KEY";
+    private static final String REVERT_LAYOUT_KEY = "REVERT_LAYOUT_KEY";
 
     private static class SimplePreferencesHolder {
         private static final RxSharedPreferences INSTANCE = init();
@@ -40,5 +41,13 @@ public class SimplePreferences {
 
     public static Preference<Set<String>> getExcludingTags() {
         return get().getStringSet(EXCLUDING_TAGS_KEY, Collections.EMPTY_SET);
+    }
+
+    public static Preference<Boolean> getStackFromEnd(String key, boolean defaultValue) {
+        return get().getBoolean(String.format("%s_%s", STACK_FROM_END_KEY, key), defaultValue);
+    }
+
+    public static Preference<Boolean> getRevertLayout(String key, boolean defaultValue) {
+        return get().getBoolean(String.format("%s_%s", REVERT_LAYOUT_KEY, key), defaultValue);
     }
 }

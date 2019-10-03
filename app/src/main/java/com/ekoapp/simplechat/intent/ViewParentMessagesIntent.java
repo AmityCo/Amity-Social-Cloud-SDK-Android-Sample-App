@@ -2,17 +2,18 @@ package com.ekoapp.simplechat.intent;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 
-import com.ekoapp.simplechat.MessageListActivity;
+import androidx.annotation.NonNull;
 
-public class ViewMessagesIntent extends BaseIntent {
+import com.ekoapp.simplechat.ParentMessageListActivity;
+
+public class ViewParentMessagesIntent extends BaseIntent {
 
     private static final String EXTRA_CHANNEL_ID = EXTRA + "channel.id";
 
 
-    public ViewMessagesIntent(@NonNull Context context, @NonNull String channelId) {
-        super(context, MessageListActivity.class);
+    public ViewParentMessagesIntent(@NonNull Context context, @NonNull String channelId) {
+        super(context, ParentMessageListActivity.class);
         putExtra(EXTRA_CHANNEL_ID, channelId);
     }
 

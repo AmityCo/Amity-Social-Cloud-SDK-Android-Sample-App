@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.ekoapp.simplechat.ChannelListActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -33,16 +33,16 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="@string/total_unread_d" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/channel_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/filter_spinner"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context="com.ekoapp.simplechat.ChannelListActivity"
         tools:showIn="@layout/activity_channel_list" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

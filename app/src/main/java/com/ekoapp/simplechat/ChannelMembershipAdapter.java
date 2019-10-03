@@ -16,8 +16,7 @@ public class ChannelMembershipAdapter extends EkoChannelMembershipAdapter<EkoUse
 
     @Override
     public EkoUserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_channel_membership, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_channel_membership, parent, false);
         return new EkoUserViewHolder(view);
     }
 

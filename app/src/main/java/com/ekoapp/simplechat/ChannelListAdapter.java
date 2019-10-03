@@ -1,16 +1,17 @@
 package com.ekoapp.simplechat;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.ekoapp.ekosdk.EkoChannel;
 import com.ekoapp.ekosdk.EkoObjects;
 import com.ekoapp.ekosdk.adapter.EkoChannelAdapter;
-import com.ekoapp.simplechat.intent.ViewMessagesIntent;
+import com.ekoapp.simplechat.intent.ViewParentMessagesIntent;
 import com.google.common.base.Joiner;
 
 import butterknife.BindView;
@@ -22,8 +23,7 @@ public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
     @NonNull
     @Override
     public ChannelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_channel, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_channel, parent, false);
         return new ChannelViewHolder(view);
     }
 
@@ -70,7 +70,7 @@ public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
             super(itemView);
             itemView.setOnClickListener(view -> {
                 Context context = view.getContext();
-                ViewMessagesIntent intent = new ViewMessagesIntent(context, channelId);
+                ViewParentMessagesIntent intent = new ViewParentMessagesIntent(context, channelId);
                 context.startActivity(intent);
             });
         }

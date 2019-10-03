@@ -4,21 +4,27 @@
     tools:context="com.ekoapp.simplechat.MessageListActivity">
 
     <item
-        android:id="@+id/action_channel_membership"
+        android:id="@+id/action_with_tags"
         android:orderInCategory="100"
-        android:title="@string/member"
+        android:title="@string/with_tag"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_leave_channel"
+        android:id="@+id/action_without_tags"
         android:orderInCategory="200"
-        android:title="@string/leave_channel"
+        android:title="@string/without_tag"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_notification_for_current_channel"
+        android:id="@+id/action_stack_from_end"
         android:orderInCategory="300"
-        android:title="@string/notification_for_current_channel"
+        android:title="@string/stack_from_end"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_revert_layout"
+        android:orderInCategory="400"
+        android:title="@string/revert_layout"
         app:showAsAction="never" />
 
 </menu>

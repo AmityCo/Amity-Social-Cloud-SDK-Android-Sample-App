@@ -1,7 +1,7 @@
 package com.ekoapp.simplechat;
 
-import android.support.annotation.LayoutRes;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 
