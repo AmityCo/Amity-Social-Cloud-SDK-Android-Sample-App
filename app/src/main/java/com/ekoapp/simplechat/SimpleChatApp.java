@@ -3,7 +3,7 @@ package com.ekoapp.simplechat;
 import androidx.multidex.MultiDexApplication;
 
 import com.ekoapp.ekosdk.EkoClient;
-import com.ekoapp.push.EkoBaidu;
+//import com.ekoapp.push.EkoBaidu;
 
 public class SimpleChatApp extends MultiDexApplication {
 
@@ -15,7 +15,7 @@ public class SimpleChatApp extends MultiDexApplication {
         super.onCreate();
         APP = this;
         EkoClient.setup(SimplePreferences.getApiKey().get())
-                .andThen(EkoBaidu.create(this).setup("BZ2CnTh6qphSUl66c16Xk7AG"))
+                //.andThen(EkoBaidu.create(this).setup("BZ2CnTh6qphSUl66c16Xk7AG"))
                 .subscribe();
     }
 

@@ -3,14 +3,18 @@ package com.ekoapp.simplechat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoObjects;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.adapter.EkoMessageAdapter;
+import com.ekoapp.ekosdk.messaging.data.FileData;
+import com.ekoapp.ekosdk.messaging.data.ImageData;
 import com.ekoapp.ekosdk.messaging.data.TextData;
 import com.google.common.base.Joiner;
 
@@ -74,8 +78,18 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
 
             if ("text".equalsIgnoreCase(type)) {
                 holder.dataTextview.setText(String.format("text: %s", m.getData(TextData.class).getText()));
+                Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
+            } else if ("image".equalsIgnoreCase(type)) {
+                String url = m.getData(ImageData.class).getUrl();
+                holder.dataTextview.setText(String.format("data type: %s,\nurl: %s,\ndata: ", type, url).concat(m.getData().toString()));
+                Glide.with(holder.dataImageview.getContext()).load(url).into(holder.dataImageview);
+            } else if ("file".equalsIgnoreCase(type)) {
+                String url = m.getData(FileData.class).getUrl();
+                holder.dataTextview.setText(String.format("data type: %s,\nurl: %s,\ndata: ", type, url).concat(m.getData().toString()));
+                Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
             } else {
-                holder.dataTextview.setText(String.format("data type: %s", type));
+                holder.dataTextview.setText(String.format("data type: %s,\ndata: ", type).concat(m.getData().toString()));
+                Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
             }
 
             holder.syncStateTextview.setText(m.getSyncState().name());
@@ -117,6 +131,8 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         TextView senderTextview;
         @BindView(R.id.data_textview)
         TextView dataTextview;
+        @BindView(R.id.data_imageview)
+        ImageView dataImageview;
         @BindView(R.id.comment_count_textview)
         TextView commentTextview;
         @BindView(R.id.tags_textview)

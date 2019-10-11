@@ -1,9 +1,15 @@
 package com.ekoapp.simplechat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -14,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.paging.PagedList;
@@ -35,7 +42,13 @@ import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
+import com.jakewharton.rxbinding3.view.RxView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -60,6 +73,9 @@ public abstract class MessageListActivity extends BaseActivity {
     @BindView(R.id.message_send_button)
     Button sendButton;
 
+    @BindView(R.id.message_custom_button)
+    Button sendAsCustomButton;
+
     private LiveData<PagedList<EkoMessage>> messages;
 
     private MessageListAdapter adapter;
@@ -75,6 +91,8 @@ public abstract class MessageListActivity extends BaseActivity {
     final Preference<Boolean> revertLayout = SimplePreferences.getRevertLayout(getClass().getName(), getDefaultRevertLayout());
 
     private CompositeDisposable disposable = new CompositeDisposable();
+
+    String currentPhotoPath;
 
     abstract String getChannelId();
 
@@ -96,7 +114,7 @@ public abstract class MessageListActivity extends BaseActivity {
 
     abstract void onClick(EkoMessage message);
 
-    abstract Completable createMessage(String text);
+    abstract Completable createTextMessage(String text);
 
     @Override
     protected void onCreate(@Nullable Bundle savedState) {
@@ -111,6 +129,7 @@ public abstract class MessageListActivity extends BaseActivity {
         setSubtitleName();
 
         initialMessageCollection();
+
     }
 
     @Override
@@ -352,13 +371,14 @@ public abstract class MessageListActivity extends BaseActivity {
     void onMessageTextChanged(CharSequence input) {
         String text = String.valueOf(input).trim();
         sendButton.setEnabled(!TextUtils.isEmpty(text));
+        sendAsCustomButton.setEnabled(!TextUtils.isEmpty(text));
     }
 
     @OnClick(R.id.message_send_button)
     void onSendClick() {
         String text = String.valueOf(messageEditText.getText()).trim();
         messageEditText.setText(null);
-        createMessage(text)
+        createTextMessage(text)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(t -> {
                     EkoError ekoError = EkoError.from(t);
@@ -372,10 +392,16 @@ public abstract class MessageListActivity extends BaseActivity {
                 .subscribe();
     }
 
+    @OnClick(R.id.message_custom_button)
+    void onSendCustomMessageClick() {
+
+    }
+
     void scrollToBottom() {
         messageListRecyclerView.postDelayed(() -> {
             int lastPosition = adapter.getItemCount() - 1;
             messageListRecyclerView.scrollToPosition(lastPosition);
         }, 10);
     }
+
 }

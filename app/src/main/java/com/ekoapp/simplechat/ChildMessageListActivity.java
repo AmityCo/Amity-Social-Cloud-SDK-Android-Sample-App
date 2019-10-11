@@ -5,8 +5,13 @@ import androidx.paging.PagedList;
 
 import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoTags;
+import com.ekoapp.simplechat.intent.OpenCustomMessageSenderActivityIntent;
+import com.ekoapp.simplechat.intent.OpenFileMessageSenderActivityIntent;
+import com.ekoapp.simplechat.intent.OpenImageMessageSenderActivityIntent;
 import com.ekoapp.simplechat.intent.ViewChildMessagesIntent;
+import com.google.gson.JsonObject;
 
+import butterknife.OnClick;
 import io.reactivex.Completable;
 
 public class ChildMessageListActivity extends MessageListActivity {
@@ -73,10 +78,28 @@ public class ChildMessageListActivity extends MessageListActivity {
     }
 
     @Override
-    Completable createMessage(String text) {
+    Completable createTextMessage(String text) {
         return messageRepository.createMessage(getChannelId())
                 .text(text)
                 .parentId(getParentId())
+                .build()
                 .send();
     }
+
+    @OnClick(R.id.message_image_button)
+    void sendImageMessage() {
+        startActivity(new OpenImageMessageSenderActivityIntent(this, getChannelId(), getParentId()));
+    }
+
+
+    @OnClick(R.id.message_file_button)
+    void sendFileMessage() {
+        startActivity(new OpenFileMessageSenderActivityIntent(this, getChannelId(), getParentId()));
+    }
+
+    @OnClick(R.id.message_custom_button)
+    void sendCustomMessage() {
+        startActivity(new OpenCustomMessageSenderActivityIntent(this, getChannelId(), getParentId()));
+    }
+
 }
