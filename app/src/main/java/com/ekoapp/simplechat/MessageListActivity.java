@@ -3,9 +3,7 @@ package com.ekoapp.simplechat;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -18,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.paging.PagedList;
@@ -36,31 +33,15 @@ import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
-import com.ekoapp.ekosdk.internal.api.http.EkoOkHttp;
-import com.ekoapp.ekosdk.messaging.data.FileData;
+import com.ekoapp.simplechat.file.FileManager;
 import com.ekoapp.simplechat.intent.IntentRequestCode;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.tonyodev.fetch2.Download;
-import com.tonyodev.fetch2.Error;
-import com.tonyodev.fetch2.Fetch;
-import com.tonyodev.fetch2.FetchConfiguration;
-import com.tonyodev.fetch2.FetchListener;
-import com.tonyodev.fetch2.NetworkType;
-import com.tonyodev.fetch2.Priority;
-import com.tonyodev.fetch2.Request;
-import com.tonyodev.fetch2.Status;
-import com.tonyodev.fetch2core.DownloadBlock;
-import com.tonyodev.fetch2okhttp.OkHttpDownloader;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -70,8 +51,6 @@ import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
-import timber.log.Timber;
 
 public abstract class MessageListActivity extends BaseActivity {
 
@@ -294,7 +273,7 @@ public abstract class MessageListActivity extends BaseActivity {
                                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                                 .subscribe(granted -> {
                                     if (granted) {
-                                        openFile(message);
+                                        FileManager.Companion.openFile(getApplicationContext(), message);
                                     }
                                 });
                     }
@@ -432,108 +411,6 @@ public abstract class MessageListActivity extends BaseActivity {
                 || requestCode == IntentRequestCode.REQUEST_SEND_CUSTOM_MESSAGE)) {
             scrollToBottom();
         }
-
-    }
-
-    private void openFile(EkoMessage message) {
-        String url = message.getData(FileData.class).getUrl();
-        String filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + message.getData(FileData.class).getFileName();
-
-        OkHttpClient client = EkoOkHttp.newBuilder().build();
-
-        FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(SimpleChatApp.get())
-                .setDownloadConcurrentLimit(10)
-                .enableLogging(true)
-                .setHttpDownloader(new OkHttpDownloader(client))
-                .build();
-
-        Request request = new Request(url, filename);
-        request.setPriority(Priority.HIGH);
-        request.setNetworkType(NetworkType.ALL);
-
-        Fetch fetch = Fetch.Impl.getInstance(fetchConfiguration);
-        fetch.addListener(new FetchListener() {
-            @Override
-            public void onAdded(@NotNull Download download) {
-
-            }
-
-            @Override
-            public void onQueued(@NotNull Download download, boolean b) {
-
-            }
-
-            @Override
-            public void onWaitingNetwork(@NotNull Download download) {
-
-            }
-
-            @Override
-            public void onCompleted(@NotNull Download download) {
-                if (download.getStatus() == Status.COMPLETED) {
-                    Uri uri = FileProvider.getUriForFile(getApplicationContext(),
-                            getApplicationContext().getPackageName(),
-                            new File(request.getFile()));
-                    Intent viewIntent = new Intent(Intent.ACTION_VIEW);
-                    viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    viewIntent.setData(uri);
-                    Intent chooserIntent = Intent.createChooser(viewIntent, "Choose an application to open with:");
-                    startActivity(chooserIntent);
-                }
-            }
-
-            @Override
-            public void onError(@NotNull Download download, @NotNull Error error, @org.jetbrains.annotations.Nullable Throwable throwable) {
-                Timber.e(throwable, "download fail");
-            }
-
-            @Override
-            public void onDownloadBlockUpdated(@NotNull Download download, @NotNull DownloadBlock downloadBlock, int i) {
-
-            }
-
-            @Override
-            public void onStarted(@NotNull Download download, @NotNull List<? extends DownloadBlock> list, int i) {
-
-            }
-
-            @Override
-            public void onProgress(@NotNull Download download, long l, long l1) {
-
-            }
-
-            @Override
-            public void onPaused(@NotNull Download download) {
-
-            }
-
-            @Override
-            public void onResumed(@NotNull Download download) {
-
-            }
-
-            @Override
-            public void onCancelled(@NotNull Download download) {
-
-            }
-
-            @Override
-            public void onRemoved(@NotNull Download download) {
-
-            }
-
-            @Override
-            public void onDeleted(@NotNull Download download) {
-
-            }
-        });
-        fetch.enqueue(request, updatedRequest -> {
-            //Request was successfully enqueued for download.
-
-        }, error -> {
-            //An error occurred enqueuing the request.
-            Timber.e(error.getThrowable(), "enqueue fail");
-        });
 
     }
 
