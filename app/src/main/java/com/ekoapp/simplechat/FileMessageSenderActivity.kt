@@ -9,7 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.internal.util.RealPathUtil
-import com.ekoapp.simplechat.IntentRequestCode.REQUEST_SELECT_FILE
+import com.ekoapp.simplechat.intent.IntentRequestCode.REQUEST_SELECT_FILE
 import com.ekoapp.simplechat.intent.OpenFileMessageSenderActivityIntent
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions

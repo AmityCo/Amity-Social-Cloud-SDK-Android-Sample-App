@@ -14,6 +14,7 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.internal.util.RealPathUtil
+import com.ekoapp.simplechat.intent.IntentRequestCode
 import com.ekoapp.simplechat.intent.OpenImageMessageSenderActivityIntent
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions

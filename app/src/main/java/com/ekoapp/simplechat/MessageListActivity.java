@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -38,17 +36,31 @@ import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
+import com.ekoapp.ekosdk.internal.api.http.EkoOkHttp;
+import com.ekoapp.ekosdk.messaging.data.FileData;
+import com.ekoapp.simplechat.intent.IntentRequestCode;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
-import com.jakewharton.rxbinding3.view.RxView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tonyodev.fetch2.Download;
+import com.tonyodev.fetch2.Error;
+import com.tonyodev.fetch2.Fetch;
+import com.tonyodev.fetch2.FetchConfiguration;
+import com.tonyodev.fetch2.FetchListener;
+import com.tonyodev.fetch2.NetworkType;
+import com.tonyodev.fetch2.Priority;
+import com.tonyodev.fetch2.Request;
+import com.tonyodev.fetch2.Status;
+import com.tonyodev.fetch2core.DownloadBlock;
+import com.tonyodev.fetch2okhttp.OkHttpDownloader;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -58,6 +70,8 @@ import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
+import timber.log.Timber;
 
 public abstract class MessageListActivity extends BaseActivity {
 
@@ -90,9 +104,9 @@ public abstract class MessageListActivity extends BaseActivity {
     final Preference<Boolean> stackFromEnd = SimplePreferences.getStackFromEnd(getClass().getName(), getDefaultStackFromEnd());
     final Preference<Boolean> revertLayout = SimplePreferences.getRevertLayout(getClass().getName(), getDefaultRevertLayout());
 
-    private CompositeDisposable disposable = new CompositeDisposable();
+    final RxPermissions rxPermissions = new RxPermissions(this);
 
-    String currentPhotoPath;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     abstract String getChannelId();
 
@@ -258,15 +272,31 @@ public abstract class MessageListActivity extends BaseActivity {
     }
 
     private void onLongClick(EkoMessage message) {
+        ArrayList<String> actionItems = new ArrayList();
+        actionItems.add("flag a message");
+        actionItems.add("flag a sender");
+        actionItems.add("set tag(s)");
+        if (message.getType().equalsIgnoreCase("file")) {
+            actionItems.add("open file");
+        }
         new MaterialDialog.Builder(this)
-                .items("flag a message", "flag a sender", "set tag(s)")
+                .items()
+                .items(actionItems)
                 .itemsCallback((dialog, itemView, position, text) -> {
                     if (position == 0) {
                         flagMessage(message);
                     } else if (position == 1) {
                         flagUser(message.getUser());
-                    } else {
+                    } else if (position == 2) {
                         setTags(message);
+                    } else {
+                        rxPermissions
+                                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                .subscribe(granted -> {
+                                    if (granted) {
+                                        openFile(message);
+                                    }
+                                });
                     }
                 })
                 .show();
@@ -390,10 +420,120 @@ public abstract class MessageListActivity extends BaseActivity {
                 })
                 .doOnComplete(this::scrollToBottom)
                 .subscribe();
+
     }
 
-    @OnClick(R.id.message_custom_button)
-    void onSendCustomMessageClick() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && (requestCode == IntentRequestCode.REQUEST_SEND_IMAGE_MESSAGE
+                || requestCode == IntentRequestCode.REQUEST_SEND_FILE_MESSAGE
+                || requestCode == IntentRequestCode.REQUEST_SEND_CUSTOM_MESSAGE)) {
+            scrollToBottom();
+        }
+
+    }
+
+    private void openFile(EkoMessage message) {
+        String url = message.getData(FileData.class).getUrl();
+        String filename = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + message.getData(FileData.class).getFileName();
+
+        OkHttpClient client = EkoOkHttp.newBuilder().build();
+
+        FetchConfiguration fetchConfiguration = new FetchConfiguration.Builder(SimpleChatApp.get())
+                .setDownloadConcurrentLimit(10)
+                .enableLogging(true)
+                .setHttpDownloader(new OkHttpDownloader(client))
+                .build();
+
+        Request request = new Request(url, filename);
+        request.setPriority(Priority.HIGH);
+        request.setNetworkType(NetworkType.ALL);
+
+        Fetch fetch = Fetch.Impl.getInstance(fetchConfiguration);
+        fetch.addListener(new FetchListener() {
+            @Override
+            public void onAdded(@NotNull Download download) {
+
+            }
+
+            @Override
+            public void onQueued(@NotNull Download download, boolean b) {
+
+            }
+
+            @Override
+            public void onWaitingNetwork(@NotNull Download download) {
+
+            }
+
+            @Override
+            public void onCompleted(@NotNull Download download) {
+                if (download.getStatus() == Status.COMPLETED) {
+                    Uri uri = FileProvider.getUriForFile(getApplicationContext(),
+                            getApplicationContext().getPackageName(),
+                            new File(request.getFile()));
+                    Intent viewIntent = new Intent(Intent.ACTION_VIEW);
+                    viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    viewIntent.setData(uri);
+                    Intent chooserIntent = Intent.createChooser(viewIntent, "Choose an application to open with:");
+                    startActivity(chooserIntent);
+                }
+            }
+
+            @Override
+            public void onError(@NotNull Download download, @NotNull Error error, @org.jetbrains.annotations.Nullable Throwable throwable) {
+                Timber.e(throwable, "download fail");
+            }
+
+            @Override
+            public void onDownloadBlockUpdated(@NotNull Download download, @NotNull DownloadBlock downloadBlock, int i) {
+
+            }
+
+            @Override
+            public void onStarted(@NotNull Download download, @NotNull List<? extends DownloadBlock> list, int i) {
+
+            }
+
+            @Override
+            public void onProgress(@NotNull Download download, long l, long l1) {
+
+            }
+
+            @Override
+            public void onPaused(@NotNull Download download) {
+
+            }
+
+            @Override
+            public void onResumed(@NotNull Download download) {
+
+            }
+
+            @Override
+            public void onCancelled(@NotNull Download download) {
+
+            }
+
+            @Override
+            public void onRemoved(@NotNull Download download) {
+
+            }
+
+            @Override
+            public void onDeleted(@NotNull Download download) {
+
+            }
+        });
+        fetch.enqueue(request, updatedRequest -> {
+            //Request was successfully enqueued for download.
+
+        }, error -> {
+            //An error occurred enqueuing the request.
+            Timber.e(error.getThrowable(), "enqueue fail");
+        });
 
     }
 
@@ -402,6 +542,7 @@ public abstract class MessageListActivity extends BaseActivity {
             int lastPosition = adapter.getItemCount() - 1;
             messageListRecyclerView.scrollToPosition(lastPosition);
         }, 10);
+
     }
 
 }

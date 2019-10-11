@@ -142,9 +142,9 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         @BindView(R.id.time_textview)
         TextView timeTextview;
 
-
         MessageViewHolder(View itemView) {
             super(itemView);
         }
     }
+
 }

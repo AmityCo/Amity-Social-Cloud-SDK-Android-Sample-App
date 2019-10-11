@@ -5,6 +5,7 @@ import androidx.paging.PagedList;
 
 import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoTags;
+import com.ekoapp.simplechat.intent.IntentRequestCode;
 import com.ekoapp.simplechat.intent.OpenCustomMessageSenderActivityIntent;
 import com.ekoapp.simplechat.intent.OpenFileMessageSenderActivityIntent;
 import com.ekoapp.simplechat.intent.OpenImageMessageSenderActivityIntent;
@@ -89,18 +90,18 @@ public class ParentMessageListActivity extends MessageListActivity {
 
     @OnClick(R.id.message_image_button)
     void sendImageMessage() {
-        startActivity(new OpenImageMessageSenderActivityIntent(this, getChannelId()));
+        startActivityForResult(new OpenImageMessageSenderActivityIntent(this, getChannelId()), IntentRequestCode.REQUEST_SEND_IMAGE_MESSAGE);
     }
 
 
     @OnClick(R.id.message_file_button)
     void sendFileMessage() {
-        startActivity(new OpenFileMessageSenderActivityIntent(this, getChannelId()));
+        startActivityForResult(new OpenFileMessageSenderActivityIntent(this, getChannelId()), IntentRequestCode.REQUEST_SEND_FILE_MESSAGE);
     }
 
     @OnClick(R.id.message_custom_button)
     void sendCustomMessage() {
-        startActivity(new OpenCustomMessageSenderActivityIntent(this, getChannelId()));
+        startActivityForResult(new OpenCustomMessageSenderActivityIntent(this, getChannelId()), IntentRequestCode.REQUEST_SEND_CUSTOM_MESSAGE);
     }
 
 }
