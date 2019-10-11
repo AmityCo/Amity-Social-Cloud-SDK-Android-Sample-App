@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def ekoSdkVersion = '2.1.0-alpha3'
+def ekoSdkVersion = '2.1.0-alpha5'
 
 android {
     compileSdkVersion 28
@@ -61,6 +61,9 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.1.0-rc01'
 
+    implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
+    implementation "androidx.tonyodev.fetch2rx:xfetch2rx:3.1.4"
+
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
     implementation "com.github.bumptech.glide:okhttp3-integration:4.10.0"
@@ -73,7 +76,6 @@ dependencies {
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
     fcm_or_baiduImplementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
-
 
     implementation 'com.google.code.gson:gson:2.8.5'
 
