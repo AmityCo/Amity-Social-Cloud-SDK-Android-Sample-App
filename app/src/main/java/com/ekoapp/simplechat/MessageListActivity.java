@@ -34,7 +34,6 @@ import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
 import com.ekoapp.simplechat.file.FileManager;
-import com.ekoapp.simplechat.intent.IntentRequestCode;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
@@ -65,9 +64,6 @@ public abstract class MessageListActivity extends BaseActivity {
 
     @BindView(R.id.message_send_button)
     Button sendButton;
-
-    @BindView(R.id.message_custom_button)
-    Button sendAsCustomButton;
 
     private LiveData<PagedList<EkoMessage>> messages;
 
@@ -380,7 +376,6 @@ public abstract class MessageListActivity extends BaseActivity {
     void onMessageTextChanged(CharSequence input) {
         String text = String.valueOf(input).trim();
         sendButton.setEnabled(!TextUtils.isEmpty(text));
-        sendAsCustomButton.setEnabled(!TextUtils.isEmpty(text));
     }
 
     @OnClick(R.id.message_send_button)
@@ -406,9 +401,7 @@ public abstract class MessageListActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK && (requestCode == IntentRequestCode.REQUEST_SEND_IMAGE_MESSAGE
-                || requestCode == IntentRequestCode.REQUEST_SEND_FILE_MESSAGE
-                || requestCode == IntentRequestCode.REQUEST_SEND_CUSTOM_MESSAGE)) {
+        if (resultCode == RESULT_OK) {
             scrollToBottom();
         }
 

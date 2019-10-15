@@ -20,7 +20,8 @@ class FileManager {
         fun openFile(context: Context, message: EkoMessage) {
             val url = message.getData(FileData::class.java).url
             val dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
-            val filename = dirPath + "/" + message.getData(FileData::class.java).fileName
+            val fileName = message.getData(FileData::class.java).fileName?: ""
+            val filePath = dirPath + "/" + fileName
 
             val client = EkoOkHttp.newBuilder().build()
 
@@ -30,7 +31,7 @@ class FileManager {
                     .setHttpDownloader(OkHttpDownloader(client))
                     .build()
 
-            val request = Request(url, filename)
+            val request = Request(url, filePath)
             request.priority = Priority.HIGH
             request.networkType = NetworkType.ALL
 

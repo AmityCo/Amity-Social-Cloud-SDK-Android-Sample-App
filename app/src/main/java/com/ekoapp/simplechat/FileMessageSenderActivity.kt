@@ -35,6 +35,7 @@ class FileMessageSenderActivity : AppCompatActivity() {
         send_button.setOnClickListener {
             send_button.isEnabled = false
             sendFileMessage()
+            setResult(Activity.RESULT_OK)
             finish()
         }
 
@@ -74,8 +75,8 @@ class FileMessageSenderActivity : AppCompatActivity() {
             currentFileUri = uri
 
             send_button.isEnabled = true
-            val f = File(RealPathUtil.getRealPath(this, uri))
-            textview.text = f.name
+            val fileName = RealPathUtil.getFileName(this.contentResolver, uri)
+            textview.text = "Selected: " + fileName
         }
 
     }

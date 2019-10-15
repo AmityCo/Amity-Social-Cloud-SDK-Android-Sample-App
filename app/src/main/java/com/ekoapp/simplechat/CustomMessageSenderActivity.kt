@@ -1,5 +1,6 @@
 package com.ekoapp.simplechat
 
+import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -36,6 +37,7 @@ class CustomMessageSenderActivity : AppCompatActivity() {
         send_button.setOnClickListener {
             send_button.isEnabled = false
             sendCustomMessage()
+            setResult(Activity.RESULT_OK)
             finish()
         }
 

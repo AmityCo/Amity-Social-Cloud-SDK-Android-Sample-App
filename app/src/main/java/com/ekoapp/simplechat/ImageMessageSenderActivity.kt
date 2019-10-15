@@ -41,6 +41,7 @@ class ImageMessageSenderActivity : AppCompatActivity() {
         send_button.setOnClickListener {
             send_button.isEnabled = false
             sendImageMessage()
+            setResult(Activity.RESULT_OK)
             finish()
         }
 
