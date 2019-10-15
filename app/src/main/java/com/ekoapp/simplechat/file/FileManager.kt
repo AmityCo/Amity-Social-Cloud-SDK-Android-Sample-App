@@ -2,7 +2,10 @@ package com.ekoapp.simplechat.file
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ResolveInfo
 import android.os.Environment
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.internal.api.http.EkoOkHttp
@@ -57,8 +60,14 @@ class FileManager {
                         val viewIntent = Intent(Intent.ACTION_VIEW)
                         viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         viewIntent.data = uri
-                        val chooserIntent = Intent.createChooser(viewIntent, "Choose an application to open with:")
-                        context.startActivity(chooserIntent)
+                        val activities: List<ResolveInfo> = context.packageManager.queryIntentActivities(viewIntent, 0)
+                        if(activities.isNotEmpty()) {
+                            val chooserIntent = Intent.createChooser(viewIntent, "Choose an application to open with:")
+                            chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            context.startActivity(chooserIntent)
+                        } else {
+                            Toast.makeText(context, "No app to open this file", Toast.LENGTH_LONG).show()
+                        }
                     }
 
                     if(!fetch.isClosed) {
