@@ -55,10 +55,6 @@
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 
-        <meta-data
-            android:name=".EkoOkHttpLibraryGlideModule"
-            android:value="AppGlideModule"/>
-
         <service
             android:name=".SimpleFirebaseMessagingService"
             android:exported="false">
