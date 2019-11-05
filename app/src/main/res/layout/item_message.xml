@@ -28,15 +28,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/sender_textview"
-        android:maxLines="3"
+        android:maxLines="6"
         android:textSize="14sp"
         tools:text="Hello" />
+
+    <ImageView
+        android:id="@+id/data_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/data_textview" />
 
     <TextView
         android:id="@+id/comment_count_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/data_textview"
+        android:layout_below="@id/data_imageview"
         android:maxLines="1"
         android:textSize="14sp"
         tools:text="Comment" />

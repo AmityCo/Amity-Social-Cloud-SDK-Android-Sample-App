@@ -4,6 +4,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.ekoapp.ekosdk.EkoClient;
 import com.ekoapp.push.EkoBaidu;
+import com.ekoapp.push.EkoFcm;
 
 public class SimpleChatApp extends MultiDexApplication {
 

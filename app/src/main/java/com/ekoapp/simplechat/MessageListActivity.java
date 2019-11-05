@@ -1,6 +1,8 @@
 package com.ekoapp.simplechat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -31,11 +33,14 @@ import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
+import com.ekoapp.simplechat.file.FileManager;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -74,6 +79,8 @@ public abstract class MessageListActivity extends BaseActivity {
     final Preference<Boolean> stackFromEnd = SimplePreferences.getStackFromEnd(getClass().getName(), getDefaultStackFromEnd());
     final Preference<Boolean> revertLayout = SimplePreferences.getRevertLayout(getClass().getName(), getDefaultRevertLayout());
 
+    final RxPermissions rxPermissions = new RxPermissions(this);
+
     private CompositeDisposable disposable = new CompositeDisposable();
 
     abstract String getChannelId();
@@ -96,7 +103,7 @@ public abstract class MessageListActivity extends BaseActivity {
 
     abstract void onClick(EkoMessage message);
 
-    abstract Completable createMessage(String text);
+    abstract Completable createTextMessage(String text);
 
     @Override
     protected void onCreate(@Nullable Bundle savedState) {
@@ -111,6 +118,7 @@ public abstract class MessageListActivity extends BaseActivity {
         setSubtitleName();
 
         initialMessageCollection();
+
     }
 
     @Override
@@ -239,15 +247,31 @@ public abstract class MessageListActivity extends BaseActivity {
     }
 
     private void onLongClick(EkoMessage message) {
+        ArrayList<String> actionItems = new ArrayList();
+        actionItems.add("flag a message");
+        actionItems.add("flag a sender");
+        actionItems.add("set tag(s)");
+        if (message.getType().equalsIgnoreCase("file")) {
+            actionItems.add("open file");
+        }
         new MaterialDialog.Builder(this)
-                .items("flag a message", "flag a sender", "set tag(s)")
+                .items()
+                .items(actionItems)
                 .itemsCallback((dialog, itemView, position, text) -> {
                     if (position == 0) {
                         flagMessage(message);
                     } else if (position == 1) {
                         flagUser(message.getUser());
-                    } else {
+                    } else if (position == 2) {
                         setTags(message);
+                    } else {
+                        rxPermissions
+                                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                .subscribe(granted -> {
+                                    if (granted) {
+                                        FileManager.Companion.openFile(getApplicationContext(), message);
+                                    }
+                                });
                     }
                 })
                 .show();
@@ -358,7 +382,7 @@ public abstract class MessageListActivity extends BaseActivity {
     void onSendClick() {
         String text = String.valueOf(messageEditText.getText()).trim();
         messageEditText.setText(null);
-        createMessage(text)
+        createTextMessage(text)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnError(t -> {
                     EkoError ekoError = EkoError.from(t);
@@ -370,6 +394,17 @@ public abstract class MessageListActivity extends BaseActivity {
                 })
                 .doOnComplete(this::scrollToBottom)
                 .subscribe();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            scrollToBottom();
+        }
+
     }
 
     void scrollToBottom() {
@@ -377,5 +412,7 @@ public abstract class MessageListActivity extends BaseActivity {
             int lastPosition = adapter.getItemCount() - 1;
             messageListRecyclerView.scrollToPosition(lastPosition);
         }, 10);
+
     }
+
 }
