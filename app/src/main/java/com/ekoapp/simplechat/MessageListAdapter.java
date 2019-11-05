@@ -13,6 +13,7 @@ import com.ekoapp.ekosdk.EkoMessage;
 import com.ekoapp.ekosdk.EkoObjects;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.adapter.EkoMessageAdapter;
+import com.ekoapp.ekosdk.messaging.data.DataType;
 import com.ekoapp.ekosdk.messaging.data.FileData;
 import com.ekoapp.ekosdk.messaging.data.ImageData;
 import com.ekoapp.ekosdk.messaging.data.TextData;
@@ -76,14 +77,14 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             holder.commentTextview.setText(String.format("comment count: %s", m.getChildrenNumber()));
             holder.tagsTextview.setText(String.format("tags️: %s", Joiner.on(", ").join(m.getTags())));
 
-            if ("text".equalsIgnoreCase(type)) {
+            if (DataType.TEXT == DataType.from(m.getType())) {
                 holder.dataTextview.setText(String.format("text: %s", m.getData(TextData.class).getText()));
                 Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
-            } else if ("image".equalsIgnoreCase(type)) {
+            } else if (DataType.IMAGE == DataType.from(m.getType())) {
                 String url = m.getData(ImageData.class).getUrl();
                 holder.dataTextview.setText(String.format("data type: %s,\nurl: %s,\ndata: ", type, url).concat(m.getData().toString()));
                 Glide.with(holder.dataImageview.getContext()).load(url).into(holder.dataImageview);
-            } else if ("file".equalsIgnoreCase(type)) {
+            } else if (DataType.FILE == DataType.from(m.getType())) {
                 String url = m.getData(FileData.class).getUrl();
                 holder.dataTextview.setText(String.format("data type: %s,\nurl: %s,\ndata: ", type, url).concat(m.getData().toString()));
                 Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
