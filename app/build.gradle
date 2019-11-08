@@ -38,10 +38,10 @@ android {
     flavorDimensions "push"
 
     productFlavors {
-        fcm {
+        baidu_with_fcm {
             dimension "push"
         }
-        fcm_or_baidu {
+        fcm {
             dimension "push"
         }
     }
@@ -75,7 +75,7 @@ dependencies {
 
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
-    fcm_or_baiduImplementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
+    baidu_with_fcmImplementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
 
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
