@@ -68,8 +68,8 @@ public class ChannelListActivity extends BaseActivity {
 
     private final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
 
-    private Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
-    private Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
+    private Preference<Set<String>> includingTags = SimplePreferences.getIncludingChannelTags();
+    private Preference<Set<String>> excludingTags = SimplePreferences.getExcludingChannelTags();
 
 
     @Override

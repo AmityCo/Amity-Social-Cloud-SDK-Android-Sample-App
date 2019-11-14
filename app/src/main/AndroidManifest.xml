@@ -55,6 +55,16 @@
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".TextMessageEditorActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".CustomMessageEditorActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
+
         <service
             android:name=".SimpleFirebaseMessagingService"
             android:exported="false">

@@ -12,8 +12,8 @@ import java.util.Set;
 public class SimplePreferences {
 
     private static final String API_KEY_KEY = "API_KEY_KEY";
-    private static final String INCLUDING_TAGS_KEY = "INCLUDING_TAGS_KEY";
-    private static final String EXCLUDING_TAGS_KEY = "EXCLUDING_TAGS_KEY";
+    private static final String INCLUDING_CHANNEL_TAGS_KEY = "INCLUDING_CHANNEL_TAGS_KEY";
+    private static final String EXCLUDING_CHANNEL_TAGS_KEY = "EXCLUDING_CHANNEL_TAGS_KEY";
     private static final String STACK_FROM_END_KEY = "STACK_FROM_END_KEY";
     private static final String REVERT_LAYOUT_KEY = "REVERT_LAYOUT_KEY";
 
@@ -35,12 +35,12 @@ public class SimplePreferences {
         return get().getString(API_KEY_KEY, SimpleConfig.DEFAULT_API_KEY);
     }
 
-    public static Preference<Set<String>> getIncludingTags() {
-        return get().getStringSet(INCLUDING_TAGS_KEY, Collections.EMPTY_SET);
+    public static Preference<Set<String>> getIncludingChannelTags() {
+        return get().getStringSet(INCLUDING_CHANNEL_TAGS_KEY, Collections.EMPTY_SET);
     }
 
-    public static Preference<Set<String>> getExcludingTags() {
-        return get().getStringSet(EXCLUDING_TAGS_KEY, Collections.EMPTY_SET);
+    public static Preference<Set<String>> getExcludingChannelTags() {
+        return get().getStringSet(EXCLUDING_CHANNEL_TAGS_KEY, Collections.EMPTY_SET);
     }
 
     public static Preference<Boolean> getStackFromEnd(String key, boolean defaultValue) {

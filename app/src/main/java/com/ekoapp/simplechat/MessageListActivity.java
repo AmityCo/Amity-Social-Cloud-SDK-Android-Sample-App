@@ -33,14 +33,21 @@ import com.ekoapp.ekosdk.EkoTags;
 import com.ekoapp.ekosdk.EkoUser;
 import com.ekoapp.ekosdk.EkoUserRepository;
 import com.ekoapp.ekosdk.exception.EkoError;
+import com.ekoapp.ekosdk.messaging.data.DataType;
+import com.ekoapp.ekosdk.messaging.data.TextData;
 import com.ekoapp.simplechat.file.FileManager;
+import com.ekoapp.simplechat.intent.IntentRequestCode;
+import com.ekoapp.simplechat.intent.OpenCustomMessageEditorActivityIntent;
+import com.ekoapp.simplechat.intent.OpenTextMessageEditorActivityIntent;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
+import com.google.gson.JsonObject;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -68,13 +75,14 @@ public abstract class MessageListActivity extends BaseActivity {
     private LiveData<PagedList<EkoMessage>> messages;
 
     private MessageListAdapter adapter;
+    private EkoMessage editingMessage;
 
     final EkoChannelRepository channelRepository = EkoClient.newChannelRepository();
     final EkoMessageRepository messageRepository = EkoClient.newMessageRepository();
     final EkoUserRepository userRepository = EkoClient.newUserRepository();
 
-    final Preference<Set<String>> includingTags = SimplePreferences.getIncludingTags();
-    final Preference<Set<String>> excludingTags = SimplePreferences.getExcludingTags();
+    final Set<String> includingTags = Sets.newConcurrentHashSet();
+    final Set<String> excludingTags = Sets.newConcurrentHashSet();
 
     final Preference<Boolean> stackFromEnd = SimplePreferences.getStackFromEnd(getClass().getName(), getDefaultStackFromEnd());
     final Preference<Boolean> revertLayout = SimplePreferences.getRevertLayout(getClass().getName(), getDefaultRevertLayout());
@@ -157,27 +165,31 @@ public abstract class MessageListActivity extends BaseActivity {
                     .subscribe();
             return true;
         } else if (item.getItemId() == R.id.action_with_tags) {
-            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags.get()), true, (dialog, input) -> {
-                Set<String> set = Sets.newConcurrentHashSet();
+            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags), true, (dialog, input) -> {
+                //Set<String> set = Sets.newConcurrentHashSet();
+                includingTags.clear();
                 for (String tag : String.valueOf(input).split(",")) {
                     if (tag.length() > 0) {
-                        set.add(tag);
+                        includingTags.add(tag);
                     }
                 }
-                includingTags.set(set);
+                //includingTags.clear();
+                //includingTags.addAll(set.);
                 initialMessageCollection();
                 observeMessageCollection();
             });
             return true;
         } else if (item.getItemId() == R.id.action_without_tags) {
-            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags.get()), true, (dialog, input) -> {
-                Set<String> set = Sets.newConcurrentHashSet();
+            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags), true, (dialog, input) -> {
+                //Set<String> set = Sets.newConcurrentHashSet();
+                excludingTags.clear();
                 for (String tag : String.valueOf(input).split(",")) {
                     if (tag.length() > 0) {
-                        set.add(tag);
+                        excludingTags.add(tag);
                     }
                 }
-                excludingTags.set(set);
+                //excludingTags.clear();
+                //excludingTags.addAll(set);
                 initialMessageCollection();
                 observeMessageCollection();
             });
@@ -247,13 +259,40 @@ public abstract class MessageListActivity extends BaseActivity {
     }
 
     private void onLongClick(EkoMessage message) {
+
+        if(message.isDeleted()) {
+            return;
+        }
+
         ArrayList<String> actionItems = new ArrayList();
         actionItems.add("flag a message");
         actionItems.add("flag a sender");
         actionItems.add("set tag(s)");
-        if (message.getType().equalsIgnoreCase("file")) {
-            actionItems.add("open file");
+
+        switch (DataType.from(message.getType())) {
+            case TEXT: {
+                actionItems.add("edit");
+                actionItems.add("delete");
+                break;
+            }
+            case IMAGE: {
+                actionItems.add("delete");
+                break;
+            }
+            case FILE: {
+                actionItems.add("open file");
+                actionItems.add("delete");
+                break;
+            }
+            case CUSTOM: {
+                actionItems.add("edit");
+                actionItems.add("delete");
+                break;
+            }
+            default:
+                break;
         }
+
         new MaterialDialog.Builder(this)
                 .items()
                 .items(actionItems)
@@ -265,16 +304,47 @@ public abstract class MessageListActivity extends BaseActivity {
                     } else if (position == 2) {
                         setTags(message);
                     } else {
-                        rxPermissions
-                                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                .subscribe(granted -> {
-                                    if (granted) {
-                                        FileManager.Companion.openFile(getApplicationContext(), message);
-                                    }
-                                });
+                        handleMessageOption(position, message);
                     }
                 })
                 .show();
+    }
+
+    private void handleMessageOption(int position, EkoMessage message) {
+        switch (DataType.from(message.getType())) {
+            case TEXT: {
+                if (position == 3) {
+                    goToTextMessageEditor(message);
+                } else {
+                    message.getTextMessageEditor().delete().subscribe();
+                }
+                break;
+            }
+            case IMAGE: {
+                if (position == 3) {
+                    message.getImageMessageEditor().delete().subscribe();
+                }
+                break;
+            }
+            case FILE: {
+                if (position == 3) {
+                    openFile(message);
+                } else {
+                    message.getFileMessageEditor().delete().subscribe();
+                }
+                break;
+            }
+            case CUSTOM: {
+                if (position == 3) {
+                    goToCustomMessageEditor(message);
+                } else {
+                    message.getCustomMessageEditor().delete().subscribe();
+                }
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     private void flagMessage(EkoMessage message) {
@@ -403,6 +473,19 @@ public abstract class MessageListActivity extends BaseActivity {
 
         if (resultCode == RESULT_OK) {
             scrollToBottom();
+            switch (requestCode) {
+                case IntentRequestCode.REQUEST_EDIT_TEXT_MESSAGE: {
+                    sendEditTextMessageRequest(data);
+                    break;
+                }
+                case IntentRequestCode.REQUEST_EDIT_CUSTOM_MESSAGE: {
+                    sendEditCustomMessageRequest(data);
+                    break;
+                }
+                default: break;
+            }
+        } else {
+            editingMessage = null;
         }
 
     }
@@ -415,4 +498,48 @@ public abstract class MessageListActivity extends BaseActivity {
 
     }
 
+    private void openFile(EkoMessage message) {
+        rxPermissions
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(granted -> {
+                    if (granted) {
+                        FileManager.Companion.openFile(getApplicationContext(), message);
+                    }
+                });
+    }
+
+    private void goToTextMessageEditor(EkoMessage message) {
+        editingMessage = message;
+        Intent intent = new OpenTextMessageEditorActivityIntent(this, message.getData(TextData.class).getText());
+        startActivityForResult(intent, IntentRequestCode.REQUEST_EDIT_TEXT_MESSAGE);
+    }
+
+    private void sendEditTextMessageRequest(Intent data) {
+        String text = data.getStringExtra(OpenTextMessageEditorActivityIntent.EXTRA_TEXT);
+        editingMessage.getTextMessageEditor()
+                .text(text)
+                .subscribe();
+
+        editingMessage = null;
+    }
+
+    private void goToCustomMessageEditor(EkoMessage message) {
+        editingMessage = message;
+        Intent intent = new OpenCustomMessageEditorActivityIntent(this);
+        startActivityForResult(intent, IntentRequestCode.REQUEST_EDIT_CUSTOM_MESSAGE);
+    }
+
+    private void sendEditCustomMessageRequest(Intent data) {
+        String key = data.getStringExtra(OpenCustomMessageEditorActivityIntent.EXTRA_MAP_KEY);
+        String value = data.getStringExtra(OpenCustomMessageEditorActivityIntent.EXTRA_MAP_VALUE);
+
+        JsonObject customData = new JsonObject();
+        customData.addProperty(key, value);
+
+        editingMessage.getCustomMessageEditor()
+                .custom(customData)
+                .subscribe();
+
+        editingMessage = null;
+    }
 }

@@ -56,6 +56,13 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         if (EkoObjects.isProxy(m)) {
             ViewCollections.set(holder.optionalViews, visibility, View.GONE);
             holder.messageIdTextview.setText(String.format("loading adapter position: %s", position));
+            Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
+
+        } else if(m.isDeleted()) {
+            ViewCollections.set(holder.optionalViews, visibility, View.GONE);
+            holder.messageIdTextview.setText(String.format("Deleted"));
+            holder.dataTextview.setText("");
+            Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
         } else {
             ViewCollections.set(holder.optionalViews, visibility, View.VISIBLE);
             String type = m.getType();
@@ -80,14 +87,16 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             if (DataType.TEXT == DataType.from(m.getType())) {
                 holder.dataTextview.setText(String.format("text: %s", m.getData(TextData.class).getText()));
                 Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
+
             } else if (DataType.IMAGE == DataType.from(m.getType())) {
                 String url = m.getData(ImageData.class).getUrl();
                 holder.dataTextview.setText(String.format("data type: %s,\nurl: %s,\ndata: ", type, url).concat(m.getData().toString()));
                 Glide.with(holder.dataImageview.getContext()).load(url).into(holder.dataImageview);
+
             } else if (DataType.FILE == DataType.from(m.getType())) {
                 String url = m.getData(FileData.class).getUrl();
                 holder.dataTextview.setText(String.format("data type: %s,\nurl: %s,\ndata: ", type, url).concat(m.getData().toString()));
-                Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
+                  Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
             } else {
                 holder.dataTextview.setText(String.format("data type: %s,\ndata: ", type).concat(m.getData().toString()));
                 Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);

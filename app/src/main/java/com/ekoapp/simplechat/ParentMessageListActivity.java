@@ -44,8 +44,8 @@ public class ParentMessageListActivity extends MessageListActivity {
     LiveData<PagedList<EkoMessage>> getMessageCollection() {
         return messageRepository.getMessageCollectionByTags(getChannelId(),
                 null,
-                new EkoTags(includingTags.get()),
-                new EkoTags(excludingTags.get()), stackFromEnd.get());
+                new EkoTags(includingTags),
+                new EkoTags(excludingTags), stackFromEnd.get());
     }
 
     @Override
@@ -70,6 +70,10 @@ public class ParentMessageListActivity extends MessageListActivity {
 
     @Override
     void onClick(EkoMessage message) {
+        if(message.isDeleted()) {
+            return;
+        }
+
         ViewChildMessagesIntent intent = new ViewChildMessagesIntent(this,
                 message.getChannelId(),
                 message.getMessageId(),
