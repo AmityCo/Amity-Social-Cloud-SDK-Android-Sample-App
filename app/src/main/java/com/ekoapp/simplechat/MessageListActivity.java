@@ -38,7 +38,6 @@ import com.ekoapp.ekosdk.messaging.data.TextData;
 import com.ekoapp.simplechat.file.FileManager;
 import com.ekoapp.simplechat.intent.IntentRequestCode;
 import com.ekoapp.simplechat.intent.OpenCustomMessageEditorActivityIntent;
-import com.ekoapp.simplechat.intent.OpenTextMessageEditorActivityIntent;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 import com.f2prateek.rx.preferences2.Preference;
 import com.google.common.base.Joiner;
@@ -47,7 +46,6 @@ import com.google.gson.JsonObject;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -254,7 +252,7 @@ public abstract class MessageListActivity extends BaseActivity {
 
     private void onLongClick(EkoMessage message) {
 
-        if(message.isDeleted()) {
+        if (message.isDeleted()) {
             return;
         }
 
@@ -468,15 +466,12 @@ public abstract class MessageListActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             scrollToBottom();
             switch (requestCode) {
-                case IntentRequestCode.REQUEST_EDIT_TEXT_MESSAGE: {
-                    sendEditTextMessageRequest(data);
-                    break;
-                }
                 case IntentRequestCode.REQUEST_EDIT_CUSTOM_MESSAGE: {
                     sendEditCustomMessageRequest(data);
                     break;
                 }
-                default: break;
+                default:
+                    break;
             }
         } else {
             editingMessage = null;
@@ -503,24 +498,32 @@ public abstract class MessageListActivity extends BaseActivity {
     }
 
     private void goToTextMessageEditor(EkoMessage message) {
-        editingMessage = message;
-        Intent intent = new OpenTextMessageEditorActivityIntent(this, message.getData(TextData.class).getText());
-        startActivityForResult(intent, IntentRequestCode.REQUEST_EDIT_TEXT_MESSAGE);
-    }
+        String currentText = message.getData(TextData.class).getText();
 
-    private void sendEditTextMessageRequest(Intent data) {
-        String text = data.getStringExtra(OpenTextMessageEditorActivityIntent.EXTRA_TEXT);
-        editingMessage.getTextMessageEditor()
-                .text(text)
-                .subscribe();
+        showDialog(R.string.edit_text_message, "enter text", currentText, false, (dialog, input) -> {
 
-        editingMessage = null;
+            String modifiedText = input.toString();
+            if(!modifiedText.equals(currentText)) {
+                message.getTextMessageEditor()
+                        .text(modifiedText)
+                        .subscribe();
+            }
+
+        });
+
     }
 
     private void goToCustomMessageEditor(EkoMessage message) {
-        editingMessage = message;
-        Intent intent = new OpenCustomMessageEditorActivityIntent(this);
-        startActivityForResult(intent, IntentRequestCode.REQUEST_EDIT_CUSTOM_MESSAGE);
+
+        new MaterialDialog.Builder(this)
+                .title(R.string.edit_custom_message)
+                .inputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
+                .input("value", "testtest", true, null)
+                .show();
+
+//        editingMessage = message;
+//        Intent intent = new OpenCustomMessageEditorActivityIntent(this);
+//        startActivityForResult(intent, IntentRequestCode.REQUEST_EDIT_CUSTOM_MESSAGE);
     }
 
     private void sendEditCustomMessageRequest(Intent data) {
@@ -536,4 +539,5 @@ public abstract class MessageListActivity extends BaseActivity {
 
         editingMessage = null;
     }
+
 }
