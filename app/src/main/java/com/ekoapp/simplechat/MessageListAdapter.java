@@ -58,7 +58,7 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             holder.messageIdTextview.setText(String.format("loading adapter position: %s", position));
             Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
 
-        } else if(m.isDeleted()) {
+        } else if (m.isDeleted()) {
             ViewCollections.set(holder.optionalViews, visibility, View.GONE);
             holder.messageIdTextview.setText(String.format("Deleted"));
             holder.dataTextview.setText("");
@@ -96,7 +96,7 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             } else if (DataType.FILE == DataType.from(m.getType())) {
                 String url = m.getData(FileData.class).getUrl();
                 holder.dataTextview.setText(String.format("data type: %s,\nurl: %s,\ndata: ", type, url).concat(m.getData().toString()));
-                  Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
+                Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
             } else {
                 holder.dataTextview.setText(String.format("data type: %s,\ndata: ", type).concat(m.getData().toString()));
                 Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);

@@ -166,30 +166,24 @@ public abstract class MessageListActivity extends BaseActivity {
             return true;
         } else if (item.getItemId() == R.id.action_with_tags) {
             showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags), true, (dialog, input) -> {
-                //Set<String> set = Sets.newConcurrentHashSet();
                 includingTags.clear();
                 for (String tag : String.valueOf(input).split(",")) {
                     if (tag.length() > 0) {
                         includingTags.add(tag);
                     }
                 }
-                //includingTags.clear();
-                //includingTags.addAll(set.);
                 initialMessageCollection();
                 observeMessageCollection();
             });
             return true;
         } else if (item.getItemId() == R.id.action_without_tags) {
             showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags), true, (dialog, input) -> {
-                //Set<String> set = Sets.newConcurrentHashSet();
                 excludingTags.clear();
                 for (String tag : String.valueOf(input).split(",")) {
                     if (tag.length() > 0) {
                         excludingTags.add(tag);
                     }
                 }
-                //excludingTags.clear();
-                //excludingTags.addAll(set);
                 initialMessageCollection();
                 observeMessageCollection();
             });
