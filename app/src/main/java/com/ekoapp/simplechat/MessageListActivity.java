@@ -263,22 +263,30 @@ public abstract class MessageListActivity extends BaseActivity {
 
         switch (DataType.from(message.getType())) {
             case TEXT: {
-                actionItems.add("edit");
-                actionItems.add("delete");
+                if (message.getUserId().equals(EkoClient.getUserId())) {
+                    actionItems.add("edit");
+                    actionItems.add("delete");
+                }
                 break;
             }
             case IMAGE: {
-                actionItems.add("delete");
+                if (message.getUserId().equals(EkoClient.getUserId())) {
+                    actionItems.add("delete");
+                }
                 break;
             }
             case FILE: {
                 actionItems.add("open file");
-                actionItems.add("delete");
+                if (message.getUserId().equals(EkoClient.getUserId())) {
+                    actionItems.add("delete");
+                }
                 break;
             }
             case CUSTOM: {
-                actionItems.add("edit");
-                actionItems.add("delete");
+                if (message.getUserId().equals(EkoClient.getUserId())) {
+                    actionItems.add("edit");
+                    actionItems.add("delete");
+                }
                 break;
             }
             default:
@@ -499,11 +507,9 @@ public abstract class MessageListActivity extends BaseActivity {
 
     private void goToTextMessageEditor(EkoMessage message) {
         String currentText = message.getData(TextData.class).getText();
-
         showDialog(R.string.edit_text_message, "enter text", currentText, false, (dialog, input) -> {
-
             String modifiedText = input.toString();
-            if(!modifiedText.equals(currentText)) {
+            if (!modifiedText.equals(currentText)) {
                 message.getTextMessageEditor()
                         .text(modifiedText)
                         .subscribe();
@@ -514,16 +520,9 @@ public abstract class MessageListActivity extends BaseActivity {
     }
 
     private void goToCustomMessageEditor(EkoMessage message) {
-
-        new MaterialDialog.Builder(this)
-                .title(R.string.edit_custom_message)
-                .inputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS)
-                .input("value", "testtest", true, null)
-                .show();
-
-//        editingMessage = message;
-//        Intent intent = new OpenCustomMessageEditorActivityIntent(this);
-//        startActivityForResult(intent, IntentRequestCode.REQUEST_EDIT_CUSTOM_MESSAGE);
+        editingMessage = message;
+        Intent intent = new OpenCustomMessageEditorActivityIntent(this);
+        startActivityForResult(intent, IntentRequestCode.REQUEST_EDIT_CUSTOM_MESSAGE);
     }
 
     private void sendEditCustomMessageRequest(Intent data) {
