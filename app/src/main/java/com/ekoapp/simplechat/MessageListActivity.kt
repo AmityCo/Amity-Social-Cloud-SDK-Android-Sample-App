@@ -138,7 +138,7 @@ abstract class MessageListActivity : BaseActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        getMenuInflater().inflate(getMenu(), menu)
+        menuInflater.inflate(getMenu(), menu)
         return true
     }
 
@@ -438,7 +438,7 @@ abstract class MessageListActivity : BaseActivity() {
 
     private fun observeMessageCollection() {
         if (messages != null) {
-            messages!!.removeObservers(this)
+            messages?.removeObservers(this)
         }
 
         messages = getMessageCollection()
