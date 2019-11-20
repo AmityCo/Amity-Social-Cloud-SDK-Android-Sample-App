@@ -300,7 +300,7 @@ abstract class MessageListActivity : BaseActivity() {
         when (DataType.from(message.type)) {
             DataType.TEXT -> {
                 if (position == 3) {
-                    goToTextMessageEditor(message)
+                    showTextMessageEditor(message)
                 } else {
                     message.textMessageEditor?.run {
                         delete().subscribe()
@@ -325,7 +325,7 @@ abstract class MessageListActivity : BaseActivity() {
             }
             DataType.CUSTOM -> {
                 if (position == 3) {
-                    goToCustomMessageEditor(message)
+                    showCustomMessageEditor(message)
                 } else {
                     message.customMessageEditor?.run {
                         delete().subscribe()
@@ -512,7 +512,7 @@ abstract class MessageListActivity : BaseActivity() {
                 })
     }
 
-    private fun goToTextMessageEditor(message: EkoMessage) {
+    private fun showTextMessageEditor(message: EkoMessage) {
         val currentText = message.getData(TextData::class.java).text
         showDialog(R.string.edit_text_message, "enter text", currentText, false, { dialog, input ->
             val modifiedText = input.toString()
@@ -528,7 +528,7 @@ abstract class MessageListActivity : BaseActivity() {
 
     }
 
-    private fun goToCustomMessageEditor(message: EkoMessage) {
+    private fun showCustomMessageEditor(message: EkoMessage) {
         val dialog = MaterialDialog(this)
                 .title(text = "Edit custom message")
                 .customView(R.layout.view_edit_custom_message, scrollable = true)
