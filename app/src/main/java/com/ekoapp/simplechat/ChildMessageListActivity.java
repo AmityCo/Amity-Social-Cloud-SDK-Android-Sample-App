@@ -18,7 +18,7 @@ import io.reactivex.Completable;
 public class ChildMessageListActivity extends MessageListActivity {
 
     @Override
-    String getChannelId() {
+    protected String getChannelId() {
         return ViewChildMessagesIntent.getChannelId(getIntent());
     }
 
@@ -31,56 +31,57 @@ public class ChildMessageListActivity extends MessageListActivity {
     }
 
     @Override
-    void setTitleName() {
+    protected void setTitleName() {
 
     }
 
     @Override
-    void setSubtitleName() {
+    protected void setSubtitleName() {
         toolbar.setSubtitle(getData());
     }
 
     @Override
-    int getMenu() {
+    protected int getMenu() {
         return R.menu.menu_child_message_list;
     }
 
     @Override
-    LiveData<PagedList<EkoMessage>> getMessageCollection() {
-        return messageRepository.getMessageCollectionByTags(getChannelId(),
+    protected LiveData<PagedList<EkoMessage>> getMessageCollection() {
+
+        return getMessageRepository().getMessageCollectionByTags(getChannelId(),
                 getParentId(),
-                new EkoTags(includingTags),
-                new EkoTags(excludingTags), stackFromEnd.get());
+                new EkoTags(getIncludingTags()),
+                new EkoTags(getExcludingTags()), getStackFromEnd().get());
     }
 
     @Override
-    boolean getDefaultStackFromEnd() {
+    protected boolean getDefaultStackFromEnd() {
         return false;
     }
 
     @Override
-    boolean getDefaultRevertLayout() {
+    protected boolean getDefaultRevertLayout() {
         return false;
     }
 
     @Override
-    void startReading() {
+    protected void startReading() {
 
     }
 
     @Override
-    void stopReading() {
+    protected void stopReading() {
 
     }
 
     @Override
-    void onClick(EkoMessage message) {
+    protected void onClick(EkoMessage message) {
 
     }
 
     @Override
-    Completable createTextMessage(String text) {
-        return messageRepository.createMessage(getChannelId())
+    protected Completable createTextMessage(String text) {
+        return getMessageRepository().createMessage(getChannelId())
                 .text(text)
                 .parentId(getParentId())
                 .build()
