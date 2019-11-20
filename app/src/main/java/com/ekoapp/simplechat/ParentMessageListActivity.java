@@ -18,58 +18,58 @@ import io.reactivex.Completable;
 public class ParentMessageListActivity extends MessageListActivity {
 
     @Override
-    String getChannelId() {
+    protected String getChannelId() {
         return ViewParentMessagesIntent.getChannelId(getIntent());
     }
 
     @Override
-    void setTitleName() {
+    protected void setTitleName() {
 
     }
 
     @Override
-    void setSubtitleName() {
-        channelRepository.getChannel(getChannelId())
+    protected void setSubtitleName() {
+        getChannelRepository().getChannel(getChannelId())
                 .observe(this, channel -> toolbar.setSubtitle(String.format("unreadCount: %s messageCount:%s",
                         channel.getUnreadCount(),
                         channel.getMessageCount())));
     }
 
     @Override
-    int getMenu() {
+    protected int getMenu() {
         return R.menu.menu_parent_message_list;
     }
 
     @Override
-    LiveData<PagedList<EkoMessage>> getMessageCollection() {
-        return messageRepository.getMessageCollectionByTags(getChannelId(),
+    protected LiveData<PagedList<EkoMessage>> getMessageCollection() {
+        return getMessageRepository().getMessageCollectionByTags(getChannelId(),
                 null,
-                new EkoTags(includingTags),
-                new EkoTags(excludingTags), stackFromEnd.get());
+                new EkoTags(getIncludingTags()),
+                new EkoTags(getExcludingTags()), getStackFromEnd().get());
     }
 
     @Override
-    boolean getDefaultStackFromEnd() {
+    protected boolean getDefaultStackFromEnd() {
         return true;
     }
 
     @Override
-    boolean getDefaultRevertLayout() {
+    protected boolean getDefaultRevertLayout() {
         return false;
     }
 
     @Override
-    void startReading() {
-        channelRepository.membership(getChannelId()).startReading();
+    protected void startReading() {
+        getChannelRepository().membership(getChannelId()).startReading();
     }
 
     @Override
-    void stopReading() {
-        channelRepository.membership(getChannelId()).stopReading();
+    protected void stopReading() {
+        getChannelRepository().membership(getChannelId()).stopReading();
     }
 
     @Override
-    void onClick(EkoMessage message) {
+    protected void onClick(EkoMessage message) {
         if(message.isDeleted()) {
             return;
         }
@@ -85,8 +85,8 @@ public class ParentMessageListActivity extends MessageListActivity {
     }
 
     @Override
-    Completable createTextMessage(String text) {
-        return messageRepository.createMessage(getChannelId())
+    protected Completable createTextMessage(String text) {
+        return getMessageRepository().createMessage(getChannelId())
                 .text(text)
                 .build()
                 .send();
