@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def ekoSdkVersion = '2.1.1'
+def ekoSdkVersion = '2.3.0'
 
 android {
     compileSdkVersion 28
@@ -55,7 +55,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
+    implementation 'com.afollestad.material-dialogs:core:3.1.1'
+    implementation 'com.afollestad.material-dialogs:input:3.1.1'
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.multidex:multidex:2.0.1'

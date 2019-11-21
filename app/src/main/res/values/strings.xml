@@ -7,6 +7,8 @@
     <string name="change_api_key">Change API Key</string>
     <string name="member">Member</string>
     <string name="with_tag">With Tag(s)</string>
+    <string name="edit_text_message">Edit text message</string>
+    <string name="edit_custom_message">Edit custom message</string>
     <string name="without_tag">Without Tag(s)</string>
     <string name="set_tags">Set Tag(s)</string>
     <string name="leave_channel">Leave Channel</string>

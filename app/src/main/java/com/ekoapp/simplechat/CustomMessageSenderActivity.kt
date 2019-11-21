@@ -11,7 +11,6 @@ import com.google.gson.JsonObject
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.activity_custom_message_sender.*
 
-
 class CustomMessageSenderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
