@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.simplechat.ParentMessageListActivity;
+import com.ekoapp.simplechat.messagelist.ParentMessageListActivity;
 
 public class ViewParentMessagesIntent extends BaseIntent {
 

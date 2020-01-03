@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.simplechat.FileMessageSenderActivity;
+import com.ekoapp.simplechat.messagelist.FileMessageSenderActivity;
 
 public class OpenFileMessageSenderActivityIntent extends BaseIntent {
 

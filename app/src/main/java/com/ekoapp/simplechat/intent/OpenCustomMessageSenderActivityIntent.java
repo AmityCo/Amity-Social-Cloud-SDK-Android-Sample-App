@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.simplechat.CustomMessageSenderActivity;
+import com.ekoapp.simplechat.messagelist.CustomMessageSenderActivity;
 
 public class OpenCustomMessageSenderActivityIntent extends BaseIntent {
 

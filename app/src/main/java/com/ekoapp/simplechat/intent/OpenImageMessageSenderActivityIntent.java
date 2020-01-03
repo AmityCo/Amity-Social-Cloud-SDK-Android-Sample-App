@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.simplechat.ImageMessageSenderActivity;
+import com.ekoapp.simplechat.messagelist.ImageMessageSenderActivity;
 
 public class OpenImageMessageSenderActivityIntent extends BaseIntent {
 
