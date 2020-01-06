@@ -52,7 +52,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 abstract class MessageListActivity : BaseActivity() {
 
@@ -256,7 +255,7 @@ abstract class MessageListActivity : BaseActivity() {
         val actionItems = getMessageOptions(message)
         MaterialDialog(this).show {
             listItems(items = actionItems) { dialog, position, text ->
-                when (MessageOption.valueOf(text.toString())) {
+                when (MessageOption.enumOf(text.toString())) {
                     MessageOption.FLAG_MESSAGE -> {
                         flagMessage(message)
                     }
@@ -288,25 +287,25 @@ abstract class MessageListActivity : BaseActivity() {
 
     private fun getMessageOptions(message: EkoMessage): List<String> {
         val optionItems = mutableListOf<String>()
-        optionItems.add(MessageOption.FLAG_MESSAGE.value())
-        optionItems.add(MessageOption.FLAG_SENDER.value())
-        optionItems.add(MessageOption.SET_TAG.value())
+        optionItems.add(MessageOption.FLAG_MESSAGE.value)
+        optionItems.add(MessageOption.FLAG_SENDER.value)
+        optionItems.add(MessageOption.SET_TAG.value)
 
         if (DataType.from(message.type) == DataType.FILE) {
-            optionItems.add(MessageOption.OPEN_FILE.value())
+            optionItems.add(MessageOption.OPEN_FILE.value)
         }
 
         if (message.userId == EkoClient.getUserId()) {
-            if(DataType.from(message.type) == DataType.TEXT
-                    || DataType.from(message.type) == DataType.CUSTOM ) {
-                optionItems.add(MessageOption.EDIT.value())
+            if (DataType.from(message.type) == DataType.TEXT
+                    || DataType.from(message.type) == DataType.CUSTOM) {
+                optionItems.add(MessageOption.EDIT.value)
             }
-            optionItems.add(MessageOption.DELETE.value())
+            optionItems.add(MessageOption.DELETE.value)
         }
 
-        optionItems.add(MessageOption.ADD_REACTION.value())
+        optionItems.add(MessageOption.ADD_REACTION.value)
         if (message.myReactions.isNotEmpty()) {
-            optionItems.add(MessageOption.REMOVE_REACTION.value())
+            optionItems.add(MessageOption.REMOVE_REACTION.value)
         }
 
         return optionItems
@@ -578,9 +577,16 @@ abstract class MessageListActivity : BaseActivity() {
 
     private fun showAddReactionDialog(message: EkoMessage) {
         val reactionItems = mutableListOf<String>()
-        ReactionOption.values().iterator().forEach {
+        ReactionOption.values().filter {
+            !message.myReactions.contains(it.value())
+        }.forEach {
             reactionItems.add(it.value())
         }
+
+        if (reactionItems.isNullOrEmpty()) {
+            return
+        }
+
         MaterialDialog(this).show {
             listItems(items = reactionItems) { dialog, position, text ->
                 message.react()
