@@ -1,4 +1,4 @@
-package com.ekoapp.simplechat;
+package com.ekoapp.simplechat.channellist;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,12 +11,14 @@ import androidx.annotation.NonNull;
 import com.ekoapp.ekosdk.EkoChannel;
 import com.ekoapp.ekosdk.EkoObjects;
 import com.ekoapp.ekosdk.adapter.EkoChannelAdapter;
+import com.ekoapp.simplechat.BaseViewHolder;
+import com.ekoapp.simplechat.R;
 import com.ekoapp.simplechat.intent.ViewParentMessagesIntent;
 import com.google.common.base.Joiner;
 
 import butterknife.BindView;
 
-import static com.ekoapp.simplechat.ChannelListAdapter.ChannelViewHolder;
+import static com.ekoapp.simplechat.channellist.ChannelListAdapter.ChannelViewHolder;
 
 public class ChannelListAdapter extends EkoChannelAdapter<ChannelViewHolder> {
 

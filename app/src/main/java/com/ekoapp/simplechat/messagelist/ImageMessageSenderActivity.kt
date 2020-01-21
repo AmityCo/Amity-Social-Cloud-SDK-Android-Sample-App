@@ -1,4 +1,4 @@
-package com.ekoapp.simplechat
+package com.ekoapp.simplechat.messagelist
 
 import android.Manifest
 import android.app.Activity
@@ -14,8 +14,9 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.internal.util.RealPathUtil
+import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.intent.IntentRequestCode
-import com.ekoapp.simplechat.intent.OpenImageMessageSenderActivityIntent
+import com.ekoapp.simplechat.intent.OpenImageMessageSenderIntent
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Completable
@@ -161,8 +162,8 @@ class ImageMessageSenderActivity : AppCompatActivity() {
 
     private fun createRequest(): Completable {
         val messageRepository = EkoClient.newMessageRepository()
-        val channelId = OpenImageMessageSenderActivityIntent.getChannelId(intent) ?: ""
-        val parentId = OpenImageMessageSenderActivityIntent.getParentId(intent)
+        val channelId = OpenImageMessageSenderIntent.getChannelId(intent) ?: ""
+        val parentId = OpenImageMessageSenderIntent.getParentId(intent)
 
         if (parentId != null) {
             return messageRepository.createMessage(channelId)

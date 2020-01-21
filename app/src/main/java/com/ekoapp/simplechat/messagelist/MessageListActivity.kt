@@ -1,4 +1,4 @@
-package com.ekoapp.simplechat
+package com.ekoapp.simplechat.messagelist
 
 import android.Manifest
 import android.app.Activity
@@ -36,8 +36,14 @@ import com.ekoapp.ekosdk.*
 import com.ekoapp.ekosdk.exception.EkoError
 import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.ekosdk.messaging.data.TextData
+import com.ekoapp.simplechat.BaseActivity
+import com.ekoapp.simplechat.R
+import com.ekoapp.simplechat.SimplePreferences
 import com.ekoapp.simplechat.file.FileManager
+import com.ekoapp.simplechat.intent.OpenMessageReactionListIntent
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent
+import com.ekoapp.simplechat.messagelist.option.MessageOption
+import com.ekoapp.simplechat.messagelist.option.ReactionOption
 import com.google.common.base.Joiner
 import com.google.common.collect.Sets
 import com.google.gson.JsonObject
@@ -47,7 +53,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 
 abstract class MessageListActivity : BaseActivity() {
 
@@ -202,7 +207,7 @@ abstract class MessageListActivity : BaseActivity() {
                     .doOnSuccess { allowed ->
                         MaterialDialog(this).show {
                             checkBoxPrompt(text = "allow notification for current channel", isCheckedDefault = allowed, onToggle = null)
-                            positiveButton(text = "save change") {
+                            positiveButton(text = "save changes") {
                                 channelRepository.notification(getChannelId())
                                         .setAllowed(isCheckPromptChecked())
                                         .subscribeOn(Schedulers.io())
@@ -248,93 +253,104 @@ abstract class MessageListActivity : BaseActivity() {
             return
         }
 
-        val actionItems = ArrayList<String>()
-        actionItems.add("flag a message")
-        actionItems.add("flag a sender")
-        actionItems.add("set tag(s)")
-
-        when (DataType.from(message.type)) {
-            DataType.TEXT -> {
-                if (message.userId == EkoClient.getUserId()) {
-                    actionItems.add("edit")
-                    actionItems.add("delete")
-                }
-            }
-            DataType.IMAGE -> {
-                if (message.userId == EkoClient.getUserId()) {
-                    actionItems.add("delete")
-                }
-            }
-            DataType.FILE -> {
-                actionItems.add("open file")
-                if (message.userId == EkoClient.getUserId()) {
-                    actionItems.add("delete")
-                }
-            }
-            DataType.CUSTOM -> {
-                if (message.userId == EkoClient.getUserId()) {
-                    actionItems.add("edit")
-                    actionItems.add("delete")
-                }
-            }
-
-        }
-
+        val actionItems = getMessageOptions(message)
         MaterialDialog(this).show {
             listItems(items = actionItems) { dialog, position, text ->
-                if (position == 0) {
-                    flagMessage(message)
-                } else if (position == 1) {
-                    flagUser(message.user)
-                } else if (position == 2) {
-                    setTags(message)
-                } else {
-                    handleMessageOption(position, message)
+                when (MessageOption.enumOf(text.toString())) {
+                    MessageOption.FLAG_MESSAGE -> {
+                        flagMessage(message)
+                    }
+                    MessageOption.FLAG_SENDER -> {
+                        flagUser(message.user)
+                    }
+                    MessageOption.SET_TAG -> {
+                        setTags(message)
+                    }
+                    MessageOption.ADD_REACTION -> {
+                        showAddReactionDialog(message)
+                    }
+                    MessageOption.REMOVE_REACTION -> {
+                        showRemoveReactionDialog(message)
+                    }
+                    MessageOption.EDIT -> {
+                        editMessage(message)
+                    }
+                    MessageOption.DELETE -> {
+                        deleteMessage(message)
+                    }
+                    MessageOption.OPEN_FILE -> {
+                        openFile(message)
+                    }
+                    MessageOption.REACTION_HISTORY -> {
+                        showReactionHistory(message)
+                    }
                 }
             }
         }
-
     }
 
-    private fun handleMessageOption(position: Int, message: EkoMessage) {
+    private fun getMessageOptions(message: EkoMessage): List<String> {
+        val optionItems = mutableListOf<String>()
+        optionItems.add(MessageOption.FLAG_MESSAGE.value)
+        optionItems.add(MessageOption.FLAG_SENDER.value)
+        optionItems.add(MessageOption.SET_TAG.value)
+
+        if (DataType.from(message.type) == DataType.FILE) {
+            optionItems.add(MessageOption.OPEN_FILE.value)
+        }
+
+        if (message.userId == EkoClient.getUserId()) {
+            if (DataType.from(message.type) == DataType.TEXT
+                    || DataType.from(message.type) == DataType.CUSTOM) {
+                optionItems.add(MessageOption.EDIT.value)
+            }
+            optionItems.add(MessageOption.DELETE.value)
+        }
+
+        optionItems.add(MessageOption.ADD_REACTION.value)
+        if (message.myReactions.isNotEmpty()) {
+            optionItems.add(MessageOption.REMOVE_REACTION.value)
+        }
+        optionItems.add(MessageOption.REACTION_HISTORY.value)
+
+        return optionItems
+    }
+
+    private fun editMessage(message: EkoMessage) {
         when (DataType.from(message.type)) {
             DataType.TEXT -> {
-                if (position == 3) {
-                    showTextMessageEditor(message)
-                } else {
-                    message.textMessageEditor?.run {
-                        delete().subscribe()
-                    }
+                showTextMessageEditor(message)
+            }
+
+            DataType.CUSTOM -> {
+                showCustomMessageEditor(message)
+            }
+        }
+    }
+
+    private fun deleteMessage(message: EkoMessage) {
+        when (DataType.from(message.type)) {
+            DataType.TEXT -> {
+                message.textMessageEditor?.run {
+                    delete().subscribe()
                 }
             }
             DataType.IMAGE -> {
-                if (position == 3) {
-                    message.imageMessageEditor?.run {
-                        delete().subscribe()
-                    }
+                message.imageMessageEditor?.run {
+                    delete().subscribe()
                 }
             }
             DataType.FILE -> {
-                if (position == 3) {
-                    openFile(message)
-                } else {
-                    message.fileMessageEditor?.run {
-                        delete().subscribe()
-                    }
+                message.fileMessageEditor?.run {
+                    delete().subscribe()
                 }
             }
             DataType.CUSTOM -> {
-                if (position == 3) {
-                    showCustomMessageEditor(message)
-                } else {
-                    message.customMessageEditor?.run {
-                        delete().subscribe()
-                    }
+                message.customMessageEditor?.run {
+                    delete().subscribe()
                 }
             }
-
         }
-
     }
 
     private fun flagMessage(message: EkoMessage) {
@@ -366,7 +382,6 @@ abstract class MessageListActivity : BaseActivity() {
                 }
             }
         }
-
     }
 
     private fun flagUser(user: EkoUser) {
@@ -393,9 +408,7 @@ abstract class MessageListActivity : BaseActivity() {
                             .subscribe())
                 }
             }
-
         }
-
     }
 
     private fun setTags(message: EkoMessage) {
@@ -416,10 +429,10 @@ abstract class MessageListActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = stackFromEnd.get()
         layoutManager.reverseLayout = revertLayout.get()
-        messageListRecyclerView!!.layoutManager = layoutManager
+        messageListRecyclerView?.layoutManager = layoutManager
 
         adapter = MessageListAdapter()
-        messageListRecyclerView!!.adapter = adapter
+        messageListRecyclerView?.adapter = adapter
 
         disposable.clear()
 
@@ -451,7 +464,6 @@ abstract class MessageListActivity : BaseActivity() {
             title(title)
             input(inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, hint = hint.toString(), prefill = prefill, allowEmpty = allowEmptyInput, callback = callback)
         }
-
     }
 
     @OnTextChanged(R.id.message_edittext)
@@ -494,19 +506,18 @@ abstract class MessageListActivity : BaseActivity() {
 
     }
 
-    internal fun scrollToBottom() {
+    private fun scrollToBottom() {
         messageListRecyclerView?.postDelayed({
             val lastPosition = adapter?.itemCount!! - 1
             messageListRecyclerView?.scrollToPosition(lastPosition)
         }, 10)
-
     }
 
     private fun openFile(message: EkoMessage) {
         rxPermissions
                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe({ granted ->
-                    if (granted!!) {
+                    if (granted) {
                         FileManager.openFile(getApplicationContext(), message)
                     }
                 })
@@ -521,11 +532,8 @@ abstract class MessageListActivity : BaseActivity() {
                     text(modifiedText)
                             .subscribe()
                 }
-
             }
-
         })
-
     }
 
     private fun showCustomMessageEditor(message: EkoMessage) {
@@ -538,7 +546,7 @@ abstract class MessageListActivity : BaseActivity() {
         val valueEditText = customView.findViewById<EditText>(R.id.value_edittext)
         val sendButton = customView.findViewById<Button>(R.id.send_button)
 
-        keyEditText.addTextChangedListener(object: TextWatcher {
+        keyEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 sendButton.isEnabled = s?.isNotEmpty() ?: false
             }
@@ -558,12 +566,10 @@ abstract class MessageListActivity : BaseActivity() {
             dialog.dismiss()
         }
 
-        dialog.show ()
-
+        dialog.show()
     }
 
     private fun sendEditCustomMessageRequest(message: EkoMessage, key: String, value: String) {
-
         val customData = JsonObject()
         customData.addProperty(key, value)
 
@@ -572,7 +578,42 @@ abstract class MessageListActivity : BaseActivity() {
             custom(customData)
                     .subscribe()
         }
+    }
 
+    private fun showAddReactionDialog(message: EkoMessage) {
+        val reactionItems = mutableListOf<String>()
+        ReactionOption.values().filter {
+            !message.myReactions.contains(it.value())
+        }.forEach {
+            reactionItems.add(it.value())
+        }
+
+        if (reactionItems.isNullOrEmpty()) {
+            return
+        }
+
+        MaterialDialog(this).show {
+            listItems(items = reactionItems) { dialog, position, text ->
+                message.react()
+                        .addReaction(text.toString())
+                        .subscribe()
+            }
+        }
+    }
+
+    private fun showRemoveReactionDialog(message: EkoMessage) {
+        val reactionItems = message.myReactions
+        MaterialDialog(this).show {
+            listItems(items = reactionItems) { dialog, position, text ->
+                message.react()
+                        .removeReaction(text.toString())
+                        .subscribe()
+            }
+        }
+    }
+
+    private fun showReactionHistory(message: EkoMessage) {
+        startActivity(OpenMessageReactionListIntent(this, message.messageId))
     }
 
 }

@@ -5,20 +5,20 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.simplechat.FileMessageSenderActivity;
+import com.ekoapp.simplechat.messagelist.CustomMessageSenderActivity;
 
-public class OpenFileMessageSenderActivityIntent extends BaseIntent {
+public class OpenCustomMessageSenderIntent extends BaseIntent {
 
     private static final String EXTRA_CHANNEL_ID = EXTRA + "channel.id";
     private static final String EXTRA_PARENT_ID = EXTRA + "parent.id";
 
-    public OpenFileMessageSenderActivityIntent(@NonNull Context context, @NonNull String channelId) {
-        super(context, FileMessageSenderActivity.class);
+    public OpenCustomMessageSenderIntent(@NonNull Context context, @NonNull String channelId) {
+        super(context, CustomMessageSenderActivity.class);
         putExtra(EXTRA_CHANNEL_ID, channelId);
     }
 
-    public OpenFileMessageSenderActivityIntent(@NonNull Context context, @NonNull String channelId, @NonNull String parentId) {
-        super(context, FileMessageSenderActivity.class);
+    public OpenCustomMessageSenderIntent(@NonNull Context context, @NonNull String channelId, @NonNull String parentId) {
+        super(context, CustomMessageSenderActivity.class);
         putExtra(EXTRA_CHANNEL_ID, channelId);
         putExtra(EXTRA_PARENT_ID, parentId);
     }

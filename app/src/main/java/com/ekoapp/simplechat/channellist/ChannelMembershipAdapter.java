@@ -1,4 +1,4 @@
-package com.ekoapp.simplechat;
+package com.ekoapp.simplechat.channellist;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +8,9 @@ import android.widget.TextView;
 import com.ekoapp.ekosdk.EkoChannelMembership;
 import com.ekoapp.ekosdk.EkoObjects;
 import com.ekoapp.ekosdk.adapter.EkoChannelMembershipAdapter;
-import com.ekoapp.simplechat.ChannelMembershipAdapter.EkoUserViewHolder;
+import com.ekoapp.simplechat.BaseViewHolder;
+import com.ekoapp.simplechat.channellist.ChannelMembershipAdapter.EkoUserViewHolder;
+import com.ekoapp.simplechat.R;
 
 import butterknife.BindView;
 

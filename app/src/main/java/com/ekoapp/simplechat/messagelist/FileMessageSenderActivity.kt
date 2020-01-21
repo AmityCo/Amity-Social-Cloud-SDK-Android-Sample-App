@@ -1,4 +1,4 @@
-package com.ekoapp.simplechat
+package com.ekoapp.simplechat.messagelist
 
 import android.Manifest
 import android.app.Activity
@@ -9,13 +9,13 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.internal.util.RealPathUtil
+import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.intent.IntentRequestCode.REQUEST_SELECT_FILE
-import com.ekoapp.simplechat.intent.OpenFileMessageSenderActivityIntent
+import com.ekoapp.simplechat.intent.OpenFileMessageSenderIntent
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.activity_file_message_sender.*
-import java.io.File
 
 class FileMessageSenderActivity : AppCompatActivity() {
 
@@ -89,8 +89,8 @@ class FileMessageSenderActivity : AppCompatActivity() {
 
     private fun createRequest(): Completable {
         val messageRepository = EkoClient.newMessageRepository()
-        val channelId = OpenFileMessageSenderActivityIntent.getChannelId(intent) ?: ""
-        val parentId = OpenFileMessageSenderActivityIntent.getParentId(intent)
+        val channelId = OpenFileMessageSenderIntent.getChannelId(intent) ?: ""
+        val parentId = OpenFileMessageSenderIntent.getParentId(intent)
 
         if (parentId != null) {
             return messageRepository.createMessage(channelId)

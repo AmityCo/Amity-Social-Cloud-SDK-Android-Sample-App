@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ekoapp.simplechat.ChannelListActivity">
+    tools:context="com.ekoapp.simplechat.channellist.ChannelListActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -39,7 +39,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/filter_spinner"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:context="com.ekoapp.simplechat.ChannelListActivity"
+        tools:context="com.ekoapp.simplechat.channellist.ChannelListActivity"
         tools:showIn="@layout/activity_channel_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

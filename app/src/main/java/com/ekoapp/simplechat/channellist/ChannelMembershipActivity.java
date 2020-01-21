@@ -1,4 +1,4 @@
-package com.ekoapp.simplechat;
+package com.ekoapp.simplechat.channellist;
 
 import android.os.Bundle;
 
@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ekoapp.ekosdk.EkoClient;
+import com.ekoapp.simplechat.BaseActivity;
+import com.ekoapp.simplechat.R;
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent;
 
 import butterknife.BindView;

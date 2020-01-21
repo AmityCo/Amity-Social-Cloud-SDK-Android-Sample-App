@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ChannelListActivity"
+            android:name=".channellist.ChannelListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -29,32 +29,41 @@
         </activity>
 
         <activity
-            android:name=".ParentMessageListActivity"
+            android:name=".messagelist.ParentMessageListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ChildMessageListActivity"
+            android:name=".messagelist.ChildMessageListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ChannelMembershipActivity"
+            android:name=".channellist.ChannelMembershipActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ImageMessageSenderActivity"
+            android:name=".messagelist.ImageMessageSenderActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".FileMessageSenderActivity"
+            android:name=".messagelist.FileMessageSenderActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".CustomMessageSenderActivity"
+            android:name=".messagelist.CustomMessageSenderActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".messagereactionlist.MessageReactionListActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".channellist.ChangeMetadataActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".SimpleFirebaseMessagingService"

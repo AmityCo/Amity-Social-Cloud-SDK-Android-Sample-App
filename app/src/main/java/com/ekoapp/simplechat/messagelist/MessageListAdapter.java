@@ -1,4 +1,4 @@
-package com.ekoapp.simplechat;
+package com.ekoapp.simplechat.messagelist;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +17,8 @@ import com.ekoapp.ekosdk.messaging.data.DataType;
 import com.ekoapp.ekosdk.messaging.data.FileData;
 import com.ekoapp.ekosdk.messaging.data.ImageData;
 import com.ekoapp.ekosdk.messaging.data.TextData;
+import com.ekoapp.simplechat.BaseViewHolder;
+import com.ekoapp.simplechat.R;
 import com.google.common.base.Joiner;
 
 import org.joda.time.DateTime;
@@ -32,7 +34,7 @@ import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.subjects.PublishSubject;
 
-import static com.ekoapp.simplechat.MessageListAdapter.MessageViewHolder;
+import static com.ekoapp.simplechat.messagelist.MessageListAdapter.MessageViewHolder;
 
 public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
 
@@ -54,28 +56,22 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         Setter<View, Integer> visibility = (view, value, index) -> view.setVisibility(value);
 
         if (EkoObjects.isProxy(m)) {
-            ViewCollections.set(holder.optionalViews, visibility, View.GONE);
-            holder.messageIdTextview.setText(String.format("loading adapter position: %s", position));
-            Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
-
+            renderLoadingItem(holder, visibility, position);
         } else if (m.isDeleted()) {
-            ViewCollections.set(holder.optionalViews, visibility, View.GONE);
-            holder.messageIdTextview.setText(String.format("Deleted"));
-            holder.dataTextview.setText("");
-            Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
+           renderDeletedMessage(holder, visibility);
         } else {
             ViewCollections.set(holder.optionalViews, visibility, View.VISIBLE);
             String type = m.getType();
             EkoUser sender = m.getUser();
             DateTime created = m.getCreatedAt();
 
-            holder.messageIdTextview.setText(String.format("id: %s %s:%s\nsegment: %s",
+            holder.messageIdTextview.setText(String.format("mid: %s %s:%s\nsegment: %s",
                     m.getMessageId(),
                     m.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                     m.getFlagCount(),
                     m.getChannelSegment()));
 
-            holder.senderTextview.setText(String.format("id: %s %s: %s\ndisplay name: %s",
+            holder.senderTextview.setText(String.format("uid: %s %s: %s\ndisplay name: %s",
                     sender != null ? sender.getUserId() : "",
                     sender != null && sender.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                     sender != null ? sender.getFlagCount() : 0,
@@ -102,6 +98,8 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
                 Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
             }
 
+            renderReaction(holder, m);
+
             holder.syncStateTextview.setText(m.getSyncState().name());
             holder.timeTextview.setText(created.toString(DateTimeFormat.longDateTime()));
         }
@@ -115,6 +113,36 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             onClickSubject.onNext(m);
         });
     }
+
+    private void renderLoadingItem(@NonNull MessageViewHolder holder, Setter<View, Integer> visibility, int position) {
+        ViewCollections.set(holder.optionalViews, visibility, View.GONE);
+        holder.messageIdTextview.setText(String.format("loading adapter position: %s", position));
+        Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
+    }
+
+    private void renderDeletedMessage(@NonNull MessageViewHolder holder, Setter<View, Integer> visibility) {
+        ViewCollections.set(holder.optionalViews, visibility, View.GONE);
+        holder.messageIdTextview.setText(String.format("Deleted"));
+        holder.dataTextview.setText("");
+        Glide.with(holder.dataImageview.getContext()).clear(holder.dataImageview);
+    }
+
+    private void renderReaction(@NonNull MessageViewHolder holder, @NonNull EkoMessage m) {
+        String reactions = "";
+        for(String key: m.getReactions().keySet()) {
+            int reactionCount = m.getReactions().getCount(key);
+            reactions += String.format("\n%s : %s", key, reactionCount);
+        }
+
+        List<String> myReactions = m.getMyReactions();
+        String myReactionsString = Joiner.on(" ").join(myReactions);
+
+        holder.reactionTextview.setText(String.format("reaction count: %s %s \nmy reactions: %s",
+                m.getReactionCount(),
+                reactions,
+                myReactionsString));
+    }
+
 
     Flowable<EkoMessage> getOnLongClickFlowable() {
         return onLongClickSubject.toFlowable(BackpressureStrategy.BUFFER);
@@ -143,6 +171,8 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
         TextView dataTextview;
         @BindView(R.id.data_imageview)
         ImageView dataImageview;
+        @BindView(R.id.reaction_textview)
+        TextView reactionTextview;
         @BindView(R.id.comment_count_textview)
         TextView commentTextview;
         @BindView(R.id.tags_textview)

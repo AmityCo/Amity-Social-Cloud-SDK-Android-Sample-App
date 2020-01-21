@@ -3,6 +3,7 @@
     <string name="register">Register</string>
     <string name="unregister">Un-Register</string>
     <string name="change_display_name">Change DisplayName</string>
+    <string name="change_metadata">Change Metadata</string>
     <string name="join_channel">Join Channel</string>
     <string name="change_api_key">Change API Key</string>
     <string name="member">Member</string>

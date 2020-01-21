@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.simplechat.ChildMessageListActivity;
+import com.ekoapp.simplechat.messagelist.ChildMessageListActivity;
 
 public class ViewChildMessagesIntent extends BaseIntent {
 

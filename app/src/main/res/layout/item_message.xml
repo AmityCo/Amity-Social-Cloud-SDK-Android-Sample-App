@@ -10,7 +10,6 @@
         android:id="@+id/message_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="2"
         android:textSize="14sp"
         tools:text="1337: ms91d" />
 
@@ -39,10 +38,18 @@
         android:layout_below="@id/data_textview" />
 
     <TextView
-        android:id="@+id/comment_count_textview"
+        android:id="@+id/reaction_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/data_imageview"
+        android:textSize="14sp"
+        tools:text="Reaction"/>
+
+    <TextView
+        android:id="@+id/comment_count_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reaction_textview"
         android:maxLines="1"
         android:textSize="14sp"
         tools:text="Comment" />
