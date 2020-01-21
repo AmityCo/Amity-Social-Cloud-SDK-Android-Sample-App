@@ -34,6 +34,7 @@ import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.SimpleConfig
 import com.ekoapp.simplechat.SimplePreferences
 import com.ekoapp.simplechat.channellist.option.ChannelTypeOption
+import com.ekoapp.simplechat.intent.OpenChangeMetadataIntent
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.base.Joiner
@@ -48,19 +49,24 @@ import java.util.*
 class ChannelListActivity : BaseActivity() {
 
     @BindView(R.id.toolbar)
-    @JvmField var toolbar: Toolbar? = null
+    @JvmField
+    var toolbar: Toolbar? = null
 
     @BindView(R.id.total_unread_textview)
-    @JvmField var totalUnreadTextView: TextView? = null
+    @JvmField
+    var totalUnreadTextView: TextView? = null
 
     @BindView(R.id.filter_spinner)
-    @JvmField var spinner: Spinner? = null
+    @JvmField
+    var spinner: Spinner? = null
 
     @BindView(R.id.fab)
-    @JvmField var fab: FloatingActionButton? = null
+    @JvmField
+    var fab: FloatingActionButton? = null
 
     @BindView(R.id.channel_list_recyclerview)
-    @JvmField var channelListRecyclerView: RecyclerView? = null
+    @JvmField
+    var channelListRecyclerView: RecyclerView? = null
 
     private var filter = EkoChannelFilter.ALL
 
@@ -155,6 +161,13 @@ class ChannelListActivity : BaseActivity() {
                         .subscribe()
             })
             return true
+        } else if (id == R.id.action_change_metadata) {
+            val metadata = "Coming soon in version 2.6"
+            MaterialDialog(this).show {
+                title(R.string.change_metadata)
+                message(null, metadata, null)
+            }
+            return true
         } else if (id == R.id.action_join_channel) {
             val channelTypeItems = ArrayList<String>()
             channelTypeItems.run {
@@ -225,7 +238,7 @@ class ChannelListActivity : BaseActivity() {
                     .isAllowed()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess{ allowed ->
+                    .doOnSuccess { allowed ->
                         MaterialDialog(this).show {
                             title(text = "Notification Settings")
                             checkBoxPrompt(text = "allow notification for current user", isCheckedDefault = allowed, onToggle = null)

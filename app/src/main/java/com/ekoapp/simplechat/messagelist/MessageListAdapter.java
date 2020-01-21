@@ -65,13 +65,13 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
             EkoUser sender = m.getUser();
             DateTime created = m.getCreatedAt();
 
-            holder.messageIdTextview.setText(String.format("id: %s %s:%s\nsegment: %s",
+            holder.messageIdTextview.setText(String.format("mid: %s %s:%s\nsegment: %s",
                     m.getMessageId(),
                     m.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                     m.getFlagCount(),
                     m.getChannelSegment()));
 
-            holder.senderTextview.setText(String.format("id: %s %s: %s\ndisplay name: %s",
+            holder.senderTextview.setText(String.format("uid: %s %s: %s\ndisplay name: %s",
                     sender != null ? sender.getUserId() : "",
                     sender != null && sender.isFlaggedByMe() ? "\uD83C\uDFC1" : "\uD83C\uDFF3️",
                     sender != null ? sender.getFlagCount() : 0,
@@ -130,25 +130,17 @@ public class MessageListAdapter extends EkoMessageAdapter<MessageViewHolder> {
     private void renderReaction(@NonNull MessageViewHolder holder, @NonNull EkoMessage m) {
         String reactions = "";
         for(String key: m.getReactions().keySet()) {
-            String reactionName =  key;
-            int reactionCount = m.getReactions().get(key);
-            reactions += String.format("\n%s : %s", reactionName, reactionCount);
+            int reactionCount = m.getReactions().getCount(key);
+            reactions += String.format("\n%s : %s", key, reactionCount);
         }
 
-        String myReactions = "";
-        for(String reaction: m.getMyReactions()) {
+        List<String> myReactions = m.getMyReactions();
+        String myReactionsString = Joiner.on(" ").join(myReactions);
 
-            if(!myReactions.isEmpty()) {
-                myReactions += ',' ;
-            }
-
-            myReactions += reaction;
-        }
-
-        holder.reactionTextview.setText(String.format("reaction count: %s \nall reactions: %s \nmy reactions: %s",
+        holder.reactionTextview.setText(String.format("reaction count: %s %s \nmy reactions: %s",
                 m.getReactionCount(),
                 reactions,
-                myReactions));
+                myReactionsString));
     }
 
 

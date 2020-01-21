@@ -16,7 +16,9 @@ enum class MessageOption(val value: String) {
 
     ADD_REACTION("add reaction"),
 
-    REMOVE_REACTION("remove reaction");
+    REMOVE_REACTION("remove reaction"),
+
+    REACTION_HISTORY("reaction history");
 
     companion object {
         fun enumOf(value: String): MessageOption? = MessageOption.values().find { it.value == value }

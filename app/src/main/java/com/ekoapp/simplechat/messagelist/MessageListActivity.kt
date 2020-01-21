@@ -40,6 +40,7 @@ import com.ekoapp.simplechat.BaseActivity
 import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.SimplePreferences
 import com.ekoapp.simplechat.file.FileManager
+import com.ekoapp.simplechat.intent.OpenMessageReactionListIntent
 import com.ekoapp.simplechat.intent.ViewChannelMembershipsIntent
 import com.ekoapp.simplechat.messagelist.option.MessageOption
 import com.ekoapp.simplechat.messagelist.option.ReactionOption
@@ -280,6 +281,9 @@ abstract class MessageListActivity : BaseActivity() {
                     MessageOption.OPEN_FILE -> {
                         openFile(message)
                     }
+                    MessageOption.REACTION_HISTORY -> {
+                        showReactionHistory(message)
+                    }
                 }
             }
         }
@@ -307,6 +311,7 @@ abstract class MessageListActivity : BaseActivity() {
         if (message.myReactions.isNotEmpty()) {
             optionItems.add(MessageOption.REMOVE_REACTION.value)
         }
+        optionItems.add(MessageOption.REACTION_HISTORY.value)
 
         return optionItems
     }
@@ -605,6 +610,10 @@ abstract class MessageListActivity : BaseActivity() {
                         .subscribe()
             }
         }
+    }
+
+    private fun showReactionHistory(message: EkoMessage) {
+        startActivity(OpenMessageReactionListIntent(this, message.messageId))
     }
 
 }
