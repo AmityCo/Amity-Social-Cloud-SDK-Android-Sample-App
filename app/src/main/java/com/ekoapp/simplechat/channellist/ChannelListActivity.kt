@@ -162,10 +162,18 @@ class ChannelListActivity : BaseActivity() {
             })
             return true
         } else if (id == R.id.action_change_metadata) {
-            val metadata = "Coming soon in version 2.6"
+            val metadata = EkoClient.getUserMetadata() ?: "Metadata has not been set"
+            val intent = OpenChangeMetadataIntent(this)
+            val context = this
             MaterialDialog(this).show {
                 title(R.string.change_metadata)
-                message(null, metadata, null)
+                message(null, metadata.toString(), null)
+                positiveButton(
+                        null,
+                        "Set",
+                        {
+                            context.startActivity(intent)
+                        })
             }
             return true
         } else if (id == R.id.action_join_channel) {
