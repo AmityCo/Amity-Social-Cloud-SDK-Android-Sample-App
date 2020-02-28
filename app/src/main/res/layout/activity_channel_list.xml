@@ -14,20 +14,21 @@
         android:elevation="8dp"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <Spinner
-        android:id="@+id/filter_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
+    <TextView
+        android:id="@+id/query_filter_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
-        android:layout_alignParentRight="true" />
+        android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        tools:text="filter options" />
 
     <TextView
         android:id="@+id/total_unread_textview"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/query_filter_textview"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/filter_spinner"
         android:gravity="center_vertical"
         android:padding="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -37,7 +38,7 @@
         android:id="@+id/channel_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/filter_spinner"
+        android:layout_below="@id/total_unread_textview"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context="com.ekoapp.simplechat.channellist.ChannelListActivity"
         tools:showIn="@layout/activity_channel_list" />

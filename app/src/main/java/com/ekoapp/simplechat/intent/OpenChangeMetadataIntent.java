@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.simplechat.channellist.ChangeMetadataActivity;
+import com.ekoapp.simplechat.ChangeMetadataActivity;
 
 public class OpenChangeMetadataIntent extends BaseIntent {
 

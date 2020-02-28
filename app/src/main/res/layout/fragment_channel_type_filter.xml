@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.ekoapp.simplechat.channellist.filter.channeltype.ChannelTypeFilterViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Channel types"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_standard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={model.isStandardTypeSelected}"
+            android:text="Standard" />
+
+        <CheckBox
+            android:id="@+id/checkbox_private"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={model.isPrivateTypeSelected}"
+            android:text="Private" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#3e3e3e"/>
+
+    </LinearLayout>
+
+
+</layout>

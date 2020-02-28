@@ -61,7 +61,12 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".channellist.ChangeMetadataActivity"
+            android:name=".ChangeMetadataActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".channellist.filter.ChannelQueryFilterActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 
