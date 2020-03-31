@@ -43,13 +43,13 @@ class ChannelTypeFilterFragment : Fragment() {
             viewModel.isPrivateTypeSelected.postValue(true)
         }
 
-//        if(channelTypes.contains(EkoChannel.Type.BROADCAST.apiKey)) {
-//            viewModel.isBroadcastTypeSelected.postValue(true)
-//        }
-//
-//        if(channelTypes.contains(EkoChannel.Type.CONVERSATION.apiKey)) {
-//            viewModel.isChatTypeSelected.postValue(true)
-//        }
+        if(channelTypes.contains(EkoChannel.Type.BROADCAST.apiKey)) {
+            viewModel.isBroadcastTypeSelected.postValue(true)
+        }
+
+        if(channelTypes.contains(EkoChannel.Type.CONVERSATION.apiKey)) {
+            viewModel.isChatTypeSelected.postValue(true)
+        }
 
     }
 

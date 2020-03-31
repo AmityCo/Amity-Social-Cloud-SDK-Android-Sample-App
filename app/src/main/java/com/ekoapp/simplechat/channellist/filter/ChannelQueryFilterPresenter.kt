@@ -36,13 +36,13 @@ class ChannelQueryFilterPresenter(private val view: ChannelQueryFilterContract.V
             listOfChannelType.add(EkoChannel.Type.PRIVATE.apiKey)
         }
 
-//        if(channelTypeFilterViewModel.isBroadcastTypeSelected.value == true) {
-//            listOfChannelType.add(EkoChannel.Type.BROADCAST.apiKey)
-//        }
-//
-//        if(channelTypeFilterViewModel.isChatTypeSelected.value == true) {
-//            listOfChannelType.add(EkoChannel.Type.CONVERSATION.apiKey)
-//        }
+        if(channelTypeFilterViewModel.isBroadcastTypeSelected.value == true) {
+            listOfChannelType.add(EkoChannel.Type.BROADCAST.apiKey)
+        }
+
+        if(channelTypeFilterViewModel.isChatTypeSelected.value == true) {
+            listOfChannelType.add(EkoChannel.Type.CONVERSATION.apiKey)
+        }
 
         if (listOfChannelType.isEmpty()) {
             EkoChannel.Type.getAllChannelTypes()

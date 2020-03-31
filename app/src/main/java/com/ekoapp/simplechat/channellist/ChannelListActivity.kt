@@ -130,21 +130,38 @@ class ChannelListActivity : AppCompatActivity() {
                         })
             }
             return true
-        } else if (id == R.id.action_join_channel) {
+        } else if (id == R.id.action_create_channel) {
             val channelTypeItems = ArrayList<String>()
             channelTypeItems.run {
-                add(EkoChannel.Type.STANDARD.apiKey)
-                add(EkoChannel.Type.PRIVATE.apiKey)
+                add(EkoChannel.CreationType.STANDARD.apiKey)
+                add(EkoChannel.CreationType.PRIVATE.apiKey)
             }
 
             MaterialDialog(this).show {
                 listItems(items = channelTypeItems) { dialog, index, text ->
-                    showDialog(R.string.join_channel, "", "", false, { d, input ->
+                    showDialog(R.string.create_channel, "channelId", "", false, { d, input ->
                         val channelId = input.toString()
-                        channelRepository.getOrCreateById(channelId, EkoChannel.Type.fromJson(text.toString()))
+                        channelRepository.createChannel(channelId,
+                                EkoChannel.CreationType.fromJson(text.toString()),
+                                EkoChannel.CreateOption.none())
                     })
                 }
             }
+            return true
+        } else if (id == R.id.action_create_conversation) {
+            showDialog(R.string.create_conversation, "userId", "", false, { d, input ->
+                val userId = input.toString()
+                channelRepository.createConversation(userId)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { Toast.makeText(this, String.format("conversation created with %s", userId), Toast.LENGTH_SHORT).show() }
+                        .subscribe()
+            })
+            return true
+        } else if (id == R.id.action_join_channel) {
+            showDialog(R.string.join_channel, "channelId", "", false, { d, input ->
+                val channelId = input.toString()
+                channelRepository.joinChannel(channelId).subscribe()
+            })
             return true
         } else if (id == R.id.action_change_api_key) {
             val apiKeyStore = SimplePreferences.getApiKey()

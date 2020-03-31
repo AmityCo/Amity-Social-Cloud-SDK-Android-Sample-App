@@ -32,6 +32,19 @@
             android:checked="@={model.isPrivateTypeSelected}"
             android:text="Private" />
 
+        <CheckBox
+            android:id="@+id/checkbox_broadcast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={model.isBroadcastTypeSelected}"
+            android:text="Broadcast" />
+        <CheckBox
+            android:id="@+id/checkbox_conversation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={model.isChatTypeSelected}"
+            android:text="Conversation" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

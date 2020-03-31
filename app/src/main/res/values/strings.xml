@@ -5,6 +5,8 @@
     <string name="change_display_name">Change DisplayName</string>
     <string name="change_metadata">Change Metadata</string>
     <string name="join_channel">Join Channel</string>
+    <string name="create_channel">Create Channel</string>
+    <string name="create_conversation">Create Conversation</string>
     <string name="change_api_key">Change API Key</string>
     <string name="member">Member</string>
     <string name="with_tag">With Tag(s)</string>

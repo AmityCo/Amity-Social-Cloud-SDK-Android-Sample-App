@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def ekoSdkVersion = '3.0.0-beta2'
+def ekoSdkVersion = '3.0.0'
 
 android {
     compileSdkVersion 28
@@ -48,6 +48,10 @@ android {
         fcm {
             dimension "push"
         }
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
     compileOptions {
