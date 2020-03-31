@@ -30,11 +30,13 @@
 
         <activity
             android:name=".messagelist.ParentMessageListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <activity
             android:name=".messagelist.ChildMessageListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <activity
             android:name=".channellist.ChannelMembershipActivity"
@@ -61,7 +63,12 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".channellist.ChangeMetadataActivity"
+            android:name=".ChangeMetadataActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".channellist.filter.ChannelQueryFilterActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
 

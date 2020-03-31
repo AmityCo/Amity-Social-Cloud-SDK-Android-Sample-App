@@ -1,5 +1,6 @@
 package com.ekoapp.simplechat.channellist
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -7,17 +8,14 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.*
+import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
@@ -29,63 +27,38 @@ import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.ekosdk.sdk.BuildConfig
-import com.ekoapp.simplechat.BaseActivity
 import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.SimpleConfig
 import com.ekoapp.simplechat.SimplePreferences
-import com.ekoapp.simplechat.channellist.option.ChannelTypeOption
+import com.ekoapp.simplechat.channellist.filter.ChannelQueryFilterActivity
+import com.ekoapp.simplechat.intent.IntentRequestCode
 import com.ekoapp.simplechat.intent.OpenChangeMetadataIntent
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.base.Joiner
 import com.google.common.base.MoreObjects
-import com.google.common.collect.Sets
+import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_channel_list.*
 import org.bson.types.ObjectId
 import java.util.*
 
 
-class ChannelListActivity : BaseActivity() {
-
-    @BindView(R.id.toolbar)
-    @JvmField
-    var toolbar: Toolbar? = null
-
-    @BindView(R.id.total_unread_textview)
-    @JvmField
-    var totalUnreadTextView: TextView? = null
-
-    @BindView(R.id.filter_spinner)
-    @JvmField
-    var spinner: Spinner? = null
-
-    @BindView(R.id.fab)
-    @JvmField
-    var fab: FloatingActionButton? = null
-
-    @BindView(R.id.channel_list_recyclerview)
-    @JvmField
-    var channelListRecyclerView: RecyclerView? = null
-
-    private var filter = EkoChannelFilter.ALL
+class ChannelListActivity : AppCompatActivity() {
 
     private var channels: LiveData<PagedList<EkoChannel>>? = null
 
     private val channelRepository = EkoClient.newChannelRepository()
-
-    private val includingTags = SimplePreferences.getIncludingChannelTags()
-    private val excludingTags = SimplePreferences.getExcludingChannelTags()
 
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         setContentView(R.layout.activity_channel_list)
         val appName = getString(R.string.app_name)
-        toolbar?.title = String.format("%s %s: %s", appName, "Eko SDK", BuildConfig.VERSION_NAME)
-        toolbar?.subtitle = String.format("%s", BuildConfig.EKO_HTTP_URL)
-        toolbar?.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
-        toolbar?.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        toolbar.title = String.format("%s %s: %s", appName, "Eko SDK", BuildConfig.VERSION_NAME)
+        toolbar.subtitle = String.format("%s", BuildConfig.EKO_HTTP_URL)
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
 
         val userId = MoreObjects.firstNonNull(EkoClient.getUserId(), SimpleConfig.DEFAULT_USER_ID)
@@ -93,44 +66,26 @@ class ChannelListActivity : BaseActivity() {
 
         EkoClient.registerDevice(userId, displayName)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { this.setupChannelList() }
+                .doOnComplete { this.observeChannelCollection() }
                 .subscribe()
 
-        fab?.setOnClickListener { view ->
+        fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null)
                     .show()
         }
 
-        val resources = getResources()
-
-        LiveDataReactiveStreams.fromPublisher(channelRepository.getTotalUnreadCount())
-                .observe(this, object : Observer<Int> {
-                    override fun onChanged(totalUnreadCount: Int) {
-                        val totalUnreadCountString = resources.getString(R.string.total_unread_d, totalUnreadCount)
-                        totalUnreadTextView?.text = totalUnreadCountString
-                    }
-                })
-    }
-
-    private fun setupChannelList() {
-        val modes = arrayOf<String>(EkoChannelFilter.ALL.apiKey, EkoChannelFilter.MEMBER.getApiKey(), EkoChannelFilter.NOT_MEMBER.apiKey)
-
-        spinner?.adapter = ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                modes)
-
-        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                filter = EkoChannelFilter.fromApiKey(modes[position])
-                observeChannelCollection()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // do nothing
-            }
+        query_filter_textview.setOnClickListener {
+            startActivityForResult(Intent(this, ChannelQueryFilterActivity::class.java),
+                    IntentRequestCode.REQUEST_CHANNEL_FILTER_OPTION)
         }
 
+        LiveDataReactiveStreams.fromPublisher(channelRepository.getTotalUnreadCount())
+                .observe(this, Observer<Int> { totalUnreadCount ->
+                    val totalUnreadCountString = getString(R.string.total_unread_d, totalUnreadCount)
+                    total_unread_textview.text = totalUnreadCountString
+
+                })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -151,8 +106,7 @@ class ChannelListActivity : BaseActivity() {
             })
             return true
         } else if (id == R.id.action_unregister) {
-            EkoClient.unregisterDevice()
-                    .subscribe()
+            EkoClient.unregisterDevice().subscribe()
             return true
         } else if (id == R.id.action_change_display_name) {
             showDialog(R.string.change_display_name, "", EkoClient.getDisplayName(), false, { dialog, input ->
@@ -176,20 +130,38 @@ class ChannelListActivity : BaseActivity() {
                         })
             }
             return true
-        } else if (id == R.id.action_join_channel) {
+        } else if (id == R.id.action_create_channel) {
             val channelTypeItems = ArrayList<String>()
             channelTypeItems.run {
-                add(ChannelTypeOption.STANDARD.value())
+                add(EkoChannel.CreationType.STANDARD.apiKey)
+                add(EkoChannel.CreationType.PRIVATE.apiKey)
             }
 
             MaterialDialog(this).show {
                 listItems(items = channelTypeItems) { dialog, index, text ->
-                    showDialog(R.string.join_channel, "", "", false, { d, input ->
+                    showDialog(R.string.create_channel, "channelId", "", false, { d, input ->
                         val channelId = input.toString()
-                        channelRepository.getOrCreateById(channelId, EkoChannel.Type.fromJson(text.toString()))
+                        channelRepository.createChannel(channelId,
+                                EkoChannel.CreationType.fromJson(text.toString()),
+                                EkoChannel.CreateOption.none())
                     })
                 }
             }
+            return true
+        } else if (id == R.id.action_create_conversation) {
+            showDialog(R.string.create_conversation, "userId", "", false, { d, input ->
+                val userId = input.toString()
+                channelRepository.createConversation(userId)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { Toast.makeText(this, String.format("conversation created with %s", userId), Toast.LENGTH_SHORT).show() }
+                        .subscribe()
+            })
+            return true
+        } else if (id == R.id.action_join_channel) {
+            showDialog(R.string.join_channel, "channelId", "", false, { d, input ->
+                val channelId = input.toString()
+                channelRepository.joinChannel(channelId).subscribe()
+            })
             return true
         } else if (id == R.id.action_change_api_key) {
             val apiKeyStore = SimplePreferences.getApiKey()
@@ -197,30 +169,6 @@ class ChannelListActivity : BaseActivity() {
                 val newApiKey = input.toString()
                 apiKeyStore.set(newApiKey)
                 EkoClient.setup(newApiKey)
-            })
-            return true
-        } else if (id == R.id.action_with_tags) {
-            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags.get()), true, { dialog, input ->
-                val set = Sets.newConcurrentHashSet<String>()
-                for (tag in input.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()) {
-                    if (tag.length > 0) {
-                        set.add(tag)
-                    }
-                }
-                includingTags.set(set)
-                observeChannelCollection()
-            })
-            return true
-        } else if (id == R.id.action_without_tags) {
-            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags.get()), true, { dialog, input ->
-                val set = Sets.newConcurrentHashSet<String>()
-                for (tag in input.split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()) {
-                    if (tag.length > 0) {
-                        set.add(tag)
-                    }
-                }
-                excludingTags.set(set)
-                observeChannelCollection()
             })
             return true
         } else if (id == R.id.action_register_push) {
@@ -277,12 +225,50 @@ class ChannelListActivity : BaseActivity() {
     private fun observeChannelCollection() {
         channels?.removeObservers(this)
         val adapter = ChannelListAdapter()
-        channelListRecyclerView?.adapter = adapter
+        channel_list_recyclerview.adapter = adapter
 
-        channels = channelRepository.getChannelCollectionByTags(filter, EkoTags(includingTags.get()), EkoTags(excludingTags.get()))
+        displayQueryOptions()
+        channels = getChannelsLiveData()
         channels?.observe(this, Observer<PagedList<EkoChannel>> { adapter.submitList(it) })
     }
 
+    private fun getChannelsLiveData(): LiveData<PagedList<EkoChannel>> {
+
+        val types = FluentIterable.from(SimplePreferences.getChannelTypeOptions().get())
+                .transform {
+                    EkoChannel.Type.fromJson(it)
+                }.toSet()
+
+        val filter = EkoChannelFilter.fromApiKey(SimplePreferences.getChannelMembershipOption().get())
+        val includingTags = EkoTags(SimplePreferences.getIncludingChannelTags().get())
+        val excludingTags = EkoTags(SimplePreferences.getExcludingChannelTags().get())
+
+        return channelRepository
+                .channelCollection
+                .byTypes()
+                .types(types)
+                .filter(filter)
+                .includingTags(includingTags)
+                .excludingTags(excludingTags)
+                .build()
+                .query()
+    }
+
+    private fun displayQueryOptions() {
+        val types = "Types: " + Joiner.on(",").join(SimplePreferences.getChannelTypeOptions().get())
+        val filter = "\nMembership: " + SimplePreferences.getChannelMembershipOption().get()
+        val includeTags = "\nincludeTags: " + Joiner.on(",").join(SimplePreferences.getIncludingChannelTags().get())
+        val excludingTags = "\nexcludingTags: " + Joiner.on(",").join(SimplePreferences.getExcludingChannelTags().get())
+
+        query_filter_textview.text = types + filter + includeTags + excludingTags
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_CHANNEL_FILTER_OPTION) {
+            observeChannelCollection()
+        }
+    }
 
     private fun showDialog(@StringRes title: Int, hint: CharSequence, prefill: CharSequence, allowEmptyInput: Boolean, callback: InputCallback) {
         MaterialDialog(this).show {

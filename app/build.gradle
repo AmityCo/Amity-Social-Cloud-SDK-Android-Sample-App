@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def ekoSdkVersion = '2.7.0'
+def ekoSdkVersion = '3.0.0'
 
 android {
     compileSdkVersion 28
@@ -35,6 +35,10 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     flavorDimensions "push"
 
     productFlavors {
@@ -44,6 +48,10 @@ android {
         fcm {
             dimension "push"
         }
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 
     compileOptions {
@@ -58,9 +66,12 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
     implementation 'com.afollestad.material-dialogs:input:3.1.1'
 
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.1.0-rc01'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.1.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.1.0"
+
 
     implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
     implementation "androidx.tonyodev.fetch2:xfetch2:3.1.4"
@@ -86,11 +97,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
 
     implementation 'com.google.guava:guava:28.1-android'
-
-    implementation 'com.airbnb.android:epoxy:3.5.0'
-    implementation 'com.airbnb.android:epoxy-databinding:3.5.0'
-    implementation 'com.airbnb.android:epoxy-paging:3.5.0'
-    kapt 'com.airbnb.android:epoxy-processor:3.5.0'
 
     implementation 'com.jakewharton:butterknife:10.1.0'
     kapt 'com.jakewharton:butterknife-compiler:10.1.0'

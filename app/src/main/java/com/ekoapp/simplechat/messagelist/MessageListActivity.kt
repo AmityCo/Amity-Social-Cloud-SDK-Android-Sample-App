@@ -10,6 +10,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -53,6 +54,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_message_list.*
 
 abstract class MessageListActivity : BaseActivity() {
 
@@ -121,6 +123,7 @@ abstract class MessageListActivity : BaseActivity() {
 
         setTitleName()
         setSubtitleName()
+        setUpInputLayout()
 
         initialMessageCollection()
 
@@ -245,6 +248,14 @@ abstract class MessageListActivity : BaseActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setUpInputLayout() {
+        EkoClient.newChannelRepository().getChannel(getChannelId()).observe(this, Observer {
+            if(EkoChannel.Type.fromJson(it.channelType)  == EkoChannel.Type.BROADCAST) {
+                message_input_layout.visibility = View.GONE
+            }
+        })
     }
 
     private fun onLongClick(message: EkoMessage) {

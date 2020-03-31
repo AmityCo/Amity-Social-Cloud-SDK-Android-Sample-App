@@ -1,8 +1,7 @@
-package com.ekoapp.simplechat.channellist
+package com.ekoapp.simplechat
 
 import android.os.Bundle
 import com.ekoapp.ekosdk.EkoClient
-import com.ekoapp.simplechat.KeyValueInputActivity
 import com.google.gson.JsonObject
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.activity_key_value_input.*
