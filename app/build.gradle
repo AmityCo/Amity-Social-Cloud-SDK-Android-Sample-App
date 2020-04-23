@@ -6,13 +6,13 @@ apply plugin: 'kotlin-android-extensions'
 def ekoSdkVersion = '3.8.0-beta12'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.ekoapp.simplechat"
 
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
 
         versionCode 1
         versionName ekoSdkVersion
@@ -87,20 +87,20 @@ dependencies {
     implementation "com.github.bumptech.glide:okhttp3-integration:4.10.0"
     implementation "com.github.bumptech.glide:recyclerview-integration:4.10.0"
 
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
 
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
-    baidu_with_fcmImplementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
+    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
 
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-core:17.3.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.5'
 
     implementation 'com.google.guava:guava:28.1-android'
 
@@ -113,7 +113,7 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
