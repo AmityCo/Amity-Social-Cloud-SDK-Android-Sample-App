@@ -27,4 +27,5 @@
     <string name="user_list">User list</string>
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
+    <string name="title_social_feature">Social</string>
 </resources>
