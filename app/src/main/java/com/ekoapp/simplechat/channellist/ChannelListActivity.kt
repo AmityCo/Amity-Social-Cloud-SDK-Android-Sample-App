@@ -33,15 +33,19 @@ import com.ekoapp.simplechat.channellist.filter.ChannelQueryFilterActivity
 import com.ekoapp.simplechat.intent.IntentRequestCode
 import com.ekoapp.simplechat.intent.OpenChangeMetadataIntent
 import com.ekoapp.simplechat.userlist.UserListActivity
+import com.ekoapp.utils.split.InstallModuleSealed
+import com.ekoapp.utils.split.SOCIAL_DYNAMIC_FEATURE
+import com.ekoapp.utils.split.SplitInstall
 import com.google.common.base.Joiner
 import com.google.common.collect.FluentIterable
+import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
 import java.util.*
 
 
-class ChannelListActivity : AppCompatActivity() {
+class ChannelListActivity : DaggerAppCompatActivity() {
 
     private var channels: LiveData<PagedList<EkoChannel>>? = null
 
@@ -203,6 +207,21 @@ class ChannelListActivity : AppCompatActivity() {
             return true
         } else if (id == R.id.action_view_user_list) {
             startActivity(Intent(this, UserListActivity::class.java))
+            return true
+        } else if (id == R.id.action_view_social) {
+            SplitInstall(this).installModule {
+                when (it) {
+                    is InstallModuleSealed.Installed -> {
+                        if (it.data.module == SOCIAL_DYNAMIC_FEATURE) {
+                            val intent = Intent().setClassName(
+                                    this,
+                                    "com.ekoapp.sample.socialfeature.view.MainActivity"
+                            )
+                            startActivity(intent)
+                        }
+                    }
+                }
+            }
             return true
         }
         return super.onOptionsItemSelected(item)

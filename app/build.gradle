@@ -64,6 +64,8 @@ android {
 
 }
 
+ext.dagger = "2.25.3"
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -121,7 +123,15 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    apply plugin: 'com.google.gms.google-services'
 
+    //Dagger
+    api "com.google.dagger:dagger-android-support:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+    kapt "com.google.dagger:dagger-android-processor:$dagger"
+    androidTestImplementation "com.google.dagger:dagger-android-support:$dagger"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger"
+
+    apply plugin: 'com.google.gms.google-services'
     implementation 'com.google.android.play:core:1.7.2'
 }

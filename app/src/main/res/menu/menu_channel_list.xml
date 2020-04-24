@@ -87,4 +87,10 @@
         android:title="@string/user_list"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_view_social"
+        android:orderInCategory="1400"
+        android:title="@string/title_social_feature"
+        app:showAsAction="never" />
+
 </menu>

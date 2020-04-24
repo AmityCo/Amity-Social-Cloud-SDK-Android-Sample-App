@@ -3,7 +3,6 @@ package com.ekoapp.simplechat;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ekoapp.ekosdk.EkoChannel;
 import com.ekoapp.ekosdk.EkoChannelFilter;
 import com.f2prateek.rx.preferences2.Preference;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
@@ -26,7 +25,7 @@ public class SimplePreferences {
     }
 
     private static RxSharedPreferences init() {
-        SharedPreferences preferences = SimpleChatApp.get()
+        SharedPreferences preferences = SimpleChatApp.Companion.get()
                 .getSharedPreferences("simple_preferences", Context.MODE_PRIVATE);
         return RxSharedPreferences.create(preferences);
     }
