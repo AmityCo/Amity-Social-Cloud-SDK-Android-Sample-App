@@ -47,6 +47,7 @@ class ChannelListActivity : AppCompatActivity() {
         val appName = getString(R.string.app_name)
         toolbar.title = String.format("%s %s: %s", appName, "Eko SDK", BuildConfig.VERSION_NAME)
         toolbar.subtitle = String.format("%s", BuildConfig.EKO_HTTP_URL)
+
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
@@ -116,7 +117,7 @@ class ChannelListActivity : AppCompatActivity() {
 
         displayQueryOptions()
         channels = getChannelsLiveData()
-        channels?.observe(this, Observer<PagedList<EkoChannel>> { adapter.submitList(it) })
+        channels?.observe(this, Observer { adapter.submitList(it) })
     }
 
     private fun getChannelsLiveData(): LiveData<PagedList<EkoChannel>> {

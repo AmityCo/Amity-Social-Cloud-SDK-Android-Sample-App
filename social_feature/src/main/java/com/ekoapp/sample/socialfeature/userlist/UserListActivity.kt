@@ -68,7 +68,7 @@ class UserListActivity : BaseActivity() {
 
             MaterialDialog(this).show {
                 listItems(items = sortingOptions) { dialog, index, text ->
-                    when(text.toString()) {
+                    when (text.toString()) {
                         "Displayname" -> {
                             sortBy = EkoUserSortOption.DISPLAYNAME
                         }
