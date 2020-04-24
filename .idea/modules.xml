@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EkoMessagingSDKAndroidSample.iml" filepath="$PROJECT_DIR$/EkoMessagingSDKAndroidSample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/EkoMessagingSDKAndroidSample-app.iml" filepath="$PROJECT_DIR$/app/EkoMessagingSDKAndroidSample-app.iml" group="EkoMessagingSDKAndroidSample/app" />
+      <module fileurl="file://$PROJECT_DIR$/GitHub-EkoMessagingSDKAndroidSample.iml" filepath="$PROJECT_DIR$/GitHub-EkoMessagingSDKAndroidSample.iml" group="EkoMessagingSDKAndroidSample" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/social_feature/social_feature.iml" filepath="$PROJECT_DIR$/social_feature/social_feature.iml" group="EkoMessagingSDKAndroidSample/social_feature" />
     </modules>
   </component>
 </project>
