@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/message_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        tools:text="1337: ms91d" />
+
+    <TextView
+        android:id="@+id/sender_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message_textview"
+        android:maxLines="2"
+        android:textSize="14sp"
+        tools:text="DisplayName (uid)" />
+
+    <TextView
+        android:id="@+id/data_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sender_textview"
+        android:maxLines="6"
+        android:textSize="14sp"
+        tools:text="Hello" />
+
+    <ImageView
+        android:id="@+id/data_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/data_textview" />
+
+    <TextView
+        android:id="@+id/reaction_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/data_imageview"
+        android:textSize="14sp"
+        tools:text="Reaction"/>
+
+    <TextView
+        android:id="@+id/comment_count_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reaction_textview"
+        android:maxLines="1"
+        android:textSize="14sp"
+        tools:text="Comment" />
+
+    <TextView
+        android:id="@+id/tags_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_count_textview"
+        android:maxLines="1"
+        android:textSize="14sp"
+        tools:text="Tag" />
+
+    <TextView
+        android:id="@+id/sync_state_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tags_textview"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:maxLines="1"
+        android:textSize="14sp"
+        tools:text="synced" />
+
+    <TextView
+        android:id="@+id/time_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sync_state_textview"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:maxLines="1"
+        android:textSize="14sp"
+        tools:text="13:37" />
+
+
+
+</RelativeLayout>

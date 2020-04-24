@@ -1,0 +1,90 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ekoapp.sample.chatfeature.channellist.ChannelListActivity">
+
+    <item
+        android:id="@+id/action_register"
+        android:orderInCategory="100"
+        android:title="@string/register"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_unregister"
+        android:orderInCategory="200"
+        android:title="@string/unregister"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_change_display_name"
+        android:orderInCategory="300"
+        android:title="@string/change_display_name"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_change_metadata"
+        android:orderInCategory="400"
+        android:title="@string/change_metadata"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_create_channel"
+        android:orderInCategory="500"
+        android:title="@string/create_channel"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_create_conversation"
+        android:orderInCategory="600"
+        android:title="@string/create_conversation"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_join_channel"
+        android:orderInCategory="500"
+        android:title="@string/join_channel"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/action_change_api_key"
+        android:orderInCategory="700"
+        android:title="@string/change_api_key"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_register_push"
+        android:orderInCategory="800"
+        android:title="@string/register_push"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_unregister_push"
+        android:orderInCategory="1000"
+        android:title="@string/unregister_push"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_unregister_push_for_all"
+        android:orderInCategory="1100"
+        android:title="@string/unregister_push_for_all"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_notification_for_current_user"
+        android:orderInCategory="1200"
+        android:title="@string/notification_for_current_user"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_notification_request_write_settings_permission"
+        android:orderInCategory="1300"
+        android:title="@string/request_write_settings_permissions"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_view_user_list"
+        android:orderInCategory="1400"
+        android:title="@string/user_list"
+        app:showAsAction="never" />
+
+</menu>
