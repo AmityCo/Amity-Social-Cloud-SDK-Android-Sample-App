@@ -52,10 +52,10 @@ import javax.inject.Inject
 class ChannelListActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var splitInstallManager: SplitInstallManager
+    lateinit var installManager: SplitInstallManager
 
     @Inject
-    lateinit var splitInstallRequest: SplitInstallRequest
+    lateinit var installRequest: SplitInstallRequest
 
     private var channels: LiveData<PagedList<EkoChannel>>? = null
 
@@ -220,7 +220,7 @@ class ChannelListActivity : AppCompatActivity() {
             startActivity(Intent(this, UserListActivity::class.java))
             return true
         } else if (id == R.id.action_view_social) {
-            SplitInstall(this, splitInstallManager, splitInstallRequest).installModule {
+            SplitInstall(this, installManager, installRequest).installModule {
                 when (it) {
                     is InstallModuleSealed.Installed -> {
                         if (it.data.module == SOCIAL_DYNAMIC_FEATURE) {
