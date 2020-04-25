@@ -10,22 +10,15 @@ import javax.inject.Inject
 
 class App : MultiDexApplication(), HasAndroidInjector, CoreComponentProvider {
 
-    companion object {
-        private lateinit var APP: App
-        fun get(): App {
-            return APP
-        }
-    }
-
     private lateinit var coreComponent: CoreComponent
 
     @Inject
     lateinit var injector: DispatchingAndroidInjector<Any>
 
     override fun androidInjector(): AndroidInjector<Any> = injector
+
     override fun onCreate() {
         super.onCreate()
-        APP = this
         coreComponent = initCoreDi(this)
         initEkoClient(this)
     }

@@ -2,10 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Documents-GitHub-EkoMessagingSDKAndroidSample.iml" filepath="$PROJECT_DIR$/Documents-GitHub-EkoMessagingSDKAndroidSample.iml" group="EkoMessagingSDKAndroidSample" />
       <module fileurl="file://$PROJECT_DIR$/EkoMessagingSDKAndroidSample.iml" filepath="$PROJECT_DIR$/EkoMessagingSDKAndroidSample.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/EkoMessagingSDKAndroidSample-app.iml" filepath="$PROJECT_DIR$/app/EkoMessagingSDKAndroidSample-app.iml" group="EkoMessagingSDKAndroidSample/app" />
+      <module fileurl="file://$PROJECT_DIR$/core/EkoMessagingSDKAndroidSample-core.iml" filepath="$PROJECT_DIR$/core/EkoMessagingSDKAndroidSample-core.iml" group="EkoMessagingSDKAndroidSample/core" />
+      <module fileurl="file://$PROJECT_DIR$/social_feature/EkoMessagingSDKAndroidSample-social_feature.iml" filepath="$PROJECT_DIR$/social_feature/EkoMessagingSDKAndroidSample-social_feature.iml" group="EkoMessagingSDKAndroidSample/social_feature" />
       <module fileurl="file://$PROJECT_DIR$/GitHub-EkoMessagingSDKAndroidSample.iml" filepath="$PROJECT_DIR$/GitHub-EkoMessagingSDKAndroidSample.iml" group="EkoMessagingSDKAndroidSample" />
+      <module fileurl="file://$PROJECT_DIR$/app/GitHub-EkoMessagingSDKAndroidSample-app.iml" filepath="$PROJECT_DIR$/app/GitHub-EkoMessagingSDKAndroidSample-app.iml" group="EkoMessagingSDKAndroidSample/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chatfeature/chatfeature.iml" filepath="$PROJECT_DIR$/chatfeature/chatfeature.iml" group="EkoMessagingSDKAndroidSample/chatfeature" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" group="EkoMessagingSDKAndroidSample/core" />
       <module fileurl="file://$PROJECT_DIR$/social_feature/social_feature.iml" filepath="$PROJECT_DIR$/social_feature/social_feature.iml" group="EkoMessagingSDKAndroidSample/social_feature" />
     </modules>

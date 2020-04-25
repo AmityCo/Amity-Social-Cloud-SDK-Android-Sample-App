@@ -1,7 +1,7 @@
 package com.ekoapp.utils.split
 
 import android.content.Context
-import com.ekoapp.utils.getCurrentClassAndMethodNames
+import com.ekoapp.sample.utils.*
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import timber.log.Timber
@@ -17,7 +17,7 @@ class SplitInstall(val context: Context,
                    private val installManager: SplitInstallManager,
                    private val installRequest: SplitInstallRequest) {
 
-    private val modules = listOf(SOCIAL_DYNAMIC_FEATURE)
+    private val modules = listOf(CHAT_DYNAMIC_FEATURE, SOCIAL_DYNAMIC_FEATURE)
 
     fun installModule(type: (InstallModuleSealed) -> Unit) {
         modules.forEach {

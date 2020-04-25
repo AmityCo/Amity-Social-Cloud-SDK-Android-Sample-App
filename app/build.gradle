@@ -59,7 +59,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dynamicFeatures = [":social_feature"]
+    dynamicFeatures = [":social_feature", ":chatfeature"]
 
 
 }
@@ -98,9 +98,9 @@ dependencies {
 
     implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
 
-    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
-    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
-    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
+//    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
+//    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
+//    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
 
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
@@ -117,7 +117,7 @@ dependencies {
     implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0'
     implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
 
-    implementation 'com.jakewharton.timber:timber:4.7.1'
+    api 'com.jakewharton.timber:timber:4.7.1'
 
 
     testImplementation 'junit:junit:4.13'

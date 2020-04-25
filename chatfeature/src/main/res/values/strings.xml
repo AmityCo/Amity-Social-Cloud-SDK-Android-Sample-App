@@ -1,0 +1,31 @@
+<resources>
+    <string name="change_display_name">Change DisplayName</string>
+    <string name="change_metadata">Change Metadata</string>
+    <string name="join_channel">Join Channel</string>
+    <string name="change_api_key">Change API Key</string>
+    <string name="create_channel">Create Channel</string>
+    <string name="create_conversation">Create Conversation</string>
+    <string name="edit_text_message">Edit text message</string>
+    <string name="edit_custom_message">Edit custom message</string>
+    <string name="leave_channel">Leave Channel</string>
+    <string name="member">Member</string>
+    <string name="notification_for_current_user">Notification Settings</string>
+    <string name="notification_for_current_channel">Notification Settings</string>
+    <string name="register">Register</string>
+    <string name="register_push">Register Push</string>
+    <string name="request_write_settings_permissions">Request Write Settings Permission</string>
+    <string name="revert_layout">Revert Layout</string>
+    <string name="search">Search</string>
+    <string name="sort_by">Sort by</string>
+    <string name="set_tags">Set Tag(s)</string>
+    <string name="stack_from_end">Stack From End</string>
+    <string name="total_unread_d">Total unread: %d</string>
+    <string name="unregister">Un-Register</string>
+    <string name="unregister_push">Un-register Push</string>
+    <string name="unregister_push_for_all">Un-register Push for All Users</string>
+    <string name="user_list">User list</string>
+    <string name="with_tag">With Tag(s)</string>
+    <string name="without_tag">Without Tag(s)</string>
+    <string name="title_social_feature">Social</string>
+    <string name="title_chatfeature">Chat</string>
+</resources>
