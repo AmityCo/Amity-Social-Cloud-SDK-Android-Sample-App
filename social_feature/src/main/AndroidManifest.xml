@@ -12,8 +12,7 @@
         <dist:fusing dist:include="true" />
     </dist:module>
 
-    <application
-        android:name=".SocialApplication">
+    <application>
         <activity android:name=".view.MainActivity" />
     </application>
 </manifest>
