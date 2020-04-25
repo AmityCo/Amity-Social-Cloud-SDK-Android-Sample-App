@@ -18,7 +18,9 @@ class SplitInstall(val context: Context,
                    private val installRequest: SplitInstallRequest) {
 
     fun installModule(type: (InstallModuleSealed) -> Unit) {
-            type.invoke(InstallModuleData(installRequest.moduleNames.first()).getInstallModuleType())
+        installRequest.moduleNames.forEach {
+            type.invoke(InstallModuleData(it).getInstallModuleType())
+        }
     }
 
     private fun InstallModuleData.getInstallModuleType(): InstallModuleSealed {
