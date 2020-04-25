@@ -21,25 +21,17 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
-
         <activity
             android:name="com.ekoapp.sample.chatfeature.messagelist.ParentMessageListActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.ekoapp.sample.chatfeature.messagelist.ChildMessageListActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name="com.ekoapp.sample.chatfeature.channellist.ChannelMembershipActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 

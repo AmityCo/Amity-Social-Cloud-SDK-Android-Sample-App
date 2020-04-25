@@ -1,3 +1,4 @@
 include ':app'
 include ':social_feature'
 include ':chat_feature'
+include ':core'

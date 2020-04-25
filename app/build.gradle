@@ -60,16 +60,11 @@ android {
     }
     dynamicFeatures = [":social_feature", ":chat_feature"]
 
-
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    api 'com.afollestad.material-dialogs:core:3.1.1'
-    api 'com.afollestad.material-dialogs:input:3.1.1'
+    api project(":core")
 
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.appcompat:appcompat:1.1.0'
@@ -85,10 +80,13 @@ dependencies {
     api "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
     api "androidx.tonyodev.fetch2:xfetch2:3.1.4"
 
-    api 'com.github.bumptech.glide:glide:4.10.0'
-    kapt 'com.github.bumptech.glide:compiler:4.10.0'
-    api "com.github.bumptech.glide:okhttp3-integration:4.10.0"
-    api "com.github.bumptech.glide:recyclerview-integration:4.10.0"
+    api 'com.afollestad.material-dialogs:core:3.1.1'
+    api 'com.afollestad.material-dialogs:input:3.1.1'
+
+    api "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    api "com.github.bumptech.glide:okhttp3-integration:$glide_version"
+    api "com.github.bumptech.glide:recyclerview-integration:$glide_version"
 
     api 'com.google.android.material:material:1.1.0'
 
@@ -102,19 +100,24 @@ dependencies {
 
     api 'com.google.code.gson:gson:2.8.6'
 
+    api "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    androidTestImplementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
+
     implementation 'com.google.firebase:firebase-core:17.3.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.5'
 
     api 'com.google.guava:guava:28.1-android'
-
-    api 'com.jakewharton:butterknife:10.1.0'
-    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
 
     api 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0'
     api 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
 
     api 'com.jakewharton.timber:timber:4.7.1'
 
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'

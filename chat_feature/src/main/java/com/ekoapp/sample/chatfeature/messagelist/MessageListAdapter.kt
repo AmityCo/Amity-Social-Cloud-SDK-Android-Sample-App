@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.Setter
-import butterknife.ViewCollections
 import com.bumptech.glide.Glide
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoObjects
@@ -33,13 +31,12 @@ class MessageListAdapter : EkoMessageAdapter<MessageViewHolder>() {
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val m = getItem(position)
-        val visibility = Setter { view: View, value: Int?, index: Int -> view.visibility = value!! }
         if (EkoObjects.isProxy(m)) {
-            renderLoadingItem(holder, visibility, position)
+            renderLoadingItem(holder, position)
         } else if (m!!.isDeleted) {
-            renderDeletedMessage(holder, visibility)
+            renderDeletedMessage(holder)
         } else {
-            ViewCollections.set(holder.optionalViews, visibility, View.VISIBLE)
+            setViewsVisibility(holder.optionalViews, View.VISIBLE)
             val type = m.type
             val sender = m.user
             val created = m.createdAt
@@ -81,14 +78,14 @@ class MessageListAdapter : EkoMessageAdapter<MessageViewHolder>() {
         holder.itemView.setOnClickListener { v: View? -> onClickSubject.onNext(m!!) }
     }
 
-    private fun renderLoadingItem(holder: MessageViewHolder, visibility: Setter<View, Int?>, position: Int) {
-        ViewCollections.set(holder.optionalViews, visibility, View.GONE)
+    private fun renderLoadingItem(holder: MessageViewHolder, position: Int) {
+        setViewsVisibility(holder.optionalViews, View.GONE)
         holder.itemView.message_textview.text = String.format("loading adapter position: %s", position)
         Glide.with(holder.itemView.data_imageview.context).clear(holder.itemView.data_imageview)
     }
 
-    private fun renderDeletedMessage(holder: MessageViewHolder, visibility: Setter<View, Int?>) {
-        ViewCollections.set(holder.optionalViews, visibility, View.GONE)
+    private fun renderDeletedMessage(holder: MessageViewHolder) {
+        setViewsVisibility(holder.optionalViews, View.GONE)
         holder.itemView.message_textview.text = String.format("Deleted")
         holder.itemView.data_textview.text = ""
         Glide.with(holder.itemView.data_imageview.context).clear(holder.itemView.data_imageview)
@@ -120,4 +117,11 @@ class MessageListAdapter : EkoMessageAdapter<MessageViewHolder>() {
                 itemView.sync_state_textview,
                 itemView.time_textview)
     }
+
+    private fun setViewsVisibility(views: List<View>, visibility: Int) {
+        views.forEach {
+            it.visibility = visibility
+        }
+    }
+
 }

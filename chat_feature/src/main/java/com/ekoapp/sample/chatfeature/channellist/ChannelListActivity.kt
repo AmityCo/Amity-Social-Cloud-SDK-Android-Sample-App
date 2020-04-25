@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
@@ -22,19 +21,18 @@ import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
-import com.ekoapp.ekosdk.sdk.BuildConfig
 import com.ekoapp.sample.SimplePreferences
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channellist.filter.ChannelQueryFilterActivity
+import com.ekoapp.sample.core.ui.BaseActivity
 import com.ekoapp.sample.intent.IntentRequestCode
-import com.google.common.base.Joiner
 import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
 import java.util.*
 
 
-class ChannelListActivity : AppCompatActivity() {
+class ChannelListActivity : BaseActivity() {
 
     private var channels: LiveData<PagedList<EkoChannel>>? = null
 
@@ -44,23 +42,15 @@ class ChannelListActivity : AppCompatActivity() {
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         setContentView(R.layout.activity_channel_list)
-        val appName = getString(R.string.app_name)
-        toolbar.title = String.format("%s %s: %s", appName, "Eko SDK", BuildConfig.VERSION_NAME)
-        toolbar.subtitle = String.format("%s", BuildConfig.EKO_HTTP_URL)
-
+        toolbar.title = getString(R.string.toolbar_channel_list)
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
-        toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
-
-        query_filter_textview.setOnClickListener {
-            startActivityForResult(Intent(this, ChannelQueryFilterActivity::class.java),
-                    IntentRequestCode.REQUEST_CHANNEL_FILTER_OPTION)
-        }
 
         LiveDataReactiveStreams.fromPublisher(channelRepository.getTotalUnreadCount())
                 .observe(this, Observer<Int> { totalUnreadCount ->
                     val totalUnreadCountString = getString(R.string.total_unread_d, totalUnreadCount)
-                    total_unread_textview.text = totalUnreadCountString
+                    toolbar.subtitle = totalUnreadCountString
+                    toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
                 })
 
         observeChannelCollection()
@@ -73,7 +63,11 @@ class ChannelListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
-        if (id == R.id.action_create_channel) {
+        if (id == R.id.action_filter_channel) {
+            startActivityForResult(Intent(this, ChannelQueryFilterActivity::class.java),
+                    IntentRequestCode.REQUEST_CHANNEL_FILTER_OPTION)
+            return true
+        } else if (id == R.id.action_create_channel) {
             val channelTypeItems = ArrayList<String>()
             channelTypeItems.run {
                 add(EkoChannel.CreationType.STANDARD.apiKey)
@@ -115,7 +109,6 @@ class ChannelListActivity : AppCompatActivity() {
         val adapter = ChannelListAdapter()
         channel_list_recyclerview.adapter = adapter
 
-        displayQueryOptions()
         channels = getChannelsLiveData()
         channels?.observe(this, Observer { adapter.submitList(it) })
     }
@@ -140,15 +133,6 @@ class ChannelListActivity : AppCompatActivity() {
                 .excludingTags(excludingTags)
                 .build()
                 .query()
-    }
-
-    private fun displayQueryOptions() {
-        val types = "Types: " + Joiner.on(",").join(SimplePreferences.getChannelTypeOptions().get())
-        val filter = "\nMembership: " + SimplePreferences.getChannelMembershipOption().get()
-        val includeTags = "\nincludeTags: " + Joiner.on(",").join(SimplePreferences.getIncludingChannelTags().get())
-        val excludingTags = "\nexcludingTags: " + Joiner.on(",").join(SimplePreferences.getExcludingChannelTags().get())
-
-        query_filter_textview.text = types + filter + includeTags + excludingTags
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

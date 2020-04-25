@@ -5,12 +5,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
@@ -18,18 +16,37 @@ import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
 import com.afollestad.materialdialogs.input.InputCallback
 import com.afollestad.materialdialogs.input.input
 import com.ekoapp.ekosdk.EkoClient
-import com.ekoapp.sample.BuildConfig
 import com.ekoapp.sample.R
 import com.ekoapp.sample.SimplePreferences
+import com.ekoapp.sample.core.ui.BaseActivity
+import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.intent.OpenChangeMetadataIntent
-import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.ekoapp.sample.main.di.DaggerMainActivityComponent
+import com.ekoapp.sample.utils.splitinstall.CHAT_DYNAMIC_FEATURE
+import com.ekoapp.sample.utils.splitinstall.InstallModuleSealed
+import com.ekoapp.sample.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
+import com.ekoapp.sample.utils.splitinstall.SplitInstall
+import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
+import javax.inject.Named
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+
+    @Inject
+    lateinit var splitInstallManager: SplitInstallManager
+
+    @Inject
+    @Named("chat")
+    lateinit var chatModuleInstallRequest: SplitInstallRequest
+
+    @Inject
+    @Named("social")
+    lateinit var socialModuleInstallRequest: SplitInstallRequest
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
@@ -53,7 +70,14 @@ class MainActivity : AppCompatActivity() {
                     populateFeatureList()
                 }
                 .subscribe()
+    }
 
+    override fun initDependencyInjection() {
+        DaggerMainActivityComponent
+                .builder()
+                .coreComponent(coreComponent())
+                .build()
+                .inject(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -153,54 +177,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun populateFeatureList() {
+        val dataSet: List<String> = Feature.values().map { feature -> feature.featureName }
         val listener = object : FeatureAdapter.FeatureItemListener {
             override fun onClick(featureName: String) {
                 when (featureName) {
                     Feature.CHAT.featureName -> {
-                        installChatModule()
+                        installModule(chatModuleInstallRequest)
                     }
                     Feature.SOCIAL.featureName -> {
-                        installSocialModule()
+                        installModule(socialModuleInstallRequest)
                     }
                 }
             }
         }
-        val adapter = FeatureAdapter(listener)
+        val adapter = FeatureAdapter(dataSet, listener)
         feature_list_recyclerview.adapter = adapter
     }
 
-    private fun installChatModule() {
-        val splitInstallManager = SplitInstallManagerFactory.create(applicationContext)
-        val request = SplitInstallRequest.newBuilder()
-                .addModule("chat_feature")
-                .build()
-
-        splitInstallManager.startInstall(request)
-                .addOnSuccessListener {
-                    val intent = Intent()
-                    intent.setClassName(BuildConfig.APPLICATION_ID, "com.ekoapp.sample.chatfeature.channellist.ChannelListActivity")
-                    startActivity(intent)
-                }.addOnFailureListener {
-                    Log.e(MainActivity::class.java.simpleName, it.toString())
+    private fun installModule(installRequest: SplitInstallRequest) {
+        SplitInstall(this, splitInstallManager, installRequest).installModule {
+            when (it) {
+                is InstallModuleSealed.Installed -> {
+                    when (it.data.module) {
+                        CHAT_DYNAMIC_FEATURE -> {
+                            val intent = Intent().setClassName(
+                                    this,
+                                    "com.ekoapp.sample.chatfeature.channellist.ChannelListActivity"
+                            )
+                            startActivity(intent)
+                        }
+                        SOCIAL_DYNAMIC_FEATURE -> {
+                            val intent = Intent().setClassName(
+                                    this,
+                                    "com.ekoapp.sample.socialfeature.main.SocialMainActivity"
+                            )
+                            startActivity(intent)
+                        }
+                    }
                 }
-
-
-    }
-
-    private fun installSocialModule() {
-        val splitInstallManager = SplitInstallManagerFactory.create(applicationContext)
-        val request = SplitInstallRequest.newBuilder()
-                .addModule("social_feature")
-                .build()
-
-        splitInstallManager.startInstall(request)
-                .addOnSuccessListener {
-                    val intent = Intent()
-                    intent.setClassName(BuildConfig.APPLICATION_ID, "com.ekoapp.sample.socialfeature.userlist.UserListActivity")
-                    startActivity(intent)
-                }.addOnFailureListener {
-                    Log.e(MainActivity::class.java.simpleName, it.toString())
-                }
+            }
+        }
     }
 
     private fun showDialog(@StringRes title: Int, hint: CharSequence, prefill: CharSequence, allowEmptyInput: Boolean, callback: InputCallback) {

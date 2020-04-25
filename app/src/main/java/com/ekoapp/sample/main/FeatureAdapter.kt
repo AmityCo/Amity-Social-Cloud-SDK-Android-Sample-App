@@ -7,9 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.R
 import kotlinx.android.synthetic.main.item_feature.view.*
 
-class FeatureAdapter(val listener: FeatureItemListener) : RecyclerView.Adapter<FeatureAdapter.FeatureViewHolder>() {
-
-    private val dataSet: List<String> = Feature.values().map { feature -> feature.featureName }
+open class FeatureAdapter(private val dataSet: List<String> ,
+                     private val listener: FeatureItemListener) : RecyclerView.Adapter<FeatureAdapter.FeatureViewHolder>() {
 
     class FeatureViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 

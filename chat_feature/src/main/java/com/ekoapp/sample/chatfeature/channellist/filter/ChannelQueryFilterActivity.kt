@@ -3,7 +3,6 @@ package com.ekoapp.sample.chatfeature.channellist.filter
 import android.app.Activity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
-import com.ekoapp.sample.BaseActivity
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channellist.filter.channeltype.ChannelTypeFilterFragment
 import com.ekoapp.sample.chatfeature.channellist.filter.channeltype.ChannelTypeFilterViewModel
@@ -13,6 +12,7 @@ import com.ekoapp.sample.chatfeature.channellist.filter.includetags.IncludeTagFi
 import com.ekoapp.sample.chatfeature.channellist.filter.includetags.IncludeTagFilterViewModel
 import com.ekoapp.sample.chatfeature.channellist.filter.membership.MembershipFilterFragment
 import com.ekoapp.sample.chatfeature.channellist.filter.membership.MembershipFilterViewModel
+import com.ekoapp.sample.core.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_channel_query_filter.*
 
 class ChannelQueryFilterActivity : BaseActivity(), ChannelQueryFilterContract.View {

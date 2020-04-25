@@ -16,11 +16,26 @@
     <application>
 
         <activity
-            android:name="com.ekoapp.sample.socialfeature.userlist.UserListActivity"
+            android:name="com.ekoapp.sample.socialfeature.main.SocialMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden"
             tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name="com.ekoapp.sample.socialfeature.userfeed.userlist.UserListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name="com.ekoapp.sample.socialfeature.userfeed.post.UserFeedActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:ignore="LockedOrientationActivity" />
+
     </application>
 </manifest>
 

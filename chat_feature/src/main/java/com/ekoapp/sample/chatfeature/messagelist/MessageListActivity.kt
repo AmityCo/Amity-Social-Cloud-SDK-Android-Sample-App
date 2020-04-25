@@ -15,16 +15,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.OnClick
-import butterknife.OnTextChanged
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
@@ -37,14 +32,14 @@ import com.ekoapp.ekosdk.*
 import com.ekoapp.ekosdk.exception.EkoError
 import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.ekosdk.messaging.data.TextData
-import com.ekoapp.sample.BaseActivity
-import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.SimplePreferences
-import com.ekoapp.sample.file.FileManager
+import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.intent.OpenMessageReactionListIntent
 import com.ekoapp.sample.chatfeature.intent.ViewChannelMembershipsIntent
 import com.ekoapp.sample.chatfeature.messagelist.option.MessageOption
 import com.ekoapp.sample.chatfeature.messagelist.option.ReactionOption
+import com.ekoapp.sample.core.ui.BaseActivity
+import com.ekoapp.sample.file.FileManager
 import com.google.common.base.Joiner
 import com.google.common.collect.Sets
 import com.google.gson.JsonObject
@@ -57,22 +52,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_message_list.*
 
 abstract class MessageListActivity : BaseActivity() {
-
-    @BindView(R.id.toolbar)
-    @JvmField
-    var toolbar: Toolbar? = null
-
-    @BindView(R.id.message_list_recyclerview)
-    @JvmField
-    var messageListRecyclerView: RecyclerView? = null
-
-    @BindView(R.id.message_edittext)
-    @JvmField
-    var messageEditText: EditText? = null
-
-    @BindView(R.id.message_send_button)
-    @JvmField
-    var sendButton: Button? = null
 
     private var messages: LiveData<PagedList<EkoMessage>>? = null
 
@@ -117,16 +96,13 @@ abstract class MessageListActivity : BaseActivity() {
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         setContentView(R.layout.activity_message_list)
-
-        toolbar?.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
-        setSupportActionBar(toolbar)
-
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setTitleName()
         setSubtitleName()
+        setSupportActionBar(toolbar)
         setUpInputLayout()
-
         initialMessageCollection()
-
     }
 
     override fun onStart() {
@@ -251,8 +227,47 @@ abstract class MessageListActivity : BaseActivity() {
     }
 
     private fun setUpInputLayout() {
+
+        message_edittext.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(input: Editable?) {
+                val text = input.toString().trim { it <= ' ' }
+                message_send_button.isEnabled = !TextUtils.isEmpty(text)
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // do nothing
+            }
+        })
+
+        message_send_button.setOnClickListener {
+            val text = message_edittext.text.toString().trim()
+            message_edittext.text = null
+            createTextMessage(text)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError { t ->
+                        val ekoError = EkoError.from(t)
+                        if (ekoError == EkoError.USER_IS_BANNED) {
+                            message_edittext.post {
+                                Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
+                            }
+                            message_edittext.postDelayed({
+                                finish()
+                            },
+                                    500)
+                        }
+                    }
+                    .doOnComplete {
+                        scrollToBottom()
+                    }
+                    .subscribe()
+        }
+
         EkoClient.newChannelRepository().getChannel(getChannelId()).observe(this, Observer {
-            if(EkoChannel.Type.fromJson(it.channelType)  == EkoChannel.Type.BROADCAST) {
+            if (EkoChannel.Type.fromJson(it.channelType) == EkoChannel.Type.BROADCAST) {
                 message_input_layout.visibility = View.GONE
             }
         })
@@ -440,10 +455,10 @@ abstract class MessageListActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = stackFromEnd.get()
         layoutManager.reverseLayout = revertLayout.get()
-        messageListRecyclerView?.layoutManager = layoutManager
+        message_list_recyclerview.layoutManager = layoutManager
 
         adapter = MessageListAdapter()
-        messageListRecyclerView?.adapter = adapter
+        message_list_recyclerview.adapter = adapter
 
         disposable.clear()
 
@@ -477,37 +492,6 @@ abstract class MessageListActivity : BaseActivity() {
         }
     }
 
-    @OnTextChanged(R.id.message_edittext)
-    internal fun onMessageTextChanged(input: CharSequence) {
-        val text = input.toString().trim { it <= ' ' }
-        sendButton!!.isEnabled = !TextUtils.isEmpty(text)
-    }
-
-    @OnClick(R.id.message_send_button)
-    internal fun onSendClick() {
-        val text = messageEditText?.text.toString().trim()
-        messageEditText?.text = null
-        createTextMessage(text)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError { t ->
-                    val ekoError = EkoError.from(t)
-                    if (ekoError == EkoError.USER_IS_BANNED) {
-                        messageEditText?.post {
-                            Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
-                        }
-                        messageEditText?.postDelayed({
-                            finish()
-                        },
-                                500)
-                    }
-                }
-                .doOnComplete {
-                    scrollToBottom()
-                }
-                .subscribe()
-
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -518,9 +502,9 @@ abstract class MessageListActivity : BaseActivity() {
     }
 
     private fun scrollToBottom() {
-        messageListRecyclerView?.postDelayed({
+        message_list_recyclerview.postDelayed({
             val lastPosition = adapter?.itemCount!! - 1
-            messageListRecyclerView?.scrollToPosition(lastPosition)
+            message_list_recyclerview.scrollToPosition(lastPosition)
         }, 10)
     }
 

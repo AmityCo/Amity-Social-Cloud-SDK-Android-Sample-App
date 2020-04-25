@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.sample.ChangeMetadataActivity;
+import com.ekoapp.sample.usermetadata.ChangeMetadataActivity;
 
 public class OpenChangeMetadataIntent extends BaseIntent {
 
