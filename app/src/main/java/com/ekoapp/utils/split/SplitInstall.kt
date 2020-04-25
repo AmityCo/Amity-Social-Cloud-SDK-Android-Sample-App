@@ -13,7 +13,10 @@ sealed class InstallModuleSealed {
     class Installed(val data: InstallModuleData) : InstallModuleSealed()
 }
 
-class SplitInstall(val context: Context, private val installManager: SplitInstallManager, private val installRequest: SplitInstallRequest) {
+class SplitInstall(val context: Context,
+                   private val installManager: SplitInstallManager,
+                   private val installRequest: SplitInstallRequest) {
+
     private val modules = listOf(SOCIAL_DYNAMIC_FEATURE)
 
     fun installModule(type: (InstallModuleSealed) -> Unit) {
