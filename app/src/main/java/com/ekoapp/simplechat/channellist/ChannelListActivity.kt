@@ -38,15 +38,24 @@ import com.ekoapp.simplechat.userlist.UserListActivity
 import com.ekoapp.utils.split.InstallModuleSealed
 import com.ekoapp.utils.split.SOCIAL_DYNAMIC_FEATURE
 import com.ekoapp.utils.split.SplitInstall
+import com.google.android.play.core.splitinstall.SplitInstallManager
+import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.common.base.Joiner
 import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
 import java.util.*
+import javax.inject.Inject
 
 
 class ChannelListActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var splitInstallManager: SplitInstallManager
+
+    @Inject
+    lateinit var splitInstallRequest: SplitInstallRequest
 
     private var channels: LiveData<PagedList<EkoChannel>>? = null
 
@@ -211,7 +220,7 @@ class ChannelListActivity : AppCompatActivity() {
             startActivity(Intent(this, UserListActivity::class.java))
             return true
         } else if (id == R.id.action_view_social) {
-            SplitInstall(this).installModule {
+            SplitInstall(this, splitInstallManager, splitInstallRequest).installModule {
                 when (it) {
                     is InstallModuleSealed.Installed -> {
                         if (it.data.module == SOCIAL_DYNAMIC_FEATURE) {

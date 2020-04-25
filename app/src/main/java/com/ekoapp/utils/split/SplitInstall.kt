@@ -3,7 +3,6 @@ package com.ekoapp.utils.split
 import android.content.Context
 import com.ekoapp.utils.getCurrentClassAndMethodNames
 import com.google.android.play.core.splitinstall.SplitInstallManager
-import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import timber.log.Timber
 
@@ -14,17 +13,10 @@ sealed class InstallModuleSealed {
     class Installed(val data: InstallModuleData) : InstallModuleSealed()
 }
 
-class SplitInstall(val context: Context) {
+class SplitInstall(val context: Context, val manager: SplitInstallManager, val request: SplitInstallRequest) {
     private val modules = listOf(SOCIAL_DYNAMIC_FEATURE)
 
-    private val manager: SplitInstallManager = SplitInstallManagerFactory.create(context)
-    private val request: SplitInstallRequest = SplitInstallRequest
-            .newBuilder()
-            .addModule(SOCIAL_DYNAMIC_FEATURE)
-            .build()
-
     fun installModule(type: (InstallModuleSealed) -> Unit) {
-        Timber.d(getCurrentClassAndMethodNames())
         modules.forEach {
             type.invoke(InstallModuleData(module = it).getInstallModuleType())
         }
