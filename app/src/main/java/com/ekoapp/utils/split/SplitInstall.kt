@@ -1,6 +1,7 @@
 package com.ekoapp.utils.split
 
 import android.content.Context
+import com.ekoapp.utils.getCurrentClassAndMethodNames
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
@@ -14,7 +15,6 @@ sealed class InstallModuleSealed {
 }
 
 class SplitInstall(val context: Context) {
-    private val splitTag = "class : " + SplitInstall::class.java.name + " ,method: " + object {}.javaClass.enclosingMethod?.name
     private val modules = listOf(SOCIAL_DYNAMIC_FEATURE)
 
     private val manager: SplitInstallManager = SplitInstallManagerFactory.create(context)
@@ -24,6 +24,7 @@ class SplitInstall(val context: Context) {
             .build()
 
     fun installModule(type: (InstallModuleSealed) -> Unit) {
+        Timber.d(getCurrentClassAndMethodNames())
         modules.forEach {
             type.invoke(InstallModuleData(module = it).getInstallModuleType())
         }
@@ -44,7 +45,7 @@ class SplitInstall(val context: Context) {
     private fun startInstall(module: String, result: (InstallModuleData) -> InstallModuleSealed) {
         manager.startInstall(request)
                 .addOnFailureListener {
-                    Timber.d("$splitTag addOnFailureListener: ${it.message}")
+                    Timber.d("${getCurrentClassAndMethodNames()} addOnFailureListener: ${it.message}")
                     result.invoke(InstallModuleData(module = module, isInstall = DOWNLOAD_FAILED))
                 }
                 .addOnSuccessListener {

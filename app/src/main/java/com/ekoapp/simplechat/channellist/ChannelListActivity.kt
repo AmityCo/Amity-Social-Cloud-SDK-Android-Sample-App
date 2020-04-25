@@ -22,11 +22,13 @@ import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
 import com.afollestad.materialdialogs.input.InputCallback
 import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
+import com.ekoapp.di.DaggerActivityComponent
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.ekosdk.sdk.BuildConfig
+import com.ekoapp.sample.ui.extensions.coreComponent
 import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.SimplePreferences
 import com.ekoapp.simplechat.channellist.filter.ChannelQueryFilterActivity
@@ -38,14 +40,13 @@ import com.ekoapp.utils.split.SOCIAL_DYNAMIC_FEATURE
 import com.ekoapp.utils.split.SplitInstall
 import com.google.common.base.Joiner
 import com.google.common.collect.FluentIterable
-import dagger.android.support.DaggerAppCompatActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
 import java.util.*
 
 
-class ChannelListActivity : DaggerAppCompatActivity() {
+class ChannelListActivity : AppCompatActivity() {
 
     private var channels: LiveData<PagedList<EkoChannel>>? = null
 
@@ -53,6 +54,7 @@ class ChannelListActivity : DaggerAppCompatActivity() {
 
 
     override fun onCreate(savedState: Bundle?) {
+        initDependencyInjection()
         super.onCreate(savedState)
         setContentView(R.layout.activity_channel_list)
         val appName = getString(R.string.app_name)
@@ -281,5 +283,12 @@ class ChannelListActivity : DaggerAppCompatActivity() {
             input(inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, hint = hint.toString(), prefill = prefill, allowEmpty = allowEmptyInput, callback = callback)
         }
     }
+
+    private fun initDependencyInjection() =
+            DaggerActivityComponent
+                    .builder()
+                    .coreComponent(coreComponent())
+                    .build()
+                    .inject(this)
 
 }

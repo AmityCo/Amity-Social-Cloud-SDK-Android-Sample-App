@@ -1,13 +1,22 @@
 package com.ekoapp
 
-import com.ekoapp.di.AppModule
-import com.ekoapp.di.DaggerCoreComponent
-import com.ekoapp.simplechat.SimpleChatApp
+
+import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.push.EkoBaidu
+import com.ekoapp.sample.core.di.ContextModule
+import com.ekoapp.sample.core.di.CoreComponent
+import com.ekoapp.sample.core.di.DaggerCoreComponent
+import com.ekoapp.simplechat.SimplePreferences
 
 
-fun initDi(app: SimpleChatApp) {
-    DaggerCoreComponent.builder()
-            .appModule(AppModule(app))
-            .build()
-            .inject(app)
+fun initEkoClient(app: App) {
+    EkoClient.setup(SimplePreferences.getApiKey().get())
+            .andThen(EkoBaidu.create(app).setup("BZ2CnTh6qphSUl66c16Xk7AG"))
+            .subscribe()
 }
+
+fun initCoreDi(app: App): CoreComponent =
+        DaggerCoreComponent
+                .builder()
+                .contextModule(ContextModule(app))
+                .build()

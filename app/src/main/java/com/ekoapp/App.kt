@@ -1,22 +1,23 @@
-package com.ekoapp.simplechat
+package com.ekoapp
 
 import androidx.multidex.MultiDexApplication
-import com.ekoapp.ekosdk.EkoClient
-import com.ekoapp.initDi
-import com.ekoapp.push.EkoBaidu
+import com.ekoapp.sample.core.di.CoreComponent
+import com.ekoapp.sample.core.di.CoreComponentProvider
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import javax.inject.Inject
 
-class SimpleChatApp : MultiDexApplication(), HasAndroidInjector {
+class App : MultiDexApplication(), HasAndroidInjector, CoreComponentProvider {
 
     companion object {
-        private lateinit var APP: SimpleChatApp
-        fun get(): SimpleChatApp {
+        private lateinit var APP: App
+        fun get(): App {
             return APP
         }
     }
+
+    private lateinit var coreComponent: CoreComponent
 
     @Inject
     lateinit var injector: DispatchingAndroidInjector<Any>
@@ -25,9 +26,9 @@ class SimpleChatApp : MultiDexApplication(), HasAndroidInjector {
     override fun onCreate() {
         super.onCreate()
         APP = this
-        EkoClient.setup(SimplePreferences.getApiKey().get())
-                .andThen(EkoBaidu.create(this).setup("BZ2CnTh6qphSUl66c16Xk7AG"))
-                .subscribe()
-        initDi(this)
+        coreComponent = initCoreDi(this)
+        initEkoClient(this)
     }
+
+    override fun provideCoreComponent(): CoreComponent = coreComponent
 }

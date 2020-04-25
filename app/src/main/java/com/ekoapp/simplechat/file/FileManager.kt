@@ -9,7 +9,7 @@ import androidx.core.content.FileProvider
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.internal.api.http.EkoOkHttp
 import com.ekoapp.ekosdk.messaging.data.FileData
-import com.ekoapp.simplechat.SimpleChatApp
+import com.ekoapp.App
 import com.tonyodev.fetch2.*
 import com.tonyodev.fetch2core.DownloadBlock
 import com.tonyodev.fetch2core.Func
@@ -27,7 +27,7 @@ class FileManager {
 
             val client = EkoOkHttp.newBuilder().build()
 
-            val fetchConfiguration = FetchConfiguration.Builder(SimpleChatApp.get())
+            val fetchConfiguration = FetchConfiguration.Builder(App.get())
                     .setDownloadConcurrentLimit(10)
                     .enableLogging(true)
                     .setHttpDownloader(OkHttpDownloader(client))

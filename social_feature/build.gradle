@@ -58,6 +58,7 @@ ext.rxExt = "0.20.10" //stable as 0.20.7
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':core')
     implementation project(':app')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

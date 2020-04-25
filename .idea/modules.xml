@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/EkoMessagingSDKAndroidSample-app.iml" filepath="$PROJECT_DIR$/app/EkoMessagingSDKAndroidSample-app.iml" group="EkoMessagingSDKAndroidSample/app" />
       <module fileurl="file://$PROJECT_DIR$/GitHub-EkoMessagingSDKAndroidSample.iml" filepath="$PROJECT_DIR$/GitHub-EkoMessagingSDKAndroidSample.iml" group="EkoMessagingSDKAndroidSample" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" group="EkoMessagingSDKAndroidSample/core" />
       <module fileurl="file://$PROJECT_DIR$/social_feature/social_feature.iml" filepath="$PROJECT_DIR$/social_feature/social_feature.iml" group="EkoMessagingSDKAndroidSample/social_feature" />
     </modules>
   </component>
