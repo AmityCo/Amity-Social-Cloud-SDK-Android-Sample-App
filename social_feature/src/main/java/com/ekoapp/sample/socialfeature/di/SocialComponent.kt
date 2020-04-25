@@ -10,9 +10,9 @@ import dagger.android.AndroidInjector
 @Component(
         dependencies = [CoreComponent::class],
         modules = [
-            ActivityBuilder::class,
-            FragmentBuilder::class,
-            AppModule::class,
+            SocialActivityBuilder::class,
+            SocialFragmentBuilder::class,
+            SocialAppModule::class,
             AndroidInjectionModule::class]
 )
 interface SocialComponent : AndroidInjector<SocialApplication>

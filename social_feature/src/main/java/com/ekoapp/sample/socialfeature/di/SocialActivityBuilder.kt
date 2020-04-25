@@ -4,8 +4,9 @@ import com.ekoapp.sample.socialfeature.view.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
+
 @Module
-abstract class ActivityBuilder {
+abstract class SocialActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun bindMainActivity(): MainActivity

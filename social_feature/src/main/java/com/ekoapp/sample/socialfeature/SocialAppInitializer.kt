@@ -1,7 +1,7 @@
 package com.ekoapp.sample.socialfeature
 
 import android.os.Looper
-import com.ekoapp.sample.socialfeature.di.AppModule
+import com.ekoapp.sample.socialfeature.di.SocialAppModule
 import com.ekoapp.sample.socialfeature.di.DaggerSocialComponent
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -10,7 +10,7 @@ import io.reactivex.plugins.RxJavaPlugins
 
 fun initDi(app: SocialApplication) {
     DaggerSocialComponent.builder()
-            .appModule(AppModule(app))
+            .socialAppModule(SocialAppModule(app))
             .build()
             .inject(app)
 }

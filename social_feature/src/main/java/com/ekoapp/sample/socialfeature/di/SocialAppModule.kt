@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class AppModule(private val app: Application) {
+class SocialAppModule(private val app: Application) {
     @Provides
     @AppContext
     fun getApplication(): Context {
