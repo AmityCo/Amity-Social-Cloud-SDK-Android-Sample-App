@@ -4,7 +4,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 def ekoSdkVersion = '3.8.0-beta12'
-def kotlin_version = '1.3.72'
 
 android {
     compileSdkVersion 29
@@ -59,63 +58,66 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dynamicFeatures = [":social_feature"]
-
+    dynamicFeatures = [":social_feature", ":chat_feature"]
 
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(":core")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'androidx.multidex:multidex:2.0.1'
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'androidx.core:core-ktx:1.2.0'
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    api "androidx.activity:activity-ktx:1.1.0"
+    api "androidx.fragment:fragment-ktx:1.2.4"
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    api 'androidx.lifecycle:lifecycle-reactivestreams:2.2.0'
 
-    implementation 'com.afollestad.material-dialogs:core:3.1.1'
-    implementation 'com.afollestad.material-dialogs:input:3.1.1'
+    api "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
+    api "androidx.tonyodev.fetch2:xfetch2:3.1.4"
 
-    implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation "androidx.activity:activity-ktx:1.1.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.4"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.2.0'
+    api 'com.afollestad.material-dialogs:core:3.1.1'
+    api 'com.afollestad.material-dialogs:input:3.1.1'
 
-    implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
-    implementation "androidx.tonyodev.fetch2:xfetch2:3.1.4"
+    api "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    api "com.github.bumptech.glide:okhttp3-integration:$glide_version"
+    api "com.github.bumptech.glide:recyclerview-integration:$glide_version"
 
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    kapt 'com.github.bumptech.glide:compiler:4.10.0'
-    implementation "com.github.bumptech.glide:okhttp3-integration:4.10.0"
-    implementation "com.github.bumptech.glide:recyclerview-integration:4.10.0"
+    api 'com.google.android.material:material:1.1.0'
 
-    implementation 'com.google.android.material:material:1.1.0'
+    api 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
 
-    implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
+    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
+    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
+    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
 
-    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
-    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
-    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
 
-    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    api 'com.google.code.gson:gson:2.8.6'
 
-    implementation 'com.google.code.gson:gson:2.8.6'
+    api "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    androidTestImplementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
 
     implementation 'com.google.firebase:firebase-core:17.3.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.5'
 
-    implementation 'com.google.guava:guava:28.1-android'
+    api 'com.google.guava:guava:28.1-android'
 
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
 
-    implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0'
-    implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
+    api 'com.jakewharton.timber:timber:4.7.1'
 
-    implementation 'com.jakewharton.timber:timber:4.7.1'
-
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'

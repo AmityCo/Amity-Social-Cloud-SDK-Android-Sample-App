@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ekoapp.simplechat">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ekoapp.sample">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -10,7 +11,7 @@
         android:required="true" />
 
     <application
-        android:name=".SimpleChatApp"
+        android:name="com.ekoapp.sample.app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +20,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".channellist.ChannelListActivity"
+            android:name="com.ekoapp.sample.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
@@ -28,58 +29,14 @@
             </intent-filter>
         </activity>
 
-
         <activity
-            android:name=".messagelist.ParentMessageListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-
-        <activity
-            android:name=".messagelist.ChildMessageListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-
-        <activity
-            android:name=".channellist.ChannelMembershipActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name=".messagelist.ImageMessageSenderActivity"
+            android:name="com.ekoapp.sample.usermetadata.ChangeMetadataActivity"
             android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".messagelist.FileMessageSenderActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".messagelist.CustomMessageSenderActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".messagereactionlist.MessageReactionListActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".ChangeMetadataActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".channellist.filter.ChannelQueryFilterActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".userlist.UserListActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <service
-            android:name=".SimpleFirebaseMessagingService"
+            android:name="com.ekoapp.sample.SimpleFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

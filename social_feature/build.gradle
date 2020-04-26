@@ -1,4 +1,7 @@
 apply plugin: 'com.android.dynamic-feature'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
@@ -16,6 +19,10 @@ android {
 
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     flavorDimensions "push"
 
     productFlavors {
@@ -27,6 +34,9 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
 }
 

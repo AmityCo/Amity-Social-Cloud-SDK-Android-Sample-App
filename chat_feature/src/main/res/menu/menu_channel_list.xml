@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ekoapp.sample.chatfeature.channellist.ChannelListActivity">
+
+    <item
+        android:id="@+id/action_filter_channel"
+        android:orderInCategory="100"
+        android:title="@string/filter_channel"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_create_channel"
+        android:orderInCategory="200"
+        android:title="@string/create_channel"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_create_conversation"
+        android:orderInCategory="300"
+        android:title="@string/create_conversation"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_join_channel"
+        android:orderInCategory="400"
+        android:title="@string/join_channel"
+        app:showAsAction="never" />
+
+</menu>

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">SimpleChat</string>
+    <string name="join_channel">Join Channel</string>
+    <string name="create_channel">Create Channel</string>
+    <string name="create_conversation">Create Conversation</string>
+    <string name="edit_text_message">Edit text message</string>
+    <string name="edit_custom_message">Edit custom message</string>
+    <string name="filter_channel">Filter Channel</string>
+    <string name="leave_channel">Leave Channel</string>
+    <string name="member">Member</string>
+    <string name="notification_for_current_channel">Notification Settings</string>
+    <string name="revert_layout">Revert Layout</string>
+    <string name="set_tags">Set Tag(s)</string>
+    <string name="stack_from_end">Stack From End</string>
+    <string name="toolbar_channel_list">Channels</string>
+    <string name="toolbar_parent_message_list">Chat</string>
+    <string name="toolbar_child_message_list">Reply</string>
+    <string name="total_unread_d">Total unread: %d</string>
+    <string name="with_tag">With Tag(s)</string>
+    <string name="without_tag">Without Tag(s)</string>
+</resources>
