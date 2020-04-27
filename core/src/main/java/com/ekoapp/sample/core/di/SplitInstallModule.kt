@@ -1,8 +1,8 @@
-package com.ekoapp.sample.main.di
+package com.ekoapp.sample.core.di
 
 import android.content.Context
-import com.ekoapp.sample.utils.splitinstall.CHAT_DYNAMIC_FEATURE
-import com.ekoapp.sample.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
+import com.ekoapp.sample.core.utils.splitinstall.CHAT_DYNAMIC_FEATURE
+import com.ekoapp.sample.core.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest

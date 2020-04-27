@@ -16,11 +16,19 @@
     <application>
 
         <activity
+            android:name="com.ekoapp.sample.chatfeature.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
             android:name="com.ekoapp.sample.chatfeature.channellist.ChannelListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name="com.ekoapp.sample.chatfeature.messagelist.ParentMessageListActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -70,6 +78,14 @@
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+
+        <service
+            android:name="com.ekoapp.sample.chatfeature.services.SimpleFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <provider
             android:name="androidx.core.content.FileProvider"

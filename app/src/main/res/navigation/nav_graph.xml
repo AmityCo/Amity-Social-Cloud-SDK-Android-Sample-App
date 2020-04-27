@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/chat">
+
+    <fragment
+        android:id="@+id/chat"
+        android:name="com.ekoapp.sample.main.navigation.fragments.Chats"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_coming_soon">
+        <action
+            android:id="@+id/action_home2_to_explore"
+            app:destination="@id/feeds" />
+    </fragment>
+    <fragment
+        android:id="@+id/feeds"
+        android:name="com.ekoapp.sample.main.navigation.fragments.Feeds"
+        android:label="fragment_explore"
+        tools:layout="@layout/fragment_coming_soon">
+        <action
+            android:id="@+id/action_explore_to_more"
+            app:destination="@id/users" />
+    </fragment>
+    <fragment
+        android:id="@+id/users"
+        android:name="com.ekoapp.sample.main.navigation.fragments.Users"
+        android:label="fragment_more"
+        tools:layout="@layout/fragment_coming_soon" />
+</navigation>

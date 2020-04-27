@@ -1,7 +1,7 @@
-package com.ekoapp.sample.utils.splitinstall
+package com.ekoapp.sample.core.utils.splitinstall
 
 import android.content.Context
-import com.ekoapp.sample.utils.getCurrentClassAndMethodNames
+import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import timber.log.Timber

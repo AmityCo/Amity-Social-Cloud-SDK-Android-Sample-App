@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SimpleChat</string>
+    <string name="app_name">SampleChat</string>
     <string name="toolbar_user_list">Select User</string>
     <string name="toolbar_user_feed">User Feed</string>
     <string name="toolbar_social_main">Social Features</string>

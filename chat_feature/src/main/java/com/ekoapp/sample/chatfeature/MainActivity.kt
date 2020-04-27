@@ -1,4 +1,4 @@
-package com.ekoapp.sample.main
+package com.ekoapp.sample.chatfeature
 
 import android.content.Intent
 import android.net.Uri
@@ -16,18 +16,16 @@ import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
 import com.afollestad.materialdialogs.input.InputCallback
 import com.afollestad.materialdialogs.input.input
 import com.ekoapp.ekosdk.EkoClient
-import com.ekoapp.sample.R
 import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.ekoapp.sample.core.ui.BaseActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.chatfeature.usermetadata.OpenChangeMetadataIntent
 import com.ekoapp.sample.core.ui.Feature
 import com.ekoapp.sample.core.ui.FeatureAdapter
-import com.ekoapp.sample.main.di.DaggerMainActivityComponent
-import com.ekoapp.sample.utils.splitinstall.CHAT_DYNAMIC_FEATURE
-import com.ekoapp.sample.utils.splitinstall.InstallModuleSealed
-import com.ekoapp.sample.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
-import com.ekoapp.sample.utils.splitinstall.SplitInstall
+import com.ekoapp.sample.core.utils.splitinstall.CHAT_DYNAMIC_FEATURE
+import com.ekoapp.sample.core.utils.splitinstall.InstallModuleSealed
+import com.ekoapp.sample.core.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
+import com.ekoapp.sample.core.utils.splitinstall.SplitInstall
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -74,13 +72,13 @@ class MainActivity : BaseActivity() {
                 .subscribe()
     }
 
-    override fun initDependencyInjection() {
-        DaggerMainActivityComponent
-                .builder()
-                .coreComponent(coreComponent())
-                .build()
-                .inject(this)
-    }
+//    override fun initDependencyInjection() {
+//        DaggerMainActivityComponent
+//                .builder()
+//                .coreComponent(coreComponent())
+//                .build()
+//                .inject(this)
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)

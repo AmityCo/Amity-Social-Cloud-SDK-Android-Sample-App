@@ -1,4 +1,4 @@
-package com.ekoapp.sample.utils.splitinstall
+package com.ekoapp.sample.core.utils.splitinstall
 
 const val DOWNLOAD_FAILED = false
 const val DOWNLOAD_SUCCESS = true

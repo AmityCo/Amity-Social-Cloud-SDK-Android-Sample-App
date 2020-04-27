@@ -1,4 +1,4 @@
-package com.ekoapp.sample;
+package com.ekoapp.sample.chatfeature.services;
 
 import android.util.Log;
 

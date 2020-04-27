@@ -1,8 +1,9 @@
-package com.ekoapp.sample.main.di
+package com.ekoapp.sample.chatfeature.di
 
+import com.ekoapp.sample.chatfeature.MainActivity
 import com.ekoapp.sample.core.di.CoreComponent
+import com.ekoapp.sample.core.di.SplitInstallModule
 import com.ekoapp.sample.core.di.scope.ActivityScope
-import com.ekoapp.sample.main.MainActivity
 import dagger.Component
 
 @ActivityScope

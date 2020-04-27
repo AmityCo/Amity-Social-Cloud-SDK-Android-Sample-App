@@ -1,4 +1,4 @@
-package com.ekoapp.sample.utils
+package com.ekoapp.sample.core.utils
 
 fun getCurrentClassAndMethodNames(): String {
     val e = Thread.currentThread().stackTrace[3]
