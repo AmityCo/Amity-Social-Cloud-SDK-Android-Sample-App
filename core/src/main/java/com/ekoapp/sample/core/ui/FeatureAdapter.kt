@@ -1,10 +1,10 @@
-package com.ekoapp.sample.main
+package com.ekoapp.sample.core.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ekoapp.sample.R
+import com.ekoapp.sample.core.R
 import kotlinx.android.synthetic.main.item_feature.view.*
 
 open class FeatureAdapter(private val dataSet: List<String> ,
@@ -16,7 +16,7 @@ open class FeatureAdapter(private val dataSet: List<String> ,
         fun onClick(featureName: String)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureAdapter.FeatureViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeatureViewHolder {
         val featureItemView = LayoutInflater.from(parent.context).inflate(R.layout.item_feature, parent, false)
         return FeatureViewHolder(featureItemView)
     }

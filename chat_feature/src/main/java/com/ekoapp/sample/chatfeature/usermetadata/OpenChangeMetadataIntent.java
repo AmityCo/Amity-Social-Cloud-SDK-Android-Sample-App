@@ -1,10 +1,11 @@
-package com.ekoapp.sample.intent;
+package com.ekoapp.sample.chatfeature.usermetadata;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.sample.usermetadata.ChangeMetadataActivity;
+import com.ekoapp.sample.core.intent.BaseIntent;
+
 
 public class OpenChangeMetadataIntent extends BaseIntent {
 

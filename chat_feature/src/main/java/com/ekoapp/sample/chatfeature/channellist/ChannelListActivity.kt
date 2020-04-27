@@ -21,11 +21,11 @@ import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
-import com.ekoapp.sample.SimplePreferences
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channellist.filter.ChannelQueryFilterActivity
+import com.ekoapp.sample.core.intent.IntentRequestCode
+import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.ekoapp.sample.core.ui.BaseActivity
-import com.ekoapp.sample.intent.IntentRequestCode
 import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*

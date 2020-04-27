@@ -17,10 +17,12 @@ import com.afollestad.materialdialogs.input.InputCallback
 import com.afollestad.materialdialogs.input.input
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.R
-import com.ekoapp.sample.SimplePreferences
+import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.ekoapp.sample.core.ui.BaseActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
-import com.ekoapp.sample.intent.OpenChangeMetadataIntent
+import com.ekoapp.sample.chatfeature.usermetadata.OpenChangeMetadataIntent
+import com.ekoapp.sample.core.ui.Feature
+import com.ekoapp.sample.core.ui.FeatureAdapter
 import com.ekoapp.sample.main.di.DaggerMainActivityComponent
 import com.ekoapp.sample.utils.splitinstall.CHAT_DYNAMIC_FEATURE
 import com.ekoapp.sample.utils.splitinstall.InstallModuleSealed

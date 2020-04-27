@@ -1,4 +1,4 @@
-package com.ekoapp.sample.intent;
+package com.ekoapp.sample.core.intent;
 
 public class IntentRequestCode {
 

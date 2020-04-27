@@ -10,7 +10,7 @@ import com.ekoapp.sample.chatfeature.intent.OpenCustomMessageSenderIntent
 import com.ekoapp.sample.chatfeature.intent.OpenFileMessageSenderIntent
 import com.ekoapp.sample.chatfeature.intent.OpenImageMessageSenderIntent
 import com.ekoapp.sample.chatfeature.intent.ViewChildMessagesIntent
-import com.ekoapp.sample.intent.IntentRequestCode
+import com.ekoapp.sample.core.intent.IntentRequestCode
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.activity_message_list.*
 

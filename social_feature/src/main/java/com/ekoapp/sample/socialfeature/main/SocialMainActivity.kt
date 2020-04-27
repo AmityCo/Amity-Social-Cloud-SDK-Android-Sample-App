@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.ekoapp.sample.core.ui.BaseActivity
-import com.ekoapp.sample.main.FeatureAdapter
+import com.ekoapp.sample.core.ui.FeatureAdapter
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.userlist.UserListActivity
 import kotlinx.android.synthetic.main.activity_social_main.*

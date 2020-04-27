@@ -66,7 +66,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(":core")
 
-    api 'androidx.multidex:multidex:2.0.1'
+    api project(":chat_feature")
+    api project(":social_feature")
+
     api 'androidx.appcompat:appcompat:1.1.0'
     api 'androidx.core:core-ktx:1.2.0'
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
@@ -77,45 +79,8 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     api 'androidx.lifecycle:lifecycle-reactivestreams:2.2.0'
 
-    api "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
-    api "androidx.tonyodev.fetch2:xfetch2:3.1.4"
-
-    api 'com.afollestad.material-dialogs:core:3.1.1'
-    api 'com.afollestad.material-dialogs:input:3.1.1'
-
-    api "com.github.bumptech.glide:glide:$glide_version"
-    kapt "com.github.bumptech.glide:compiler:$glide_version"
-    api "com.github.bumptech.glide:okhttp3-integration:$glide_version"
-    api "com.github.bumptech.glide:recyclerview-integration:$glide_version"
-
-    api 'com.google.android.material:material:1.1.0'
-
-    api 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
-
-    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
-    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
-    api "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
-
-    api 'com.github.tbruyelle:rxpermissions:0.10.2'
-
-    api 'com.google.code.gson:gson:2.8.6'
-
-    api "com.google.dagger:dagger-android-support:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-    androidTestImplementation "com.google.dagger:dagger-android-support:$dagger_version"
-    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
-    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
-
     implementation 'com.google.firebase:firebase-core:17.3.0'
     implementation 'com.google.firebase:firebase-messaging:20.1.5'
-
-    api 'com.google.guava:guava:28.1-android'
-
-    api 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0'
-    api 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
-
-    api 'com.jakewharton.timber:timber:4.7.1'
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 

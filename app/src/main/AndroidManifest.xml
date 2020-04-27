@@ -11,7 +11,7 @@
         android:required="true" />
 
     <application
-        android:name="com.ekoapp.sample.app.App"
+        android:name="com.ekoapp.sample.core.app.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -29,12 +29,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.ekoapp.sample.usermetadata.ChangeMetadataActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-
         <service
             android:name="com.ekoapp.sample.SimpleFirebaseMessagingService"
             android:exported="false">
@@ -42,16 +36,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
-        </provider>
 
     </application>
 

@@ -1,8 +1,8 @@
-package com.ekoapp.sample.app
+package com.ekoapp.sample.core.app
 
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.push.EkoBaidu
-import com.ekoapp.sample.SimplePreferences
+import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.ekoapp.sample.core.di.ContextModule
 import com.ekoapp.sample.core.di.CoreComponent
 import com.ekoapp.sample.core.di.DaggerCoreComponent

@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.SimplePreferences
 import com.ekoapp.sample.chatfeature.databinding.FragmentChannelTypeFilterBinding
+import com.ekoapp.sample.core.preferences.SimplePreferences
 
 class ChannelTypeFilterFragment : Fragment() {
 

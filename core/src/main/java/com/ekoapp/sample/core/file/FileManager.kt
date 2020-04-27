@@ -1,4 +1,4 @@
-package com.ekoapp.sample.file
+package com.ekoapp.sample.core.file
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,7 @@ import androidx.core.content.FileProvider
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.internal.api.http.EkoOkHttp
 import com.ekoapp.ekosdk.messaging.data.FileData
-import com.ekoapp.sample.app.App
+import com.ekoapp.sample.core.app.App
 import com.tonyodev.fetch2.*
 import com.tonyodev.fetch2core.DownloadBlock
 import com.tonyodev.fetch2core.Func

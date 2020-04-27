@@ -1,4 +1,4 @@
-package com.ekoapp.sample;
+package com.ekoapp.sample.core;
 
 public interface SimpleConfig {
 

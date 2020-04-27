@@ -1,4 +1,4 @@
-package com.ekoapp.sample.app
+package com.ekoapp.sample.core.app
 
 import androidx.multidex.MultiDexApplication
 import com.ekoapp.sample.core.di.CoreComponent

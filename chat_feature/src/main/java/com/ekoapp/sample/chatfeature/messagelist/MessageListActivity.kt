@@ -32,14 +32,14 @@ import com.ekoapp.ekosdk.*
 import com.ekoapp.ekosdk.exception.EkoError
 import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.ekosdk.messaging.data.TextData
-import com.ekoapp.sample.SimplePreferences
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.intent.OpenMessageReactionListIntent
 import com.ekoapp.sample.chatfeature.intent.ViewChannelMembershipsIntent
 import com.ekoapp.sample.chatfeature.messagelist.option.MessageOption
 import com.ekoapp.sample.chatfeature.messagelist.option.ReactionOption
+import com.ekoapp.sample.core.file.FileManager
+import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.ekoapp.sample.core.ui.BaseActivity
-import com.ekoapp.sample.file.FileManager
 import com.google.common.base.Joiner
 import com.google.common.collect.Sets
 import com.google.gson.JsonObject

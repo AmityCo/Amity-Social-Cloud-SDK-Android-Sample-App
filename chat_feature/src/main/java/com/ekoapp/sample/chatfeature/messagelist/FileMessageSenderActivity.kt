@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.internal.util.RealPathUtil
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.intent.IntentRequestCode.REQUEST_SELECT_FILE
 import com.ekoapp.sample.chatfeature.intent.OpenFileMessageSenderIntent
+import com.ekoapp.sample.core.intent.IntentRequestCode.REQUEST_SELECT_FILE
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Completable

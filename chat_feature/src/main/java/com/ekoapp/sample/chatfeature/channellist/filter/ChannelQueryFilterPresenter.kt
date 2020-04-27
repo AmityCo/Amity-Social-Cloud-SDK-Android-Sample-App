@@ -2,11 +2,11 @@ package com.ekoapp.sample.chatfeature.channellist.filter
 
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
-import com.ekoapp.sample.SimplePreferences
 import com.ekoapp.sample.chatfeature.channellist.filter.channeltype.ChannelTypeFilterViewModel
 import com.ekoapp.sample.chatfeature.channellist.filter.excludetags.ExcludeTagFilterViewModel
 import com.ekoapp.sample.chatfeature.channellist.filter.includetags.IncludeTagFilterViewModel
 import com.ekoapp.sample.chatfeature.channellist.filter.membership.MembershipFilterViewModel
+import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.google.common.collect.Sets
 
 class ChannelQueryFilterPresenter(private val view: ChannelQueryFilterContract.View,

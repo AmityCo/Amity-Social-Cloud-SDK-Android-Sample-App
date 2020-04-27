@@ -1,10 +1,10 @@
-package com.ekoapp.sample.usermetadata
+package com.ekoapp.sample.chatfeature.usermetadata
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
-import com.ekoapp.sample.R
+import com.ekoapp.sample.chatfeature.R
 import kotlinx.android.synthetic.main.activity_key_value_input.*
 
 abstract class KeyValueInputActivity : AppCompatActivity() {

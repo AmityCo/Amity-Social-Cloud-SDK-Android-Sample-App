@@ -9,7 +9,7 @@ import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.intent.*
-import com.ekoapp.sample.intent.IntentRequestCode
+import com.ekoapp.sample.core.intent.IntentRequestCode
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.activity_message_list.*
 

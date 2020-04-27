@@ -1,4 +1,4 @@
-package com.ekoapp.sample.usermetadata
+package com.ekoapp.sample.chatfeature.usermetadata
 
 import android.os.Bundle
 import com.ekoapp.ekosdk.EkoClient

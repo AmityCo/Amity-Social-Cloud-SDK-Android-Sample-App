@@ -1,4 +1,4 @@
-package com.ekoapp.sample.main
+package com.ekoapp.sample.core.ui
 
 enum class Feature(val featureName: String) {
     CHAT("chat"),

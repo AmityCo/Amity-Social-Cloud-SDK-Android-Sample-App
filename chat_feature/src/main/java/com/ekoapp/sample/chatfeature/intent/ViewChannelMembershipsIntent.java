@@ -6,7 +6,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.ekoapp.sample.chatfeature.channellist.ChannelMembershipActivity;
-import com.ekoapp.sample.intent.BaseIntent;
+import com.ekoapp.sample.core.intent.BaseIntent;
 
 public class ViewChannelMembershipsIntent extends BaseIntent {
 
