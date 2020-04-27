@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ekoapp.sample.chatfeature">
 
-    <dist:module
-        dist:instant="false"
-        dist:onDemand="true"
-        dist:title="@string/title_chat_feature">
-        <dist:delivery>
-            <dist:on-demand />
-        </dist:delivery>
-        <dist:fusing dist:include="true" />
-    </dist:module>
+<!--    <dist:module-->
+<!--        dist:instant="false"-->
+<!--        dist:onDemand="true"-->
+<!--        dist:title="@string/title_chat_feature">-->
+<!--        <dist:delivery>-->
+<!--            <dist:on-demand />-->
+<!--        </dist:delivery>-->
+<!--        <dist:fusing dist:include="true" />-->
+<!--    </dist:module>-->
 
     <application>
 

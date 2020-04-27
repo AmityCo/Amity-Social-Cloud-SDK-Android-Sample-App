@@ -6,11 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    
 
     defaultConfig {
         minSdkVersion 16
@@ -24,15 +19,20 @@ android {
         enabled = true
     }
 
-    flavorDimensions "push"
+//    flavorDimensions "push"
+//
+//    productFlavors {
+//        baidu_with_fcm {
+//            dimension "push"
+//        }
+//        fcm {
+//            dimension "push"
+//        }
+//    }
 
-    productFlavors {
-        baidu_with_fcm {
-            dimension "push"
-        }
-        fcm {
-            dimension "push"
-        }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {

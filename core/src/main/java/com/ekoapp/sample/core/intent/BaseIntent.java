@@ -5,13 +5,11 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.sample.BuildConfig;
-
 
 public class BaseIntent extends Intent {
 
-    protected static final String ACTION = BuildConfig.APPLICATION_ID + ".intent.action.";
-    protected static final String EXTRA = BuildConfig.APPLICATION_ID + ".intent.extra.";
+    protected static final String ACTION = "intent.action.";
+    protected static final String EXTRA = "intent.extra.";
 
 
     protected BaseIntent(String action) {
