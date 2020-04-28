@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
-import kotlinx.android.synthetic.main.component_body_feeds.view.*
-import kotlinx.android.synthetic.main.component_header_feeds.view.*
+import com.ekoapp.sample.socialfeature.userfeed.view.render.userFeedRender
+import kotlinx.android.synthetic.main.item_user_feeds.view.*
 
 class UserFeedsAdapter(private val context: Context,
                        private val items: List<SampleFeedsResponse>) : RecyclerView.Adapter<ViewHolder>() {
@@ -23,12 +23,13 @@ class UserFeedsAdapter(private val context: Context,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
+        val feedsResponse = items[position]
         val itemView = holder.itemView
         val context = itemView.context
 
-        itemView.text_full_name.text = item.creator
-        itemView.text_description.text = item.description
+        feedsResponse.userFeedRender(
+                headerFeedsComponent = itemView.header_feeds,
+                bodyFeedsComponent = itemView.body_feeds)
     }
 }
 
