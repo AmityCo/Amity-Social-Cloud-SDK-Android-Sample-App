@@ -13,11 +13,7 @@ class LikeActionComponent : ConstraintLayout {
         LayoutInflater.from(context).inflate(R.layout.component_like_action, this, true)
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-            context,
-            attrs,
-            defStyle
-    )
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 }

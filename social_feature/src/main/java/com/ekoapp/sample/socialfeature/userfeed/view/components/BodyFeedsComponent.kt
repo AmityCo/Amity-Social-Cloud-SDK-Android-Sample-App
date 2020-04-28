@@ -13,11 +13,7 @@ class BodyFeedsComponent : ConstraintLayout {
         LayoutInflater.from(context).inflate(R.layout.component_body_feeds, this, true)
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-            context,
-            attrs,
-            defStyle
-    )
+    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 }
