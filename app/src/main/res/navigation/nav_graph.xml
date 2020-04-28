@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/feeds"
-        android:name="com.ekoapp.sample.socialfeature.userfeed.view.UserFeedFragment"
+        android:name="com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsFragment"
         android:label="fragment_feeds"
         tools:layout="@layout/fragment_coming_soon">
         <action

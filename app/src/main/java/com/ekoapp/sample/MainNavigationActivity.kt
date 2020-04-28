@@ -25,7 +25,7 @@ class MainNavigationActivity : BaseActivity() {
     }
 
     private fun setUpNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
-        navHostFragment?.navController?.let { NavigationUI.setupWithNavController(bttm_nav, it) }
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment?
+        navHostFragment?.navController?.let { NavigationUI.setupWithNavController(bottom_navigation, it) }
     }
 }
