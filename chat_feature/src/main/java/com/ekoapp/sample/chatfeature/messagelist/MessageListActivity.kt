@@ -39,7 +39,7 @@ import com.ekoapp.sample.chatfeature.messagelist.option.MessageOption
 import com.ekoapp.sample.chatfeature.messagelist.option.ReactionOption
 import com.ekoapp.sample.core.file.FileManager
 import com.ekoapp.sample.core.preferences.SimplePreferences
-import com.ekoapp.sample.core.ui.BaseActivity
+import com.ekoapp.sample.core.base.BaseActivity
 import com.google.common.base.Joiner
 import com.google.common.collect.Sets
 import com.google.gson.JsonObject

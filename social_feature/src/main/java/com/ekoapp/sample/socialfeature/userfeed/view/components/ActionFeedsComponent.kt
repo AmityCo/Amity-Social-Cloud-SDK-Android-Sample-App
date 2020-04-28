@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.component
+package com.ekoapp.sample.socialfeature.userfeed.view.components
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,10 +7,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.sample.socialfeature.R
 
 
-class HeaderFeedsComponent : ConstraintLayout {
+class ActionFeedsComponent : ConstraintLayout {
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.component_header_feeds, this, true)
+        LayoutInflater.from(context).inflate(R.layout.component_action_feeds, this, true)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(

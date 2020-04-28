@@ -3,7 +3,7 @@ package com.ekoapp.sample
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.ekoapp.sample.core.ui.BaseActivity
+import com.ekoapp.sample.core.base.BaseActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.main.di.DaggerMainNavigationComponent
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*

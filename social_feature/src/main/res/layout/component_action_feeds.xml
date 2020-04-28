@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.component.LikeActionComponent
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.LikeActionComponent
         android:id="@+id/like_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.component.CommentActionComponent
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.CommentActionComponent
         android:id="@+id/comment_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/like_action" />
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.component.ShareActionComponent
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.ShareActionComponent
         android:id="@+id/share_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

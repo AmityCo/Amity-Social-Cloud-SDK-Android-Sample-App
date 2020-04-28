@@ -8,7 +8,7 @@ import com.ekoapp.ekosdk.EkoChannelMembership
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.intent.ViewChannelMembershipsIntent
-import com.ekoapp.sample.core.ui.BaseActivity
+import com.ekoapp.sample.core.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_channel_membership_list.*
 
 class ChannelMembershipActivity : BaseActivity() {

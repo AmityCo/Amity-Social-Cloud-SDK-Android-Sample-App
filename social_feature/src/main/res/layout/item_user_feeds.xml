@@ -7,14 +7,14 @@
     android:padding="@dimen/material_component_dialogs_padding_around_content_area"
     tools:ignore="PrivateResource">
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.component.HeaderFeedsComponent
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.HeaderFeedsComponent
         android:id="@+id/header_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.component.BodyFeedsComponent
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.BodyFeedsComponent
         android:id="@+id/body_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="@id/header_feeds"
         app:layout_constraintTop_toBottomOf="@id/body_feeds" />
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.component.ActionFeedsComponent
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.ActionFeedsComponent
         android:id="@+id/action_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -12,7 +12,7 @@ import com.ekoapp.sample.chatfeature.channellist.filter.includetags.IncludeTagFi
 import com.ekoapp.sample.chatfeature.channellist.filter.includetags.IncludeTagFilterViewModel
 import com.ekoapp.sample.chatfeature.channellist.filter.membership.MembershipFilterFragment
 import com.ekoapp.sample.chatfeature.channellist.filter.membership.MembershipFilterViewModel
-import com.ekoapp.sample.core.ui.BaseActivity
+import com.ekoapp.sample.core.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_channel_query_filter.*
 
 class ChannelQueryFilterActivity : BaseActivity(), ChannelQueryFilterContract.View {
