@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/material_component_dialogs_padding_around_content_area"
+    tools:ignore="PrivateResource">
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.component.HeaderFeedsComponent
+        android:id="@+id/header_feeds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.component.BodyFeedsComponent
+        android:id="@+id/body_feeds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
+        app:layout_constraintEnd_toEndOf="@id/header_feeds"
+        app:layout_constraintStart_toStartOf="@id/header_feeds"
+        app:layout_constraintTop_toBottomOf="@id/header_feeds" />
+
+    <View
+        android:id="@+id/view_grid_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/material_component_grid_lists_padding_small"
+        android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
+        android:background="@color/material_light_black"
+        app:layout_constraintEnd_toEndOf="@id/header_feeds"
+        app:layout_constraintStart_toStartOf="@id/header_feeds"
+        app:layout_constraintTop_toBottomOf="@id/body_feeds" />
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.component.ActionFeedsComponent
+        android:id="@+id/action_feeds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
+        app:layout_constraintEnd_toEndOf="@id/header_feeds"
+        app:layout_constraintStart_toStartOf="@id/header_feeds"
+        app:layout_constraintTop_toBottomOf="@id/view_grid_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_like_action"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <ImageView
+        android:id="@+id/image_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_like"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/md_listitem_control_margin"
+        android:layout_marginEnd="@dimen/md_listitem_control_margin"
+        android:text="@string/temporarily_like"
+        android:textColor="@color/material_light_black"
+        android:textSize="@dimen/material_typography_caption"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/image_like"
+        app:layout_constraintStart_toEndOf="@id/image_like"
+        app:layout_constraintTop_toTopOf="@id/image_like"
+        tools:ignore="PrivateResource" />
+
+</merge>
