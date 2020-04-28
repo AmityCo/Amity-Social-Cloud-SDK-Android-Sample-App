@@ -1,19 +1,32 @@
 package com.ekoapp.sample.socialfeature.userfeed.view
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
+import com.ekoapp.sample.core.ui.extensions.coreComponent
+import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialFragmentComponent
+import timber.log.Timber
 
-class UserFeedsFragment : Fragment() {
+class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_user_feeds, container, false)
+    override fun getLayout(): Int {
+        return R.layout.fragment_user_feeds
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun bindViewModel(viewModel: UserFeedsViewModel) {
+        Timber.d(getCurrentClassAndMethodNames())
+
+    }
+
+    override fun initDependencyInjection() {
+        DaggerSocialFragmentComponent
+                .builder()
+                .coreComponent(coreComponent())
+                .build()
+                .inject(this)
+    }
+
+    override fun getViewModelClass(): Class<UserFeedsViewModel> {
+        return UserFeedsViewModel::class.java
     }
 }

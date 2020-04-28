@@ -61,8 +61,8 @@ class ChannelListActivity : BaseActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id = item?.itemId
         if (id == R.id.action_filter_channel) {
             startActivityForResult(Intent(this, ChannelQueryFilterActivity::class.java),
                     IntentRequestCode.REQUEST_CHANNEL_FILTER_OPTION)

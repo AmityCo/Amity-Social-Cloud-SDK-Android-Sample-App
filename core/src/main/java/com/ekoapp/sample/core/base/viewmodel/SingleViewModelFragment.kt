@@ -23,7 +23,7 @@ abstract class SingleViewModelFragment<VM : ViewModel> : BaseFragment(), HasSing
     }
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this)
+        initDependencyInjection()
         super.onAttach(context)
     }
 
@@ -39,5 +39,9 @@ abstract class SingleViewModelFragment<VM : ViewModel> : BaseFragment(), HasSing
             localQueue.forEach { it(viewModel) }
             onViewModelActiveQueue.clear()
         }
+    }
+
+    open fun initDependencyInjection() {
+
     }
 }

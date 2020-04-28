@@ -16,11 +16,13 @@ import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
 import com.afollestad.materialdialogs.input.InputCallback
 import com.afollestad.materialdialogs.input.input
 import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.sample.chatfeature.di.DaggerMainActivityComponent
 import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.ekoapp.sample.core.base.BaseActivity
 import com.ekoapp.sample.chatfeature.usermetadata.OpenChangeMetadataIntent
 import com.ekoapp.sample.core.ui.Feature
 import com.ekoapp.sample.core.ui.FeatureAdapter
+import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.utils.splitinstall.CHAT_DYNAMIC_FEATURE
 import com.ekoapp.sample.core.utils.splitinstall.InstallModuleSealed
 import com.ekoapp.sample.core.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
@@ -71,21 +73,21 @@ class MainActivity : BaseActivity() {
                 .subscribe()
     }
 
-//    override fun initDependencyInjection() {
-//        DaggerMainActivityComponent
-//                .builder()
-//                .coreComponent(coreComponent())
-//                .build()
-//                .inject(this)
-//    }
+    override fun initDependencyInjection() {
+        DaggerMainActivityComponent
+                .builder()
+                .coreComponent(coreComponent())
+                .build()
+                .inject(this)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id = item?.itemId
         if (id == R.id.action_register) {
             showDialog(R.string.register, "", EkoClient.getUserId(), false, { dialog, input ->
                 val userId = input.toString()

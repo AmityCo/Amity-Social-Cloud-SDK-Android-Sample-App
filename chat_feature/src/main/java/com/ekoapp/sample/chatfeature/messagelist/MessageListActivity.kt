@@ -126,16 +126,16 @@ abstract class MessageListActivity : BaseActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_channel_membership) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.action_channel_membership) {
             startActivity(ViewChannelMembershipsIntent(this, getChannelId()))
             return true
-        } else if (item.itemId == R.id.action_leave_channel) {
+        } else if (item?.itemId == R.id.action_leave_channel) {
             channelRepository.leaveChannel(getChannelId())
                     .doOnComplete(Action { this.finish() })
                     .subscribe()
             return true
-        } else if (item.itemId == R.id.action_with_tags) {
+        } else if (item?.itemId == R.id.action_with_tags) {
             showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags), true, { dialog, input ->
                 includingTags.clear()
                 for (tag in input.toString().split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()) {
@@ -147,7 +147,7 @@ abstract class MessageListActivity : BaseActivity() {
                 observeMessageCollection()
             })
             return true
-        } else if (item.itemId == R.id.action_without_tags) {
+        } else if (item?.itemId == R.id.action_without_tags) {
             showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags), true, { dialog, input ->
                 excludingTags.clear()
                 for (tag in input.toString().split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()) {
@@ -159,7 +159,7 @@ abstract class MessageListActivity : BaseActivity() {
                 observeMessageCollection()
             })
             return true
-        } else if (item.itemId == R.id.action_set_tags) {
+        } else if (item?.itemId == R.id.action_set_tags) {
             val liveData = channelRepository.getChannel(getChannelId())
             liveData.observeForever(object : Observer<EkoChannel> {
                 override fun onChanged(channel: EkoChannel) {
@@ -178,7 +178,7 @@ abstract class MessageListActivity : BaseActivity() {
                 }
             })
             return true
-        } else if (item.itemId == R.id.action_notification_for_current_channel) {
+        } else if (item?.itemId == R.id.action_notification_for_current_channel) {
             channelRepository.notification(getChannelId())
                     .isAllowed
                     .subscribeOn(Schedulers.io())
@@ -198,7 +198,7 @@ abstract class MessageListActivity : BaseActivity() {
                     }
                     .subscribe()
             return true
-        } else if (item.itemId == R.id.action_stack_from_end) {
+        } else if (item?.itemId == R.id.action_stack_from_end) {
             MaterialDialog(this).show {
                 checkBoxPrompt(text = getString(R.string.stack_from_end), isCheckedDefault = stackFromEnd.get(), onToggle = null)
                 positiveButton(text = "save change") {
@@ -210,7 +210,7 @@ abstract class MessageListActivity : BaseActivity() {
             }
 
             return true
-        } else if (item.itemId == R.id.action_revert_layout) {
+        } else if (item?.itemId == R.id.action_revert_layout) {
 
             MaterialDialog(this).show {
                 checkBoxPrompt(text = getString(R.string.revert_layout), isCheckedDefault = revertLayout.get(), onToggle = null)
