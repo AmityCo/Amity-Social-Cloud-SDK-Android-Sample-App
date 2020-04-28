@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_body_feeds"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <ImageView
+        android:id="@+id/image_avatar"
+        android:layout_width="@dimen/material_layout_avatar"
+        android:layout_height="@dimen/material_layout_avatar"
+        android:background="@drawable/default_oval"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_touchable_target_post"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/material_component_floating_action_button_mini_size"
+        android:layout_marginStart="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
+        android:layout_marginLeft="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
+        android:background="@drawable/selector_background_post_feeds"
+        android:text="@string/temporarily_what_is_on_your_mind"
+        android:textAllCaps="false"
+        android:textColor="@color/material_blue_grey_700"
+        app:layout_constraintBottom_toBottomOf="@id/image_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_avatar"
+        app:layout_constraintTop_toTopOf="@id/image_avatar"
+        tools:ignore="PrivateResource" />
+
+</merge>
