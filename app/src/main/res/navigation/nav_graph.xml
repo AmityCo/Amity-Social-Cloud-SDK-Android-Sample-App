@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/chat">
+    app:startDestination="@id/chats">
 
     <fragment
-        android:id="@+id/chat"
+        android:id="@+id/chats"
         android:name="com.ekoapp.sample.main.navigation.fragments.Chats"
-        android:label="fragment_home"
+        android:label="fragment_chat"
         tools:layout="@layout/fragment_coming_soon">
         <action
             android:id="@+id/action_home2_to_explore"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/feeds"
         android:name="com.ekoapp.sample.main.navigation.fragments.Feeds"
-        android:label="fragment_explore"
+        android:label="fragment_feeds"
         tools:layout="@layout/fragment_coming_soon">
         <action
             android:id="@+id/action_explore_to_more"
@@ -26,6 +26,6 @@
     <fragment
         android:id="@+id/users"
         android:name="com.ekoapp.sample.main.navigation.fragments.Users"
-        android:label="fragment_more"
+        android:label="fragment_users"
         tools:layout="@layout/fragment_coming_soon" />
 </navigation>
