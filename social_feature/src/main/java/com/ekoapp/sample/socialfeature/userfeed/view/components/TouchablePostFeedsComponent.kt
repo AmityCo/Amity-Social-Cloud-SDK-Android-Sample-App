@@ -10,7 +10,7 @@ import com.ekoapp.sample.socialfeature.R
 class TouchablePostFeedsComponent : ConstraintLayout {
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.component_touchable_post_feeds, this, true)
+        LayoutInflater.from(context).inflate(R.layout.component_touchable_create_feeds, this, true)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
