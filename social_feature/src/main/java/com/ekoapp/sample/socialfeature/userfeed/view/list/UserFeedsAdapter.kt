@@ -13,7 +13,7 @@ import com.ekoapp.sample.socialfeature.userfeed.view.render.userFeedRender
 import kotlinx.android.synthetic.main.item_user_feeds.view.*
 
 class UserFeedsAdapter(private val context: Context,
-                       private val items: List<SampleFeedsResponse>,
+                       private val items: MutableList<SampleFeedsResponse>,
                        private val userFeedsViewModel: UserFeedsViewModel) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
@@ -34,7 +34,18 @@ class UserFeedsAdapter(private val context: Context,
                 onClickDelete = {
                     userFeedsViewModel.submitDeleteFeed(it)
                 })
+    }
 
+    fun addItem(position: Int, data: SampleFeedsResponse) {
+        items.add(position, data)
+        notifyItemInserted(position)
+        notifyItemRangeChanged(position, items.size)
+    }
+
+    fun deleteItem(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, items.size)
     }
 }
 
