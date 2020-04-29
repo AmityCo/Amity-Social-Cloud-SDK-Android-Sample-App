@@ -7,11 +7,10 @@
     android:layout_height="wrap_content"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <ImageView
-        android:id="@+id/image_avatar"
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.AvatarComponent
+        android:id="@+id/avatar"
         android:layout_width="@dimen/material_layout_avatar"
         android:layout_height="@dimen/material_layout_avatar"
-        android:background="@drawable/default_oval"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,14 +20,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
         android:layout_marginEnd="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
+        android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/temporarily_full_name"
         android:textColor="@color/material_grey_900"
         android:textSize="@dimen/material_typography_body1"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/image_more_horiz"
-        app:layout_constraintStart_toEndOf="@id/image_avatar"
-        app:layout_constraintTop_toTopOf="@id/image_avatar"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
         tools:ignore="PrivateResource" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:text="@string/temporarily_time"
         android:textColor="@color/material_grey_600"
         android:textSize="@dimen/material_typography_caption"
-        app:layout_constraintBottom_toBottomOf="@id/image_avatar"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintEnd_toEndOf="@id/text_full_name"
         app:layout_constraintStart_toStartOf="@id/text_full_name"
         app:layout_constraintTop_toBottomOf="@id/text_full_name"
@@ -52,6 +52,7 @@
         android:src="@drawable/ic_more_horiz"
         android:tint="@color/material_grey_600"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
 
 </merge>

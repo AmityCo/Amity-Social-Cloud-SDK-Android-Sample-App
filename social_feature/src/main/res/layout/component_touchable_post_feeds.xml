@@ -7,11 +7,10 @@
     android:layout_height="wrap_content"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <ImageView
-        android:id="@+id/image_avatar"
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.AvatarComponent
+        android:id="@+id/avatar"
         android:layout_width="@dimen/material_layout_avatar"
         android:layout_height="@dimen/material_layout_avatar"
-        android:background="@drawable/default_oval"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,10 +28,11 @@
         android:text="@string/temporarily_what_is_on_your_mind"
         android:textAllCaps="false"
         android:textColor="@color/material_grey_900"
-        app:layout_constraintBottom_toBottomOf="@id/image_avatar"
+        android:textSize="@dimen/material_typography_subheading"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/image_avatar"
-        app:layout_constraintTop_toTopOf="@id/image_avatar"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
         tools:ignore="PrivateResource" />
 
 </merge>
