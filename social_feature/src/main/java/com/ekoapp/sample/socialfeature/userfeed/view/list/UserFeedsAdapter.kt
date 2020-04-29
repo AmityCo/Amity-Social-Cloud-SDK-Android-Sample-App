@@ -4,11 +4,15 @@ package com.ekoapp.sample.socialfeature.userfeed.view.list
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
+import com.ekoapp.sample.socialfeature.userfeed.view.MoreHorizBottomSheetFragment
+import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeed.view.render.userFeedRender
+import kotlinx.android.synthetic.main.component_header_feeds.view.*
 import kotlinx.android.synthetic.main.item_user_feeds.view.*
 
 class UserFeedsAdapter(private val context: Context,
@@ -25,7 +29,6 @@ class UserFeedsAdapter(private val context: Context,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val feedsResponse = items[position]
         val itemView = holder.itemView
-        val context = itemView.context
 
         feedsResponse.userFeedRender(
                 headerFeedsComponent = itemView.header_feeds,
