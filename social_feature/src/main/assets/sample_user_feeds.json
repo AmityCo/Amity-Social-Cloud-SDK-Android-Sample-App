@@ -7,7 +7,8 @@
       "avatar": "",
       "lastCreated": "",
       "description": "Post1",
-      "isLiked": false
+      "isLiked": false,
+      "isDeleted": false
     },
     {
       "id": "8977913583590",
@@ -15,7 +16,8 @@
       "avatar": "",
       "lastCreated": "",
       "description": "Post2",
-      "isLiked": true
+      "isLiked": true,
+      "isDeleted": false
     }
   ]
 }

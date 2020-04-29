@@ -6,5 +6,6 @@ data class SampleFeedsResponse(
         val avatar: String,
         val lastCreated: String,
         val description: String,
-        val isLiked: Boolean
+        val isLiked: Boolean,
+        val isDeleted: Boolean
 )

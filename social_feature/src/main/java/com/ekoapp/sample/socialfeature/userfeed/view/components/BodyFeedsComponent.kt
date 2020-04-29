@@ -22,4 +22,8 @@ class BodyFeedsComponent : ConstraintLayout {
     fun setupView(data: SampleFeedsResponse) {
         text_description.text = data.description
     }
+
+    fun setupEvent(){
+
+    }
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
+import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialFragmentComponent
@@ -23,6 +24,9 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     override fun bindViewModel(viewModel: UserFeedsViewModel) {
         renderList(viewModel)
         setupEvent(viewModel)
+        viewModel.renderDelete().observeNotNull(viewLifecycleOwner, {
+
+        })
     }
 
     private fun setupEvent(viewModel: UserFeedsViewModel) {
@@ -33,7 +37,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
-        val adapter = UserFeedsAdapter(requireContext(), viewModel.getUserFeeds())
+        val adapter = UserFeedsAdapter(requireContext(), viewModel.getUserFeeds(), userFeedsViewModel = viewModel)
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
                 .builder()
                 .build(adapter)

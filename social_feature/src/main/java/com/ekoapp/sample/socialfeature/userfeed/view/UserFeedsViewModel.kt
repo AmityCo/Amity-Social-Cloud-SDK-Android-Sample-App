@@ -8,4 +8,10 @@ class UserFeedsViewModel @Inject constructor(private val context: Context,
                                              private val userFeedsRepository: UserFeedsRepository) : DisposableViewModel() {
 
     fun getUserFeeds() = userFeedsRepository.getSampleDataFeeds(context).feeds
+
+    fun submitDeleteFeed(isDeleted: Boolean) {
+        userFeedsRepository.sendDeleteFeeds(isDeleted)
+    }
+
+    fun renderDelete() = userFeedsRepository.isDeletedLive
 }
