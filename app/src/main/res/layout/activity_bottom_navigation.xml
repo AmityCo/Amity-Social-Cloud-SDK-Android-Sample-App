@@ -11,15 +11,17 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/material_grey_100"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        app:navGraph="@navigation/nav_graph"
+        tools:ignore="PrivateResource" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:itemBackground="@color/material_blue_grey_100"
+        app:itemBackground="@color/colorPrimaryDark"
         app:menu="@menu/bottom_menu_nav" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

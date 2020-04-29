@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/chats"
-        android:name="com.ekoapp.sample.main.navigation.fragments.Chats"
+        android:name="com.ekoapp.sample.main.navigation.fragments.NotAvailable"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_coming_soon">
+        tools:layout="@layout/fragment_not_available">
         <action
             android:id="@+id/action_home2_to_explore"
             app:destination="@id/feeds" />
@@ -18,14 +18,14 @@
         android:id="@+id/feeds"
         android:name="com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsFragment"
         android:label="fragment_feeds"
-        tools:layout="@layout/fragment_coming_soon">
+        tools:layout="@layout/fragment_user_feeds">
         <action
             android:id="@+id/action_explore_to_more"
             app:destination="@id/users" />
     </fragment>
     <fragment
         android:id="@+id/users"
-        android:name="com.ekoapp.sample.main.navigation.fragments.Users"
+        android:name="com.ekoapp.sample.main.navigation.fragments.NotAvailable"
         android:label="fragment_users"
-        tools:layout="@layout/fragment_coming_soon" />
+        tools:layout="@layout/fragment_not_available" />
 </navigation>

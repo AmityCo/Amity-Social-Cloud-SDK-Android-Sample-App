@@ -6,21 +6,20 @@
 
     <ImageView
         android:id="@+id/ic_coming_soon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/material_layout_vertical_spacing_tool_bar"
+        android:layout_height="@dimen/material_layout_vertical_spacing_tool_bar"
         android:tint="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@id/tv_coming_soon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_coming_soon" />
+        app:srcCompat="@drawable/ic_info" />
 
     <TextView
         android:id="@+id/tv_coming_soon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:text="Coming soon"
-        android:textColor="@color/colorAccent"
+        android:paddingTop="@dimen/material_component_cards_supporting_text_top_padding"
+        android:text="@string/temporarily_not_available"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/ic_coming_soon"
         app:layout_constraintStart_toStartOf="@id/ic_coming_soon"

@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Sample</string>
+    <string name="app_name">UIKit</string>
+    <string name="temporarily_not_available">Sorry, this service is not available.</string>
 </resources>
