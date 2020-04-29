@@ -38,8 +38,11 @@ class HeaderFeedsComponent : ConstraintLayout {
     }
 
     fun actionDeleteFeeds(actionDelete: (Boolean) -> Unit) {
-        moreHorizBottomSheet.renderDelete(actionDelete::invoke)
-
+        moreHorizBottomSheet.renderDelete {
+            actionDelete.invoke(it)
+            moreHorizBottomSheet.dialog?.cancel()
+        }
     }
+
 
 }
