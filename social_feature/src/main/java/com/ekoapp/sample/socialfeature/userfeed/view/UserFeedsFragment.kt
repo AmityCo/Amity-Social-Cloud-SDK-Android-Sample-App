@@ -16,6 +16,7 @@ import timber.log.Timber
 class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
     private val spaceFeeds = 1
+    private lateinit var adapter: UserFeedsAdapter
 
     override fun getLayout(): Int {
         return R.layout.fragment_user_feeds
@@ -24,9 +25,6 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     override fun bindViewModel(viewModel: UserFeedsViewModel) {
         renderList(viewModel)
         setupEvent(viewModel)
-        viewModel.renderDelete().observeNotNull(viewLifecycleOwner, {
-
-        })
     }
 
     private fun setupEvent(viewModel: UserFeedsViewModel) {
@@ -34,10 +32,14 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
             Timber.d(getCurrentClassAndMethodNames())
             startActivity(Intent(requireActivity(), CreateFeedsActivity::class.java))
         }
+
+        viewModel.renderDelete().observeNotNull(viewLifecycleOwner, {
+            viewModel.updateDeletedList(it, adapter::deleteItem)
+        })
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
-        val adapter = UserFeedsAdapter(requireContext(), viewModel.getUserFeeds(), userFeedsViewModel = viewModel)
+        adapter = UserFeedsAdapter(requireContext(), viewModel.getUserFeeds().toMutableList(), userFeedsViewModel = viewModel)
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
                 .builder()
                 .build(adapter)

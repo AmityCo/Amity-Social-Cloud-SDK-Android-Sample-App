@@ -13,11 +13,11 @@ import kotlinx.android.synthetic.main.component_header_feeds.view.*
 
 class HeaderFeedsComponent : ConstraintLayout {
 
-    private var bottomSheetFragment: MoreHorizBottomSheetFragment
+    private var moreHorizBottomSheet: MoreHorizBottomSheetFragment
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_header_feeds, this, true)
-        bottomSheetFragment = MoreHorizBottomSheetFragment()
+        moreHorizBottomSheet = MoreHorizBottomSheetFragment()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
@@ -30,15 +30,16 @@ class HeaderFeedsComponent : ConstraintLayout {
     }
 
     private fun Context.renderBottomSheet() {
-        bottomSheetFragment.show((this as AppCompatActivity).supportFragmentManager, bottomSheetFragment.tag)
+        moreHorizBottomSheet.show((this as AppCompatActivity).supportFragmentManager, moreHorizBottomSheet.tag)
     }
 
     fun actionEditFeeds(actionEdit: (Boolean) -> Unit) {
-        bottomSheetFragment.renderEdit(actionEdit::invoke)
+        moreHorizBottomSheet.renderEdit(actionEdit::invoke)
     }
 
     fun actionDeleteFeeds(actionDelete: (Boolean) -> Unit) {
-        bottomSheetFragment.renderDelete(actionDelete::invoke)
+        moreHorizBottomSheet.renderDelete(actionDelete::invoke)
+
     }
 
 }
