@@ -38,7 +38,6 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
         appbar_create_feeds.setTitle(getString(R.string.temporarily_create_post))
     }
 
-
     override fun getViewModelClass(): Class<CreateFeedsViewModel> {
         return CreateFeedsViewModel::class.java
     }
