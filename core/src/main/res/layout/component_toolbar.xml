@@ -27,13 +27,12 @@
             android:id="@+id/text_title_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="start"
             android:ellipsize="end"
-            android:lineSpacingExtra="28sp"
+            android:lineSpacingExtra="@dimen/material_layout_vertical_spacing_status_bar"
             android:maxLines="1"
-            android:textColor="@color/material_light_black"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textColor="@color/material_light_white"
+            android:textSize="@dimen/material_typography_title"
             tools:text="Title" />
     </androidx.appcompat.widget.Toolbar>
 

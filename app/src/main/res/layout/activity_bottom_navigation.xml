@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainNavigationActivity">
 
+    <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
+        android:id="@+id/appbar_main_navigation"
+        style="@style/AppTheme.Appbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -13,6 +19,7 @@
         android:layout_height="match_parent"
         android:background="@color/material_grey_400"
         app:defaultNavHost="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:navGraph="@navigation/nav_graph"
         tools:ignore="PrivateResource" />
 

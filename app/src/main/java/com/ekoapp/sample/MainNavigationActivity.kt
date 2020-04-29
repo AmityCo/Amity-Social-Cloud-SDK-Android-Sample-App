@@ -3,7 +3,6 @@ package com.ekoapp.sample
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.ekoapp.sample.core.base.BaseActivity
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
@@ -16,7 +15,12 @@ class MainNavigationActivity : SingleViewModelActivity<MainNavigationViewModel>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupAppBar()
         setUpNavigation()
+    }
+
+    private fun setupAppBar() {
+        appbar_main_navigation.setTitle(getString(R.string.app_name))
     }
 
     override fun initDependencyInjection() {
@@ -37,7 +41,7 @@ class MainNavigationActivity : SingleViewModelActivity<MainNavigationViewModel>(
     }
 
     override fun bindViewModel(viewModel: MainNavigationViewModel) {
-       Timber.i(getCurrentClassAndMethodNames())
+        Timber.i(getCurrentClassAndMethodNames())
     }
 
     override fun getViewModelClass(): Class<MainNavigationViewModel> {
