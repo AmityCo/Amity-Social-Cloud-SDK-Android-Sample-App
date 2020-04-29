@@ -9,8 +9,8 @@
 
     <com.ekoapp.sample.socialfeature.userfeed.view.components.AvatarComponent
         android:id="@+id/avatar"
-        android:layout_width="@dimen/material_layout_avatar"
-        android:layout_height="@dimen/material_layout_avatar"
+        android:layout_width="@dimen/material_component_text_fields_icon_height"
+        android:layout_height="@dimen/material_component_text_fields_icon_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,7 +18,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_touchable_target_post"
         android:layout_width="0dp"
-        android:layout_height="@dimen/material_component_floating_action_button_mini_size"
+        android:layout_height="@dimen/material_component_button_height"
         android:layout_marginStart="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
         android:layout_marginLeft="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
         android:background="@drawable/selector_background_post_feeds"
@@ -28,7 +28,7 @@
         android:text="@string/temporarily_what_is_on_your_mind"
         android:textAllCaps="false"
         android:textColor="@color/material_grey_900"
-        android:textSize="@dimen/material_typography_subheading"
+        android:textSize="@dimen/material_typography_body1"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/avatar"
