@@ -6,15 +6,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : HasLayout, AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initDependencyInjection()
-    }
-
-    open fun initDependencyInjection() {
-
+        setContentView(getLayout())
     }
 
     /****** Toolbar Menu *******/

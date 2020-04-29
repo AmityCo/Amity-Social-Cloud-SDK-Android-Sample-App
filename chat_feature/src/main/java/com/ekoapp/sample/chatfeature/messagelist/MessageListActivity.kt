@@ -95,7 +95,6 @@ abstract class MessageListActivity : BaseActivity() {
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
-        setContentView(R.layout.activity_message_list)
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setTitleName()
@@ -609,6 +608,10 @@ abstract class MessageListActivity : BaseActivity() {
 
     private fun showReactionHistory(message: EkoMessage) {
         startActivity(OpenMessageReactionListIntent(this, message.messageId))
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_message_list
     }
 
 }

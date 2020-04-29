@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/image_avatar"
-        android:layout_width="@dimen/material_layout_avatar"
-        android:layout_height="@dimen/material_layout_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/ic_avatar_placeholder"
         android:tint="@color/material_grey_600"
         app:layout_constraintStart_toStartOf="parent"

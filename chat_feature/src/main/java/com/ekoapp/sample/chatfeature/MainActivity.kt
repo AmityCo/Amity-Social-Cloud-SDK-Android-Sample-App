@@ -17,12 +17,15 @@ import com.afollestad.materialdialogs.input.InputCallback
 import com.afollestad.materialdialogs.input.input
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.chatfeature.di.DaggerMainActivityComponent
-import com.ekoapp.sample.core.preferences.SimplePreferences
-import com.ekoapp.sample.core.base.BaseActivity
 import com.ekoapp.sample.chatfeature.usermetadata.OpenChangeMetadataIntent
+import com.ekoapp.sample.chatfeature.viewmodel.MainViewModel
+import com.ekoapp.sample.core.base.BaseActivity
+import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
+import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.ekoapp.sample.core.ui.Feature
 import com.ekoapp.sample.core.ui.FeatureAdapter
 import com.ekoapp.sample.core.ui.extensions.coreComponent
+import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.core.utils.splitinstall.CHAT_DYNAMIC_FEATURE
 import com.ekoapp.sample.core.utils.splitinstall.InstallModuleSealed
 import com.ekoapp.sample.core.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
@@ -32,11 +35,12 @@ import com.google.android.play.core.splitinstall.SplitInstallRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 
 
-class MainActivity : BaseActivity() {
+class MainActivity : SingleViewModelActivity<MainViewModel>() {
 
     @Inject
     lateinit var splitInstallManager: SplitInstallManager
@@ -51,7 +55,6 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
-        setContentView(R.layout.activity_main)
         val appName = getString(R.string.app_name)
         toolbar.title = String.format("%s %s: %s", appName, "Eko SDK", com.ekoapp.ekosdk.sdk.BuildConfig.VERSION_NAME)
         toolbar.subtitle = String.format("%s", com.ekoapp.ekosdk.sdk.BuildConfig.EKO_HTTP_URL)
@@ -177,6 +180,10 @@ class MainActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun getLayout(): Int {
+        return R.layout.activity_main
+    }
+
     private fun populateFeatureList() {
         val dataSet: List<String> = Feature.values().map { feature -> feature.featureName }
         val listener = object : FeatureAdapter.FeatureItemListener {
@@ -225,6 +232,14 @@ class MainActivity : BaseActivity() {
             title(title)
             input(inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, hint = hint.toString(), prefill = prefill, allowEmpty = allowEmptyInput, callback = callback)
         }
+    }
+
+    override fun bindViewModel(viewModel: MainViewModel) {
+        Timber.d(getCurrentClassAndMethodNames())
+    }
+
+    override fun getViewModelClass(): Class<MainViewModel> {
+        return MainViewModel::class.java
     }
 
 }

@@ -13,5 +13,9 @@
     <!--        <dist:fusing dist:include="true" />-->
     <!--    </dist:module>-->
 
+    <application>
+        <activity android:name=".userfeed.view.CreateFeedsActivity" />
+    </application>
+
 </manifest>
 

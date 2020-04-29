@@ -41,7 +41,6 @@ class ChannelListActivity : BaseActivity() {
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
-        setContentView(R.layout.activity_channel_list)
         toolbar.title = getString(R.string.toolbar_channel_list)
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
@@ -102,6 +101,10 @@ class ChannelListActivity : BaseActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun getLayout(): Int {
+       return R.layout.activity_channel_list
     }
 
     private fun observeChannelCollection() {

@@ -22,9 +22,12 @@ class ChannelQueryFilterActivity : BaseActivity(), ChannelQueryFilterContract.Vi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initPresenter()
-        setContentView(R.layout.activity_channel_query_filter)
         attachFragments()
         setViewListener()
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_channel_query_filter
     }
 
     override fun onSaveCompleted() {

@@ -1,12 +1,16 @@
 package com.ekoapp.sample.socialfeature.userfeed.view
 
+import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
+import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.userfeed.view.list.UserFeedsAdapter
+import kotlinx.android.synthetic.main.component_touchable_create_feeds.view.*
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
+import timber.log.Timber
 
 class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
@@ -18,6 +22,14 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
     override fun bindViewModel(viewModel: UserFeedsViewModel) {
         renderList(viewModel)
+        setupEvent(viewModel)
+    }
+
+    private fun setupEvent(viewModel: UserFeedsViewModel) {
+        touchable_post_feeds.button_touchable_target_post.setOnClickListener {
+            Timber.d(getCurrentClassAndMethodNames())
+            startActivity(Intent(requireActivity(), CreateFeedsActivity::class.java))
+        }
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {

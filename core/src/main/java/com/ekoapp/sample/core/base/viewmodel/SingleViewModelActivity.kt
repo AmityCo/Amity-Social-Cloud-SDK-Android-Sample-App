@@ -14,6 +14,7 @@ abstract class SingleViewModelActivity<VM : ViewModel> : HasSingleViewModel<VM>,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initDependencyInjection()
         val viewModel = ViewModelProvider(this, vmFactory).get(getViewModelClass())
         this.viewModel = viewModel
         bindViewModel(viewModel)
@@ -32,5 +33,9 @@ abstract class SingleViewModelActivity<VM : ViewModel> : HasSingleViewModel<VM>,
             localQueue.forEach { it(viewModel) }
             onViewModelActiveQueue.clear()
         }
+    }
+
+    open fun initDependencyInjection() {
+
     }
 }
