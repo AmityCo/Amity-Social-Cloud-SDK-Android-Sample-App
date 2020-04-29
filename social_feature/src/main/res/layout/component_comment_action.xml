@@ -12,8 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_comment"
+        android:tint="@color/material_grey_600"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
 
     <TextView
         android:id="@+id/text_comment"
@@ -22,7 +24,7 @@
         android:layout_marginStart="@dimen/md_listitem_control_margin"
         android:layout_marginEnd="@dimen/md_listitem_control_margin"
         android:text="@string/temporarily_comment"
-        android:textColor="@color/material_light_black"
+        android:textColor="@color/material_grey_600"
         android:textSize="@dimen/material_typography_caption"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/image_comment"

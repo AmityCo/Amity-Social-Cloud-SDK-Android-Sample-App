@@ -10,8 +10,10 @@
     <corners
         android:radius="@dimen/material_component_floating_action_button_mini_size"
         tools:ignore="PrivateResource" />
-    <solid android:color="@color/material_light_white" />
+    <solid
+        android:color="@color/material_grey_50"
+        tools:ignore="PrivateResource" />
     <stroke
         android:width="@dimen/material_component_grid_lists_padding_small"
-        android:color="@color/material_blue_grey_400" />
+        android:color="@color/material_grey_400" />
 </shape>
