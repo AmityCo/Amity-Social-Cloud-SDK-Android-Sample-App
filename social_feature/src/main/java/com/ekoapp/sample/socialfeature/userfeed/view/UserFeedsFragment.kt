@@ -10,6 +10,7 @@ import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.REQUEST_CODE_CREATE_FEEDS
+import com.ekoapp.sample.socialfeature.userfeed.UPPERMOST
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
 import com.ekoapp.sample.socialfeature.userfeed.view.createfeeds.CreateFeedsActivity
@@ -71,6 +72,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
         data?.let {
             val item = data.getParcelableExtra<SampleFeedsResponse>(EXTRA_NAME_CREATE_FEEDS)
             adapter.addItem(data = item)
+            recycler_feeds.smoothScrollToPosition(UPPERMOST)
         }
     }
 }
