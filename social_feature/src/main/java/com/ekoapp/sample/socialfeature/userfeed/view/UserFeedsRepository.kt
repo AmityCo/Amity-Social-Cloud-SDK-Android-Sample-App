@@ -20,12 +20,25 @@ class UserFeedsRepository @Inject constructor() {
 
     fun getUserFeedsFromGson(context: Context): SampleUserFeedsResponse {
         val data = "sample_user_feeds.json"
-        val moviesString = context.assets.open(data).bufferedReader().use { it.readText() }
-        return Gson().fromJson(moviesString, SampleUserFeedsResponse::class.java)
+        val readData = context.assets.open(data).bufferedReader().use { it.readText() }
+
+        return Gson().fromJson(readData, SampleUserFeedsResponse::class.java)
     }
 
     fun sendDeleteFeeds(id: String): Single<UserFeedsTypeSealed> {
         val result = DeleteUserFeedsResult(id, true)
         return Single.just(UserFeedsTypeSealed.DeleteFeeds(result))
+    }
+
+    fun getMockCreateFeed(description: String): SampleFeedsResponse {
+        return SampleFeedsResponse(
+                id = (0..100).random().toString(),
+                creator = "User1",
+                avatar = "",
+                lastCreated = "",
+                description = description,
+                isLiked = false,
+                isDeleted = false
+        )
     }
 }
