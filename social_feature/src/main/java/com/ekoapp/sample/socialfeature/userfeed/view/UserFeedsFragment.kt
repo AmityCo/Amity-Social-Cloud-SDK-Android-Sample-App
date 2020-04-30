@@ -38,8 +38,12 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
         }
 
         viewModel.deletedRelay
-                .doOnNext(adapter::deleteItem)
-                .subscribe()
+                .doOnNext {
+                    adapter.deleteItem(it)
+                }
+                .doOnError {
+                    Timber.d("${getCurrentClassAndMethodNames()} doOnError: ${it.message}")
+                }.subscribe()
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {

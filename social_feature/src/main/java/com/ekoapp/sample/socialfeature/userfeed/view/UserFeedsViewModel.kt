@@ -25,6 +25,9 @@ class UserFeedsViewModel @Inject constructor(context: Context,
     fun submitDelete(id: String) {
         userFeedsRepository.sendDeleteFeeds(id)
                 .doOnSuccess(this::findPositionDelete)
+                .doOnError {
+                    Timber.d("${getCurrentClassAndMethodNames()} doOnError: ${it.message}")
+                }
                 .subscribe()
     }
 
