@@ -1,9 +1,6 @@
 package com.ekoapp.sample.core.ui.extensions
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import org.reactivestreams.Publisher
@@ -45,3 +42,6 @@ fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: (T) -> Unit) {
     })
 }
 
+fun <T> MutableLiveData<T>.notifyObserver() {
+    this.value = this.value
+}

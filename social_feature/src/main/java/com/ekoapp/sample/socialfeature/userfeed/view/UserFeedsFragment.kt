@@ -36,14 +36,6 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
             Timber.d(getCurrentClassAndMethodNames())
             startActivityForResult(Intent(requireActivity(), CreateFeedsActivity::class.java), REQUEST_CODE_CREATE_FEEDS)
         }
-
-        viewModel.deletedRelay
-                .doOnNext {
-                    adapter.deleteItem(it)
-                }
-                .doOnError {
-                    Timber.d("${getCurrentClassAndMethodNames()} doOnError: ${it.message}")
-                }.subscribe()
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
