@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_action_feeds"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.LikeActionComponent
+        android:id="@+id/like_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.CommentActionComponent
+        android:id="@+id/comment_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
+        app:layout_constraintEnd_toStartOf="@+id/share_action"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/like_action" />
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.ShareActionComponent
+        android:id="@+id/share_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+</merge>

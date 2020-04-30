@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_share_action"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <ImageView
+        android:id="@+id/image_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_share"
+        android:tint="@color/material_grey_600"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+
+    <TextView
+        android:id="@+id/text_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/md_listitem_control_margin"
+        android:layout_marginEnd="@dimen/md_listitem_control_margin"
+        android:text="@string/temporarily_share"
+        android:textColor="@color/material_grey_600"
+        android:textSize="@dimen/material_typography_caption"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/image_share"
+        app:layout_constraintStart_toEndOf="@id/image_share"
+        app:layout_constraintTop_toTopOf="@id/image_share"
+        tools:ignore="PrivateResource" />
+
+</merge>

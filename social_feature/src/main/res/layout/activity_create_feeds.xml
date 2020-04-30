@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_grey_50"
+    android:orientation="vertical"
+    tools:ignore="PrivateResource">
+
+    <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
+        android:id="@+id/appbar_create_feeds"
+        style="@style/AppTheme.Appbar" />
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.CreateFeedsComponent
+        android:id="@+id/create_feeds"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/material_component_text_full_width_single_line_text_field_text_top_and_bottom_padding" />
+
+</LinearLayout>

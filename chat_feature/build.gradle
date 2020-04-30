@@ -1,14 +1,12 @@
-apply plugin: 'com.android.dynamic-feature'
+//apply plugin: 'com.android.dynamic-feature'
+apply plugin: 'com.android.library'
+
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 
     defaultConfig {
         minSdkVersion 16
@@ -22,15 +20,20 @@ android {
         enabled = true
     }
 
-    flavorDimensions "push"
+//    flavorDimensions "push"
+//
+//    productFlavors {
+//        baidu_with_fcm {
+//            dimension "push"
+//        }
+//        fcm {
+//            dimension "push"
+//        }
+//    }
 
-    productFlavors {
-        baidu_with_fcm {
-            dimension "push"
-        }
-        fcm {
-            dimension "push"
-        }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
@@ -41,5 +44,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':app')
+
+    api project(":core")
+//    implementation project(':app')
+
+    implementation 'com.google.firebase:firebase-core:17.3.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.5'
+
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 }

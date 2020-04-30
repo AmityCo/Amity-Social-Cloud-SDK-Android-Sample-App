@@ -15,8 +15,8 @@ import com.bumptech.glide.Glide
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.internal.util.RealPathUtil
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.intent.IntentRequestCode
 import com.ekoapp.sample.chatfeature.intent.OpenImageMessageSenderIntent
+import com.ekoapp.sample.core.intent.IntentRequestCode
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Completable

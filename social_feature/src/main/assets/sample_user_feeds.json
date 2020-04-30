@@ -1,0 +1,23 @@
+{
+  "userId": "4538654937309",
+  "feeds": [
+    {
+      "id": "4538654937309",
+      "creator": "User1",
+      "avatar": "",
+      "lastCreated": "",
+      "description": "Post1",
+      "isLiked": false,
+      "isDeleted": false
+    },
+    {
+      "id": "8977913583590",
+      "creator": "User2",
+      "avatar": "",
+      "lastCreated": "",
+      "description": "Post2",
+      "isLiked": true,
+      "isDeleted": false
+    }
+  ]
+}

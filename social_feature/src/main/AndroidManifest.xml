@@ -3,39 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ekoapp.sample.socialfeature">
 
-    <dist:module
-        dist:instant="false"
-        dist:onDemand="true"
-        dist:title="@string/title_social_feature">
-        <dist:delivery>
-            <dist:on-demand />
-        </dist:delivery>
-        <dist:fusing dist:include="true" />
-    </dist:module>
+    <!--    <dist:module-->
+    <!--        dist:instant="false"-->
+    <!--        dist:onDemand="true"-->
+    <!--        dist:title="@string/title_social_feature">-->
+    <!--        <dist:delivery>-->
+    <!--            <dist:on-demand />-->
+    <!--        </dist:delivery>-->
+    <!--        <dist:fusing dist:include="true" />-->
+    <!--    </dist:module>-->
 
     <application>
-
-        <activity
-            android:name="com.ekoapp.sample.socialfeature.main.SocialMainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name="com.ekoapp.sample.socialfeature.userfeed.userlist.UserListActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name="com.ekoapp.sample.socialfeature.userfeed.post.UserFeedActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            tools:ignore="LockedOrientationActivity" />
-
+        <activity android:name=".userfeed.view.CreateFeedsActivity" />
     </application>
+
 </manifest>
 

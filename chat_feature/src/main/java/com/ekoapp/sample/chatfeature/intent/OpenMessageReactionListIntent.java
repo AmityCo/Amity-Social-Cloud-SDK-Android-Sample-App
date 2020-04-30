@@ -6,7 +6,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.ekoapp.sample.chatfeature.messagereactionlist.MessageReactionListActivity;
-import com.ekoapp.sample.intent.BaseIntent;
+import com.ekoapp.sample.core.intent.BaseIntent;
 
 public class OpenMessageReactionListIntent extends BaseIntent {
 

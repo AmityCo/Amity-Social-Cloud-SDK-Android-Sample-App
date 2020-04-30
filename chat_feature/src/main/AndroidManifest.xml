@@ -3,17 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ekoapp.sample.chatfeature">
 
-    <dist:module
-        dist:instant="false"
-        dist:onDemand="true"
-        dist:title="@string/title_chat_feature">
-        <dist:delivery>
-            <dist:on-demand />
-        </dist:delivery>
-        <dist:fusing dist:include="true" />
-    </dist:module>
+<!--    <dist:module-->
+<!--        dist:instant="false"-->
+<!--        dist:onDemand="true"-->
+<!--        dist:title="@string/title_chat_feature">-->
+<!--        <dist:delivery>-->
+<!--            <dist:on-demand />-->
+<!--        </dist:delivery>-->
+<!--        <dist:fusing dist:include="true" />-->
+<!--    </dist:module>-->
 
     <application>
+
+        <activity
+            android:name="com.ekoapp.sample.chatfeature.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.ekoapp.sample.chatfeature.channellist.ChannelListActivity"
@@ -21,6 +28,7 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name="com.ekoapp.sample.chatfeature.messagelist.ParentMessageListActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -64,6 +72,30 @@
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name="com.ekoapp.sample.chatfeature.usermetadata.ChangeMetadataActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <service
+            android:name="com.ekoapp.sample.chatfeature.services.SimpleFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
 
     </application>
 
