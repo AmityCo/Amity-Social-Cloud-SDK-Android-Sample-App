@@ -16,6 +16,8 @@ class UserFeedsAdapter(private val context: Context,
                        private val items: MutableList<SampleFeedsResponse>,
                        private val userFeedsViewModel: UserFeedsViewModel) : RecyclerView.Adapter<ViewHolder>() {
 
+    private val uppermost = 0
+
     override fun getItemCount(): Int {
         return items.size
     }
@@ -36,7 +38,7 @@ class UserFeedsAdapter(private val context: Context,
                 })
     }
 
-    fun addItem(position: Int, data: SampleFeedsResponse) {
+    fun addItem(position: Int = uppermost, data: SampleFeedsResponse) {
         items.add(position, data)
         notifyItemInserted(position)
         notifyItemRangeChanged(position, items.size)

@@ -16,7 +16,7 @@ class UserFeedsViewModel @Inject constructor(private val context: Context,
 
     fun renderDelete() = userFeedsRepository.isDeletedLive
 
-    fun updateDeletedList(newData: SampleFeedsResponse, action: (Int) -> Unit) {
+    fun updateDeletedFeeds(newData: SampleFeedsResponse, action: (Int) -> Unit) {
         getUserFeeds().forEachIndexed { index, oldData ->
             if (oldData.id == newData.id && newData.isDeleted) {
                 action.invoke(index)

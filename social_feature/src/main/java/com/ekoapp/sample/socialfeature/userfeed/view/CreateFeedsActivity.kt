@@ -1,14 +1,18 @@
 package com.ekoapp.sample.socialfeature.userfeed.view
 
+import android.app.Activity
+import android.content.Intent
 import android.view.Menu
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialActivityComponent
 import kotlinx.android.synthetic.main.activity_create_feeds.*
 import timber.log.Timber
+
 
 class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
 
@@ -19,7 +23,8 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
             val localMenu = menu
             if (localMenu == null) {
                 Timber.e("${getCurrentClassAndMethodNames()}${Throwable("Invalid menu state, cannot initial menu since it is null")}")
-                onBackPressed()
+                create_feeds.getDescription()?.let(this::sendResult)
+                finish()
             } else this.onPrepareOptionsMenu(localMenu)
         })
     }
@@ -54,4 +59,11 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
                 .inject(this)
     }
 
+    private fun sendResult(description: String) {
+        viewModel?.let {
+            val data = Intent()
+            data.putExtra(EXTRA_NAME_CREATE_FEEDS, it.mockCreateFeeds(description))
+            setResult(Activity.RESULT_OK, data)
+        }
+    }
 }

@@ -1,5 +1,9 @@
 package com.ekoapp.sample.socialfeature.userfeed.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class SampleFeedsResponse(
         val id: String,
         val creator: String,
@@ -8,4 +12,4 @@ data class SampleFeedsResponse(
         val description: String,
         val isLiked: Boolean,
         val isDeleted: Boolean
-)
+) : Parcelable
