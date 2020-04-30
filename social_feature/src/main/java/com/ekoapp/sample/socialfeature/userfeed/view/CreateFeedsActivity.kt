@@ -6,6 +6,7 @@ import android.view.Menu
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
+import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_CREATE_FEEDS
@@ -24,6 +25,7 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
             if (localMenu == null) {
                 Timber.e("${getCurrentClassAndMethodNames()}${Throwable("Invalid menu state, cannot initial menu since it is null")}")
                 create_feeds.getDescription()?.let(this::sendResult)
+                hideKeyboard()
                 finish()
             } else this.onPrepareOptionsMenu(localMenu)
         })
