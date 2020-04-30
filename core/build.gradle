@@ -100,4 +100,9 @@ dependencies {
 
     //Material Design Dimens
     api 'com.dmitrymalkovich.android:material-design-dimens:1.4'
+
+    //arrow-kt
+    api "io.arrow-kt:arrow-core:$arrow_version"
+    api "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt "io.arrow-kt:arrow-meta:$arrow_version"
 }

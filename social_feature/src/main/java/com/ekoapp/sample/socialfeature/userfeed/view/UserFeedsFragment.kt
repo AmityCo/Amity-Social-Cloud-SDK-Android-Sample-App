@@ -37,16 +37,18 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
             startActivityForResult(Intent(requireActivity(), CreateFeedsActivity::class.java), REQUEST_CODE_CREATE_FEEDS)
         }
 
-        viewModel.renderDelete().observeNotNull(viewLifecycleOwner, {
-            viewModel.updateDeletedFeeds(it, adapter::deleteItem)
-        })
+        viewModel.deletedRelay
+                .doOnNext(adapter::deleteItem)
+                .subscribe()
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
-        adapter = UserFeedsAdapter(requireContext(), viewModel.getUserFeeds().toMutableList(), userFeedsViewModel = viewModel)
-        RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
-                .builder()
-                .build(adapter)
+        viewModel.feedsItems.observeNotNull(viewLifecycleOwner, {
+            adapter = UserFeedsAdapter(requireContext(), it, userFeedsViewModel = viewModel)
+            RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
+                    .builder()
+                    .build(adapter)
+        })
     }
 
     override fun initDependencyInjection() {

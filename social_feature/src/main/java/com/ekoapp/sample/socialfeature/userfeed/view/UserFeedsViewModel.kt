@@ -1,25 +1,38 @@
 package com.ekoapp.sample.socialfeature.userfeed.view
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
+import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
+import com.ekoapp.sample.socialfeature.userfeed.model.SampleUserFeedsResponse
+import io.reactivex.processors.PublishProcessor
+import timber.log.Timber
 import javax.inject.Inject
 
-class UserFeedsViewModel @Inject constructor(private val context: Context,
+class UserFeedsViewModel @Inject constructor(context: Context,
                                              private val userFeedsRepository: UserFeedsRepository) : DisposableViewModel() {
 
-    fun getUserFeeds() = userFeedsRepository.getSampleDataFeeds(context).feeds
+    private val data: SampleUserFeedsResponse = userFeedsRepository.getUserFeedsFromGson(context)
 
-    fun submitDeleteFeed(isDeleted: Boolean) {
-        userFeedsRepository.sendDeleteFeeds(isDeleted)
+    val feedsItems = MutableLiveData<MutableList<SampleFeedsResponse>>()
+    val deletedRelay = PublishProcessor.create<Int>()
+
+    init {
+        feedsItems.postValue(data.feeds.toMutableList())
     }
 
-    fun renderDelete() = userFeedsRepository.isDeletedLive
+    fun submitDelete(id: String) {
+        userFeedsRepository.sendDeleteFeeds(id)
+                .doOnSuccess(this::findPositionDelete)
+                .subscribe()
+    }
 
-    fun updateDeletedFeeds(newData: SampleFeedsResponse, action: (Int) -> Unit) {
-        getUserFeeds().forEachIndexed { index, oldData ->
-            if (oldData.id == newData.id && newData.isDeleted) {
-                action.invoke(index)
+    private fun findPositionDelete(result: DeleteUserFeedsResult) {
+        feedsItems.value?.forEachIndexed { index, data ->
+            Timber.d(getCurrentClassAndMethodNames() + " result id " + result.id + ", data " + data.id)
+            if (result.id == data.id) {
+                deletedRelay.onNext(index)
             }
         }
     }
