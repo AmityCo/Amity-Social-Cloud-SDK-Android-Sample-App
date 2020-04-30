@@ -31,9 +31,9 @@ class UserFeedsAdapter(private val context: Context,
         val itemView = holder.itemView
 
         feedsResponse.userFeedRender(
-                headerFeedsComponent = itemView.header_feeds,
-                bodyFeedsComponent = itemView.body_feeds,
-                onClickDelete = {
+                header = itemView.header_feeds,
+                body = itemView.body_feeds,
+                eventDelete = {
                     userFeedsViewModel.submitDelete(feedsResponse.id)
                 })
     }

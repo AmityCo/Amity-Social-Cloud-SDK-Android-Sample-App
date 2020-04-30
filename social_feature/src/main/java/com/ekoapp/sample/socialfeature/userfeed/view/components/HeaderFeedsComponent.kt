@@ -33,16 +33,15 @@ class HeaderFeedsComponent : ConstraintLayout {
         moreHorizBottomSheet.show((this as AppCompatActivity).supportFragmentManager, moreHorizBottomSheet.tag)
     }
 
-    fun actionEditFeeds(actionEdit: (Boolean) -> Unit) {
-        moreHorizBottomSheet.renderEdit(actionEdit::invoke)
+    fun editFeeds(edit: (Boolean) -> Unit) {
+        moreHorizBottomSheet.renderEdit(edit::invoke)
     }
 
-    fun actionDeleteFeeds(actionDelete: (Boolean) -> Unit) {
+    fun deleteFeeds(delete: (Boolean) -> Unit) {
         moreHorizBottomSheet.renderDelete {
-            actionDelete.invoke(it)
+            delete.invoke(it)
             moreHorizBottomSheet.dialog?.cancel()
         }
     }
-
 
 }

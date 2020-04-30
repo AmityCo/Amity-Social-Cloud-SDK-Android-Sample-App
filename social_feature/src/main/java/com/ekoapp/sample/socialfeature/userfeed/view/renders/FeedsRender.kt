@@ -5,12 +5,12 @@ import com.ekoapp.sample.socialfeature.userfeed.view.components.BodyFeedsCompone
 import com.ekoapp.sample.socialfeature.userfeed.view.components.HeaderFeedsComponent
 
 fun SampleFeedsResponse.userFeedRender(
-        headerFeedsComponent: HeaderFeedsComponent,
-        bodyFeedsComponent: BodyFeedsComponent,
-        onClickDelete: (Boolean) -> Unit) {
+        header: HeaderFeedsComponent,
+        body: BodyFeedsComponent,
+        eventDelete: (Boolean) -> Unit) {
 
-    headerFeedsComponent.setupView(this)
-    headerFeedsComponent.actionDeleteFeeds(onClickDelete::invoke)
+    header.setupView(this)
+    header.deleteFeeds(eventDelete::invoke)
 
-    bodyFeedsComponent.setupView(this)
+    body.setupView(this)
 }
