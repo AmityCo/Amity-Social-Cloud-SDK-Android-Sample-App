@@ -13,5 +13,4 @@ fun SampleFeedsResponse.userFeedRender(
     headerFeedsComponent.actionDeleteFeeds(onClickDelete::invoke)
 
     bodyFeedsComponent.setupView(this)
-
 }

@@ -36,17 +36,15 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
             Timber.d(getCurrentClassAndMethodNames())
             startActivityForResult(Intent(requireActivity(), CreateFeedsActivity::class.java), REQUEST_CODE_CREATE_FEEDS)
         }
-
-        viewModel.renderDelete().observeNotNull(viewLifecycleOwner, {
-            viewModel.updateDeletedFeeds(it, adapter::deleteItem)
-        })
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
-        adapter = UserFeedsAdapter(requireContext(), viewModel.getUserFeeds().toMutableList(), userFeedsViewModel = viewModel)
-        RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
-                .builder()
-                .build(adapter)
+        viewModel.feedsItems.observeNotNull(viewLifecycleOwner, {
+            adapter = UserFeedsAdapter(requireContext(), it, userFeedsViewModel = viewModel)
+            RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
+                    .builder()
+                    .build(adapter)
+        })
     }
 
     override fun initDependencyInjection() {
@@ -71,7 +69,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     private fun addFeeds(data: Intent?) {
         data?.let {
             val item = data.getParcelableExtra<SampleFeedsResponse>(EXTRA_NAME_CREATE_FEEDS)
-            adapter.addItem(data = item)
+            viewModel?.updateList(UserFeedsTypeSealed.CreateFeeds(item))
         }
     }
 }
