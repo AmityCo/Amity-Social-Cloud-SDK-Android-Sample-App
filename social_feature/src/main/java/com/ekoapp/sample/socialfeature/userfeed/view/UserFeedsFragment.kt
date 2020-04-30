@@ -69,7 +69,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     private fun addFeeds(data: Intent?) {
         data?.let {
             val item = data.getParcelableExtra<SampleFeedsResponse>(EXTRA_NAME_CREATE_FEEDS)
-            viewModel?.updateList(UserFeedsTypeSealed.CreateFeeds(item))
+            adapter.addItem(data = item)
         }
     }
 }

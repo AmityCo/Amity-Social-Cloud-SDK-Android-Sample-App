@@ -43,13 +43,5 @@ class UserFeedsAdapter(private val context: Context,
         notifyItemInserted(position)
         notifyItemRangeChanged(position, items.size)
     }
-
-    fun deleteItem(position: Int) {
-        if (items.isNotEmpty()) {
-            items.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, items.size)
-        }
-    }
 }
 

@@ -33,13 +33,9 @@ class UserFeedsViewModel @Inject constructor(context: Context,
                 .subscribe()
     }
 
-    fun updateList(type: UserFeedsTypeSealed) {
+    private fun updateList(type: UserFeedsTypeSealed) {
         original.forEachIndexed { _, data ->
             when (type) {
-                is UserFeedsTypeSealed.CreateFeeds -> {
-                    feedsItems.value?.add(type.result)
-                    return feedsItems.notifyObserver()
-                }
                 is UserFeedsTypeSealed.EditFeeds -> {
                 }
                 is UserFeedsTypeSealed.DeleteFeeds -> {
