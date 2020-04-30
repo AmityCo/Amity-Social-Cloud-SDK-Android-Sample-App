@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.render
+package com.ekoapp.sample.socialfeature.userfeed.view.renders
 
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
 import com.ekoapp.sample.socialfeature.userfeed.view.components.BodyFeedsComponent

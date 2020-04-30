@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
-import com.ekoapp.sample.socialfeature.userfeed.view.MoreHorizBottomSheetFragment
+import com.ekoapp.sample.socialfeature.userfeed.view.dialogs.MoreHorizBottomSheetFragment
 import kotlinx.android.synthetic.main.component_header_feeds.view.*
 
 

@@ -9,7 +9,7 @@ import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
 import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
-import com.ekoapp.sample.socialfeature.userfeed.view.render.userFeedRender
+import com.ekoapp.sample.socialfeature.userfeed.view.renders.userFeedRender
 import kotlinx.android.synthetic.main.item_user_feeds.view.*
 
 class UserFeedsAdapter(private val context: Context,
