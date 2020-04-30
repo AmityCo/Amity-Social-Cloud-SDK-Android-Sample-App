@@ -28,16 +28,24 @@ class UserFeedsViewModel @Inject constructor(context: Context,
                 .doOnSuccess(this::updateList)
                 .onErrorReturn {
                     Timber.i("${getCurrentClassAndMethodNames()} doOnError: ${it.message}")
-                    DeleteUserFeedsResult(id, false)
+                    UserFeedsTypeSealed.ErrorResult(it)
                 }
                 .subscribe()
     }
 
-    private fun updateList(result: DeleteUserFeedsResult) {
+    private fun updateList(type: UserFeedsTypeSealed) {
         original.forEachIndexed { _, data ->
-            if (result.id == data.id) {
-                feedsItems.value?.remove(data)
-                feedsItems.notifyObserver()
+            when (type) {
+                is UserFeedsTypeSealed.CreateFeeds -> {
+                }
+                is UserFeedsTypeSealed.EditFeeds -> {
+                }
+                is UserFeedsTypeSealed.DeleteFeeds -> {
+                    if (type.result.id == data.id && type.result.isDeleted) {
+                        feedsItems.value?.remove(data)
+                        feedsItems.notifyObserver()
+                    }
+                }
             }
         }
     }
