@@ -8,7 +8,6 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 sealed class UserFeedsTypeSealed {
-    class CreateFeeds(val result: SampleFeedsResponse) : UserFeedsTypeSealed()
     class EditFeeds(val result: SampleFeedsResponse) : UserFeedsTypeSealed()
     class DeleteFeeds(val result: DeleteUserFeedsResult) : UserFeedsTypeSealed()
     class ErrorResult(val t: Throwable) : UserFeedsTypeSealed()

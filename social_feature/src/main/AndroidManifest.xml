@@ -1,6 +1,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.ekoapp.sample.socialfeature">
 
     <!--    <dist:module-->
@@ -14,7 +12,7 @@
     <!--    </dist:module>-->
 
     <application>
-        <activity android:name=".userfeed.view.CreateFeedsActivity" />
+        <activity android:name=".userfeed.view.createfeeds.CreateFeedsActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view
+package com.ekoapp.sample.socialfeature.userfeed.view.createfeeds
 
 import android.app.Activity
 import android.content.Intent
@@ -6,10 +6,12 @@ import android.view.Menu
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
+import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialActivityComponent
+import com.ekoapp.sample.socialfeature.userfeed.view.toolbars.CreateFeedsToolbarMenu
 import kotlinx.android.synthetic.main.activity_create_feeds.*
 import timber.log.Timber
 
@@ -24,6 +26,7 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
             if (localMenu == null) {
                 Timber.e("${getCurrentClassAndMethodNames()}${Throwable("Invalid menu state, cannot initial menu since it is null")}")
                 create_feeds.getDescription()?.let(this::sendResult)
+                hideKeyboard()
                 finish()
             } else this.onPrepareOptionsMenu(localMenu)
         })

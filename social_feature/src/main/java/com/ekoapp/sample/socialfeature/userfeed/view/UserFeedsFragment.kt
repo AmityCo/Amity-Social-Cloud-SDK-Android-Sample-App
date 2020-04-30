@@ -12,6 +12,7 @@ import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.REQUEST_CODE_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
+import com.ekoapp.sample.socialfeature.userfeed.view.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.userfeed.view.list.UserFeedsAdapter
 import kotlinx.android.synthetic.main.component_touchable_create_feeds.view.*
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
@@ -69,7 +70,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     private fun addFeeds(data: Intent?) {
         data?.let {
             val item = data.getParcelableExtra<SampleFeedsResponse>(EXTRA_NAME_CREATE_FEEDS)
-            viewModel?.updateList(UserFeedsTypeSealed.CreateFeeds(item))
+            adapter.addItem(data = item)
         }
     }
 }

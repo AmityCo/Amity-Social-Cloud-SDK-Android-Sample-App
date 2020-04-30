@@ -9,7 +9,7 @@ import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
 import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
-import com.ekoapp.sample.socialfeature.userfeed.view.render.userFeedRender
+import com.ekoapp.sample.socialfeature.userfeed.view.renders.userFeedRender
 import kotlinx.android.synthetic.main.item_user_feeds.view.*
 
 class UserFeedsAdapter(private val context: Context,
@@ -31,9 +31,9 @@ class UserFeedsAdapter(private val context: Context,
         val itemView = holder.itemView
 
         feedsResponse.userFeedRender(
-                headerFeedsComponent = itemView.header_feeds,
-                bodyFeedsComponent = itemView.body_feeds,
-                onClickDelete = {
+                header = itemView.header_feeds,
+                body = itemView.body_feeds,
+                eventDelete = {
                     userFeedsViewModel.submitDelete(feedsResponse.id)
                 })
     }
@@ -42,14 +42,6 @@ class UserFeedsAdapter(private val context: Context,
         items.add(position, data)
         notifyItemInserted(position)
         notifyItemRangeChanged(position, items.size)
-    }
-
-    fun deleteItem(position: Int) {
-        if (items.isNotEmpty()) {
-            items.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, items.size)
-        }
     }
 }
 
