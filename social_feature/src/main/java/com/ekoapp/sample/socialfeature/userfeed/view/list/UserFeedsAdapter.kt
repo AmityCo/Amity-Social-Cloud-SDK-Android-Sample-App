@@ -10,8 +10,10 @@ import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.UPPERMOST
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
 import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
+import com.ekoapp.sample.socialfeature.userfeed.view.renders.UserFeedsRenderData
 import com.ekoapp.sample.socialfeature.userfeed.view.renders.userFeedRender
 import kotlinx.android.synthetic.main.item_user_feeds.view.*
+
 
 class UserFeedsAdapter(private val context: Context,
                        private val items: MutableList<SampleFeedsResponse>,
@@ -28,8 +30,9 @@ class UserFeedsAdapter(private val context: Context,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val feedsResponse = items[position]
         val itemView = holder.itemView
+        val context = itemView.context
 
-        feedsResponse.userFeedRender(
+        UserFeedsRenderData(context, feedsResponse).userFeedRender(
                 header = itemView.header_feeds,
                 body = itemView.body_feeds,
                 eventDelete = {

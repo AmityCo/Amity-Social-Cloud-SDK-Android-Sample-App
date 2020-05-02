@@ -24,4 +24,8 @@ class CreateFeedsComponent : ConstraintLayout {
         }
         return null
     }
+
+    fun setDescription(description: String) {
+        edit_text_create_feeds.setText(description)
+    }
 }

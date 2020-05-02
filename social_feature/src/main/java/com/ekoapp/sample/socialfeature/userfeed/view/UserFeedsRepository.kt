@@ -24,9 +24,26 @@ class UserFeedsRepository @Inject constructor() {
         return Gson().fromJson(readData, SampleUserFeedsResponse::class.java)
     }
 
+    fun sendEditFeeds(id: String, description: String): Single<UserFeedsTypeSealed> {
+        val result = getMockEditFeed(id,description)
+        return Single.just(UserFeedsTypeSealed.EditFeeds(result))
+    }
+
     fun sendDeleteFeeds(id: String): Single<UserFeedsTypeSealed> {
         val result = DeleteUserFeedsResult(id, true)
         return Single.just(UserFeedsTypeSealed.DeleteFeeds(result))
+    }
+
+    fun getMockEditFeed(id: String, description: String): SampleFeedsResponse {
+        return SampleFeedsResponse(
+                id = id,
+                creator = "User1",
+                avatar = "",
+                lastCreated = "",
+                description = description,
+                isLiked = false,
+                isDeleted = false
+        )
     }
 
     fun getMockCreateFeed(description: String): SampleFeedsResponse {
