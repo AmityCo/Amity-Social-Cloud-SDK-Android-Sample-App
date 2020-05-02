@@ -1,6 +1,5 @@
 package com.ekoapp.sample
 
-import android.os.Bundle
 import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -19,14 +18,27 @@ class MainNavigationActivity : SingleViewModelActivity<MainNavigationViewModel>(
     @Named("social")
     lateinit var socialRequest: SplitInstallRequest
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun bindViewModel(viewModel: MainNavigationViewModel) {
         setupAppBar()
+        viewModel.installModule(socialRequest)
         setUpNavigation()
     }
 
     private fun setupAppBar() {
         appbar_main_navigation.setTitle(getString(R.string.app_name))
+    }
+
+    private fun setUpNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as DynamicNavHostFragment
+        navHostFragment.findNavController().let { NavigationUI.setupWithNavController(bottom_navigation, it) }
+    }
+
+    override fun getViewModelClass(): Class<MainNavigationViewModel> {
+        return MainNavigationViewModel::class.java
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_bottom_navigation
     }
 
     override fun initDependencyInjection() {
@@ -35,22 +47,5 @@ class MainNavigationActivity : SingleViewModelActivity<MainNavigationViewModel>(
                 .coreComponent(coreComponent())
                 .build()
                 .inject(this)
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.activity_bottom_navigation
-    }
-
-    private fun setUpNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as DynamicNavHostFragment
-        navHostFragment.findNavController().let { NavigationUI.setupWithNavController(bottom_navigation, it) }
-    }
-
-    override fun bindViewModel(viewModel: MainNavigationViewModel) {
-        viewModel.installModule(socialRequest)
-    }
-
-    override fun getViewModelClass(): Class<MainNavigationViewModel> {
-        return MainNavigationViewModel::class.java
     }
 }
