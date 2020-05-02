@@ -19,39 +19,17 @@ import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.chatfeature.di.DaggerMainActivityComponent
 import com.ekoapp.sample.chatfeature.usermetadata.OpenChangeMetadataIntent
 import com.ekoapp.sample.chatfeature.viewmodel.MainViewModel
-import com.ekoapp.sample.core.base.BaseActivity
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.preferences.SimplePreferences
-import com.ekoapp.sample.core.ui.Feature
-import com.ekoapp.sample.core.ui.FeatureAdapter
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
-import com.ekoapp.sample.core.utils.splitinstall.CHAT_DYNAMIC_FEATURE
-import com.ekoapp.sample.core.utils.splitinstall.InstallModuleSealed
-import com.ekoapp.sample.core.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
-import com.ekoapp.sample.core.utils.splitinstall.SplitInstall
-import com.google.android.play.core.splitinstall.SplitInstallManager
-import com.google.android.play.core.splitinstall.SplitInstallRequest
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
-import javax.inject.Inject
-import javax.inject.Named
 
 
 class MainActivity : SingleViewModelActivity<MainViewModel>() {
-
-    @Inject
-    lateinit var splitInstallManager: SplitInstallManager
-
-    @Inject
-    @Named("chat")
-    lateinit var chatModuleInstallRequest: SplitInstallRequest
-
-    @Inject
-    @Named("social")
-    lateinit var socialModuleInstallRequest: SplitInstallRequest
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
@@ -70,8 +48,6 @@ class MainActivity : SingleViewModelActivity<MainViewModel>() {
                             String.format("Registered as %s", EkoClient.getUserId()),
                             Toast.LENGTH_SHORT)
                             .show()
-
-                    populateFeatureList()
                 }
                 .subscribe()
     }
@@ -182,49 +158,6 @@ class MainActivity : SingleViewModelActivity<MainViewModel>() {
 
     override fun getLayout(): Int {
         return R.layout.activity_main
-    }
-
-    private fun populateFeatureList() {
-        val dataSet: List<String> = Feature.values().map { feature -> feature.featureName }
-        val listener = object : FeatureAdapter.FeatureItemListener {
-            override fun onClick(featureName: String) {
-                when (featureName) {
-                    Feature.CHAT.featureName -> {
-                        installModule(chatModuleInstallRequest)
-                    }
-                    Feature.SOCIAL.featureName -> {
-                        installModule(socialModuleInstallRequest)
-                    }
-                }
-            }
-        }
-        val adapter = FeatureAdapter(dataSet, listener)
-        feature_list_recyclerview.adapter = adapter
-    }
-
-    private fun installModule(installRequest: SplitInstallRequest) {
-        SplitInstall(this, splitInstallManager, installRequest).installModule {
-            when (it) {
-                is InstallModuleSealed.Installed -> {
-                    when (it.data.module) {
-                        CHAT_DYNAMIC_FEATURE -> {
-                            val intent = Intent().setClassName(
-                                    this,
-                                    "com.ekoapp.sample.chatfeature.channellist.ChannelListActivity"
-                            )
-                            startActivity(intent)
-                        }
-                        SOCIAL_DYNAMIC_FEATURE -> {
-                            val intent = Intent().setClassName(
-                                    this,
-                                    "com.ekoapp.sample.socialfeature.main.SocialMainActivity"
-                            )
-                            startActivity(intent)
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private fun showDialog(@StringRes title: Int, hint: CharSequence, prefill: CharSequence, allowEmptyInput: Boolean, callback: InputCallback) {

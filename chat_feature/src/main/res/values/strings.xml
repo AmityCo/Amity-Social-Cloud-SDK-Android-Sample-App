@@ -29,6 +29,4 @@
     <string name="unregister">Un-Register</string>
     <string name="unregister_push">Un-register Push</string>
     <string name="unregister_push_for_all">Un-register Push for All Users</string>
-    <string name="title_social_feature">Social</string>
-    <string name="title_chat_feature">Chat feature</string>
 </resources>

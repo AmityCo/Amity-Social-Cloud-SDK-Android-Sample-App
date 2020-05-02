@@ -2,7 +2,11 @@ package com.ekoapp.sample.socialfeature.userfeed.view.createfeeds
 
 import android.app.Activity
 import android.content.Intent
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
+import android.view.MenuItem
+import androidx.core.content.ContextCompat
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
@@ -34,6 +38,11 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.create_feeds, menu)
+        val positionOfMenuItem = 0
+        val item: MenuItem = menu.getItem(positionOfMenuItem)
+        val s = SpannableString(getString(R.string.temporarily_post))
+        s.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimaryDark)), 0, s.length, 0)
+        item.title = s
         return true
     }
 

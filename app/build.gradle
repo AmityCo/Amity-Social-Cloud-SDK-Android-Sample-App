@@ -4,12 +4,13 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 def ekoSdkVersion = '3.8.0-beta12'
+def nav_version = "2.3.0-alpha06"
 
 android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.ekoapp.simplechat"
+        applicationId "com.ekoapp.sample"
 
         minSdkVersion 16
         targetSdkVersion 29
@@ -59,7 +60,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    //dynamicFeatures = [":social_feature", ":chat_feature"]
+    dynamicFeatures = [":social_feature", ":chat_feature"]
 
 }
 
@@ -67,29 +68,18 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     api project(":core")
 
-    api project(":chat_feature")
-    api project(":social_feature")
-
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'androidx.core:core-ktx:1.2.0'
-    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    api "androidx.activity:activity-ktx:1.1.0"
-    api "androidx.fragment:fragment-ktx:1.2.4"
-    api 'androidx.constraintlayout:constraintlayout:1.1.3'
-    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
-    api 'androidx.lifecycle:lifecycle-reactivestreams:2.2.0'
-
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     apply plugin: 'com.google.gms.google-services'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    
+    implementation 'com.google.android.play:core:1.7.2'
+
+    api "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    api "androidx.navigation:navigation-ui-ktx:$nav_version"
+    api "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
 }

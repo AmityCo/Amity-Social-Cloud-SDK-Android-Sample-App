@@ -14,19 +14,18 @@ sealed class InstallModuleSealed {
 }
 
 class SplitInstall(val context: Context,
-                   private val installManager: SplitInstallManager,
-                   private val installRequest: SplitInstallRequest) {
+                   private val installManager: SplitInstallManager) {
 
-    fun installModule(type: (InstallModuleSealed) -> Unit) {
+    fun installModule(installRequest: SplitInstallRequest, type: (InstallModuleSealed) -> Unit) {
         installRequest.moduleNames.forEach {
-            type.invoke(InstallModuleData(it).getInstallModuleType())
+            type.invoke(InstallModuleData(it).getInstallModuleType(installRequest))
         }
     }
 
-    private fun InstallModuleData.getInstallModuleType(): InstallModuleSealed {
+    private fun InstallModuleData.getInstallModuleType(installRequest: SplitInstallRequest): InstallModuleSealed {
         installManager.installedModules.contains(module).let { isInstall ->
             if (!isInstall) {
-                startInstall(module) {
+                startInstall(installRequest, module) {
                     return@startInstall InstallModuleSealed.NotInstall(InstallModuleData(module, it.isInstall))
                 }
             } else {
@@ -37,7 +36,7 @@ class SplitInstall(val context: Context,
         return InstallModuleSealed.NotInstall(InstallModuleData(module, DOWNLOAD_FAILED))
     }
 
-    private fun startInstall(module: String, result: (InstallModuleData) -> InstallModuleSealed) {
+    private fun startInstall(installRequest: SplitInstallRequest, module: String, result: (InstallModuleData) -> InstallModuleSealed) {
         installManager.startInstall(installRequest)
                 .addOnFailureListener {
                     Timber.d("${getCurrentClassAndMethodNames()} addOnFailureListener: ${it.message}")

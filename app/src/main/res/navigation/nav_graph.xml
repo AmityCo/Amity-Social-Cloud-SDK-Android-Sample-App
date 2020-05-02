@@ -3,28 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/chats">
+    app:startDestination="@id/chatsFragment">
 
     <fragment
-        android:id="@+id/chats"
+        android:id="@+id/chatsFragment"
         android:name="com.ekoapp.sample.main.navigation.fragments.NotAvailable"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_not_available">
         <action
-            android:id="@+id/action_home2_to_explore"
-            app:destination="@id/feeds" />
+            android:id="@+id/action_chatsFragment_to_feedsFragment"
+            app:destination="@id/feedsFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/feeds"
+        android:id="@+id/feedsFragment"
         android:name="com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsFragment"
         android:label="fragment_feeds"
-        tools:layout="@layout/fragment_user_feeds">
+        app:moduleName="social_feature">
         <action
-            android:id="@+id/action_explore_to_more"
-            app:destination="@id/users" />
+            android:id="@+id/action_feedsFragment_to_usersFragment"
+            app:destination="@id/usersFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/users"
+        android:id="@+id/usersFragment"
         android:name="com.ekoapp.sample.main.navigation.fragments.NotAvailable"
         android:label="fragment_users"
         tools:layout="@layout/fragment_not_available" />

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.userfeed.UPPERMOST
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
 import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeed.view.renders.userFeedRender
@@ -15,8 +16,6 @@ import kotlinx.android.synthetic.main.item_user_feeds.view.*
 class UserFeedsAdapter(private val context: Context,
                        private val items: MutableList<SampleFeedsResponse>,
                        private val userFeedsViewModel: UserFeedsViewModel) : RecyclerView.Adapter<ViewHolder>() {
-
-    private val uppermost = 0
 
     override fun getItemCount(): Int {
         return items.size
@@ -38,7 +37,7 @@ class UserFeedsAdapter(private val context: Context,
                 })
     }
 
-    fun addItem(position: Int = uppermost, data: SampleFeedsResponse) {
+    fun addItem(position: Int = UPPERMOST, data: SampleFeedsResponse) {
         items.add(position, data)
         notifyItemInserted(position)
         notifyItemRangeChanged(position, items.size)

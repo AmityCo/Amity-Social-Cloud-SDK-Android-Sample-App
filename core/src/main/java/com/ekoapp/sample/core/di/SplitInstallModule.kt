@@ -3,6 +3,7 @@ package com.ekoapp.sample.core.di
 import android.content.Context
 import com.ekoapp.sample.core.utils.splitinstall.CHAT_DYNAMIC_FEATURE
 import com.ekoapp.sample.core.utils.splitinstall.SOCIAL_DYNAMIC_FEATURE
+import com.ekoapp.sample.core.utils.splitinstall.SplitInstall
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
@@ -33,4 +34,8 @@ class SplitInstallModule {
             .newBuilder()
             .addModule(SOCIAL_DYNAMIC_FEATURE)
             .build()
+
+    @Provides
+    @Reusable
+    fun splitInstall(context: Context, installManager: SplitInstallManager): SplitInstall = SplitInstall(context, installManager)
 }

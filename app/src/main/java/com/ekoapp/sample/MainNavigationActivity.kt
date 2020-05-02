@@ -1,26 +1,44 @@
 package com.ekoapp.sample
 
-import android.os.Bundle
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
-import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.main.di.DaggerMainNavigationComponent
 import com.ekoapp.sample.viewmodel.MainNavigationViewModel
+import com.google.android.play.core.splitinstall.SplitInstallRequest
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
-import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Named
 
 class MainNavigationActivity : SingleViewModelActivity<MainNavigationViewModel>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    @Inject
+    @Named("social")
+    lateinit var socialRequest: SplitInstallRequest
+
+    override fun bindViewModel(viewModel: MainNavigationViewModel) {
         setupAppBar()
+        viewModel.installModule(socialRequest)
         setUpNavigation()
     }
 
     private fun setupAppBar() {
         appbar_main_navigation.setTitle(getString(R.string.app_name))
+    }
+
+    private fun setUpNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as DynamicNavHostFragment
+        navHostFragment.findNavController().let { NavigationUI.setupWithNavController(bottom_navigation, it) }
+    }
+
+    override fun getViewModelClass(): Class<MainNavigationViewModel> {
+        return MainNavigationViewModel::class.java
+    }
+
+    override fun getLayout(): Int {
+        return R.layout.activity_bottom_navigation
     }
 
     override fun initDependencyInjection() {
@@ -29,22 +47,5 @@ class MainNavigationActivity : SingleViewModelActivity<MainNavigationViewModel>(
                 .coreComponent(coreComponent())
                 .build()
                 .inject(this)
-    }
-
-    override fun getLayout(): Int {
-        return R.layout.activity_bottom_navigation
-    }
-
-    private fun setUpNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment?
-        navHostFragment?.navController?.let { NavigationUI.setupWithNavController(bottom_navigation, it) }
-    }
-
-    override fun bindViewModel(viewModel: MainNavigationViewModel) {
-        Timber.i(getCurrentClassAndMethodNames())
-    }
-
-    override fun getViewModelClass(): Class<MainNavigationViewModel> {
-        return MainNavigationViewModel::class.java
     }
 }
