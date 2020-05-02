@@ -1,4 +1,4 @@
-package com.ekoapp.sample.main.navigation.fragments
+package com.ekoapp.sample.navigation.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

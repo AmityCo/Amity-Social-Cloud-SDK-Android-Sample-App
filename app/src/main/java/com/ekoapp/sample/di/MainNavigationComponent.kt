@@ -1,4 +1,4 @@
-package com.ekoapp.sample.main.di
+package com.ekoapp.sample.di
 
 import com.ekoapp.sample.MainNavigationActivity
 import com.ekoapp.sample.core.di.CoreComponent
