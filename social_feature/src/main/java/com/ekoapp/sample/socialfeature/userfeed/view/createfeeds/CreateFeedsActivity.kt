@@ -11,39 +11,35 @@ import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
-import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.userfeed.view.toolbars.CreateFeedsToolbarMenu
 import kotlinx.android.synthetic.main.activity_create_feeds.*
-import timber.log.Timber
 
 
 class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
 
-    var menu: Menu? = null
-
     override fun getToolbar(): ToolbarMenu? {
-        return CreateFeedsToolbarMenu(onPostCallback = {
-            val localMenu = menu
-            if (localMenu == null) {
-                Timber.e("${getCurrentClassAndMethodNames()}${Throwable("Invalid menu state, cannot initial menu since it is null")}")
-                create_feeds.getDescription()?.let(this::sendResult)
-                hideKeyboard()
-                finish()
-            } else this.onPrepareOptionsMenu(localMenu)
-        })
+        return CreateFeedsToolbarMenu(create_feeds.getDescription(), eventPost = this::sendResult,
+                onBackPressed = {
+                    hideKeyboard()
+                    finish()
+                })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.create_feeds, menu)
+        setupMenuPost(menu)
+        return true
+    }
+
+    private fun setupMenuPost(menu: Menu) {
         val positionOfMenuItem = 0
         val item: MenuItem = menu.getItem(positionOfMenuItem)
-        val s = SpannableString(getString(R.string.temporarily_post))
-        s.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorPrimaryDark)), 0, s.length, 0)
-        item.title = s
-        return true
+        val spannable = SpannableString(getString(R.string.temporarily_post))
+        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)), 0, spannable.length, 0)
+        item.title = spannable
     }
 
     override fun bindViewModel(viewModel: CreateFeedsViewModel) {

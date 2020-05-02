@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/chatsFragment"
-        android:name="com.ekoapp.sample.main.navigation.fragments.NotAvailable"
+        android:name="com.ekoapp.sample.navigation.fragments.NotAvailable"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_not_available">
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/usersFragment"
-        android:name="com.ekoapp.sample.main.navigation.fragments.NotAvailable"
+        android:name="com.ekoapp.sample.navigation.fragments.NotAvailable"
         android:label="fragment_users"
         tools:layout="@layout/fragment_not_available" />
 </navigation>
