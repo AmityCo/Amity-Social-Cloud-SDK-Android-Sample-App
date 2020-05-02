@@ -6,7 +6,6 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
-import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.REQUEST_CODE_CREATE_FEEDS
@@ -17,7 +16,6 @@ import com.ekoapp.sample.socialfeature.userfeed.view.createfeeds.CreateFeedsActi
 import com.ekoapp.sample.socialfeature.userfeed.view.list.UserFeedsAdapter
 import kotlinx.android.synthetic.main.component_touchable_create_feeds.view.*
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
-import timber.log.Timber
 
 class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
@@ -35,7 +33,6 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
     private fun setupEvent(viewModel: UserFeedsViewModel) {
         touchable_post_feeds.button_touchable_target_post.setOnClickListener {
-            Timber.d(getCurrentClassAndMethodNames())
             startActivityForResult(Intent(requireActivity(), CreateFeedsActivity::class.java), REQUEST_CODE_CREATE_FEEDS)
         }
     }
