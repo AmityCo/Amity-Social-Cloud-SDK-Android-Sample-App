@@ -11,6 +11,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MainNavigationViewModel @Inject constructor(private val splitInstall: SplitInstall) : DisposableViewModel() {
+
     fun installModule(installRequest: SplitInstallRequest) {
         splitInstall.installModule(installRequest) {
             when (it) {
