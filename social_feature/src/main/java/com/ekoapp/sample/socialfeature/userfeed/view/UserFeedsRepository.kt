@@ -34,7 +34,7 @@ class UserFeedsRepository @Inject constructor() {
         return Single.just(UserFeedsTypeSealed.DeleteFeeds(result))
     }
 
-    fun getMockEditFeed(id: String, description: String): SampleFeedsResponse {
+    private fun getMockEditFeed(id: String, description: String): SampleFeedsResponse {
         return SampleFeedsResponse(
                 id = id,
                 creator = "User1",

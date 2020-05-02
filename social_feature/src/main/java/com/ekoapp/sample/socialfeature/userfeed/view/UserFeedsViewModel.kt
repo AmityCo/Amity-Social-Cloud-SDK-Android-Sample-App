@@ -23,16 +23,6 @@ class UserFeedsViewModel @Inject constructor(context: Context,
         feedsItems.postValue(original)
     }
 
-    fun submitEdit(id: String, description: String) {
-        userFeedsRepository.sendEditFeeds(id, description)
-                .doOnSuccess(this::updateList)
-                .onErrorReturn {
-                    Timber.i("${getCurrentClassAndMethodNames()} doOnError: ${it.message}")
-                    UserFeedsTypeSealed.ErrorResult(it)
-                }
-                .subscribe()
-    }
-
     fun submitDelete(id: String) {
         userFeedsRepository.sendDeleteFeeds(id)
                 .doOnSuccess(this::updateList)

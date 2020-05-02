@@ -1,5 +1,7 @@
 package com.ekoapp.sample.socialfeature.userfeed.view.editfeeds
 
+import android.app.Activity
+import android.content.Intent
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Menu
@@ -10,14 +12,18 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
+import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsTypeSealed
 import com.ekoapp.sample.socialfeature.userfeed.view.toolbars.EditFeedsToolbarMenu
 import kotlinx.android.synthetic.main.activity_create_feeds.*
 
 
 class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
+
+    private var feedId = ""
 
     override fun getToolbar(): ToolbarMenu? {
         return EditFeedsToolbarMenu(create_feeds.getDescription(), eventEdit = this::sendResult,
@@ -28,7 +34,7 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.create_feeds, menu)
+        menuInflater.inflate(R.menu.edit_feeds, menu)
         setupMenuPost(menu)
         return true
     }
@@ -43,7 +49,10 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
 
     override fun bindViewModel(viewModel: EditFeedsViewModel) {
         val item = intent.extras?.getParcelable<SampleFeedsResponse>(EXTRA_NAME_FEEDS)
-        item?.let { setupView(item) }
+        item?.let {
+            feedId = it.id
+            setupView(item)
+        }
         setupAppBar()
     }
 
@@ -73,10 +82,16 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
     }
 
     private fun sendResult(description: String) {
-        viewModel?.let {
-            /* val data = Intent()
-             data.putExtra(EXTRA_NAME_EDIT_FEEDS, it.mockEditFeeds(id, description))
-             setResult(Activity.RESULT_OK, data)*/
+        viewModel?.let { viewModel ->
+            viewModel.submitEdit(feedId, description) {
+                when (it) {
+                    is UserFeedsTypeSealed.EditFeeds -> {
+                        val data = Intent()
+                        data.putExtra(EXTRA_NAME_EDIT_FEEDS, it.result)
+                        setResult(Activity.RESULT_OK, data)
+                    }
+                }
+            }
         }
     }
 }
