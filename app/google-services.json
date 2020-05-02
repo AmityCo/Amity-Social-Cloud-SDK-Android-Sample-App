@@ -68,7 +68,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1056361182889:android:01a3c8f3e5cce342",
         "android_client_info": {
-          "package_name": "com.ekoapp.simplechat"
+          "package_name": "com.ekoapp.sample"
         }
       },
       "oauth_client": [
@@ -97,7 +97,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1056361182889:android:dff6edb36a53c23e",
         "android_client_info": {
-          "package_name": "com.ekoapp.simplechat.debug"
+          "package_name": "com.ekoapp.sample.debug"
         }
       },
       "oauth_client": [

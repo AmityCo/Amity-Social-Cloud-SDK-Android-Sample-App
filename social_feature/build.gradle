@@ -1,5 +1,5 @@
-apply plugin: 'com.android.library'
-//apply plugin: 'com.android.dynamic-feature'
+//apply plugin: 'com.android.library'
+apply plugin: 'com.android.dynamic-feature'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
@@ -19,16 +19,16 @@ android {
         enabled = true
     }
 
-//    flavorDimensions "push"
-//
-//    productFlavors {
-//        baidu_with_fcm {
-//            dimension "push"
-//        }
-//        fcm {
-//            dimension "push"
-//        }
-//    }
+    flavorDimensions "push"
+
+    productFlavors {
+        baidu_with_fcm {
+            dimension "push"
+        }
+        fcm {
+            dimension "push"
+        }
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -49,7 +49,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api project(":core")
-//    implementation project(':app')
+    implementation project(':app')
 
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
