@@ -34,7 +34,10 @@ class HeaderFeedsComponent : ConstraintLayout {
     }
 
     fun editFeeds(edit: (Boolean) -> Unit) {
-        moreHorizBottomSheet.renderEdit(edit::invoke)
+        moreHorizBottomSheet.renderEdit {
+            edit.invoke(it)
+            moreHorizBottomSheet.dialog?.cancel()
+        }
     }
 
     fun deleteFeeds(delete: (Boolean) -> Unit) {

@@ -28,7 +28,7 @@ class MoreHorizBottomSheetFragment : BottomSheetDialogFragment() {
     private fun initView() {
         text_edit.setOnClickListener {
             //TODO Show Confirm Dialog
-//            callbackEdit(true)
+            callbackEdit(true)
         }
         text_delete.setOnClickListener {
             //TODO Show Confirm Dialog
