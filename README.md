@@ -116,7 +116,6 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
                              .build(adapter)
    
    ###### Full Example:
-         ```
          private lateinit var adapter: MyAdapter
          
          private fun renderList() {
@@ -125,6 +124,5 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
                        .builder()
                        .build(adapter)
          }
-         ```
       
 
