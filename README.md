@@ -65,7 +65,7 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
             ```
         - ***getLayout()*** is required return your layout.
      
-     5. _ ***Don't forgot***_ override **initDependencyInjection()** in your activity or fragment
+     5. **Don't forgot** override **initDependencyInjection()** in your activity or fragment
      ###### Example:
 
             override fun initDependencyInjection() {
