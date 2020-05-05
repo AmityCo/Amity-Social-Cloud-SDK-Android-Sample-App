@@ -16,7 +16,7 @@ You can try out using this API Key:
 - [X] Design pattern is MVVM
 - [X] Reactive Programming
 - [X] Functional Programming
-- [X] Dependency Injection used Dagger2
+- [X] Dagger2
 - [X] Dynamic feature
 - [X] Navigation Component
 
