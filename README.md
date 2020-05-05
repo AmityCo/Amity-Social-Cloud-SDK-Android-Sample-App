@@ -58,11 +58,11 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
 
         - **getViewModelClass()** is required return your view model
             ###### Example:
-              ```
+            ```
               override fun getViewModelClass(): Class<YourViewModel> {
                  return YourViewModel::class.java
               }
-              ```
+            ```
 
  
 
