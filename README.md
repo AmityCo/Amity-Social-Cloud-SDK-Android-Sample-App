@@ -99,5 +99,19 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
    ```
    appbar_main.setTitle("Your Title")
    ```
-
+   
+### RecyclerBuilder
+   If you prefer setup adapter you can call
+   1. Create your adapter
+   ###### Example:
+        private lateinit var adapter: MyAdapter
+         
+        adapter = MyAdapter(itemList)
+        
+   2. Create RecyclerBuilder for setup adapter
+   ###### Example:
+          
+        RecyclerBuilder(context = requireContext(), recyclerView = recycler_list, spaceCount = spaceNumber)
+                             .builder()
+                             .build(adapter)
 
