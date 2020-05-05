@@ -1,4 +1,4 @@
-# Example EkoSDK
+# Android Example EkoSDK
 EkoSDK allows you to easily present an interactive chat, social and community
 
 ## Installation
