@@ -15,7 +15,7 @@ You can try out using this API Key:
    - Clean Code
 
 ## Technology Stack
-- [X] Kotlin Language
+- [X] **Kotlin** Language
 - [X] Design pattern is MVVM
 - [X] Reactive Programming
 - [X] Functional Programming
