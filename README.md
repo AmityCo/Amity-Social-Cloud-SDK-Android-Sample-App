@@ -13,7 +13,7 @@ You can try out using this API Key:
 ## Goal Project
    - Encourage writing code to **lower than 200 line for each class/file** 
    - Clean Code
-   - Combine UI with custom Component 
+   - Custom Component with UI
 
 ## Technology Stack
 - [X] **Kotlin** Language
