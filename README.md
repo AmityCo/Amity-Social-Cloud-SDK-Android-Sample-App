@@ -60,16 +60,16 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
        ```
       4. when you extend SingleViewModelActivity or SingleViewModelFragment It's override function include **bindViewModel(), getViewModelClass()** and **getLayout()** .
       
-        - ***bindViewModel()*** is auto provide your view model and already to called in onCreate() for activity and onActivityCreated() for fragment so you can used bindViewModel() instead of.
+        - **bindViewModel()** _is auto provide your view model and already to called in onCreate() for activity and onActivityCreated() for fragment so you can used bindViewModel() instead of._
 
-        - ***getViewModelClass()*** is required return your view model.
+        - **getViewModelClass()** _is required return your view model._
             ###### Example:
             ```
               override fun getViewModelClass(): Class<YourViewModel> {
                  return YourViewModel::class.java
               }
             ```
-        - ***getLayout()*** is required return your layout.
+        - **getLayout()** _is required return your layout._
      
      5. **Don't forgot** override **initDependencyInjection()** in your activity or fragment
      ###### Example:
