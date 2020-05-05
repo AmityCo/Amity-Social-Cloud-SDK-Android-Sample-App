@@ -88,9 +88,13 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
    ```
 2. In your activity or fragment you can call 
 
-   (If you want back button set **true** in hasBack param. _By default hasBack is **false**_)
+   - If you want back button set **true** in hasBack param. _By default hasBack is **false**_)
    ```
    appbar_main.setup(activity = this, true)
+   ```
+   - If you want set tilte on Toolbar you can call
+   ```
+   appbar_main.setTitle("Your Title")
    ```
 
 
