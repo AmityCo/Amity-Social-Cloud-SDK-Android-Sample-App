@@ -5,17 +5,12 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
     }
 
     dataBinding {
@@ -27,10 +22,17 @@ android {
     productFlavors {
         baidu_with_fcm {
             dimension "push"
+            minSdkVersion  21
         }
         fcm {
             dimension "push"
+            minSdkVersion  21
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
@@ -41,5 +43,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(":core")
     implementation project(':app')
+
+    //Dagger
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    //Arrow-KT
+    kapt "io.arrow-kt:arrow-meta:$arrow_version"
 }

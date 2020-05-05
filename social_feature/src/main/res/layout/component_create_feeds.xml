@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_grey_50"
+    android:padding="@dimen/material_component_cards_left_and_right_padding"
+    tools:ignore="PrivateResource"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.HeaderCreateFeedsComponent
+        android:id="@+id/header_create_feeds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_text_create_feeds"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
+        android:background="@android:color/transparent"
+        android:gravity="top"
+        android:hint="@string/temporarily_what_is_on_your_mind"
+        android:padding="@dimen/material_component_text_fields_floating_label_padding_below_input_text_including_divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/edit_text_create_feeds"
+        app:layout_constraintTop_toBottomOf="@id/header_create_feeds" />
+
+</merge>

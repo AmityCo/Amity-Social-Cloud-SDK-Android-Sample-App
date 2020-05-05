@@ -1,0 +1,32 @@
+{
+  "userId": "4538654937309",
+  "feeds": [
+    {
+      "id": "001",
+      "creator": "User1",
+      "avatar": "",
+      "lastCreated": "",
+      "description": "Post1",
+      "isLiked": false,
+      "isDeleted": false
+    },
+    {
+      "id": "002",
+      "creator": "User1",
+      "avatar": "",
+      "lastCreated": "",
+      "description": "Post2",
+      "isLiked": true,
+      "isDeleted": false
+    },
+    {
+      "id": "003",
+      "creator": "User1",
+      "avatar": "",
+      "lastCreated": "",
+      "description": "Post3",
+      "isLiked": true,
+      "isDeleted": false
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_header_feeds"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.ekoapp.sample.socialfeature.userfeed.view.components.AvatarComponent
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/material_layout_avatar"
+        android:layout_height="@dimen/material_layout_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_full_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
+        android:layout_marginEnd="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/temporarily_full_name"
+        android:textColor="@color/material_grey_900"
+        android:textSize="@dimen/material_typography_body1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/image_more_horiz"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        tools:ignore="PrivateResource" />
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="@string/temporarily_time"
+        android:textColor="@color/material_grey_600"
+        android:textSize="@dimen/material_typography_caption"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="@id/text_full_name"
+        app:layout_constraintStart_toStartOf="@id/text_full_name"
+        app:layout_constraintTop_toBottomOf="@id/text_full_name"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_more_horiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_more_horiz"
+        android:tint="@color/material_grey_600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+
+</merge>

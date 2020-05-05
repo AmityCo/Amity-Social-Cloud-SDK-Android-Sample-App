@@ -21,11 +21,11 @@ import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
-import com.ekoapp.sample.SimplePreferences
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channellist.filter.ChannelQueryFilterActivity
-import com.ekoapp.sample.core.ui.BaseActivity
-import com.ekoapp.sample.intent.IntentRequestCode
+import com.ekoapp.sample.core.intent.IntentRequestCode
+import com.ekoapp.sample.core.preferences.SimplePreferences
+import com.ekoapp.sample.core.base.BaseActivity
 import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
@@ -41,7 +41,6 @@ class ChannelListActivity : BaseActivity() {
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
-        setContentView(R.layout.activity_channel_list)
         toolbar.title = getString(R.string.toolbar_channel_list)
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
@@ -61,8 +60,8 @@ class ChannelListActivity : BaseActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        val id = item?.itemId
         if (id == R.id.action_filter_channel) {
             startActivityForResult(Intent(this, ChannelQueryFilterActivity::class.java),
                     IntentRequestCode.REQUEST_CHANNEL_FILTER_OPTION)
@@ -102,6 +101,10 @@ class ChannelListActivity : BaseActivity() {
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun getLayout(): Int {
+       return R.layout.activity_channel_list
     }
 
     private fun observeChannelCollection() {

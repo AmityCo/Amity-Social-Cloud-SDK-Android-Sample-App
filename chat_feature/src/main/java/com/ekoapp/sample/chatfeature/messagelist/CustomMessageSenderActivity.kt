@@ -3,8 +3,8 @@ package com.ekoapp.sample.chatfeature.messagelist
 import android.app.Activity
 import android.os.Bundle
 import com.ekoapp.ekosdk.EkoClient
-import com.ekoapp.sample.usermetadata.KeyValueInputActivity
 import com.ekoapp.sample.chatfeature.intent.OpenCustomMessageSenderIntent
+import com.ekoapp.sample.chatfeature.usermetadata.KeyValueInputActivity
 import com.google.gson.JsonObject
 import io.reactivex.Completable
 import kotlinx.android.synthetic.main.activity_key_value_input.*

@@ -1,8 +1,15 @@
 <resources>
-    <string name="app_name">SimpleChat</string>
-    <string name="toolbar_user_list">Select User</string>
-    <string name="toolbar_user_feed">User Feed</string>
-    <string name="toolbar_social_main">Social Features</string>
-    <string name="search">Search</string>
-    <string name="sort_by">Sort by</string>
+    <string name="app_name">Social</string>
+    <string name="temporarily_full_name">Chattip Soontaku</string>
+    <string name="temporarily_time">1 second ago</string>
+    <string name="temporarily_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="temporarily_like">Like</string>
+    <string name="temporarily_comment">Comment</string>
+    <string name="temporarily_share">Share</string>
+    <string name="temporarily_what_is_on_your_mind">What\'s on your mind?</string>
+    <string name="temporarily_create_post">Create Post</string>
+    <string name="temporarily_edit_post">Edit Post</string>
+    <string name="temporarily_post">Post</string>
+    <string name="temporarily_edit">Edit</string>
+    <string name="temporarily_delete">Delete</string>
 </resources>

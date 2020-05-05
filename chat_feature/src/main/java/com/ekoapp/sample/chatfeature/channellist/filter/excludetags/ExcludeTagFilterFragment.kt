@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.SimplePreferences
 import com.ekoapp.sample.chatfeature.databinding.FragmentExcludeTagsFilterBinding
+import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.google.common.base.Joiner
 
 class ExcludeTagFilterFragment : Fragment() {

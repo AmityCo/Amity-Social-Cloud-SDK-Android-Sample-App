@@ -18,4 +18,15 @@
     <string name="total_unread_d">Total unread: %d</string>
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
+
+    <string name="change_display_name">Change DisplayName</string>
+    <string name="change_metadata">Change Metadata</string>
+    <string name="change_api_key">Change API Key</string>
+    <string name="notification_for_current_user">Notification Settings</string>
+    <string name="register">Register</string>
+    <string name="register_push">Register Push</string>
+    <string name="request_write_settings_permissions">Request Write Settings Permission</string>
+    <string name="unregister">Un-Register</string>
+    <string name="unregister_push">Un-register Push</string>
+    <string name="unregister_push_for_all">Un-register Push for All Users</string>
 </resources>
