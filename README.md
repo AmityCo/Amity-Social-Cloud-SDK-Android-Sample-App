@@ -114,4 +114,17 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_list, spaceCount = spaceNumber)
                              .builder()
                              .build(adapter)
+   
+   ###### Full Example:
+         ```
+         private lateinit var adapter: MyAdapter
+         
+         private fun renderList() {
+               adapter = MyAdapter(itemList)
+               RecyclerBuilder(context = requireContext(), recyclerView = recycler_list, spaceCount = spaceNumber)
+                       .builder()
+                       .build(adapter)
+         }
+         ```
+      
 
