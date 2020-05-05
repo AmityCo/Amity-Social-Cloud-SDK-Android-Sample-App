@@ -11,6 +11,13 @@ You can try out using this API Key:
 "b3bee90c39d9a5644831d84e5a0d1688d100ddebef3c6e78".
 ```
 
+## Technology Stack
+- [X] Kotlin Language
+- [X] MVVM
+- [X] Dagger2
+- [X] Dynamic feature
+- [X] Navigation Component
+
 ## Architecture 
 The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM** so you can following code style:
    
