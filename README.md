@@ -77,5 +77,19 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
             }
 
 ### Toolbar Component
+1. If you prefer Toolbar you can integrate on this in your layout.
+   ```
+       <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
+           android:id="@+id/appbar_main"
+           style="@style/AppTheme.Appbar"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
+   ```
+2. In your activity or fragment you can call 
+
+   (If you want back button set **true** in hasBack param. _By default hasBack is **false**_)
+   ```
+   appbar_main.setup(activity = this, true)
+   ```
 
 
