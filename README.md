@@ -17,7 +17,7 @@ You can try out using this API Key:
 
 ## Technology Stack
 - [X] **Kotlin** Language
-- [X] Design pattern is MVVM
+- [X] Design pattern is **MVVM**
 - [X] Reactive Programming
 - [X] Functional Programming
 - [X] Dagger2
