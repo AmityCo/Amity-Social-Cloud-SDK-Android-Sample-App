@@ -14,11 +14,11 @@ You can try out using this API Key:
 ## Technology Stack
 - [X] Kotlin Language
 - [X] Design pattern is MVVM
+- [X] Reactive Programming
+- [X] Functional Programming
 - [X] Dependency Injection used Dagger2
 - [X] Dynamic feature
 - [X] Navigation Component
-- [X] Reactive Programming
-- [X] Functional Programming
 
 ## Architecture 
 The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM** so you can following code style:
