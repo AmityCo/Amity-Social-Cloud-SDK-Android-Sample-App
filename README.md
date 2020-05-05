@@ -10,7 +10,9 @@ You can try out using this API Key:
 ```
 "b3bee90c39d9a5644831d84e5a0d1688d100ddebef3c6e78"
 ```
-
+## Goal Project
+   - Encourage development process to **lower than 200 line for each class** 
+   
 ## Technology Stack
 - [X] Kotlin Language
 - [X] Design pattern is MVVM
