@@ -19,6 +19,7 @@ You can try out using this API Key:
 - [X] Dagger2
 - [X] Dynamic feature
 - [X] Navigation Component
+- [X] ConstraintLayout
 
 ## Architecture 
 The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM** so you can following code style:
