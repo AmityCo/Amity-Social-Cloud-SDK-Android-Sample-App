@@ -38,7 +38,7 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
         
         }
       ```
-       2. For **Activity** You can extend ***SingleViewModelActivity***
+       2. For **Activity** You can extend ***SingleViewModelActivity*** and For **fragment** You can extend ***SingleViewModelFragment***
  
 
 
