@@ -2,7 +2,7 @@
 EkoSDK allows you to easily present an interactive chat, social and community
 
 ## Installation
-### 1. Chat
+#### 1. Chat
 
 https://docs.ekomedia.technology/
 
