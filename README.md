@@ -20,6 +20,7 @@ You can try out using this API Key:
 - [X] Dynamic feature
 - [X] Navigation Component
 - [X] ConstraintLayout
+- [X] Custom Component
 
 ## Architecture 
 The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM** so you can following code style:
