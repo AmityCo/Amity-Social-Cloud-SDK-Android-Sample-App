@@ -38,20 +38,21 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
         
         }
       ```
-       2. For **Activity** class You can extend ***SingleViewModelActivity*** 
+       2. For **Activity** class you can extend ***SingleViewModelActivity*** 
        ###### Example:
        ```
          class YourActivity : SingleViewModelActivity<YourViewModel>() {
       
          }
        ```
-       3. For **Fragment** class You can extend ***SingleViewModelFragment***
+       3. For **Fragment** class you can extend ***SingleViewModelFragment***
        ###### Example:
        ```
          class YourFragment : SingleViewModelFragment<YourViewModel>() {
       
          }
        ```
+      4. when you extend SingleViewModelActivity or SingleViewModelFragment It's override function include ***bindViewModel(), getViewModelClass()*** and ***getLayout()***
  
 
 
