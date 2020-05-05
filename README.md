@@ -98,7 +98,7 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
    - If you want set tilte on Toolbar you can call
    ###### Example:
    ```
-   appbar_main.setTitle("Your Title")
+   appbar_main.setTitle(getString(R.string.your_title))
    ```
    
 ### RecyclerBuilder
