@@ -76,6 +76,6 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
                       .inject(this)
             }
 
- 
+### Toolbar Component
 
 
