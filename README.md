@@ -79,6 +79,7 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
 
 ### Toolbar Component
 1. If you prefer Toolbar you can integrate on this in your layout.
+###### Example:
    ```
        <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
            android:id="@+id/appbar_main"
@@ -89,10 +90,12 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
 2. In your activity or fragment you can call 
 
    - If you want back button set **true** in hasBack param. _By default hasBack is **false**_)
+   ###### Example:
    ```
    appbar_main.setup(activity = this, true)
    ```
    - If you want set tilte on Toolbar you can call
+   ###### Example:
    ```
    appbar_main.setTitle("Your Title")
    ```
