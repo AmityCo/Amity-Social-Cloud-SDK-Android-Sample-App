@@ -13,8 +13,8 @@ You can try out using this API Key:
 
 ## Technology Stack
 - [X] Kotlin Language
-- [X] MVVM
-- [X] Dagger2
+- [X] Design pattern is MVVM
+- [X] Dependency Injection used Dagger2
 - [X] Dynamic feature
 - [X] Navigation Component
 
