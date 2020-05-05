@@ -32,6 +32,12 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
         
         }
       ```
+      But if you want to use ApplicationContext you can parse context param into constructor. _Dependency Injection will be provide ApplicationContext_
+      ```
+        class YourViewModel @Inject constructor(context: Context) : DisposableViewModel() {
+        
+        }
+      ```
  
 
 
