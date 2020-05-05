@@ -23,6 +23,15 @@ You can try out using this API Key:
 ## Architecture 
 The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM** so you can following code style:
    
-   1. If you prefer ***MVVM*** Style in your **activity** or **fragment** 
+   - If you prefer ***MVVM*** Style in your **activity** or **fragment**
+
+      1. First crate your view model class and inject constructor and extend DisposableViewModel
+      ###### Example:
+      ```
+        class YourViewModel @Inject constructor() : DisposableViewModel() {
+        
+        }
+      ```
+ 
 
 
