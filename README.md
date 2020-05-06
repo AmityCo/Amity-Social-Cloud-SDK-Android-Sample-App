@@ -31,7 +31,7 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
    
    - If you prefer ***MVVM*** Style in your **activity** or **fragment** .
 
-      1. First crate your view model class and inject constructor and extend DisposableViewModel.
+      1. First create your view model class and inject constructor and extend DisposableViewModel.
       ###### Example:
       ```
         class YourViewModel @Inject constructor() : DisposableViewModel() {
