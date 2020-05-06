@@ -27,7 +27,7 @@ You can try out using this API Key:
 - [X] Custom Component
 
 ## Architecture 
-The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM** so you can following code style:
+The ExampleEkoSDK App is a project to showcase _design pattern_ **MVVM** architecture so you can following code style:
    
    - If you prefer ***MVVM*** Style in your **activity** or **fragment** .
 
