@@ -83,7 +83,7 @@ The ExampleEkoSDK App architecture is a project _design pattern_ based on **MVVM
             }
 
 ### Toolbar Component
-1. If you prefer Toolbar you can integrate on this in your layout.
+1. If you prefer Toolbar you can integrate this in your layout.
 ###### Example:
    ```
        <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
