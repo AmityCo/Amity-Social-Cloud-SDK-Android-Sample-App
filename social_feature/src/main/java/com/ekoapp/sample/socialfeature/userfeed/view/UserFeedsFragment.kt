@@ -7,10 +7,12 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.REQUEST_CODE_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.REQUEST_CODE_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.userfeed.view.createfeeds.CreateFeedsActivity
+import com.ekoapp.sample.socialfeature.userfeed.view.editfeeds.EditFeedsActivity
 import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsAdapter
 import kotlinx.android.synthetic.main.component_touchable_create_feeds.view.*
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
@@ -33,6 +35,12 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
         touchable_post_feeds.button_touchable_target_post.setOnClickListener {
             startActivityForResult(Intent(requireActivity(), CreateFeedsActivity::class.java), REQUEST_CODE_CREATE_FEEDS)
         }
+
+        viewModel.observeEditFeedsPage().observeNotNull(viewLifecycleOwner, {
+            val intent = Intent(requireActivity(), EditFeedsActivity::class.java)
+            intent.putExtra(EXTRA_NAME_EDIT_FEEDS, it)
+            startActivityForResult(intent, REQUEST_CODE_EDIT_FEEDS)
+        })
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {

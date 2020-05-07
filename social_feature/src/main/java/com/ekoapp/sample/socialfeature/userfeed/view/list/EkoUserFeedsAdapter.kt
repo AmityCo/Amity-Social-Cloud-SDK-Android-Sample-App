@@ -33,11 +33,9 @@ class EkoUserFeedsAdapter(private val items: PagedList<EkoPost>,
             EkoUserFeedsRenderData(context, this).userFeedRender(
                     header = itemView.header_feeds,
                     body = itemView.body_feeds,
-                    eventEdit = {
-
-                    },
+                    eventEdit = userFeedsViewModel.editFeedsActionRelay::postValue,
                     eventDelete = {
-                        userFeedsViewModel.deleteUserFeeds(this)
+                        userFeedsViewModel.deletePost(this)
                     })
         }
     }

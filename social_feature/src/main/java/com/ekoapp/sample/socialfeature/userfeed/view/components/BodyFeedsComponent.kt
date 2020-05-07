@@ -31,4 +31,6 @@ class BodyFeedsComponent : ConstraintLayout {
         }
     }
 
+    fun getDescription() = text_description.text.toString()
+
 }
