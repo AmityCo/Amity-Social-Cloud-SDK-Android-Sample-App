@@ -20,13 +20,13 @@ class BodyFeedsComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(item: EkoPost?) {
-        val dataJson: String = item?.data.toString()
+    fun setupView(item: EkoPost) {
+        val dataJson: String = item.data.toString()
         val dataObject = JSONObject(dataJson)
 
         val textBody: Any = dataObject.get("text")
 
-        (textBody as? String)?.let {
+        (textBody as String).let {
             text_description.text = it
         }
     }

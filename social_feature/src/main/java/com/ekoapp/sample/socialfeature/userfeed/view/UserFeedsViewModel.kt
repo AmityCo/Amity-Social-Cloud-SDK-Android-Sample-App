@@ -13,4 +13,10 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     fun getUserFeeds(): LiveData<PagedList<EkoPost>> {
         return EkoClient.newFeedRepository().getUserFeed(EkoClient.getUserId(), EkoUserFeedSortOption.LAST_CREATED)
     }
+
+    fun deleteUserFeeds(item: EkoPost) {
+        EkoClient.newFeedRepository().editPost(item.postId)
+                .delete()
+                .subscribe()
+    }
 }

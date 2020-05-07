@@ -6,12 +6,12 @@ import com.ekoapp.sample.socialfeature.userfeed.view.components.BodyFeedsCompone
 import com.ekoapp.sample.socialfeature.userfeed.view.components.HeaderFeedsComponent
 
 
-data class EkoUserFeedsRenderData(val context: Context, val item: EkoPost?)
+data class EkoUserFeedsRenderData(val context: Context, val item: EkoPost)
 
 fun EkoUserFeedsRenderData.userFeedRender(
         header: HeaderFeedsComponent,
         body: BodyFeedsComponent,
-        eventEdit: (EkoPost?) -> Unit,
+        eventEdit: (EkoPost) -> Unit,
         eventDelete: (Boolean) -> Unit) {
 
     header.setupView(item)

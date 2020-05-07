@@ -24,8 +24,8 @@ class HeaderFeedsComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(item: EkoPost?) {
-        text_full_name.text = item?.postedUserId
+    fun setupView(item: EkoPost) {
+        text_full_name.text = item.postedUserId
         image_more_horiz.setOnClickListener { context.renderBottomSheet() }
     }
 
