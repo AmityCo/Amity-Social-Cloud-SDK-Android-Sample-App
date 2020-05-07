@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listview_background_shape">
+    <padding
+        android:bottom="@dimen/material_component_dialogs_padding_around_content_area"
+        android:left="@dimen/material_component_dialogs_padding_around_content_area"
+        android:right="@dimen/material_component_dialogs_padding_around_content_area"
+        android:top="@dimen/material_component_dialogs_padding_around_content_area" />
+    <corners
+        android:radius="@dimen/material_component_text_fields_icon_height"
+        tools:ignore="PrivateResource" />
+    <solid android:color="@color/material_light_white" />
+</shape>

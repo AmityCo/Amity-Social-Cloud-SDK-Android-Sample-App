@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/default_gradient_background"
+    android:padding="@dimen/material_component_dialogs_padding_around_content_area">
+
+    <TextView
+        android:id="@+id/text_register"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/temporarily_register"
+        android:textColor="@color/colorTextHeader"
+        android:textSize="@dimen/material_typography_display2"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_text_register_id"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/material_component_text_fields_icon_height"
+        android:background="@drawable/default_text_field"
+        android:gravity="center_vertical"
+        android:hint="@string/temporarily_user_id"
+        android:maxLines="1"
+        android:padding="@dimen/material_component_text_fields_floating_label_padding_between_label_and_input_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/text_register"
+        app:layout_constraintStart_toStartOf="@id/text_register"
+        app:layout_constraintTop_toBottomOf="@id/text_register" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginTop="@dimen/material_component_text_full_width_single_line_text_field_text_top_and_bottom_padding"
+        android:background="@color/colorPrimaryDark"
+        android:paddingStart="@dimen/material_component_button_text_left_and_right_padding"
+        android:paddingEnd="@dimen/material_component_button_text_left_and_right_padding"
+        android:text="@string/temporarily_let_s_go"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_button"
+        app:layout_constraintEnd_toEndOf="@id/edit_text_register_id"
+        app:layout_constraintStart_toStartOf="@id/edit_text_register_id"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_register_id" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">UIKit</string>
     <string name="temporarily_not_available">Sorry, this service is not available.</string>
+
+    <string name="temporarily_register">Register</string>
+    <string name="temporarily_user_id">User ID</string>
+    <string name="temporarily_let_s_go">Let\'s go</string>
 </resources>
