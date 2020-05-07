@@ -3,19 +3,18 @@ package com.ekoapp.sample.socialfeature.userfeed.view.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
+import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.userfeed.UPPERMOST
-import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
 import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
-import com.ekoapp.sample.socialfeature.userfeed.view.renders.UserFeedsRenderData
+import com.ekoapp.sample.socialfeature.userfeed.view.renders.EkoUserFeedsRenderData
 import com.ekoapp.sample.socialfeature.userfeed.view.renders.userFeedRender
 import kotlinx.android.synthetic.main.item_user_feeds.view.*
 
-
-class UserFeedsAdapter(private val items: MutableList<SampleFeedsResponse>,
-                       private val userFeedsViewModel: UserFeedsViewModel) : RecyclerView.Adapter<ViewHolder>() {
+class EkoUserFeedsAdapter(private val items: PagedList<EkoPost>,
+                          private val userFeedsViewModel: UserFeedsViewModel) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun getItemCount(): Int {
         return items.size
@@ -26,25 +25,19 @@ class UserFeedsAdapter(private val items: MutableList<SampleFeedsResponse>,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val feedsResponse = items[position]
+        val item = items[position]
         val itemView = holder.itemView
         val context = itemView.context
 
-        UserFeedsRenderData(context, feedsResponse).userFeedRender(
+        EkoUserFeedsRenderData(context, item).userFeedRender(
                 header = itemView.header_feeds,
                 body = itemView.body_feeds,
                 eventEdit = {
-                    userFeedsViewModel.editRelay.postValue(it)
+
                 },
                 eventDelete = {
-                    userFeedsViewModel.submitDelete(feedsResponse.id)
-                })
-    }
 
-    fun addItem(position: Int = UPPERMOST, data: SampleFeedsResponse) {
-        items.add(position, data)
-        notifyItemInserted(position)
-        notifyItemRangeChanged(position, items.size)
+                })
     }
 }
 

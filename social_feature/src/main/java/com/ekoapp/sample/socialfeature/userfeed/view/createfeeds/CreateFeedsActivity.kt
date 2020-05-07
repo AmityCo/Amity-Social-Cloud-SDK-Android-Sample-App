@@ -1,7 +1,5 @@
 package com.ekoapp.sample.socialfeature.userfeed.view.createfeeds
 
-import android.app.Activity
-import android.content.Intent
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Menu
@@ -12,7 +10,6 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.userfeed.view.toolbars.CreateFeedsToolbarMenu
 import kotlinx.android.synthetic.main.activity_create_feeds.*
@@ -68,10 +65,6 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
     }
 
     private fun sendResult(description: String) {
-        viewModel?.let {
-            val data = Intent()
-            data.putExtra(EXTRA_NAME_CREATE_FEEDS, it.mockCreateFeeds(description))
-            setResult(Activity.RESULT_OK, data)
-        }
+        viewModel?.createPost(description)
     }
 }
