@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.ekoapp.sample.core.R
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 
 abstract class BaseActivity : HasLayout, AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_Launcher)
         super.onCreate(savedInstanceState)
         setContentView(getLayout())
     }
