@@ -1,6 +1,5 @@
 package com.ekoapp.sample.socialfeature.userfeed.view
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
@@ -45,10 +44,11 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
     private fun renderList(viewModel: UserFeedsViewModel) {
         viewModel.getUserFeeds().observeNotNull(viewLifecycleOwner, {
-            adapter = EkoUserFeedsAdapter(it, userFeedsViewModel = viewModel)
+            adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
             RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
                     .builder()
                     .build(adapter)
+            adapter.submitList(it)
         })
     }
 
@@ -62,17 +62,5 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
     override fun getViewModelClass(): Class<UserFeedsViewModel> {
         return UserFeedsViewModel::class.java
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when {
-            requestCode == REQUEST_CODE_CREATE_FEEDS && resultCode == RESULT_OK -> {
-                //TODO After create feeds
-            }
-            requestCode == REQUEST_CODE_EDIT_FEEDS && resultCode == RESULT_OK -> {
-                //TODO After edit feeds
-            }
-        }
     }
 }
