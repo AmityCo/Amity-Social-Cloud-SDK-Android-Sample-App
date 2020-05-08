@@ -20,13 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Main">
 
-        <activity android:name=".register.RegisterActivity">
+        <activity android:name=".entry.EntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".register.RegisterActivity" />
         <activity android:name=".MainNavigationActivity" />
 
     </application>

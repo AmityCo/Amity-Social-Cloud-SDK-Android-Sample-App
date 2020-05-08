@@ -1,21 +1,23 @@
 package com.ekoapp.sample.register
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.rx.into
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class RegisterViewModel @Inject constructor() : DisposableViewModel() {
-
+class RegisterViewModel @Inject constructor(val context: Context, private val registerRepository: RegisterRepository) : DisposableViewModel() {
     private val registerActionRelay = MutableLiveData<Unit>()
 
-    fun registerRelay(): LiveData<Unit> = registerActionRelay
+    fun observeRegisterAction(): LiveData<Unit> = registerActionRelay
 
     fun register(displayName: String) {
-        EkoClient.registerDevice(EkoClient.getUserId(), displayName)
+        registerRepository.registerEkoClient(displayName)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete {
                     registerActionRelay.postValue(Unit)

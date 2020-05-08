@@ -20,7 +20,7 @@ class RegisterActivity : SingleViewModelActivity<RegisterViewModel>() {
         button_register.setOnClickListener {
             viewModel.register(edit_text_register_id.text.toString())
         }
-        viewModel.registerRelay().observeNotNull(this, { this.navMainNavigation() })
+        viewModel.observeRegisterAction().observeNotNull(this, { this.navMainNavigation() })
     }
 
     private fun navMainNavigation() {
