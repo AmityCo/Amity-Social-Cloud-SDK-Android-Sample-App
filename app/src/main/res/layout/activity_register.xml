@@ -38,7 +38,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/material_component_text_fields_icon_height"
         android:layout_marginTop="@dimen/material_component_text_full_width_single_line_text_field_height"
-        android:background="@drawable/transparent_text_field"
+        android:background="@drawable/text_field_transparent"
         android:gravity="center_vertical"
         android:hint="@string/temporarily_user_id"
         android:inputType="textEmailAddress"
