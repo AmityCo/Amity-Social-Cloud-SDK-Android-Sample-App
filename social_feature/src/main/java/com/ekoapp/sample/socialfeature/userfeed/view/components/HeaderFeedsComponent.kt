@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.ekosdk.EkoPost
+import com.ekoapp.sample.core.utils.getTimeAgo
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.view.dialogs.MoreHorizBottomSheetFragment
 import kotlinx.android.synthetic.main.component_header_feeds.view.*
@@ -26,6 +27,7 @@ class HeaderFeedsComponent : ConstraintLayout {
 
     fun setupView(item: EkoPost) {
         text_full_name.text = item.postedUserId
+        text_time.text = item.createdAt.toDate().getTimeAgo()
         image_more_horiz.setOnClickListener { context.renderBottomSheet() }
     }
 
@@ -46,5 +48,4 @@ class HeaderFeedsComponent : ConstraintLayout {
             moreHorizBottomSheet.dialog?.cancel()
         }
     }
-
 }
