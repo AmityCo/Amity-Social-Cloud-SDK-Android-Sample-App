@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/default_bottom_sheet">
     <padding
-        android:bottom="@dimen/material_component_dialogs_padding_around_content_area"
-        android:left="@dimen/material_component_dialogs_padding_around_content_area"
-        android:right="@dimen/material_component_dialogs_padding_around_content_area"
-        android:top="@dimen/material_component_dialogs_padding_around_content_area" />
+        android:bottom="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+        android:left="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+        android:right="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+        android:top="@dimen/material_component_bottom_sheet_edge_top_bottom_margins" />
     <corners
         android:topLeftRadius="@dimen/material_component_bottom_sheet_edge_left_right_margins"
         android:topRightRadius="@dimen/material_component_bottom_sheet_edge_left_right_margins"

@@ -5,33 +5,26 @@
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:background="@drawable/default_bottom_sheet"
+    android:backgroundTint="@color/material_grey_900"
     app:behavior_hideable="true"
     app:behavior_peekHeight="@dimen/material_component_bottom_sheet_list_item_height"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    tools:ignore="PrivateResource">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_edit"
-        android:drawableLeft="@drawable/ic_edit"
         android:drawablePadding="@dimen/material_layout_app_bar_icon_padding"
         android:gravity="center_vertical"
         android:padding="@dimen/material_layout_app_bar_icon_padding"
         android:text="@string/temporarily_edit"
-        android:textColor="@color/material_grey_900"
+        android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_body1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="PrivateResource" />
-
-    <View
-        android:id="@+id/view_grid_edit"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/material_component_grid_lists_padding_small"
-        android:background="@color/material_grey_300"
-        app:layout_constraintTop_toBottomOf="@id/text_edit"
         tools:ignore="PrivateResource" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -39,22 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_delete"
-        android:drawableLeft="@drawable/ic_delete"
         android:drawablePadding="@dimen/material_layout_app_bar_icon_padding"
         android:gravity="center_vertical"
         android:padding="@dimen/material_layout_app_bar_icon_padding"
         android:text="@string/temporarily_delete"
-        android:textColor="@color/material_grey_900"
+        android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_body1"
-        app:layout_constraintTop_toBottomOf="@id/view_grid_edit"
-        tools:ignore="PrivateResource" />
-
-    <View
-        android:id="@+id/view_grid_delete"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/material_component_grid_lists_padding_small"
-        android:background="@color/material_grey_300"
-        app:layout_constraintTop_toBottomOf="@id/text_delete"
+        app:layout_constraintTop_toBottomOf="@id/text_edit"
         tools:ignore="PrivateResource" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
