@@ -3,13 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_grey_50"
+    android:background="@color/defaultColorBackground"
     android:orientation="vertical"
     tools:ignore="PrivateResource">
 
     <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
         android:id="@+id/appbar_create_feeds"
         style="@style/AppTheme.Appbar" />
+
+    <View
+        android:id="@+id/view_grid_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/material_component_grid_lists_padding_small"
+        android:background="@color/material_light_white" />
 
     <com.ekoapp.sample.socialfeature.userfeed.view.components.CreateFeedsComponent
         android:id="@+id/create_feeds"

@@ -6,7 +6,6 @@ import androidx.navigation.ui.NavigationUI
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.di.DaggerMainNavigationComponent
-import com.ekoapp.sample.viewmodel.MainNavigationViewModel
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import kotlinx.android.synthetic.main.activity_bottom_navigation.*
 import javax.inject.Inject

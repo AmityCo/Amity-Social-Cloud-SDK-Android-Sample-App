@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def eko_sdk_version = '3.8.0-beta12'
+def eko_sdk_version = '3.8.1-beta6'
 
 android {
     compileSdkVersion 29
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.ekoapp.sample"
 
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
 
         versionCode 1
@@ -42,11 +42,9 @@ android {
     productFlavors {
         baidu_with_fcm {
             dimension "push"
-            minSdkVersion  21
         }
         fcm {
             dimension "push"
-            minSdkVersion  21
         }
     }
 

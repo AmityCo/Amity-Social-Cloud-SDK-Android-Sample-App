@@ -8,7 +8,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -112,8 +112,9 @@ dependencies {
     //Google Core Libraries for Java
     api 'com.google.guava:guava:28.1-android'
 
-    //Rx Preferences
+    //Preferences
     api 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
+    api 'androidx.preference:preference-ktx:1.1.1'
 
     //Downloaders
     api "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"

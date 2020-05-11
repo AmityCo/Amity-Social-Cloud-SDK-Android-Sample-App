@@ -5,6 +5,7 @@
     android:id="@+id/root_component_body_feeds"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:background="@color/material_light_black"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <TextView
@@ -14,7 +15,7 @@
         android:ellipsize="end"
         android:maxLines="5"
         android:text="@string/temporarily_description"
-        android:textColor="@color/material_grey_900"
+        android:textColor="@color/material_light_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="PrivateResource" />

@@ -4,9 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
 import kotlinx.android.synthetic.main.component_body_feeds.view.*
+import org.json.JSONObject
 
 
 class BodyFeedsComponent : ConstraintLayout {
@@ -19,8 +20,17 @@ class BodyFeedsComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(data: SampleFeedsResponse) {
-        text_description.text = data.description
+    fun setupView(item: EkoPost) {
+        val dataJson: String = item.data.toString()
+        val dataObject = JSONObject(dataJson)
+
+        val textBody: Any = dataObject.get("text")
+
+        (textBody as String).let {
+            text_description.text = it
+        }
     }
+
+    fun getDescription() = text_description.text.toString()
 
 }

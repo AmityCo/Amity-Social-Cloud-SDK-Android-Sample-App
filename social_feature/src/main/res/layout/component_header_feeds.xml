@@ -5,6 +5,7 @@
     android:id="@+id/root_component_header_feeds"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:background="@color/material_light_black"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <com.ekoapp.sample.socialfeature.userfeed.view.components.AvatarComponent
@@ -23,7 +24,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/temporarily_full_name"
-        android:textColor="@color/material_grey_900"
+        android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_body1"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/image_more_horiz"
@@ -50,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_more_horiz"
-        android:tint="@color/material_grey_600"
+        android:tint="@color/material_light_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />

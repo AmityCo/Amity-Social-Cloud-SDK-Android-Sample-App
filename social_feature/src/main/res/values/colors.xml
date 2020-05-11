@@ -3,4 +3,6 @@
     <color name="colorPrimary">#76ceca</color>
     <color name="colorPrimaryDark">#0abab5</color>
     <color name="colorAccent">#f9b9b6</color>
+
+    <color name="colorTextEnableMenu">@color/material_light_white</color>
 </resources>

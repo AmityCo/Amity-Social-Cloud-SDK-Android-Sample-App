@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/default_gradient_background"
+    android:padding="@dimen/material_component_dialogs_padding_around_content_area">
+
+    <TextView
+        android:id="@+id/text_register_display"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_layout_vertical_spacing_tool_bar"
+        android:text="@string/temporarily_register_display"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_display1"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+
+    <TextView
+        android:id="@+id/text_register_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_layout_vertical_spacing_subtitle"
+        android:text="@string/temporarily_register_subtitle"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_subheading"
+        app:layout_constraintEnd_toEndOf="@+id/text_register_display"
+        app:layout_constraintStart_toStartOf="@+id/text_register_display"
+        app:layout_constraintTop_toBottomOf="@id/text_register_display" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_text_register_id"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/material_component_text_fields_icon_height"
+        android:layout_marginTop="@dimen/material_component_text_full_width_single_line_text_field_height"
+        android:background="@drawable/text_field_transparent"
+        android:gravity="center_vertical"
+        android:hint="@string/temporarily_user_id"
+        android:inputType="textEmailAddress"
+        android:paddingStart="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
+        android:paddingEnd="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
+        android:textColor="@color/material_light_white"
+        android:textColorHint="@color/material_light_white"
+        app:layout_constraintEnd_toEndOf="@id/text_register_display"
+        app:layout_constraintStart_toStartOf="@id/text_register_display"
+        app:layout_constraintTop_toBottomOf="@id/text_register_subtitle" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_register"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_component_button_dense_height"
+        android:background="@drawable/default_button"
+        android:backgroundTint="@color/material_light_black"
+        android:paddingStart="@dimen/material_component_button_text_left_and_right_padding"
+        android:paddingEnd="@dimen/material_component_button_text_left_and_right_padding"
+        android:text="@string/temporarily_register"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_button"
+        app:layout_constraintEnd_toEndOf="@id/edit_text_register_id"
+        app:layout_constraintStart_toStartOf="@id/text_register_display"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_register_id" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

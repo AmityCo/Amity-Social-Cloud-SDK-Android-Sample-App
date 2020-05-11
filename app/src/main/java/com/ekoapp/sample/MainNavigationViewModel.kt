@@ -1,4 +1,4 @@
-package com.ekoapp.sample.viewmodel
+package com.ekoapp.sample
 
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames

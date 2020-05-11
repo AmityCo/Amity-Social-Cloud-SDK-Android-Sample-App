@@ -1,7 +1,5 @@
 package com.ekoapp.sample.socialfeature.userfeed.view.editfeeds
 
-import android.app.Activity
-import android.content.Intent
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.Menu
@@ -13,17 +11,15 @@ import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_EDIT_FEEDS
-import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_FEEDS
 import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialActivityComponent
-import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
-import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsTypeSealed
+import com.ekoapp.sample.socialfeature.userfeed.view.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.userfeed.view.toolbars.EditFeedsToolbarMenu
 import kotlinx.android.synthetic.main.activity_create_feeds.*
 
 
 class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
 
-    private var feedId = ""
+    private var userFeedsData: EditUserFeedsData? = null
 
     override fun getToolbar(): ToolbarMenu? {
         return EditFeedsToolbarMenu(create_feeds.getDescription(), eventEdit = this::sendResult,
@@ -42,15 +38,15 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
     private fun setupMenuPost(menu: Menu) {
         val positionOfMenuItem = 0
         val item: MenuItem = menu.getItem(positionOfMenuItem)
-        val spannable = SpannableString(getString(R.string.temporarily_edit))
-        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)), 0, spannable.length, 0)
+        val spannable = SpannableString(getString(R.string.temporarily_menu_save))
+        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorTextEnableMenu)), 0, spannable.length, 0)
         item.title = spannable
     }
 
     override fun bindViewModel(viewModel: EditFeedsViewModel) {
-        val item = intent.extras?.getParcelable<SampleFeedsResponse>(EXTRA_NAME_FEEDS)
+        val item = intent.extras?.getParcelable<EditUserFeedsData>(EXTRA_NAME_EDIT_FEEDS)
         item?.let {
-            feedId = it.id
+            userFeedsData = it
             setupView(item)
         }
         setupAppBar()
@@ -61,7 +57,7 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
         appbar_create_feeds.setTitle(getString(R.string.temporarily_edit_post))
     }
 
-    private fun setupView(item: SampleFeedsResponse) {
+    private fun setupView(item: EditUserFeedsData) {
         create_feeds.setDescription(item.description)
     }
 
@@ -82,16 +78,8 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
     }
 
     private fun sendResult(description: String) {
-        viewModel?.let { viewModel ->
-            viewModel.submitEdit(feedId, description) {
-                when (it) {
-                    is UserFeedsTypeSealed.EditFeeds -> {
-                        val data = Intent()
-                        data.putExtra(EXTRA_NAME_EDIT_FEEDS, it.result)
-                        setResult(Activity.RESULT_OK, data)
-                    }
-                }
-            }
+        userFeedsData?.apply {
+            viewModel?.editPost(postId = postId, description = description)
         }
     }
 }

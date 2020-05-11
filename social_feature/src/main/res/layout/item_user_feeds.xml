@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/md_listitem_control_margin"
-    android:background="@color/material_grey_50"
+    android:background="@color/material_light_black"
     android:paddingLeft="@dimen/material_component_dialogs_padding_around_content_area"
     android:paddingTop="@dimen/material_component_dialogs_padding_around_content_area"
     android:paddingRight="@dimen/material_component_dialogs_padding_around_content_area"
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/material_component_grid_lists_padding_small"
         android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
-        android:background="@color/material_grey_300"
+        android:background="@color/material_grey_600"
         app:layout_constraintEnd_toEndOf="@id/header_feeds"
         app:layout_constraintStart_toStartOf="@id/header_feeds"
         app:layout_constraintTop_toBottomOf="@id/body_feeds" />
