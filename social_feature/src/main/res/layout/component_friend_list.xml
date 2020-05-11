@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_body_feeds"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/material_light_black"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/text_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temporarily_friends"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_title"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_total_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temporarily_total_friends"
+        android:textColor="@color/material_grey_600"
+        android:textSize="@dimen/material_typography_subheading"
+        app:layout_constraintTop_toBottomOf="@id/text_friends"
+        tools:ignore="PrivateResource" />
+
+    <TextView
+        android:id="@+id/text_find_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temporarily_find_friends"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/material_typography_subheading"
+        app:layout_constraintBottom_toBottomOf="@id/text_total_friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_friends"
+        tools:ignore="PrivateResource" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_friend_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/text_find_friends"
+        app:layout_constraintStart_toStartOf="@id/text_friends"
+        app:layout_constraintTop_toBottomOf="@+id/text_total_friends" />
+
+</merge>

@@ -14,4 +14,7 @@
     <string name="temporarily_menu_save">Save</string>
     <string name="temporarily_bottom_sheet_edit_post">Edit post</string>
     <string name="temporarily_bottom_sheet_delete">Delete</string>
+    <string name="temporarily_friends">Friends</string>
+    <string name="temporarily_find_friends">Find Friends</string>
+    <string name="temporarily_total_friends">%s friends</string>
 </resources>
