@@ -38,8 +38,8 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
     private fun setupMenuPost(menu: Menu) {
         val positionOfMenuItem = 0
         val item: MenuItem = menu.getItem(positionOfMenuItem)
-        val spannable = SpannableString(getString(R.string.temporarily_edit))
-        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorAccent)), 0, spannable.length, 0)
+        val spannable = SpannableString(getString(R.string.temporarily_menu_save))
+        spannable.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorTextEnableMenu)), 0, spannable.length, 0)
         item.title = spannable
     }
 

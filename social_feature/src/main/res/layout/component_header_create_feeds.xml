@@ -32,4 +32,21 @@
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@id/avatar"
         tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_privacy_see_feeds"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/material_layout_icon"
+        android:background="@drawable/small_button_transparent"
+        android:drawableStart="@drawable/ic_public"
+        android:drawableEnd="@drawable/ic_arrow_down"
+        android:gravity="center"
+        android:text="@string/temporarily_share_feeds_public"
+        android:textAllCaps="false"
+        android:textColor="@color/material_grey_600"
+        android:textSize="@dimen/material_typography_caption"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/text_full_name"
+        app:layout_constraintTop_toBottomOf="@id/text_full_name"
+        tools:ignore="PrivateResource" />
 </merge>
