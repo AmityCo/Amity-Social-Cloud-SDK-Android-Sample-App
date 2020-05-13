@@ -45,9 +45,26 @@
         android:id="@+id/recycler_friend_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/md_listitem_vertical_margin"
+        app:layout_constraintEnd_toEndOf="@id/text_find_friends"
+        app:layout_constraintStart_toStartOf="@id/text_friends"
+        app:layout_constraintTop_toBottomOf="@+id/text_total_friends"
+        tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_see_all_friends"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginTop="@dimen/md_listitem_vertical_margin"
+        android:background="@drawable/default_button_transparent"
+        android:gravity="center"
+        android:text="@string/temporarily_see_all_friends"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/text_find_friends"
         app:layout_constraintStart_toStartOf="@id/text_friends"
-        app:layout_constraintTop_toBottomOf="@+id/text_total_friends" />
+        app:layout_constraintTop_toBottomOf="@id/recycler_friend_list"
+        tools:ignore="PrivateResource" />
 
 </merge>

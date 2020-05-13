@@ -26,6 +26,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     }
 
     override fun bindViewModel(viewModel: UserFeedsViewModel) {
+        friend_list.renderList(viewLifecycleOwner, viewModel)
         renderList(viewModel)
         setupEvent(viewModel)
     }
