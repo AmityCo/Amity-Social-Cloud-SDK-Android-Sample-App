@@ -8,7 +8,7 @@
     tools:background="@color/material_light_black"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.components.AvatarComponent
+    <com.ekoapp.sample.socialfeature.components.AvatarComponent
         android:id="@+id/avatar"
         android:layout_width="@dimen/material_component_text_fields_icon_height"
         android:layout_height="@dimen/material_component_text_fields_icon_height"
@@ -22,7 +22,9 @@
         android:layout_height="@dimen/material_component_button_height"
         android:layout_marginStart="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
         android:background="@drawable/default_button_transparent"
+        android:ellipsize="end"
         android:gravity="center_vertical"
+        android:maxLines="1"
         android:paddingStart="@dimen/material_component_bottom_sheet_list_item_text_horizontal_padding"
         android:paddingEnd="@dimen/material_component_bottom_sheet_list_item_text_horizontal_padding"
         android:text="@string/temporarily_what_is_on_your_mind"
