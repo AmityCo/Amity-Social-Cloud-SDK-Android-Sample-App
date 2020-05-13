@@ -1,57 +1,42 @@
 package com.ekoapp.sample.socialfeature.userfeed.view
 
-import android.content.Context
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
+import com.ekoapp.ekosdk.*
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
-import com.ekoapp.sample.core.ui.extensions.notifyObserver
-import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
-import com.ekoapp.sample.socialfeature.userfeed.model.SampleFeedsResponse
-import com.ekoapp.sample.socialfeature.userfeed.model.SampleUserFeedsResponse
-import timber.log.Timber
+import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
+import com.ekoapp.sample.socialfeature.users.data.UserData
 import javax.inject.Inject
 
-class UserFeedsViewModel @Inject constructor(context: Context,
-                                             private val userFeedsRepository: UserFeedsRepository) : DisposableViewModel() {
+class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
 
-    private val data: SampleUserFeedsResponse = userFeedsRepository.getUserFeedsFromGson(context)
-    private val original = ArrayList<SampleFeedsResponse>()
-    val feedsItems = MutableLiveData<MutableList<SampleFeedsResponse>>()
-    val editRelay = SingleLiveData<SampleFeedsResponse>()
+    private var userDataIntent: UserData? = null
+    val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
 
-    fun observeEditFeedsPage(): SingleLiveData<SampleFeedsResponse> = editRelay
+    fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
 
-    init {
-        original.addAll(data.feeds)
-        feedsItems.postValue(original)
+    fun getIntentUserData(actionRelay: (UserData) -> Unit) {
+        userDataIntent?.let(actionRelay::invoke)
     }
 
-    fun submitDelete(id: String) {
-        userFeedsRepository.sendDeleteFeeds(id)
-                .doOnSuccess(this::updateList)
-                .onErrorReturn {
-                    Timber.i("${getCurrentClassAndMethodNames()} doOnError: ${it.message}")
-                    UserFeedsTypeSealed.ErrorResult(it)
-                }
+    fun getMyProfile() = UserData(userId = EkoClient.getUserId())
+
+    fun getUserFeeds(data: UserData): LiveData<PagedList<EkoPost>> {
+        return EkoClient.newFeedRepository().getUserFeed(data.userId, EkoUserFeedSortOption.LAST_CREATED)
+    }
+
+    fun getUserList(): LiveData<PagedList<EkoUser>> {
+        return EkoClient.newUserRepository().getAllUsers(EkoUserSortOption.DISPLAYNAME)
+    }
+
+    fun deletePost(item: EkoPost) {
+        EkoClient.newFeedRepository().editPost(item.postId)
+                .delete()
                 .subscribe()
     }
 
-    fun updateList(type: UserFeedsTypeSealed) {
-        original.forEachIndexed { index, data ->
-            when (type) {
-                is UserFeedsTypeSealed.EditFeeds -> {
-                    if (type.result.id == data.id) {
-                        feedsItems.value?.set(index, type.result)
-                        return feedsItems.notifyObserver()
-                    }
-                }
-                is UserFeedsTypeSealed.DeleteFeeds -> {
-                    if (type.result.id == data.id && type.result.isDeleted) {
-                        feedsItems.value?.remove(data)
-                        return feedsItems.notifyObserver()
-                    }
-                }
-            }
-        }
+    fun setupIntent(data: UserData?) {
+        userDataIntent = data
     }
 }

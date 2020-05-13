@@ -2,13 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ekoapp.sample">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera"
-        android:required="true" />
-
     <application
         android:name="com.ekoapp.sample.core.app.App"
         android:allowBackup="true"
@@ -19,12 +12,17 @@
         android:theme="@style/AppTheme.Main">
 
         <activity
-            android:name=".MainNavigationActivity">
+            android:name=".entry.EntryActivity"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".register.RegisterActivity" />
+
+        <activity android:name=".MainNavigationActivity" />
 
     </application>
 

@@ -7,9 +7,17 @@
     <string name="temporarily_comment">Comment</string>
     <string name="temporarily_share">Share</string>
     <string name="temporarily_what_is_on_your_mind">What\'s on your mind?</string>
-    <string name="temporarily_create_post">Create Post</string>
+    <string name="temporarily_create_post">Create post</string>
+    <string name="temporarily_share_feeds_public">Public</string>
     <string name="temporarily_edit_post">Edit Post</string>
-    <string name="temporarily_post">Post</string>
-    <string name="temporarily_edit">Edit</string>
-    <string name="temporarily_delete">Delete</string>
+    <string name="temporarily_menu_post">Post</string>
+    <string name="temporarily_menu_save">Save</string>
+    <string name="temporarily_bottom_sheet_edit_post">Edit post</string>
+    <string name="temporarily_bottom_sheet_delete">Delete</string>
+    <string name="temporarily_friends">Friends</string>
+    <string name="temporarily_find_friends">Find Friends</string>
+    <string name="temporarily_total_friends">%s friends</string>
+    <string name="temporarily_total_acquaintances">%s acquaintances</string>
+    <string name="temporarily_see_all_friends">See All Friends</string>
+    <string name="temporarily_write_something_to">Write something to %s</string>
 </resources>

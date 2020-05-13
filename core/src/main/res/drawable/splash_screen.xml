@@ -1,0 +1,11 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:opacity="opaque">
+    <item android:drawable="@color/material_light_white" />
+    <item
+        android:drawable="@drawable/ic_eko_logo"
+        android:gravity="center"
+        android:left="@dimen/md_icon_size"
+        android:right="@dimen/md_icon_size"
+        tools:ignore="PrivateResource" />
+</layer-list>

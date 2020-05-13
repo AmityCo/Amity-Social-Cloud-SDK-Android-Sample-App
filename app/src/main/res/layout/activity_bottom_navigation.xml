@@ -9,6 +9,7 @@
     <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
         android:id="@+id/appbar_main_navigation"
         style="@style/AppTheme.Appbar"
+        android:background="@color/material_light_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:itemBackground="@color/colorPrimaryDark"
-        app:menu="@menu/bottom_menu_nav" />
+        app:itemBackground="@color/material_grey_900"
+        app:itemIconTint="@color/selector_icon_bottom_navigation"
+        app:itemTextColor="@color/selector_icon_bottom_navigation"
+        app:menu="@menu/bottom_menu_nav"
+        tools:ignore="PrivateResource" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

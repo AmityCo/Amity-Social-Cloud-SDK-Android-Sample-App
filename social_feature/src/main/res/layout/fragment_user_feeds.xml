@@ -4,24 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_blue_grey_50">
+    android:background="@color/defaultColorBackground"
+    tools:ignore="PrivateResource">
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.components.TouchablePostFeedsComponent
-        android:id="@+id/touchable_post_feeds"
+    <com.ekoapp.sample.socialfeature.components.FriendListComponent
+        android:id="@+id/friend_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/material_grey_50"
         android:padding="@dimen/material_component_dialogs_padding_between_title_and_body_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <com.ekoapp.sample.socialfeature.components.TouchablePostFeedsComponent
+        android:id="@+id/touchable_post_feeds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/material_light_black"
+        android:padding="@dimen/material_component_dialogs_padding_between_title_and_body_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/friend_list"
         tools:ignore="PrivateResource" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_feeds"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/material_component_lists_padding_above_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -5,9 +5,10 @@
     android:id="@+id/root_component_header_feeds"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:background="@color/material_light_black"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.components.AvatarComponent
+    <com.ekoapp.sample.socialfeature.components.AvatarComponent
         android:id="@+id/avatar"
         android:layout_width="@dimen/material_component_lists_single_line_with_avatar_height"
         android:layout_height="@dimen/material_component_lists_single_line_with_avatar_height"
@@ -24,11 +25,28 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/temporarily_full_name"
-        android:textColor="@color/material_grey_900"
+        android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_subheading"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/image_more_horiz"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@id/avatar"
+        tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_privacy_see_feeds"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/material_layout_icon"
+        android:background="@drawable/small_button_transparent"
+        android:drawableStart="@drawable/ic_public"
+        android:drawableEnd="@drawable/ic_arrow_down"
+        android:gravity="center"
+        android:text="@string/temporarily_share_feeds_public"
+        android:textAllCaps="false"
+        android:textColor="@color/material_grey_600"
+        android:textSize="@dimen/material_typography_caption"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/text_full_name"
+        app:layout_constraintTop_toBottomOf="@id/text_full_name"
         tools:ignore="PrivateResource" />
 </merge>

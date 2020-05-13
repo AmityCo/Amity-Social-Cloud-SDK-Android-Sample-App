@@ -9,7 +9,7 @@
     tools:ignore="PrivateResource"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.components.HeaderCreateFeedsComponent
+    <com.ekoapp.sample.socialfeature.components.HeaderCreateFeedsComponent
         android:id="@+id/header_create_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +25,8 @@
         android:gravity="top"
         android:hint="@string/temporarily_what_is_on_your_mind"
         android:padding="@dimen/material_component_text_fields_floating_label_padding_below_input_text_including_divider"
+        android:textColor="@color/material_light_white"
+        android:textColorHint="@color/material_grey_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/edit_text_create_feeds"
         app:layout_constraintTop_toBottomOf="@id/header_create_feeds" />

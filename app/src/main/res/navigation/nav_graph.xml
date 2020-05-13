@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/usersFragment"
-        android:name="com.ekoapp.sample.navigation.fragments.NotAvailable"
+        android:name="com.ekoapp.sample.socialfeature.users.view.UsersFragment"
         android:label="fragment_users"
         tools:layout="@layout/fragment_not_available" />
 </navigation>
