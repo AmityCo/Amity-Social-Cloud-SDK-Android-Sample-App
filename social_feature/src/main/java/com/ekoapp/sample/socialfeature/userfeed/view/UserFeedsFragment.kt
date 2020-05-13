@@ -1,13 +1,11 @@
 package com.ekoapp.sample.socialfeature.userfeed.view
 
 import android.content.Intent
-import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.EXTRA_DISPLAY_NAME
 import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
@@ -36,7 +34,6 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     private fun setupEvent(viewModel: UserFeedsViewModel) {
         touchable_post_feeds.button_touchable_target_post.setOnClickListener {
             val intent = Intent(requireActivity(), CreateFeedsActivity::class.java)
-            intent.putExtra(EXTRA_DISPLAY_NAME, EkoClient.getUserId())
             startActivityForResult(intent, REQUEST_CODE_CREATE_FEEDS)
         }
 

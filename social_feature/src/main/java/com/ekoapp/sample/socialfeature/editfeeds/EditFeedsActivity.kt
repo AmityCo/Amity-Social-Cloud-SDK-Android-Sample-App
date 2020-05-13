@@ -19,8 +19,6 @@ import kotlinx.android.synthetic.main.activity_create_feeds.*
 
 class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
 
-    private var userFeedsData: EditUserFeedsData? = null
-
     override fun getToolbar(): ToolbarMenu? {
         return EditFeedsToolbarMenu(create_feeds.getDescription(), eventEdit = this::sendResult,
                 onBackPressed = {
@@ -45,10 +43,8 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
 
     override fun bindViewModel(viewModel: EditFeedsViewModel) {
         val item = intent.extras?.getParcelable<EditUserFeedsData>(EXTRA_EDIT_FEEDS)
-        item?.let {
-            userFeedsData = it
-            setupView(item)
-        }
+        viewModel.setupIntent(data = item)
+        viewModel.getIntentUserData(this::setupView)
         setupAppBar()
     }
 
@@ -58,6 +54,7 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
     }
 
     private fun setupView(item: EditUserFeedsData) {
+        create_feeds.setupView(displayName = item.userData.userId)
         create_feeds.setDescription(item.description)
     }
 
@@ -78,8 +75,8 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
     }
 
     private fun sendResult(description: String) {
-        userFeedsData?.apply {
-            viewModel?.editPost(postId = postId, description = description)
+        viewModel?.apply {
+            getIntentUserData { editPost(postId = it.postId, description = description) }
         }
     }
 }
