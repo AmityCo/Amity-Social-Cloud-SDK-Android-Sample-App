@@ -19,6 +19,12 @@ fun EkoUserFeedsRenderData.userFeedRender(
     header.setupView(item)
     body.setupView(item)
 
-    header.editFeeds { eventEdit.invoke(EditUserFeedsData(userData = UserData(userId = item.postedUserId), postId = item.postId, description = body.getDescription())) }
+    header.editFeeds {
+        eventEdit.invoke(
+                EditUserFeedsData(
+                        userData = UserData(userId = item.postedUserId),
+                        postId = item.postId,
+                        description = body.getDescription()))
+    }
     header.deleteFeeds(eventDelete::invoke)
 }

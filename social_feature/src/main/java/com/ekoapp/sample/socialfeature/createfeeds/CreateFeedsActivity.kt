@@ -5,6 +5,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
+import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
@@ -49,9 +50,7 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
     private fun setupView(viewModel: CreateFeedsViewModel) {
         val item = intent.extras?.getParcelable<UserData>(EXTRA_USER_DATA)
         viewModel.setupIntent(item)
-        viewModel.getIntentUserData {
-            create_feeds.setupView(displayName = it.userId)
-        }
+        create_feeds.setupView(displayName = EkoClient.getUserId())
     }
 
     private fun setupAppBar() {
