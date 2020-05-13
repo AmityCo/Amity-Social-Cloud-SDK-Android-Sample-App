@@ -12,7 +12,7 @@ import com.ekoapp.sample.socialfeature.users.renders.usersRender
 import com.ekoapp.sample.socialfeature.users.view.UsersViewModel
 import kotlinx.android.synthetic.main.item_friend_feeds.view.*
 
-class EkoUsersAdapter(val viewModel: UsersViewModel) : EkoUserAdapter<ViewHolder>() {
+class EkoUsersAdapter(private val viewModel: UsersViewModel) : EkoUserAdapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false))

@@ -3,8 +3,10 @@ package com.ekoapp.sample.socialfeature.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.core.utils.getTimeAgo
 import com.ekoapp.sample.socialfeature.R
@@ -28,6 +30,15 @@ class HeaderFeedsComponent : ConstraintLayout {
     fun setupView(item: EkoPost) {
         text_full_name.text = item.postedUserId
         text_time.text = item.createdAt.toDate().getTimeAgo()
+        setMoreHorizView(item)
+    }
+
+    private fun setMoreHorizView(item: EkoPost) {
+        if (item.postedUserId != EkoClient.getUserId()) {
+            image_more_horiz.visibility = View.GONE
+        } else {
+            image_more_horiz.visibility = View.VISIBLE
+        }
         image_more_horiz.setOnClickListener { context.renderBottomSheet() }
     }
 
