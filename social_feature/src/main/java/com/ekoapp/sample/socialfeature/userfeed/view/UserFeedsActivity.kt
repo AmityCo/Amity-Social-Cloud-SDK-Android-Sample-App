@@ -6,7 +6,10 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.*
+import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
+import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
+import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_CREATE_FEEDS
+import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
@@ -36,7 +39,7 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
         touchable_post_feeds.button_touchable_target_post.setOnClickListener {
             viewModel.getIntentUserData {
                 val intent = Intent(this, CreateFeedsActivity::class.java)
-                intent.putExtra(EXTRA_DISPLAY_NAME, it.userId)
+                intent.putExtra(EXTRA_USER_DATA, it)
                 startActivityForResult(intent, REQUEST_CODE_CREATE_FEEDS)
             }
         }

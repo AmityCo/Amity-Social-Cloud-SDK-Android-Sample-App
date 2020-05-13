@@ -10,9 +10,10 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.EXTRA_DISPLAY_NAME
+import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.toolbars.CreateFeedsToolbarMenu
+import com.ekoapp.sample.socialfeature.users.data.UserData
 import kotlinx.android.synthetic.main.activity_create_feeds.*
 
 
@@ -42,12 +43,15 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
 
     override fun bindViewModel(viewModel: CreateFeedsViewModel) {
         setupAppBar()
-        setupView()
+        setupView(viewModel)
     }
 
-    private fun setupView() {
-        val displayName = intent.extras?.getString(EXTRA_DISPLAY_NAME)
-        create_feeds.setupView(displayName = displayName ?: "")
+    private fun setupView(viewModel: CreateFeedsViewModel) {
+        val item = intent.extras?.getParcelable<UserData>(EXTRA_USER_DATA)
+        viewModel.setupIntent(item)
+        viewModel.getIntentUserData {
+            create_feeds.setupView(displayName = it.userId)
+        }
     }
 
     private fun setupAppBar() {
@@ -72,6 +76,10 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
     }
 
     private fun sendResult(description: String) {
-        viewModel?.createPost(description)
+        viewModel?.apply {
+            getIntentUserData {
+                createPost(userId = it.userId, description = description)
+            }
+        }
     }
 }
