@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.list
+package com.ekoapp.sample.socialfeature.users.list
 
 
 import android.view.LayoutInflater
@@ -8,11 +8,10 @@ import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
 import kotlinx.android.synthetic.main.item_friend_feeds.view.*
 
-class EkoFriendsFeedsAdapter : EkoUserAdapter<ViewHolder>() {
-    private val displayItem = 3
+class EkoUsersAdapter : EkoUserAdapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_friend_feeds, parent, false))
+        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_user, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -20,10 +19,6 @@ class EkoFriendsFeedsAdapter : EkoUserAdapter<ViewHolder>() {
         val itemView = holder.itemView
         val context = itemView.context
         itemView.text_full_name.text = item?.userId
-    }
-
-    override fun getItemCount(): Int {
-        return displayItem
     }
 }
 

@@ -10,7 +10,7 @@ import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoFriendsFeedsAdapter
-import kotlinx.android.synthetic.main.component_friend_list.view.*
+import kotlinx.android.synthetic.main.component_friends_feeds.view.*
 
 
 class FriendListComponent : ConstraintLayout {
@@ -18,7 +18,7 @@ class FriendListComponent : ConstraintLayout {
     private var adapter: EkoFriendsFeedsAdapter
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.component_friend_list, this, true)
+        LayoutInflater.from(context).inflate(R.layout.component_friends_feeds, this, true)
         adapter = EkoFriendsFeedsAdapter()
     }
 

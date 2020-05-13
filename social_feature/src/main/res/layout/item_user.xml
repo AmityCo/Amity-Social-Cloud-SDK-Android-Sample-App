@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/md_listitem_control_margin"
+    tools:background="@color/material_light_black"
+    tools:ignore="PrivateResource">
+
+    <com.ekoapp.sample.socialfeature.components.AvatarComponent
+        android:id="@+id/image_avatar"
+        android:layout_width="@dimen/material_component_text_fields_icon_height"
+        android:layout_height="@dimen/material_component_text_fields_icon_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_full_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/md_listitem_margin_left"
+        android:maxLines="2"
+        android:paddingTop="@dimen/material_component_lists_padding_above_list"
+        android:text="@string/temporarily_full_name"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_component_grid_lists_header_footer_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
