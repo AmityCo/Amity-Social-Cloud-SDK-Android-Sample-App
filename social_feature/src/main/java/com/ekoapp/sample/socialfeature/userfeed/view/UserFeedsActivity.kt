@@ -15,8 +15,8 @@ import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
 import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsAdapter
 import com.ekoapp.sample.socialfeature.users.data.UserData
+import kotlinx.android.synthetic.main.activity_user_feeds.*
 import kotlinx.android.synthetic.main.component_touchable_create_feeds.view.*
-import kotlinx.android.synthetic.main.fragment_user_feeds.*
 
 class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
 
@@ -24,16 +24,23 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
     private lateinit var adapter: EkoUserFeedsAdapter
 
     override fun getLayout(): Int {
-        return R.layout.fragment_user_feeds
+        return R.layout.activity_user_feeds
     }
 
     override fun bindViewModel(viewModel: UserFeedsViewModel) {
         val item = intent.extras?.getParcelable<UserData>(EXTRA_USER_DATA)
         viewModel.setupIntent(item)
-        friend_list.renderList(this, viewModel)
+        setupAppBar(viewModel)
         renderList(viewModel)
         setupView(viewModel)
         setupEvent(viewModel)
+    }
+
+    private fun setupAppBar(viewModel: UserFeedsViewModel) {
+        appbar_user_feeds.setup(this, true)
+        viewModel.getIntentUserData {
+            appbar_user_feeds.setTitle(it.userId)
+        }
     }
 
     private fun setupView(viewModel: UserFeedsViewModel) {
