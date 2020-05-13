@@ -2,9 +2,9 @@ package com.ekoapp.sample.socialfeature.userfeed.view.renders
 
 import android.content.Context
 import com.ekoapp.ekosdk.EkoPost
-import com.ekoapp.sample.socialfeature.userfeed.view.components.BodyFeedsComponent
-import com.ekoapp.sample.socialfeature.userfeed.view.components.HeaderFeedsComponent
-import com.ekoapp.sample.socialfeature.userfeed.view.editfeeds.data.EditUserFeedsData
+import com.ekoapp.sample.socialfeature.components.BodyFeedsComponent
+import com.ekoapp.sample.socialfeature.components.HeaderFeedsComponent
+import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 
 
 data class EkoUserFeedsRenderData(val context: Context, val item: EkoPost)

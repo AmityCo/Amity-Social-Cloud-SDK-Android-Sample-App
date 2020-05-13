@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.dialogs
+package com.ekoapp.sample.socialfeature.dialogs
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_user_feeds_more_horiz.*
 
-class MoreHorizBottomSheetFragment : BottomSheetDialogFragment() {
+class FeedsMoreHorizBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var fragmentView: View? = null
 

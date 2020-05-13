@@ -7,7 +7,7 @@
     android:background="@color/defaultColorBackground"
     tools:ignore="PrivateResource">
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.components.FriendListComponent
+    <com.ekoapp.sample.socialfeature.components.FriendListComponent
         android:id="@+id/friend_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="gone"/>
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.components.TouchablePostFeedsComponent
+    <com.ekoapp.sample.socialfeature.components.TouchablePostFeedsComponent
         android:id="@+id/touchable_post_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

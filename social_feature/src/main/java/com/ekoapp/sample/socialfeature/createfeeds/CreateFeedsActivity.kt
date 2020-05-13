@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.createfeeds
+package com.ekoapp.sample.socialfeature.createfeeds
 
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -10,9 +10,9 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.constants.EXTRA_DISPLAY_NAME
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
-import com.ekoapp.sample.socialfeature.userfeed.EXTRA_DISPLAY_NAME
-import com.ekoapp.sample.socialfeature.userfeed.view.toolbars.CreateFeedsToolbarMenu
+import com.ekoapp.sample.socialfeature.toolbars.CreateFeedsToolbarMenu
 import kotlinx.android.synthetic.main.activity_create_feeds.*
 
 

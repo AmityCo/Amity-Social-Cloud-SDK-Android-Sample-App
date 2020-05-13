@@ -5,7 +5,7 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.*
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
-import com.ekoapp.sample.socialfeature.userfeed.view.editfeeds.data.EditUserFeedsData
+import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import javax.inject.Inject
 
 class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {

@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.components
+package com.ekoapp.sample.socialfeature.components
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,17 +8,17 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.core.utils.getTimeAgo
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.userfeed.view.dialogs.MoreHorizBottomSheetFragment
+import com.ekoapp.sample.socialfeature.dialogs.FeedsMoreHorizBottomSheetFragment
 import kotlinx.android.synthetic.main.component_header_feeds.view.*
 
 
 class HeaderFeedsComponent : ConstraintLayout {
 
-    private var moreHorizBottomSheet: MoreHorizBottomSheetFragment
+    private var feedsMoreHorizBottomSheet: FeedsMoreHorizBottomSheetFragment
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_header_feeds, this, true)
-        moreHorizBottomSheet = MoreHorizBottomSheetFragment()
+        feedsMoreHorizBottomSheet = FeedsMoreHorizBottomSheetFragment()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
@@ -32,20 +32,20 @@ class HeaderFeedsComponent : ConstraintLayout {
     }
 
     private fun Context.renderBottomSheet() {
-        moreHorizBottomSheet.show((this as AppCompatActivity).supportFragmentManager, moreHorizBottomSheet.tag)
+        feedsMoreHorizBottomSheet.show((this as AppCompatActivity).supportFragmentManager, feedsMoreHorizBottomSheet.tag)
     }
 
     fun editFeeds(edit: (Boolean) -> Unit) {
-        moreHorizBottomSheet.renderEdit {
+        feedsMoreHorizBottomSheet.renderEdit {
             edit.invoke(it)
-            moreHorizBottomSheet.dialog?.cancel()
+            feedsMoreHorizBottomSheet.dialog?.cancel()
         }
     }
 
     fun deleteFeeds(delete: (Boolean) -> Unit) {
-        moreHorizBottomSheet.renderDelete {
+        feedsMoreHorizBottomSheet.renderDelete {
             delete.invoke(it)
-            moreHorizBottomSheet.dialog?.cancel()
+            feedsMoreHorizBottomSheet.dialog?.cancel()
         }
     }
 }

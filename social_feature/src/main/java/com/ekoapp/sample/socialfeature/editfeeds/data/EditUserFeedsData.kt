@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.editfeeds.data
+package com.ekoapp.sample.socialfeature.editfeeds.data
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

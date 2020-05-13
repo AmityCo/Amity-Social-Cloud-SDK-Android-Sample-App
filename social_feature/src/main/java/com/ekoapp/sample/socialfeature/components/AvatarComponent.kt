@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.components
+package com.ekoapp.sample.socialfeature.components
 
 import android.content.Context
 import android.util.AttributeSet

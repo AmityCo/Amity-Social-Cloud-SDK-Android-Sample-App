@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.createfeeds
+package com.ekoapp.sample.socialfeature.createfeeds
 
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel

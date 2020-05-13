@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.toolbars
+package com.ekoapp.sample.socialfeature.toolbars
 
 import android.view.MenuItem
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu

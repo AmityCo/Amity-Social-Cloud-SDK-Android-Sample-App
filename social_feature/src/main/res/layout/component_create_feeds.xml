@@ -9,7 +9,7 @@
     tools:ignore="PrivateResource"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <com.ekoapp.sample.socialfeature.userfeed.view.components.HeaderCreateFeedsComponent
+    <com.ekoapp.sample.socialfeature.components.HeaderCreateFeedsComponent
         android:id="@+id/header_create_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.components
+package com.ekoapp.sample.socialfeature.components
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,10 +7,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.sample.socialfeature.R
 
 
-class ShareActionComponent : ConstraintLayout {
+class LikeActionComponent : ConstraintLayout {
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.component_share_action, this, true)
+        LayoutInflater.from(context).inflate(R.layout.component_like_action, this, true)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
