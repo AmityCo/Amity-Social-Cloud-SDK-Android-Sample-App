@@ -32,7 +32,14 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
         viewModel.setupIntent(item)
         friend_list.renderList(this, viewModel)
         renderList(viewModel)
+        setupView(viewModel)
         setupEvent(viewModel)
+    }
+
+    private fun setupView(viewModel: UserFeedsViewModel) {
+        viewModel.getIntentUserData {
+            touchable_post_feeds.setupView(it.userId)
+        }
     }
 
     private fun setupEvent(viewModel: UserFeedsViewModel) {
