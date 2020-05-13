@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.di
+package com.ekoapp.sample.socialfeature.di
 
 import com.ekoapp.sample.core.di.CoreComponent
 import com.ekoapp.sample.core.di.SplitInstallModule

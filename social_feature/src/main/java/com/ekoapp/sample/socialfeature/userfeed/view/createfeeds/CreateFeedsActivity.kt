@@ -10,7 +10,8 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialActivityComponent
+import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
+import com.ekoapp.sample.socialfeature.userfeed.EXTRA_DISPLAY_NAME
 import com.ekoapp.sample.socialfeature.userfeed.view.toolbars.CreateFeedsToolbarMenu
 import kotlinx.android.synthetic.main.activity_create_feeds.*
 
@@ -41,6 +42,12 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
 
     override fun bindViewModel(viewModel: CreateFeedsViewModel) {
         setupAppBar()
+        setupView()
+    }
+
+    private fun setupView() {
+        val displayName = intent.extras?.getString(EXTRA_DISPLAY_NAME)
+        create_feeds.setupView(displayName = displayName ?: "")
     }
 
     private fun setupAppBar() {

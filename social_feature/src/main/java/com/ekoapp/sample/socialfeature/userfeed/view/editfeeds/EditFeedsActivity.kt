@@ -10,8 +10,8 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.userfeed.EXTRA_NAME_EDIT_FEEDS
-import com.ekoapp.sample.socialfeature.userfeed.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.userfeed.view.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.userfeed.view.toolbars.EditFeedsToolbarMenu
 import kotlinx.android.synthetic.main.activity_create_feeds.*

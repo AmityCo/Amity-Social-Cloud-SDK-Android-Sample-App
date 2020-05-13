@@ -28,4 +28,8 @@ class CreateFeedsComponent : ConstraintLayout {
     fun setDescription(description: String) {
         edit_text_create_feeds.setText(description)
     }
+
+    fun setupView(displayName: String) {
+        header_create_feeds.setupView(displayName)
+    }
 }
