@@ -17,6 +17,7 @@
     <string name="temporarily_friends">Friends</string>
     <string name="temporarily_find_friends">Find Friends</string>
     <string name="temporarily_total_friends">%s friends</string>
+    <string name="temporarily_total_acquaintances">%s acquaintances</string>
     <string name="temporarily_see_all_friends">See All Friends</string>
     <string name="temporarily_write_something_to">Write something to %s</string>
 </resources>
