@@ -49,14 +49,14 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
-        viewModel.getIntentUserData { data ->
-            viewModel.getUserFeeds(data).observeNotNull(this, {
-                adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
-                RecyclerBuilder(this, recyclerView = recycler_feeds, spaceCount = spaceFeeds)
-                        .builder()
-                        .build(adapter)
-                adapter.submitList(it)
-            })
+        adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
+        RecyclerBuilder(this, recyclerView = recycler_feeds, spaceCount = spaceFeeds)
+                .builder()
+                .build(adapter)
+        viewModel.apply {
+            getIntentUserData {
+                getUserFeeds(data = it).observeNotNull(this@UserFeedsActivity, adapter::submitList)
+            }
         }
     }
 
