@@ -5,6 +5,7 @@ import com.ekoapp.sample.core.di.SplitInstallModule
 import com.ekoapp.sample.core.di.scope.ActivityScope
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
+import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsActivity
 import dagger.Component
 
 @ActivityScope
@@ -15,4 +16,5 @@ import dagger.Component
 interface SocialActivityComponent {
     fun inject(activity: CreateFeedsActivity)
     fun inject(activity: EditFeedsActivity)
+    fun inject(activity: UserFeedsActivity)
 }

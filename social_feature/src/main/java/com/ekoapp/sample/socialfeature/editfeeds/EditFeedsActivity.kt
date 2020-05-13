@@ -10,7 +10,7 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.hideKeyboard
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.EXTRA_NAME_EDIT_FEEDS
+import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.toolbars.EditFeedsToolbarMenu
@@ -44,7 +44,7 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
     }
 
     override fun bindViewModel(viewModel: EditFeedsViewModel) {
-        val item = intent.extras?.getParcelable<EditUserFeedsData>(EXTRA_NAME_EDIT_FEEDS)
+        val item = intent.extras?.getParcelable<EditUserFeedsData>(EXTRA_EDIT_FEEDS)
         item?.let {
             userFeedsData = it
             setupView(item)

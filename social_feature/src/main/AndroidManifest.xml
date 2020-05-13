@@ -15,6 +15,7 @@
     <application>
         <activity android:name="com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity" />
         <activity android:name="com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity" />
+        <activity android:name="com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsActivity" />
     </application>
 
 </manifest>
