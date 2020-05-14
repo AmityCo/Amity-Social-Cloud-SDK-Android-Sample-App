@@ -6,19 +6,18 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.ekoapp.sample.core.R
 import com.google.android.material.appbar.AppBarLayout
+import io.reactivex.processors.PublishProcessor
 import kotlinx.android.synthetic.main.component_search_toolbar.view.*
 import kotlinx.android.synthetic.main.component_toolbar.view.toolbar_main
 
 
 class SearchAppbar : AppBarLayout {
 
-    private val keywordRelay = MutableLiveData<String>()
+    private var keywordRelay = PublishProcessor.create<String>()
 
-    fun observeKeywordSearch(): LiveData<String> = keywordRelay
+    fun keyword() = keywordRelay
 
     constructor(context: Context) : super(context, null as AttributeSet?) {
         init(context)
@@ -46,17 +45,13 @@ class SearchAppbar : AppBarLayout {
         edit_text_search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 edit_text_search.removeTextChangedListener(this)
-                keywordRelay.postValue(s.toString())
+                keywordRelay.onNext(s?.trim().toString())
                 edit_text_search.addTextChangedListener(this)
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
 
         })
     }

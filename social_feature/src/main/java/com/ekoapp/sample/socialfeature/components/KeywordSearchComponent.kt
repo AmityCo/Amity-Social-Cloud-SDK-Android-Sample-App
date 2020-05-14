@@ -19,7 +19,7 @@ class KeywordSearchComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun renderKeywordView(keyword: String) {
+    fun render(keyword: String) {
         if (keyword.isEmpty()) {
             text_search_results_keyword.visibility = View.GONE
         } else {

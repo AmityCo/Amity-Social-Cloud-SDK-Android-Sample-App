@@ -39,14 +39,19 @@ class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
     }
 
     private fun renderList(viewModel: UsersViewModel) {
-        appbar_search.observeKeywordSearch().observeNotNull(this, { keyword ->
-            keyword_search.renderKeywordView(keyword)
-            viewModel.getSearchUserList(keyword).observeNotNull(this, {
-                adapter = EkoUsersAdapter(viewModel)
-                RecyclerBuilder(context = this, recyclerView = recycler_users, spaceCount = spaceUsers)
-                        .builder()
-                        .build(adapter)
-                adapter.submitList(it)
+        viewModel.renderSearch(appbar_search.keyword())
+        viewModel.observeKeyword().observeNotNull(this, { keyword ->
+            keyword_search.render(keyword = keyword)
+            var newKeyword = keyword
+            viewModel.getSearchUserList(newKeyword).observeNotNull(this, {
+                if (newKeyword.isNotEmpty()) {
+                    adapter = EkoUsersAdapter(viewModel)
+                    RecyclerBuilder(context = this, recyclerView = recycler_users, spaceCount = spaceUsers)
+                            .builder()
+                            .build(adapter)
+                    adapter.submitList(it)
+                }
+                newKeyword = ""
             })
         })
     }
