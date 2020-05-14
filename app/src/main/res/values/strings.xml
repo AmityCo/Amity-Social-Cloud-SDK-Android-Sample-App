@@ -6,4 +6,5 @@
     <string name="temporarily_register_subtitle">EkoSDK allows you to easily present an interactive chat, social and community.</string>
     <string name="temporarily_user_id">User ID</string>
     <string name="temporarily_register">Register</string>
+    <string name="temporarily_search">Search</string>
 </resources>

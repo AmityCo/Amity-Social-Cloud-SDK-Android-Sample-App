@@ -23,6 +23,7 @@ class HeaderUsersComponent : ConstraintLayout {
 
     fun setupView(item: PagedList<EkoUser>) {
         text_total_acquaintances.visibility = View.VISIBLE
+        image_search.visibility = View.VISIBLE
         text_total_acquaintances.text = String.format(context.getString(R.string.temporarily_total_acquaintances), item.size)
     }
 }
