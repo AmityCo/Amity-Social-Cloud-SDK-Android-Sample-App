@@ -22,6 +22,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@color/material_light_black</item>
         <item name="android:padding">@dimen/material_component_button_corner_radius</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
         <item name="elevation">0dp</item>
     </style>
 

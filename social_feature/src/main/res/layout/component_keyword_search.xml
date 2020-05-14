@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_keyword_search"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/material_light_black"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/text_search_results_keyword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:paddingStart="@dimen/md_listitem_margin_left"
+        android:paddingEnd="@dimen/md_listitem_margin_left"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/material_typography_subheading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource"
+        tools:text="@string/general_search_see_results_for" />
+
+</merge>

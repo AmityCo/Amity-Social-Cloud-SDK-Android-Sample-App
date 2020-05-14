@@ -20,7 +20,7 @@
             android:layout_marginEnd="@dimen/material_component_button_corner_radius"
             android:background="@drawable/text_field_solid"
             android:gravity="center_vertical"
-            android:hint="@string/temporarily_search"
+            android:hint="@string/general_search"
             android:inputType="text"
             android:padding="@dimen/material_component_dialogs_padding_around_buttons"
             android:paddingStart="@dimen/material_layout_vertical_spacing_right_side_icons_margin"

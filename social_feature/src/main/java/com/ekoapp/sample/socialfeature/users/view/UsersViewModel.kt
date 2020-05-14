@@ -20,4 +20,7 @@ class UsersViewModel @Inject constructor() : DisposableViewModel() {
         return EkoClient.newUserRepository().getAllUsers(EkoUserSortOption.DISPLAYNAME)
     }
 
+    fun getSearchUserList(keyword: String): LiveData<PagedList<EkoUser>> {
+        return EkoClient.newUserRepository().searchUserByDisplayName(keyword, EkoUserSortOption.DISPLAYNAME)
+    }
 }

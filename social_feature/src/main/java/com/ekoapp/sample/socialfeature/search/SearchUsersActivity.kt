@@ -1,5 +1,6 @@
 package com.ekoapp.sample.socialfeature.search
 
+import android.content.Context
 import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
@@ -14,10 +15,14 @@ import com.ekoapp.sample.socialfeature.users.list.EkoUsersAdapter
 import com.ekoapp.sample.socialfeature.users.view.UsersViewModel
 import kotlinx.android.synthetic.main.activity_search_users.*
 import kotlinx.android.synthetic.main.fragment_users.recycler_users
+import javax.inject.Inject
 
 class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
     private val spaceUsers = 1
     private lateinit var adapter: EkoUsersAdapter
+
+    @Inject
+    lateinit var context: Context
 
     override fun getLayout(): Int {
         return R.layout.activity_search_users
@@ -34,12 +39,15 @@ class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
     }
 
     private fun renderList(viewModel: UsersViewModel) {
-        adapter = EkoUsersAdapter(viewModel)
-        RecyclerBuilder(context = this, recyclerView = recycler_users, spaceCount = spaceUsers)
-                .builder()
-                .build(adapter)
-        viewModel.getUserList().observeNotNull(this, {
-            adapter.submitList(it)
+        appbar_search.observeKeywordSearch().observeNotNull(this, { keyword ->
+            keyword_search.renderKeywordView(keyword)
+            viewModel.getSearchUserList(keyword).observeNotNull(this, {
+                adapter = EkoUsersAdapter(viewModel)
+                RecyclerBuilder(context = this, recyclerView = recycler_users, spaceCount = spaceUsers)
+                        .builder()
+                        .build(adapter)
+                adapter.submitList(it)
+            })
         })
     }
 
