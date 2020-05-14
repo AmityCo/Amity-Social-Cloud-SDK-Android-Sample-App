@@ -33,7 +33,7 @@
         android:layout_width="@dimen/md_icon_size"
         android:layout_height="@dimen/md_icon_size"
         android:background="@drawable/default_oval"
-        android:padding="10dp"
+        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
         android:src="@drawable/ic_search"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

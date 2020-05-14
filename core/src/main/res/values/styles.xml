@@ -17,6 +17,14 @@
         <item name="elevation">0dp</item>
     </style>
 
+    <style name="AppTheme.SearchAppbar" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/material_light_black</item>
+        <item name="android:padding">@dimen/material_component_button_corner_radius</item>
+        <item name="elevation">0dp</item>
+    </style>
+
     <style name="AppTheme.Launcher" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>

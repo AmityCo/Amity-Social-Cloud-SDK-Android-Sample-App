@@ -2,4 +2,5 @@
 <resources>
     <string name="title_social_feature">Social</string>
     <string name="title_chat_feature">Chat feature</string>
+    <string name="temporarily_search">Search</string>
 </resources>

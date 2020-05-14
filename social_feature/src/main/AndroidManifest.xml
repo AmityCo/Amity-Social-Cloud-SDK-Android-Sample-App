@@ -13,9 +13,10 @@
     </dist:module>
 
     <application>
-        <activity android:name="com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity" />
-        <activity android:name="com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity" />
-        <activity android:name="com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsActivity" />
+        <activity android:name=".createfeeds.CreateFeedsActivity" />
+        <activity android:name=".editfeeds.EditFeedsActivity" />
+        <activity android:name=".userfeed.view.UserFeedsActivity" />
+        <activity android:name=".search.SearchUsersActivity" />
     </application>
 
 </manifest>
