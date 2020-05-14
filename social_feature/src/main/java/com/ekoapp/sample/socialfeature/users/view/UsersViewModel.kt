@@ -32,7 +32,7 @@ class UsersViewModel @Inject constructor() : DisposableViewModel() {
         return EkoClient.newUserRepository().searchUserByDisplayName(keyword, EkoUserSortOption.DISPLAYNAME)
     }
 
-    fun renderSearch(keyword: Flowable<String>) {
+    fun search(keyword: Flowable<String>) {
         keyword.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(keywordRelay::postValue) into disposables

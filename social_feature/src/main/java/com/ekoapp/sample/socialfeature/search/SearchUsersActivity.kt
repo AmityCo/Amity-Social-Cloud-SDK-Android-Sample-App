@@ -39,7 +39,8 @@ class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
     }
 
     private fun renderList(viewModel: UsersViewModel) {
-        viewModel.renderSearch(appbar_search.keyword())
+        //TODO Refactor
+        viewModel.search(appbar_search.keyword())
         viewModel.observeKeyword().observeNotNull(this, { keyword ->
             keyword_search.render(keyword = keyword)
             var newKeyword = keyword
