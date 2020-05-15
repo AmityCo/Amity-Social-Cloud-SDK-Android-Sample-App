@@ -9,6 +9,7 @@ import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
+import com.ekoapp.sample.socialfeature.constants.UPPERMOST
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
@@ -45,11 +46,11 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
+        adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
+        RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
+                .builder()
+                .build(adapter)
         viewModel.getUserFeeds(viewModel.getMyProfile()).observeNotNull(viewLifecycleOwner, {
-            adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
-            RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
-                    .builder()
-                    .build(adapter)
             adapter.submitList(it)
         })
     }
@@ -64,5 +65,17 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
     override fun getViewModelClass(): Class<UserFeedsViewModel> {
         return UserFeedsViewModel::class.java
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE_CREATE_FEEDS -> {
+                recycler_feeds.smoothScrollToPosition(UPPERMOST)
+            }
+            REQUEST_CODE_EDIT_FEEDS -> {
+                //TODO After edit feeds
+            }
+        }
     }
 }

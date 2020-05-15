@@ -6,10 +6,7 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
-import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_CREATE_FEEDS
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
+import com.ekoapp.sample.socialfeature.constants.*
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
@@ -87,5 +84,17 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
 
     override fun getViewModelClass(): Class<UserFeedsViewModel> {
         return UserFeedsViewModel::class.java
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE_CREATE_FEEDS -> {
+                recycler_feeds.smoothScrollToPosition(UPPERMOST)
+            }
+            REQUEST_CODE_EDIT_FEEDS -> {
+                //TODO After edit feeds
+            }
+        }
     }
 }
