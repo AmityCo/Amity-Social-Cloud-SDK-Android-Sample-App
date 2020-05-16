@@ -26,7 +26,6 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     }
 
     override fun bindViewModel(viewModel: UserFeedsViewModel) {
-        friend_list.renderList(viewLifecycleOwner, viewModel)
         renderList(viewModel)
         setupEvent(viewModel)
     }
@@ -46,7 +45,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
 
     private fun renderList(viewModel: UserFeedsViewModel) {
         adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
-        RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
+        val builder = RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
                 .builder()
                 .build(adapter)
 
@@ -56,7 +55,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
                     it.data.observeNotNull(viewLifecycleOwner, adapter::submitList)
                 }
                 is UserFeedsViewSeal.CreateUserFeeds -> {
-                    recycler_feeds.smoothScrollToPosition(it.scrollToPosition)
+                    builder.smoothScrollToPosition(it.scrollToPosition)
                 }
             }
         })

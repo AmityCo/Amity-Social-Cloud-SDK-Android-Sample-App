@@ -7,16 +7,6 @@
     android:background="@color/defaultColorBackground"
     tools:ignore="PrivateResource">
 
-    <com.ekoapp.sample.socialfeature.components.FriendListComponent
-        android:id="@+id/friend_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/material_component_dialogs_padding_between_title_and_body_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-
     <com.ekoapp.sample.socialfeature.components.TouchablePostFeedsComponent
         android:id="@+id/touchable_post_feeds"
         android:layout_width="match_parent"
@@ -25,7 +15,7 @@
         android:padding="@dimen/material_component_dialogs_padding_between_title_and_body_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/friend_list"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />
 
     <androidx.recyclerview.widget.RecyclerView

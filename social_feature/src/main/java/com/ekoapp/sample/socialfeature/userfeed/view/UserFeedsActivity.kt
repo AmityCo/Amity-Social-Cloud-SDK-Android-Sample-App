@@ -67,7 +67,7 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
 
     private fun renderList(viewModel: UserFeedsViewModel) {
         adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
-        RecyclerBuilder(this, recyclerView = recycler_feeds, spaceCount = spaceFeeds)
+        val builder = RecyclerBuilder(this, recyclerView = recycler_feeds, spaceCount = spaceFeeds)
                 .builder()
                 .build(adapter)
 
@@ -78,7 +78,7 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
                         it.data.observeNotNull(this, adapter::submitList)
                     }
                     is UserFeedsViewSeal.CreateUserFeeds -> {
-                        recycler_feeds.smoothScrollToPosition(it.scrollToPosition)
+                        builder.smoothScrollToPosition(it.scrollToPosition)
                     }
                 }
             })

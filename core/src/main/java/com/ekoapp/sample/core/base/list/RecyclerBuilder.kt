@@ -1,6 +1,7 @@
 package com.ekoapp.sample.core.base.list
 
 import android.content.Context
+import android.os.Handler
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -17,5 +18,12 @@ data class RecyclerBuilder(
     fun build(setupAdapter: RecyclerView.Adapter<ViewHolder>): RecyclerBuilder {
         recyclerView.adapter = setupAdapter
         return this
+    }
+
+    fun smoothScrollToPosition(position: Int) {
+        val delay = 100L
+        Handler().postDelayed({
+            recyclerView.smoothScrollToPosition(position)
+        }, delay)
     }
 }
