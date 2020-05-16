@@ -9,7 +9,6 @@ import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_CREATE_FEEDS
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
-import com.ekoapp.sample.socialfeature.constants.UPPERMOST
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
@@ -50,8 +49,16 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
                 .builder()
                 .build(adapter)
-        viewModel.getUserFeeds(viewModel.getMyProfile()).observeNotNull(viewLifecycleOwner, {
-            adapter.submitList(it)
+
+        viewModel.bindUserFeeds(viewModel.getMyProfile()).observeNotNull(viewLifecycleOwner, {
+            when (it) {
+                is UserFeedsViewSeal.GetUserFeeds -> {
+                    it.data.observeNotNull(viewLifecycleOwner, adapter::submitList)
+                }
+                is UserFeedsViewSeal.CreateUserFeeds -> {
+                    recycler_feeds.smoothScrollToPosition(it.scrollToPosition)
+                }
+            }
         })
     }
 
@@ -71,10 +78,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_CODE_CREATE_FEEDS -> {
-                recycler_feeds.smoothScrollToPosition(UPPERMOST)
-            }
-            REQUEST_CODE_EDIT_FEEDS -> {
-                //TODO After edit feeds
+                viewModel?.updateFeeds()
             }
         }
     }
