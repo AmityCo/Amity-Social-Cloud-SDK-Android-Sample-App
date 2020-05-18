@@ -21,7 +21,7 @@ data class RecyclerBuilder(
     }
 
     fun smoothScrollToPosition(position: Int) {
-        val delay = 100L
+        val delay = 500L
         Handler().postDelayed({
             recyclerView.smoothScrollToPosition(position)
         }, delay)
