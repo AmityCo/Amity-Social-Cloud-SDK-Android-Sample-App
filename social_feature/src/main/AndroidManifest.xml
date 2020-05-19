@@ -12,11 +12,15 @@
         <dist:fusing dist:include="true" />
     </dist:module>
 
-    <application>
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher">
         <activity android:name=".createfeeds.CreateFeedsActivity" />
         <activity android:name=".editfeeds.EditFeedsActivity" />
         <activity android:name=".userfeed.view.UserFeedsActivity" />
         <activity android:name=".search.SearchUsersActivity" />
+        <activity android:name=".users.view.SeeAllUsersActivity" />
     </application>
 
 </manifest>

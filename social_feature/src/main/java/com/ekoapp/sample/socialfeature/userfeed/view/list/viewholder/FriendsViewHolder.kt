@@ -10,15 +10,26 @@ import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoFriendsFeedsAdapter
 import kotlinx.android.synthetic.main.item_friends_feeds.view.*
 
-class FriendsViewHolder(itemView: View) : BaseViewHolder<PagedList<EkoUser>>(itemView) {
+data class FriendsViewData(
+        val items: PagedList<EkoUser>,
+        val actionFindUsers: () -> Unit,
+        val actionSeeAllUsers: () -> Unit)
+
+class FriendsViewHolder(itemView: View) : BaseViewHolder<FriendsViewData>(itemView) {
     private val spaceFriends = 3
     private lateinit var adapter: EkoFriendsFeedsAdapter
 
-    override fun bind(item: PagedList<EkoUser>) {
+    override fun bind(item: FriendsViewData) {
         val context = itemView.context
-        itemView.text_total_friends.text = String.format(context.getString(R.string.temporarily_total_acquaintances), item.size)
+        itemView.text_total_friends.text = String.format(context.getString(R.string.temporarily_total_acquaintances), item.items.size)
+        itemView.button_see_all_friends.setOnClickListener {
+            item.actionSeeAllUsers.invoke()
+        }
+        itemView.text_find_friends.setOnClickListener {
+            item.actionFindUsers.invoke()
+        }
         itemView.recycler_feeds
-        context.renderList(item)
+        context.renderList(item.items)
     }
 
     private fun Context.renderList(item: PagedList<EkoUser>) {

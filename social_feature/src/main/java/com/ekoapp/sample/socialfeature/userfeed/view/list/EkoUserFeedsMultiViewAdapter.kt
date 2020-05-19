@@ -10,10 +10,7 @@ import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
-import com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder.CreateFeedsViewHolder
-import com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder.FriendsViewHolder
-import com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder.UserFeedsViewData
-import com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder.UserFeedsViewHolder
+import com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder.*
 
 class EkoUserFeedsMultiViewAdapter(private val context: Context,
                                    private val lifecycleOwner: LifecycleOwner,
@@ -57,7 +54,14 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
         when (holder) {
             is FriendsViewHolder -> {
                 viewModel.getUserList().observeNotNull(lifecycleOwner, {
-                    holder.bind(it)
+                    holder.bind(FriendsViewData(
+                            items = it,
+                            actionFindUsers = {
+                                viewModel.findUsersActionRelay.postValue(Unit)
+                            },
+                            actionSeeAllUsers = {
+                                viewModel.seeAllUsersActionRelay.postValue(Unit)
+                            }))
                 })
             }
             is CreateFeedsViewHolder -> {

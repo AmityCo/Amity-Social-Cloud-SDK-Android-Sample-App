@@ -6,13 +6,13 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_CREATE_FEEDS
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
+import com.ekoapp.sample.socialfeature.constants.*
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
+import com.ekoapp.sample.socialfeature.search.SearchUsersActivity
 import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsMultiViewAdapter
+import com.ekoapp.sample.socialfeature.users.view.SeeAllUsersActivity
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
 
 class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
@@ -41,6 +41,16 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
             val intent = Intent(requireActivity(), EditFeedsActivity::class.java)
             intent.putExtra(EXTRA_EDIT_FEEDS, it)
             startActivityForResult(intent, REQUEST_CODE_EDIT_FEEDS)
+        })
+
+        viewModel.observeFindUsersPage().observeNotNull(viewLifecycleOwner, {
+            startActivity(Intent(context, SearchUsersActivity::class.java))
+        })
+
+        viewModel.observeSeeAllUsersPage().observeNotNull(viewLifecycleOwner, {
+            val intent = Intent(context, SeeAllUsersActivity::class.java)
+            intent.putExtra(EXTRA_USER_DATA, viewModel.getMyProfile())
+            startActivityForResult(intent, REQUEST_CODE_SEE_ALL_USERS)
         })
     }
 
