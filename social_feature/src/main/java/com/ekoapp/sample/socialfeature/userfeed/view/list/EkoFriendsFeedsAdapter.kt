@@ -9,7 +9,7 @@ import com.ekoapp.sample.socialfeature.R
 import kotlinx.android.synthetic.main.item_friend_feeds.view.*
 
 class EkoFriendsFeedsAdapter : EkoUserAdapter<ViewHolder>() {
-    private val displayItem = 3
+    private val displayItem = 6
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_friend_feeds, parent, false))
@@ -18,7 +18,6 @@ class EkoFriendsFeedsAdapter : EkoUserAdapter<ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         val itemView = holder.itemView
-        val context = itemView.context
         itemView.text_full_name.text = item?.userId
     }
 

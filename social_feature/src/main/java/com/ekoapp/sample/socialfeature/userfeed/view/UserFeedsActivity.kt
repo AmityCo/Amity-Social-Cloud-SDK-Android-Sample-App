@@ -16,7 +16,7 @@ import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
 import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsAdapter
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import kotlinx.android.synthetic.main.activity_user_feeds.*
-import kotlinx.android.synthetic.main.component_touchable_create_feeds.view.*
+import kotlinx.android.synthetic.main.item_touchable_create_feeds.view.*
 
 class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
 
@@ -72,7 +72,7 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
                 .build(adapter)
 
         viewModel.getIntentUserData { data ->
-            viewModel.bindUserFeeds(data).observeNotNull(this, {
+            viewModel.executeUserFeeds(data).observeNotNull(this, {
                 when (it) {
                     is UserFeedsViewSeal.GetUserFeeds -> {
                         it.data.observeNotNull(this, adapter::submitList)

@@ -20,8 +20,13 @@ data class RecyclerBuilder(
         return this
     }
 
+    fun buildMultiView(setupAdapter: RecyclerView.Adapter<BaseViewHolder<*>>): RecyclerBuilder {
+        recyclerView.adapter = setupAdapter
+        return this
+    }
+
     fun smoothScrollToPosition(position: Int) {
-        val delay = 500L
+        val delay = 100L
         Handler().postDelayed({
             recyclerView.smoothScrollToPosition(position)
         }, delay)

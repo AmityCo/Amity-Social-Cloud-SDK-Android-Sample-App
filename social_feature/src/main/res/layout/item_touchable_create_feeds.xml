@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_body_feeds"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/md_listitem_control_margin"
+    android:layout_marginBottom="@dimen/md_listitem_control_margin"
+    android:background="@color/material_light_black"
+    android:padding="@dimen/material_component_dialogs_padding_between_title_and_body_text"
+    tools:ignore="PrivateResource">
+
+    <TextView
+        android:id="@+id/text_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temporarily_posts"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_title"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.ekoapp.sample.socialfeature.components.AvatarComponent
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/material_component_text_fields_icon_height"
+        android:layout_height="@dimen/material_component_text_fields_icon_height"
+        android:layout_marginTop="@dimen/md_listitem_vertical_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/text_post"
+        app:layout_constraintTop_toBottomOf="@id/text_post" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_touchable_target_post"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginStart="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
+        android:background="@drawable/default_button_transparent"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingStart="@dimen/material_component_bottom_sheet_list_item_text_horizontal_padding"
+        android:paddingEnd="@dimen/material_component_bottom_sheet_list_item_text_horizontal_padding"
+        android:text="@string/temporarily_what_is_on_your_mind"
+        android:textAllCaps="false"
+        android:textColor="@color/material_grey_700"
+        android:textSize="@dimen/material_typography_body1"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        tools:ignore="PrivateResource" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
