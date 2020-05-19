@@ -89,7 +89,7 @@ dependencies {
     api 'com.google.firebase:firebase-messaging:20.1.7'
 
     //Google Play Core
-    api 'com.google.android.play:core:1.7.2'
+    api 'com.google.android.play:core:1.7.3'
 
     //Arrow-KT
     api "io.arrow-kt:arrow-core:$arrow_version"
@@ -119,5 +119,8 @@ dependencies {
     //Downloaders
     api "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
     api "androidx.tonyodev.fetch2:xfetch2:3.1.4"
+
+    //Shape ImageView
+    api 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
 
 }

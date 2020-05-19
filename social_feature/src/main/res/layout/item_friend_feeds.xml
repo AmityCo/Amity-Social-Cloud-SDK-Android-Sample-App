@@ -10,14 +10,15 @@
     tools:background="@color/material_light_black"
     tools:ignore="PrivateResource">
 
-    <ImageView
+    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
         android:id="@+id/image_avatar"
         android:layout_width="@dimen/material_component_text_fields_floating_label_height"
         android:layout_height="@dimen/material_component_text_fields_floating_label_height"
-        android:background="@color/material_light_white"
-        android:scaleType="centerCrop"
+        android:src="@drawable/ic_user"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:siShape="@drawable/image_view_rounded_rectangle"
+        app:siSquare="true" />
 
     <TextView
         android:id="@+id/text_full_name"
