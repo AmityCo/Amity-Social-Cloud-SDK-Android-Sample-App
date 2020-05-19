@@ -22,6 +22,7 @@
         android:id="@+id/header_users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
         android:padding="@dimen/material_component_lists_padding_above_list" />
 
     <androidx.recyclerview.widget.RecyclerView
