@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/temporarily_acquaintances"
         android:textColor="@color/material_light_white"
-        android:textSize="@dimen/material_typography_title"
+        android:textSize="@dimen/material_typography_subheading"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/temporarily_total_acquaintances"
         android:textColor="@color/material_grey_600"
-        android:textSize="@dimen/material_typography_subheading"
+        android:textSize="@dimen/material_typography_body1"
         app:layout_constraintStart_toStartOf="@id/text_friends"
         app:layout_constraintTop_toBottomOf="@id/text_friends"
         tools:ignore="PrivateResource" />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="@string/temporarily_find_acquaintances"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/material_typography_subheading"
+        android:textSize="@dimen/material_typography_body1"
         app:layout_constraintBottom_toBottomOf="@id/text_total_friends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_friends"

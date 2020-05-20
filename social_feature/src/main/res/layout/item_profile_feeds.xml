@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/md_listitem_control_margin"
+    android:background="@color/material_light_black"
+    android:paddingStart="@dimen/material_component_dialogs_padding_between_title_and_body_text"
+    android:paddingEnd="@dimen/material_component_dialogs_padding_between_title_and_body_text"
+    tools:ignore="PrivateResource">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_cover"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/material_component_lists_three_line_height"
+        android:background="@drawable/image_view_cover"
+        android:backgroundTint="@color/material_grey_500"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
+        android:id="@+id/image_avatar"
+        android:layout_width="@dimen/material_component_text_fields_floating_label_height"
+        android:layout_height="@dimen/material_component_text_fields_floating_label_height"
+        android:layout_marginTop="@dimen/material_component_text_fields_icon_height"
+        android:src="@drawable/ic_user"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:siShape="@drawable/image_view_rounded_rectangle"
+        app:siSquare="true" />
+
+    <TextView
+        android:id="@+id/text_full_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/material_layout_keylines_screen_edge_margin"
+        android:gravity="center"
+        android:maxLines="2"
+        android:paddingTop="@dimen/material_component_lists_padding_above_list"
+        android:text="@string/temporarily_full_name"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_title"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_avatar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

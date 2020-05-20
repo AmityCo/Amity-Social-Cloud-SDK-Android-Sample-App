@@ -18,12 +18,14 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
     private val sections = ArrayList<Any>()
 
     companion object {
-        private const val TYPE_FRIENDS = 0
-        private const val TYPE_CREATE_FEEDS = 1
-        private const val TYPE_USER_FEEDS = 2
+        private const val TYPE_PROFILE = 0
+        private const val TYPE_FRIENDS = 1
+        private const val TYPE_CREATE_FEEDS = 2
+        private const val TYPE_USER_FEEDS = 3
     }
 
     init {
+        sections.add(TYPE_PROFILE)
         sections.add(TYPE_FRIENDS)
         sections.add(TYPE_CREATE_FEEDS)
         sections.add(TYPE_USER_FEEDS)
@@ -31,6 +33,11 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         return when (viewType) {
+            TYPE_PROFILE -> {
+                val view = LayoutInflater.from(context)
+                        .inflate(R.layout.item_profile_feeds, parent, false)
+                ProfileViewHolder(view)
+            }
             TYPE_FRIENDS -> {
                 val view = LayoutInflater.from(context)
                         .inflate(R.layout.item_friends_feeds, parent, false)
@@ -52,6 +59,9 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         when (holder) {
+            is ProfileViewHolder -> {
+                holder.bind(viewModel.getMyProfile())
+            }
             is FriendsViewHolder -> {
                 viewModel.getUserList().observeNotNull(lifecycleOwner, {
                     holder.bind(FriendsViewData(
@@ -78,6 +88,9 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
 
     override fun getItemViewType(position: Int): Int {
         return when {
+            sections[position] == TYPE_PROFILE -> {
+                TYPE_PROFILE
+            }
             sections[position] == TYPE_FRIENDS -> {
                 TYPE_FRIENDS
             }
