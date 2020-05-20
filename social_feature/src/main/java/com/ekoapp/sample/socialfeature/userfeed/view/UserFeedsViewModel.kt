@@ -24,9 +24,16 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     private val feedsRelay = PublishProcessor.create<Unit>()
     private var userDataIntent: UserData? = null
     private val userFeeds = MutableLiveData<UserFeedsViewSeal>()
-    val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
 
+    val createFeedsActionRelay = SingleLiveData<Unit>()
+    val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
+    val findUsersActionRelay = SingleLiveData<Unit>()
+    val seeAllUsersActionRelay = SingleLiveData<Unit>()
+
+    fun observeCreateFeedsPage(): SingleLiveData<Unit> = createFeedsActionRelay
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
+    fun observeFindUsersPage(): SingleLiveData<Unit> = findUsersActionRelay
+    fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
 
     fun getIntentUserData(actionRelay: (UserData) -> Unit) {
         userDataIntent?.let(actionRelay::invoke)
@@ -34,7 +41,7 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
 
     fun getMyProfile() = UserData(userId = EkoClient.getUserId())
 
-    fun bindUserFeeds(data: UserData): LiveData<UserFeedsViewSeal> {
+    fun executeUserFeeds(data: UserData): LiveData<UserFeedsViewSeal> {
         userFeeds.postValue(UserFeedsViewSeal.GetUserFeeds(data = getUserFeeds(data)))
         feedsRelay
                 .subscribeOn(Schedulers.io())

@@ -6,20 +6,21 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_CREATE_FEEDS
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
+import com.ekoapp.sample.socialfeature.constants.*
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
-import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsAdapter
-import kotlinx.android.synthetic.main.component_touchable_create_feeds.view.*
+import com.ekoapp.sample.socialfeature.search.SearchUsersActivity
+import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsMultiViewAdapter
+import com.ekoapp.sample.socialfeature.users.view.SeeAllUsersActivity
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
 
 class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
-
     private val spaceFeeds = 1
-    private lateinit var adapter: EkoUserFeedsAdapter
+
+    companion object {
+        lateinit var adapter: EkoUserFeedsMultiViewAdapter
+    }
 
     override fun getLayout(): Int {
         return R.layout.fragment_user_feeds
@@ -31,34 +32,36 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     }
 
     private fun setupEvent(viewModel: UserFeedsViewModel) {
-        touchable_post_feeds.button_touchable_target_post.setOnClickListener {
+        viewModel.observeCreateFeedsPage().observeNotNull(viewLifecycleOwner, {
             val intent = Intent(requireActivity(), CreateFeedsActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE_CREATE_FEEDS)
-        }
+        })
 
         viewModel.observeEditFeedsPage().observeNotNull(viewLifecycleOwner, {
             val intent = Intent(requireActivity(), EditFeedsActivity::class.java)
             intent.putExtra(EXTRA_EDIT_FEEDS, it)
             startActivityForResult(intent, REQUEST_CODE_EDIT_FEEDS)
         })
+
+        viewModel.observeFindUsersPage().observeNotNull(viewLifecycleOwner, {
+            startActivity(Intent(context, SearchUsersActivity::class.java))
+        })
+
+        viewModel.observeSeeAllUsersPage().observeNotNull(viewLifecycleOwner, {
+            val intent = Intent(context, SeeAllUsersActivity::class.java)
+            intent.putExtra(EXTRA_USER_DATA, viewModel.getMyProfile())
+            startActivityForResult(intent, REQUEST_CODE_SEE_ALL_USERS)
+        })
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
-        adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
-        val builder = RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
-                .builder()
-                .build(adapter)
+        adapter = EkoUserFeedsMultiViewAdapter(context = requireContext(),
+                lifecycleOwner = viewLifecycleOwner,
+                viewModel = viewModel)
 
-        viewModel.bindUserFeeds(viewModel.getMyProfile()).observeNotNull(viewLifecycleOwner, {
-            when (it) {
-                is UserFeedsViewSeal.GetUserFeeds -> {
-                    it.data.observeNotNull(viewLifecycleOwner, adapter::submitList)
-                }
-                is UserFeedsViewSeal.CreateUserFeeds -> {
-                    builder.smoothScrollToPosition(it.scrollToPosition)
-                }
-            }
-        })
+        RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
+                .builder()
+                .buildMultiView(adapter)
     }
 
     override fun initDependencyInjection() {

@@ -18,6 +18,7 @@ import javax.inject.Inject
 class UsersViewModel @Inject constructor() : DisposableViewModel() {
 
     private val keywordRelay = MutableLiveData<String>()
+    private var userDataIntent: UserData? = null
 
     val usersActionRelay = SingleLiveData<UserData>()
 
@@ -36,5 +37,13 @@ class UsersViewModel @Inject constructor() : DisposableViewModel() {
         keyword.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(keywordRelay::postValue) into disposables
+    }
+
+    fun getIntentUserData(actionRelay: (UserData) -> Unit) {
+        userDataIntent?.let(actionRelay::invoke)
+    }
+
+    fun setupIntent(data: UserData?) {
+        userDataIntent = data
     }
 }
