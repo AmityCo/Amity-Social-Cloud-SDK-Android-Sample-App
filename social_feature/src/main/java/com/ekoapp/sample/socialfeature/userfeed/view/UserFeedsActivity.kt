@@ -66,7 +66,7 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
-        adapter = EkoUserFeedsAdapter(lifecycleOwner = this, userFeedsViewModel = viewModel)
+        adapter = EkoUserFeedsAdapter(userFeedsViewModel = viewModel)
         val builder = RecyclerBuilder(this, recyclerView = recycler_feeds, spaceCount = spaceFeeds)
                 .builder()
                 .build(adapter)
