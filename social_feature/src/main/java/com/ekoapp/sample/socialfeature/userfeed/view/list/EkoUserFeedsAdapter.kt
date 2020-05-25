@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import com.ekoapp.ekosdk.adapter.EkoPostAdapter
 import com.ekoapp.sample.core.base.list.ViewHolder
-import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.enums.ReactionTypes
 import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
@@ -39,8 +38,6 @@ class EkoUserFeedsAdapter(private val lifecycleOwner: LifecycleOwner, private va
                         userFeedsViewModel.deletePost(this)
                     })
         }
-
-        userFeedsViewModel.observeActionLikeRelay().observeNotNull(lifecycleOwner, itemView.footer_feeds::selectorLike)
     }
 }
 
