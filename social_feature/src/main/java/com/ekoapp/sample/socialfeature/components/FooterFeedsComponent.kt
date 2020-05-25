@@ -32,7 +32,7 @@ class FooterFeedsComponent : ConstraintLayout {
         selectorLike(isLiked)
     }
 
-    fun selectorLike(isLike: Boolean) = if (isLike) likedView() else likeView()
+    private fun selectorLike(isLike: Boolean) = if (isLike) likedView() else likeView()
 
     fun likeFeeds(actionLike: (Boolean) -> Unit) {
         like_action.setOnClickListener {
