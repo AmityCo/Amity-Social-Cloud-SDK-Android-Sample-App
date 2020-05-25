@@ -40,9 +40,7 @@ class EkoUserFeedsAdapter(private val lifecycleOwner: LifecycleOwner, private va
                     })
         }
 
-        userFeedsViewModel.observeActionLikeRelay().observeNotNull(lifecycleOwner, {
-            if (it) itemView.footer_feeds.likedView() else itemView.footer_feeds.likeView()
-        })
+        userFeedsViewModel.observeActionLikeRelay().observeNotNull(lifecycleOwner, itemView.footer_feeds::selectorLike)
     }
 }
 

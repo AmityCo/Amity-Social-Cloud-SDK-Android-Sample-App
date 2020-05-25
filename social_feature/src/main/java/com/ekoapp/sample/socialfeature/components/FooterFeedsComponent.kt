@@ -29,8 +29,10 @@ class FooterFeedsComponent : ConstraintLayout {
 
     fun setupView(item: EkoPost) {
         isLiked = item.reactions[ReactionTypes.LIKE.text] != null && item.reactions[ReactionTypes.LIKE.text] != ZERO_COUNT
-        if (isLiked) likedView() else likeView()
+        selectorLike(isLiked)
     }
+
+    fun selectorLike(isLike: Boolean) = if (isLike) likedView() else likeView()
 
     fun likeFeeds(actionLike: (Boolean) -> Unit) {
         like_action.setOnClickListener {
@@ -39,13 +41,13 @@ class FooterFeedsComponent : ConstraintLayout {
     }
 
     @SuppressLint("PrivateResource")
-    fun likeView() {
+    private fun likeView() {
         like_action.image_like.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_like))
         like_action.image_like.setTint(ContextCompat.getColor(context, R.color.colorDisable))
         like_action.text_like.setTextColor(ContextCompat.getColor(context, R.color.colorDisable))
     }
 
-    fun likedView() {
+    private fun likedView() {
         like_action.image_like.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_liked))
         like_action.image_like.setTint(ContextCompat.getColor(context, R.color.colorEnable))
         like_action.text_like.setTextColor(ContextCompat.getColor(context, R.color.colorEnable))
