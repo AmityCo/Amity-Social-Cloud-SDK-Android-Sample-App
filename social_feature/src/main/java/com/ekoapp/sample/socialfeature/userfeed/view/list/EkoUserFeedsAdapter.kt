@@ -30,7 +30,7 @@ class EkoUserFeedsAdapter(private val userFeedsViewModel: UserFeedsViewModel) : 
                     body = itemView.body_feeds,
                     footer = itemView.footer_feeds,
                     eventLike = {
-                        userFeedsViewModel.likeFeeds(ReactionData(text = ReactionTypes.LIKE.text, isChecked = it, item = item))
+                        userFeedsViewModel.reactionFeeds(ReactionData(text = ReactionTypes.LIKE.text, isChecked = it, item = item))
                     },
                     eventEdit = userFeedsViewModel.editFeedsActionRelay::postValue,
                     eventDelete = {
