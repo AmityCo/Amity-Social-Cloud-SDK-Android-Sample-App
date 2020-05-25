@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.core.utils.setTint
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.ZERO_COUNT
 import com.ekoapp.sample.socialfeature.enums.ReactionTypes
 import kotlinx.android.synthetic.main.component_footer_feeds.view.*
 import kotlinx.android.synthetic.main.component_like_action.view.*
@@ -28,8 +27,24 @@ class FooterFeedsComponent : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
     fun setupView(item: EkoPost) {
-        isLiked = item.reactions[ReactionTypes.LIKE.text] != null && item.reactions[ReactionTypes.LIKE.text] != ZERO_COUNT
-        selectorLike(isLiked)
+        renderLike(item)
+    }
+
+    private fun renderLike(item: EkoPost) {
+        when (item.reactions[ReactionTypes.LIKE.text]) {
+            0 -> {
+                isLiked = false
+                selectorLike(isLiked)
+            }
+            null -> {
+                isLiked = false
+                selectorLike(isLiked)
+            }
+            else -> {
+                isLiked = true
+                selectorLike(isLiked)
+            }
+        }
     }
 
     fun selectorLike(isLike: Boolean) = if (isLike) likedView() else likeView()
