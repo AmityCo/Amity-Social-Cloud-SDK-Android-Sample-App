@@ -37,8 +37,8 @@
         app:layout_constraintStart_toStartOf="@id/header_feeds"
         app:layout_constraintTop_toBottomOf="@id/body_feeds" />
 
-    <com.ekoapp.sample.socialfeature.components.ActionFeedsComponent
-        android:id="@+id/action_feeds"
+    <com.ekoapp.sample.socialfeature.components.FooterFeedsComponent
+        android:id="@+id/footer_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/material_component_dialogs_padding_around_buttons"

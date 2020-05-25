@@ -7,8 +7,10 @@ import com.ekoapp.ekosdk.*
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
+import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.ekoapp.sample.socialfeature.constants.UPPERMOST
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
+import com.ekoapp.sample.socialfeature.userfeed.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.processors.PublishProcessor
@@ -24,6 +26,7 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     private val feedsRelay = PublishProcessor.create<Unit>()
     private var userDataIntent: UserData? = null
     private val userFeeds = MutableLiveData<UserFeedsViewSeal>()
+    private val actionLikeRelay = PublishProcessor.create<Boolean>()
 
     val createFeedsActionRelay = SingleLiveData<Unit>()
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
@@ -34,6 +37,7 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
     fun observeFindUsersPage(): SingleLiveData<Unit> = findUsersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
+    fun observeActionLikeRelay() = actionLikeRelay.toLiveData()
 
     fun getIntentUserData(actionRelay: (UserData) -> Unit) {
         userDataIntent?.let(actionRelay::invoke)
@@ -71,5 +75,31 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
 
     fun updateFeeds() {
         feedsRelay.onNext(Unit)
+    }
+
+    fun likeFeeds(item: ReactionData) = if (item.isChecked) addReaction(item) else removeReaction(item)
+
+    private fun removeReaction(item: ReactionData) {
+        item.item.react()
+                .removeReaction(item.text)
+                .doOnSubscribe {
+                    actionLikeRelay.onNext(false)
+                }
+                .doOnError {
+                    actionLikeRelay.onNext(true)
+                }
+                .subscribe()
+    }
+
+    private fun addReaction(item: ReactionData) {
+        item.item.react()
+                .addReaction(item.text)
+                .doOnSubscribe {
+                    actionLikeRelay.onNext(true)
+                }
+                .doOnError {
+                    actionLikeRelay.onNext(false)
+                }
+                .subscribe()
     }
 }

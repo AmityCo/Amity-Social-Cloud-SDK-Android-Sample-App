@@ -9,3 +9,5 @@ const val EXTRA_EDIT_FEEDS = "editFeeds"
 const val EXTRA_USER_DATA = "userData"
 
 const val UPPERMOST = 0
+
+const val ZERO_COUNT = 0

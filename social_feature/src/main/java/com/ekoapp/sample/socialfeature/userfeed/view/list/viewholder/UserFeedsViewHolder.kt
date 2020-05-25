@@ -27,7 +27,7 @@ class UserFeedsViewHolder(itemView: View) : BaseViewHolder<UserFeedsViewData>(it
         val context = itemView.context
         when (item.userFeedsViewSeal) {
             is UserFeedsViewSeal.GetUserFeeds -> {
-                adapter = EkoUserFeedsAdapter(item.viewModel)
+                adapter = EkoUserFeedsAdapter(lifecycleOwner = item.lifecycleOwner, userFeedsViewModel = item.viewModel)
                 RecyclerBuilder(context = context, recyclerView = itemView.recycler_feeds, spaceCount = spaceFeeds)
                         .builder()
                         .build(adapter)
