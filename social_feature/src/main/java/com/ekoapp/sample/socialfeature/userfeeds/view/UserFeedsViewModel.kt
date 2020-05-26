@@ -9,6 +9,7 @@ import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.socialfeature.constants.UPPERMOST
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
+import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,13 +31,13 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
     val findUsersActionRelay = SingleLiveData<Unit>()
     val seeAllUsersActionRelay = SingleLiveData<Unit>()
-    val reactionsSummaryActionRelay = SingleLiveData<Unit>()
+    val reactionsSummaryActionRelay = SingleLiveData<UserReactionData>()
 
     fun observeCreateFeedsPage(): SingleLiveData<Unit> = createFeedsActionRelay
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
     fun observeFindUsersPage(): SingleLiveData<Unit> = findUsersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
-    fun observeReactionsSummaryPage(): SingleLiveData<Unit> = reactionsSummaryActionRelay
+    fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
 
     fun getIntentUserData(actionRelay: (UserData) -> Unit) {
         userDataIntent?.let(actionRelay::invoke)

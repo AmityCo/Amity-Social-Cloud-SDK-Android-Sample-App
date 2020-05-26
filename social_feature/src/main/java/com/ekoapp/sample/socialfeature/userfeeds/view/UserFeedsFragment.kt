@@ -54,8 +54,10 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
             startActivityForResult(intent, REQUEST_CODE_SEE_ALL_USERS)
         })
 
-        viewModel.observeReactionsSummaryPage().observeNotNull(viewLifecycleOwner,{
-            startActivity(Intent(context, ReactionsSummaryFeedsActivity::class.java))
+        viewModel.observeReactionsSummaryPage().observeNotNull(viewLifecycleOwner, {
+            val intent = Intent(context, ReactionsSummaryFeedsActivity::class.java)
+            intent.putExtra(EXTRA_USER_REACTION_DATA, it)
+            startActivityForResult(intent, REQUEST_CODE_REACTIONS_SUMMARY)
         })
     }
 

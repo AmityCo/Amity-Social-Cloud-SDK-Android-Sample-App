@@ -7,6 +7,7 @@ import com.ekoapp.ekosdk.adapter.EkoPostAdapter
 import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.enums.ReactionTypes
+import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
 import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.EkoUserFeedsRenderData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
@@ -34,7 +35,7 @@ class EkoUserFeedsAdapter(private val userFeedsViewModel: UserFeedsViewModel) : 
                         userFeedsViewModel.reactionFeeds(ReactionData(text = ReactionTypes.FAVORITE.text, isChecked = it, item = item))
                     },
                     eventReactionsSummary = {
-                        userFeedsViewModel.reactionsSummaryActionRelay.postValue(Unit)
+                        userFeedsViewModel.reactionsSummaryActionRelay.postValue(UserReactionData(postId = item.postId))
                     },
                     eventLike = {
                         userFeedsViewModel.reactionFeeds(ReactionData(text = ReactionTypes.LIKE.text, isChecked = it, item = item))
