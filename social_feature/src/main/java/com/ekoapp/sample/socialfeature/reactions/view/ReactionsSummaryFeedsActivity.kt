@@ -19,7 +19,10 @@ class ReactionsSummaryFeedsActivity : SingleViewModelActivity<ReactionsSummaryFe
         view_pager_reactions.adapter = adapter
 
         TabLayoutMediator(tab_layout, view_pager_reactions) { tab, position ->
-            tab.text = "OBJECT ${(position + 1)}"
+            viewModel.getTabLayout(position).apply {
+//                tab.icon = ContextCompat.getDrawable(this@ReactionsSummaryFeedsActivity, icon)
+                tab.text = getString(title)
+            }
         }.attach()
     }
 
