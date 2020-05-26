@@ -25,18 +25,20 @@ class ReactionsSummaryFeedsActivity : SingleViewModelActivity<ReactionsSummaryFe
         viewModel.getIntentUserData {
             val adapter = ReactionsSummaryFeedsAdapter(it, supportFragmentManager, lifecycle)
             view_pager_reactions.adapter = adapter
-            viewModel.getPostReactionList(it.postId).observeNotNull(this, { items ->
-                val totalLike = items.filter { item -> item.reactionName == ReactionTypes.LIKE.text }
-                val totalFavorite = items.filter { item -> item.reactionName == ReactionTypes.FAVORITE.text }
-                TabLayoutMediator(tab_layout, view_pager_reactions) { tab, position ->
-                    viewModel.getTabLayout(totalLike = totalLike.size, totalFavorite = totalFavorite.size, position = position).apply {
-                        tab.text = String.format(getString(title), total)
-                    }
-                }.attach()
-            })
+            initTabLayout(viewModel, it)
         }
+    }
 
-
+    private fun initTabLayout(viewModel: ReactionsSummaryFeedsViewModel, it: UserReactionData) {
+        viewModel.getPostReactionList(it.postId).observeNotNull(this, { items ->
+            val totalLike = viewModel.getTotal(items, ReactionTypes.LIKE)
+            val totalFavorite = viewModel.getTotal(items, ReactionTypes.FAVORITE)
+            TabLayoutMediator(tab_layout, view_pager_reactions) { tab, position ->
+                viewModel.getTabLayout(totalLike = totalLike, totalFavorite = totalFavorite, position = position).apply {
+                    tab.text = String.format(getString(title), total)
+                }
+            }.attach()
+        })
     }
 
     override fun getViewModelClass(): Class<ReactionsSummaryFeedsViewModel> {

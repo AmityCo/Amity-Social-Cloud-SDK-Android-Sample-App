@@ -6,6 +6,7 @@ import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.internal.data.model.EkoPostReaction
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.enums.ReactionTypes
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
 import javax.inject.Inject
 
@@ -44,5 +45,9 @@ class ReactionsSummaryFeedsViewModel @Inject constructor() : DisposableViewModel
                 TabLayoutData(icon = R.drawable.ic_see_like, title = R.string.temporarily_like, total = totalLike)
             }
         }
+    }
+
+    fun getTotal(items: List<EkoPostReaction>, reactionTypes: ReactionTypes): Int {
+        return items.filter { item -> item.reactionName == reactionTypes.text }.size
     }
 }
