@@ -7,6 +7,9 @@
     <color name="colorDisable">@color/material_grey_600</color>
     <color name="colorEnable">@color/material_light_white</color>
 
+    <color name="colorFavorite">@color/material_light_white</color>
+    <color name="colorFavorited">@color/colorPrimary</color>
+
     <color name="colorTextEnableMenu">@color/colorEnable</color>
 
 </resources>

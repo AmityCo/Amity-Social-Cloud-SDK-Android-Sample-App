@@ -3,9 +3,11 @@
     <string name="temporarily_full_name">Anonymous</string>
     <string name="temporarily_time">1 second ago</string>
     <string name="temporarily_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="temporarily_favorite">Favorite</string>
     <string name="temporarily_like">Like</string>
     <string name="temporarily_comment">Comment</string>
     <string name="temporarily_share">Share</string>
+    <string name="temporarily_more">More</string>
     <string name="temporarily_what_is_on_your_mind">What\'s on your mind?</string>
     <string name="temporarily_create_post">Create post</string>
     <string name="temporarily_share_feeds_public">Public</string>

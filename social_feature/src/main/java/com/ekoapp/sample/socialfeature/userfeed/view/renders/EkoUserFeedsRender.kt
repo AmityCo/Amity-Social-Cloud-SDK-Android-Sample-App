@@ -15,11 +15,13 @@ fun EkoUserFeedsRenderData.userFeedRender(
         header: HeaderFeedsComponent,
         body: BodyFeedsComponent,
         footer: FooterFeedsComponent,
+        eventFavorite: (Boolean) -> Unit,
         eventLike: (Boolean) -> Unit,
         eventEdit: (EditUserFeedsData) -> Unit,
         eventDelete: (Boolean) -> Unit) {
 
     header.setupView(item)
+    header.favoriteFeeds(eventFavorite::invoke)
     header.editFeeds {
         eventEdit.invoke(
                 EditUserFeedsData(

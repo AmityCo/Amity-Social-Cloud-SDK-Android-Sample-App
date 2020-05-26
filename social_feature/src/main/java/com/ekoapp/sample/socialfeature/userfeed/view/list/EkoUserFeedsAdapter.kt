@@ -29,6 +29,9 @@ class EkoUserFeedsAdapter(private val userFeedsViewModel: UserFeedsViewModel) : 
                     header = itemView.header_feeds,
                     body = itemView.body_feeds,
                     footer = itemView.footer_feeds,
+                    eventFavorite = {
+                        userFeedsViewModel.reactionFeeds(ReactionData(text = ReactionTypes.FAVORITE.text, isChecked = it, item = item))
+                    },
                     eventLike = {
                         userFeedsViewModel.reactionFeeds(ReactionData(text = ReactionTypes.LIKE.text, isChecked = it, item = item))
                     },
