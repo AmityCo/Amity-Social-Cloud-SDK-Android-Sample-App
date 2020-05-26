@@ -43,13 +43,13 @@ class FooterFeedsComponent : ConstraintLayout {
     @SuppressLint("PrivateResource")
     private fun likeView() {
         like_action.image_like.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_like))
-        like_action.image_like.setTint(ContextCompat.getColor(context, R.color.colorDisable))
-        like_action.text_like.setTextColor(ContextCompat.getColor(context, R.color.colorDisable))
+        like_action.image_like.setTint(ContextCompat.getColor(context, R.color.colorLike))
+        like_action.text_like.setTextColor(ContextCompat.getColor(context, R.color.colorLike))
     }
 
     private fun likedView() {
         like_action.image_like.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_liked))
-        like_action.image_like.setTint(ContextCompat.getColor(context, R.color.colorEnable))
-        like_action.text_like.setTextColor(ContextCompat.getColor(context, R.color.colorEnable))
+        like_action.image_like.setTint(ContextCompat.getColor(context, R.color.colorLiked))
+        like_action.text_like.setTextColor(ContextCompat.getColor(context, R.color.colorLiked))
     }
 }

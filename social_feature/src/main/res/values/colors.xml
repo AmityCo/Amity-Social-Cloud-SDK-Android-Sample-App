@@ -8,7 +8,10 @@
     <color name="colorEnable">@color/material_light_white</color>
 
     <color name="colorFavorite">@color/material_light_white</color>
-    <color name="colorFavorited">@color/colorPrimary</color>
+    <color name="colorFavorited">@color/colorAccent</color>
+
+    <color name="colorLike">@color/material_grey_600</color>
+    <color name="colorLiked">@color/colorPrimary</color>
 
     <color name="colorTextEnableMenu">@color/colorEnable</color>
 

@@ -24,4 +24,5 @@
     <string name="temporarily_write_something_to">Write something to %s</string>
     <string name="general_search_see_results_for">See results for %s</string>
     <string name="temporarily_cover">Acquaintances</string>
+    <string name="general_default_zero_count">0</string>
 </resources>

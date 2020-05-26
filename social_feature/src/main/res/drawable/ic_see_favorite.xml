@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item>
+        <shape android:shape="oval">
+
+            <solid
+                android:color="@color/colorAccent"
+                tools:ignore="PrivateResource" />
+
+            <size
+                android:width="@dimen/md_icon_size"
+                android:height="@dimen/md_icon_size"
+                tools:ignore="PrivateResource" />
+
+            <stroke
+                android:width="@dimen/material_component_grid_lists_padding_big"
+                android:color="@color/material_light_black" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_favorited"
+        android:gravity="center" />
+</layer-list>
