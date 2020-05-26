@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view
+package com.ekoapp.sample.socialfeature.userfeeds.view
 
 import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
@@ -13,7 +13,7 @@ import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
-import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsAdapter
+import com.ekoapp.sample.socialfeature.userfeeds.view.list.EkoUserFeedsAdapter
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import kotlinx.android.synthetic.main.activity_user_feeds.*
 import kotlinx.android.synthetic.main.item_touchable_create_feeds.view.*

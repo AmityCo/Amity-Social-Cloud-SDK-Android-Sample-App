@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.users.renders
+package com.ekoapp.sample.socialfeature.users.view.renders
 
 import android.content.Context
 import android.view.View

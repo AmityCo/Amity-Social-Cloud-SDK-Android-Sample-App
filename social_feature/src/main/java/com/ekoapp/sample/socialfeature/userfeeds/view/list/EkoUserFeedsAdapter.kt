@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.list
+package com.ekoapp.sample.socialfeature.userfeeds.view.list
 
 
 import android.view.LayoutInflater
@@ -7,10 +7,10 @@ import com.ekoapp.ekosdk.adapter.EkoPostAdapter
 import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.enums.ReactionTypes
-import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
-import com.ekoapp.sample.socialfeature.userfeed.view.renders.EkoUserFeedsRenderData
-import com.ekoapp.sample.socialfeature.userfeed.view.renders.ReactionData
-import com.ekoapp.sample.socialfeature.userfeed.view.renders.userFeedRender
+import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
+import com.ekoapp.sample.socialfeature.userfeeds.view.renders.EkoUserFeedsRenderData
+import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
+import com.ekoapp.sample.socialfeature.userfeeds.view.renders.userFeedRender
 import kotlinx.android.synthetic.main.item_user_feeds.view.*
 
 class EkoUserFeedsAdapter(private val userFeedsViewModel: UserFeedsViewModel) : EkoPostAdapter<ViewHolder>() {
@@ -32,6 +32,9 @@ class EkoUserFeedsAdapter(private val userFeedsViewModel: UserFeedsViewModel) : 
                     footer = itemView.footer_feeds,
                     eventFavorite = {
                         userFeedsViewModel.reactionFeeds(ReactionData(text = ReactionTypes.FAVORITE.text, isChecked = it, item = item))
+                    },
+                    eventReactionsSummary = {
+                        userFeedsViewModel.reactionsSummaryActionRelay.postValue(Unit)
                     },
                     eventLike = {
                         userFeedsViewModel.reactionFeeds(ReactionData(text = ReactionTypes.LIKE.text, isChecked = it, item = item))

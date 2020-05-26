@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.users.list
+package com.ekoapp.sample.socialfeature.users.view.list
 
 
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import com.ekoapp.ekosdk.adapter.EkoUserAdapter
 import com.ekoapp.sample.core.base.list.ViewHolder
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.users.data.UserData
-import com.ekoapp.sample.socialfeature.users.renders.EkoUsersRenderData
-import com.ekoapp.sample.socialfeature.users.renders.usersRender
 import com.ekoapp.sample.socialfeature.users.view.UsersViewModel
+import com.ekoapp.sample.socialfeature.users.view.renders.EkoUsersRenderData
+import com.ekoapp.sample.socialfeature.users.view.renders.usersRender
 import kotlinx.android.synthetic.main.item_friend_feeds.view.*
 
 class EkoUsersAdapter(private val viewModel: UsersViewModel) : EkoUserAdapter<ViewHolder>() {

@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view
+package com.ekoapp.sample.socialfeature.userfeeds.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.socialfeature.constants.UPPERMOST
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
-import com.ekoapp.sample.socialfeature.userfeed.view.renders.ReactionData
+import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.processors.PublishProcessor
@@ -30,11 +30,13 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
     val findUsersActionRelay = SingleLiveData<Unit>()
     val seeAllUsersActionRelay = SingleLiveData<Unit>()
+    val reactionsSummaryActionRelay = SingleLiveData<Unit>()
 
     fun observeCreateFeedsPage(): SingleLiveData<Unit> = createFeedsActionRelay
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
     fun observeFindUsersPage(): SingleLiveData<Unit> = findUsersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
+    fun observeReactionsSummaryPage(): SingleLiveData<Unit> = reactionsSummaryActionRelay
 
     fun getIntentUserData(actionRelay: (UserData) -> Unit) {
         userDataIntent?.let(actionRelay::invoke)

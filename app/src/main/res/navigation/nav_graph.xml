@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/feedsFragment"
-        android:name="com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsFragment"
+        android:name="com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsFragment"
         android:label="fragment_feeds"
         app:moduleName="social_feature">
         <action

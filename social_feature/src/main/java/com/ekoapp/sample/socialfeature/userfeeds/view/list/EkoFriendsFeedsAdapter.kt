@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.list
+package com.ekoapp.sample.socialfeature.userfeeds.view.list
 
 
 import android.view.LayoutInflater

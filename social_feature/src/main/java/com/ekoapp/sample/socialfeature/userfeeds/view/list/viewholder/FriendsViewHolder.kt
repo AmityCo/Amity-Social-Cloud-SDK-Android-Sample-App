@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder
+package com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder
 
 import android.content.Context
 import android.view.View
@@ -7,7 +7,7 @@ import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoFriendsFeedsAdapter
+import com.ekoapp.sample.socialfeature.userfeeds.view.list.EkoFriendsFeedsAdapter
 import kotlinx.android.synthetic.main.item_friends_feeds.view.*
 
 data class FriendsViewData(

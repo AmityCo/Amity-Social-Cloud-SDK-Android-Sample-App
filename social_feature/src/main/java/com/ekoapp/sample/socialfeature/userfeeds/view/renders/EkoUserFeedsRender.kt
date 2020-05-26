@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.renders
+package com.ekoapp.sample.socialfeature.userfeeds.view.renders
 
 import android.content.Context
 import com.ekoapp.ekosdk.EkoPost
@@ -18,6 +18,7 @@ fun EkoUserFeedsRenderData.userFeedRender(
         reactionsSummary: ReactionsSummaryFeedsComponent,
         footer: FooterFeedsComponent,
         eventFavorite: (Boolean) -> Unit,
+        eventReactionsSummary: () -> Unit,
         eventLike: (Boolean) -> Unit,
         eventEdit: (EditUserFeedsData) -> Unit,
         eventDelete: (Boolean) -> Unit) {
@@ -34,7 +35,9 @@ fun EkoUserFeedsRenderData.userFeedRender(
     header.deleteFeeds(eventDelete::invoke)
 
     body.setupView(item)
+
     reactionsSummary.setupView(item)
+    reactionsSummary.setOnClickListener { eventReactionsSummary.invoke() }
 
     footer.setupView(item)
     footer.likeFeeds(eventLike::invoke)
