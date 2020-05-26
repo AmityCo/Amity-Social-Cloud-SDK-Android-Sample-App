@@ -19,6 +19,7 @@ class ReactionsSummaryFeedsActivity : SingleViewModelActivity<ReactionsSummaryFe
     }
 
     private fun setupView(viewModel: ReactionsSummaryFeedsViewModel) {
+        view_pager_reactions.offscreenPageLimit = 1
         viewModel.getIntentUserData {
             val adapter = ReactionsSummaryFeedsAdapter(it, supportFragmentManager, lifecycle)
             view_pager_reactions.adapter = adapter

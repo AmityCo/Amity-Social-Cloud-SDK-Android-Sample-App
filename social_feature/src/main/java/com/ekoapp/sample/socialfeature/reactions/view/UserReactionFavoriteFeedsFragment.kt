@@ -15,6 +15,10 @@ class UserReactionFavoriteFeedsFragment(val item: UserReactionData) : SingleView
     private val spaceUsers = 1
     lateinit var adapter: EkoUserReactionFeedsAdapter
 
+    companion object {
+        fun newInstance(item: UserReactionData) = UserReactionFavoriteFeedsFragment(item = item)
+    }
+
     override fun getLayout(): Int {
         return R.layout.fragment_user_reactions
     }

@@ -13,9 +13,9 @@ class ReactionsSummaryFeedsAdapter(val item: UserReactionData, fragmentManager: 
     private val reactionPages = 2
 
     override fun createFragment(position: Int): Fragment = when (position) {
-        0 -> UserReactionLikeFeedsFragment(item = item)
-        1 -> UserReactionFavoriteFeedsFragment(item = item)
-        else -> UserReactionLikeFeedsFragment(item = item)
+        0 -> UserReactionLikeFeedsFragment.newInstance(item)
+        1 -> UserReactionFavoriteFeedsFragment.newInstance(item)
+        else -> UserReactionLikeFeedsFragment.newInstance(item)
     }
 
     override fun getItemCount(): Int = reactionPages
