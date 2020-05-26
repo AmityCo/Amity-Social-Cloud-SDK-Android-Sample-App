@@ -5,6 +5,7 @@ import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.socialfeature.components.BodyFeedsComponent
 import com.ekoapp.sample.socialfeature.components.FooterFeedsComponent
 import com.ekoapp.sample.socialfeature.components.HeaderFeedsComponent
+import com.ekoapp.sample.socialfeature.components.ReactionsSummaryFeedsComponent
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 
@@ -14,6 +15,7 @@ data class EkoUserFeedsRenderData(val context: Context, val item: EkoPost)
 fun EkoUserFeedsRenderData.userFeedRender(
         header: HeaderFeedsComponent,
         body: BodyFeedsComponent,
+        reactionsSummary: ReactionsSummaryFeedsComponent,
         footer: FooterFeedsComponent,
         eventFavorite: (Boolean) -> Unit,
         eventLike: (Boolean) -> Unit,
@@ -32,6 +34,7 @@ fun EkoUserFeedsRenderData.userFeedRender(
     header.deleteFeeds(eventDelete::invoke)
 
     body.setupView(item)
+    reactionsSummary.setupView(item)
 
     footer.setupView(item)
     footer.likeFeeds(eventLike::invoke)

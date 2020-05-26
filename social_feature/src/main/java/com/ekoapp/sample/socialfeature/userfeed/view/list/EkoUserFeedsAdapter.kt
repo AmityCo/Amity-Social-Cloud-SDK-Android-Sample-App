@@ -28,6 +28,7 @@ class EkoUserFeedsAdapter(private val userFeedsViewModel: UserFeedsViewModel) : 
             EkoUserFeedsRenderData(context, this).userFeedRender(
                     header = itemView.header_feeds,
                     body = itemView.body_feeds,
+                    reactionsSummary = itemView.reactions_summary,
                     footer = itemView.footer_feeds,
                     eventFavorite = {
                         userFeedsViewModel.reactionFeeds(ReactionData(text = ReactionTypes.FAVORITE.text, isChecked = it, item = item))
