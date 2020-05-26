@@ -15,10 +15,6 @@ class UserReactionFavoriteFeedsFragment(val item: UserReactionData) : SingleView
     private val spaceUsers = 1
     lateinit var adapter: EkoUserReactionFeedsAdapter
 
-    companion object {
-        fun newInstance(item: UserReactionData) = UserReactionFavoriteFeedsFragment(item = item)
-    }
-
     override fun getLayout(): Int {
         return R.layout.fragment_user_reactions
     }
@@ -32,7 +28,7 @@ class UserReactionFavoriteFeedsFragment(val item: UserReactionData) : SingleView
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_user_reactions, spaceCount = spaceUsers)
                 .builder()
                 .buildMultiView(adapter)
-        viewModel.getPostReactionList(item.postId, ReactionTypes.FAVORITE.text).observeNotNull(viewLifecycleOwner, {
+        viewModel.getPostReactionListByName(item.postId, ReactionTypes.FAVORITE.text).observeNotNull(viewLifecycleOwner, {
             adapter.submitList(it)
         })
     }

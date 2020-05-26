@@ -15,10 +15,6 @@ class UserReactionLikeFeedsFragment(val item: UserReactionData) : SingleViewMode
     private val spaceUsers = 1
     lateinit var adapter: EkoUserReactionFeedsAdapter
 
-    companion object {
-        fun newInstance(item: UserReactionData) = UserReactionLikeFeedsFragment(item = item)
-    }
-
     override fun getLayout(): Int {
         return R.layout.fragment_user_reactions
     }
@@ -32,7 +28,7 @@ class UserReactionLikeFeedsFragment(val item: UserReactionData) : SingleViewMode
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_user_reactions, spaceCount = spaceUsers)
                 .builder()
                 .buildMultiView(adapter)
-        viewModel.getPostReactionList(item.postId, ReactionTypes.LIKE.text).observeNotNull(viewLifecycleOwner, {
+        viewModel.getPostReactionListByName(item.postId, ReactionTypes.LIKE.text).observeNotNull(viewLifecycleOwner, {
             adapter.submitList(it)
         })
     }

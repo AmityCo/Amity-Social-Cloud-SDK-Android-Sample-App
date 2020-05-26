@@ -5,6 +5,8 @@
     <string name="temporarily_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="temporarily_favorite">Favorite</string>
     <string name="temporarily_like">Like</string>
+    <string name="temporarily_total_favorite">Favorite %s</string>
+    <string name="temporarily_total_like">Like %s</string>
     <string name="temporarily_comment">Comment</string>
     <string name="temporarily_share">Share</string>
     <string name="temporarily_more">More</string>
