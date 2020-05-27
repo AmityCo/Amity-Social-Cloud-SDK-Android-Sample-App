@@ -1,11 +1,13 @@
 package com.ekoapp.sample.socialfeature.userfeeds.view.renders
 
 import android.content.Context
+import android.view.View
 import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.socialfeature.components.BodyFeedsComponent
 import com.ekoapp.sample.socialfeature.components.FooterFeedsComponent
 import com.ekoapp.sample.socialfeature.components.HeaderFeedsComponent
 import com.ekoapp.sample.socialfeature.components.ReactionsSummaryFeedsComponent
+import com.ekoapp.sample.socialfeature.constants.ZERO_COUNT
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 
@@ -36,8 +38,13 @@ fun EkoUserFeedsRenderData.userFeedRender(
 
     body.setupView(item)
 
-    reactionsSummary.setupView(item)
-    reactionsSummary.setOnClickListener { eventReactionsSummary.invoke() }
+    if (item.reactionCount == ZERO_COUNT) {
+        reactionsSummary.visibility = View.GONE
+    } else {
+        reactionsSummary.visibility = View.VISIBLE
+        reactionsSummary.setupView(item)
+        reactionsSummary.setOnClickListener { eventReactionsSummary.invoke() }
+    }
 
     footer.setupView(item)
     footer.likeFeeds(eventLike::invoke)

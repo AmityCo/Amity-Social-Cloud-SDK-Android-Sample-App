@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
+        android:paddingBottom="@dimen/material_component_cards_supporting_text_top_padding"
         app:layout_constraintEnd_toEndOf="@id/header_feeds"
         app:layout_constraintStart_toStartOf="@id/header_feeds"
         app:layout_constraintTop_toBottomOf="@id/header_feeds" />
