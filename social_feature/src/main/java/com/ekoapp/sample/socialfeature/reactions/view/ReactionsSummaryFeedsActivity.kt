@@ -17,6 +17,7 @@ class ReactionsSummaryFeedsActivity : SingleViewModelActivity<ReactionsSummaryFe
     override fun bindViewModel(viewModel: ReactionsSummaryFeedsViewModel) {
         val item = intent.extras?.getParcelable<UserReactionData>(EXTRA_USER_REACTION_DATA)
         viewModel.setupIntent(item)
+        setupAppBar()
         setupView(viewModel)
     }
 
@@ -27,6 +28,11 @@ class ReactionsSummaryFeedsActivity : SingleViewModelActivity<ReactionsSummaryFe
             view_pager_reactions.adapter = adapter
             initTabLayout(viewModel, it)
         }
+    }
+
+    private fun setupAppBar() {
+        appbar_reactions_summary_feeds.setup(this, true)
+        appbar_reactions_summary_feeds.setTitle(getString(R.string.temporarily_app_bar_reactions_summary))
     }
 
     private fun initTabLayout(viewModel: ReactionsSummaryFeedsViewModel, it: UserReactionData) {
