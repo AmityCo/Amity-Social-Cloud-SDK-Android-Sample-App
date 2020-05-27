@@ -7,13 +7,15 @@ import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.EkoFriendsFeedsAdapter
 import kotlinx.android.synthetic.main.item_friends_feeds.view.*
 
 data class FriendsViewData(
         val items: PagedList<EkoUser>,
         val actionFindUsers: () -> Unit,
-        val actionSeeAllUsers: () -> Unit)
+        val actionSeeAllUsers: () -> Unit,
+        val viewModel: UserFeedsViewModel)
 
 class FriendsViewHolder(itemView: View) : BaseViewHolder<FriendsViewData>(itemView) {
     private val spaceFriends = 3
@@ -28,12 +30,11 @@ class FriendsViewHolder(itemView: View) : BaseViewHolder<FriendsViewData>(itemVi
         itemView.text_find_friends.setOnClickListener {
             item.actionFindUsers.invoke()
         }
-        itemView.recycler_feeds
-        context.renderList(item.items)
+        context.renderList(item.items, item.viewModel)
     }
 
-    private fun Context.renderList(item: PagedList<EkoUser>) {
-        adapter = EkoFriendsFeedsAdapter()
+    private fun Context.renderList(item: PagedList<EkoUser>, viewModel: UserFeedsViewModel) {
+        adapter = EkoFriendsFeedsAdapter(viewModel = viewModel)
         RecyclerBuilder(context = this, recyclerView = itemView.recycler_feeds, spaceCount = spaceFriends)
                 .builder()
                 .build(adapter)

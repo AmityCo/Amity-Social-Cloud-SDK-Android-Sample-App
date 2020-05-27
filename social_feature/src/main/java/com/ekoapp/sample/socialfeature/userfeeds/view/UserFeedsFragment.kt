@@ -59,6 +59,12 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
             intent.putExtra(EXTRA_USER_REACTION_DATA, it)
             startActivityForResult(intent, REQUEST_CODE_REACTIONS_SUMMARY)
         })
+
+        viewModel.observeUserPage().observeNotNull(viewLifecycleOwner, {
+            val intent = Intent(context, UserFeedsActivity::class.java)
+            intent.putExtra(EXTRA_USER_DATA, it)
+            startActivityForResult(intent, REQUEST_CODE_USER_FEEDS)
+        })
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {

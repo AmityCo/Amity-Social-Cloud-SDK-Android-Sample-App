@@ -30,12 +30,14 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     val createFeedsActionRelay = SingleLiveData<Unit>()
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
     val findUsersActionRelay = SingleLiveData<Unit>()
+    val usersActionRelay = SingleLiveData<UserData>()
     val seeAllUsersActionRelay = SingleLiveData<Unit>()
     val reactionsSummaryActionRelay = SingleLiveData<UserReactionData>()
 
     fun observeCreateFeedsPage(): SingleLiveData<Unit> = createFeedsActionRelay
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
     fun observeFindUsersPage(): SingleLiveData<Unit> = findUsersActionRelay
+    fun observeUserPage(): SingleLiveData<UserData> = usersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
 

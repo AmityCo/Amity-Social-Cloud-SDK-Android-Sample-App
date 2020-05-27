@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_like_action"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/material_light_black"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/image_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
+        android:src="@drawable/ic_user"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_reaction"
+        android:layout_width="@dimen/material_layout_icon"
+        android:layout_height="@dimen/material_layout_icon"
+        android:contentDescription="@string/temporarily_like"
+        android:src="@drawable/ic_see_like"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="PrivateResource" />
+
+</merge>

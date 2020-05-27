@@ -14,7 +14,7 @@ class EkoUserReactionFeedsAdapter(private val context: Context,
                                   private val viewModel: ReactionsSummaryFeedsViewModel) : EkoPostReactionAdapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_user, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_user_reaction, parent, false)
         return UserReactionFeedsViewHolder(view)
     }
 

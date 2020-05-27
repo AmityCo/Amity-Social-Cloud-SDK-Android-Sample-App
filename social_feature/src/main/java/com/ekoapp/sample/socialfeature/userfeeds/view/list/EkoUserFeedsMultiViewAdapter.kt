@@ -71,7 +71,8 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
                             },
                             actionSeeAllUsers = {
                                 viewModel.seeAllUsersActionRelay.postValue(Unit)
-                            }))
+                            },
+                            viewModel = viewModel))
                 })
             }
             is CreateFeedsViewHolder -> {
