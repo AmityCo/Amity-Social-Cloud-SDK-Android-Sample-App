@@ -5,8 +5,9 @@ import com.ekoapp.sample.core.di.SplitInstallModule
 import com.ekoapp.sample.core.di.scope.ActivityScope
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
+import com.ekoapp.sample.socialfeature.reactions.view.ReactionsSummaryFeedsActivity
 import com.ekoapp.sample.socialfeature.search.SearchUsersActivity
-import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsActivity
+import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsActivity
 import com.ekoapp.sample.socialfeature.users.view.SeeAllUsersActivity
 import dagger.Component
 
@@ -21,4 +22,5 @@ interface SocialActivityComponent {
     fun inject(activity: UserFeedsActivity)
     fun inject(activity: SearchUsersActivity)
     fun inject(activity: SeeAllUsersActivity)
+    fun inject(activity: ReactionsSummaryFeedsActivity)
 }

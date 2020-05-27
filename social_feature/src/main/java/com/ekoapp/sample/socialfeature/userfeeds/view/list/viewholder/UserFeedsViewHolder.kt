@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder
+package com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder
 
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
@@ -8,9 +8,9 @@ import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
-import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
-import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewSeal
-import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsAdapter
+import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
+import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewSeal
+import com.ekoapp.sample.socialfeature.userfeeds.view.list.EkoUserFeedsAdapter
 import kotlinx.android.synthetic.main.item_feeds.view.*
 
 data class UserFeedsViewData(
@@ -27,7 +27,7 @@ class UserFeedsViewHolder(itemView: View) : BaseViewHolder<UserFeedsViewData>(it
         val context = itemView.context
         when (item.userFeedsViewSeal) {
             is UserFeedsViewSeal.GetUserFeeds -> {
-                adapter = EkoUserFeedsAdapter(item.viewModel)
+                adapter = EkoUserFeedsAdapter(userFeedsViewModel = item.viewModel)
                 RecyclerBuilder(context = context, recyclerView = itemView.recycler_feeds, spaceCount = spaceFeeds)
                         .builder()
                         .build(adapter)

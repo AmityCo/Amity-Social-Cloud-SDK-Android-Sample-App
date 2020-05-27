@@ -9,9 +9,9 @@ import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_USER_FEEDS
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
-import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsActivity
+import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsActivity
 import com.ekoapp.sample.socialfeature.users.data.UserData
-import com.ekoapp.sample.socialfeature.users.list.EkoUsersAdapter
+import com.ekoapp.sample.socialfeature.users.view.list.EkoUsersAdapter
 import kotlinx.android.synthetic.main.activity_see_all_users.*
 import kotlinx.android.synthetic.main.fragment_users.header_users
 import kotlinx.android.synthetic.main.fragment_users.recycler_users

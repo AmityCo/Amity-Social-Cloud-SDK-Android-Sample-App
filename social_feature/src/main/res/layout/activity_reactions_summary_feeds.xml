@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_light_black"
+    android:orientation="vertical">
+
+    <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
+        android:id="@+id/appbar_reactions_summary_feeds"
+        style="@style/AppTheme.Appbar"
+        android:background="@color/material_light_black" />
+
+    <View
+        android:id="@+id/view_grid_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/material_component_grid_lists_padding_small"
+        android:background="@color/material_light_white"
+        tools:ignore="PrivateResource" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/material_light_black"
+        app:tabInlineLabel="true"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/colorDisable" />
+
+    <View
+        android:id="@+id/view_grid_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/material_component_grid_lists_padding_small"
+        android:background="@color/material_grey_600"
+        tools:ignore="PrivateResource" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_reactions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" />
+
+</LinearLayout>

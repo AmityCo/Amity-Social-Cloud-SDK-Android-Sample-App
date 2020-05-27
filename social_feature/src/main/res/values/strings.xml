@@ -3,9 +3,13 @@
     <string name="temporarily_full_name">Anonymous</string>
     <string name="temporarily_time">1 second ago</string>
     <string name="temporarily_description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="temporarily_favorite">Favorite</string>
     <string name="temporarily_like">Like</string>
+    <string name="temporarily_total_favorite">Favorite %s</string>
+    <string name="temporarily_total_like">Like %s</string>
     <string name="temporarily_comment">Comment</string>
     <string name="temporarily_share">Share</string>
+    <string name="temporarily_more">More</string>
     <string name="temporarily_what_is_on_your_mind">What\'s on your mind?</string>
     <string name="temporarily_create_post">Create post</string>
     <string name="temporarily_share_feeds_public">Public</string>
@@ -22,4 +26,6 @@
     <string name="temporarily_write_something_to">Write something to %s</string>
     <string name="general_search_see_results_for">See results for %s</string>
     <string name="temporarily_cover">Acquaintances</string>
+    <string name="general_default_zero_count">0</string>
+    <string name="temporarily_app_bar_reactions_summary">People who reacted</string>
 </resources>

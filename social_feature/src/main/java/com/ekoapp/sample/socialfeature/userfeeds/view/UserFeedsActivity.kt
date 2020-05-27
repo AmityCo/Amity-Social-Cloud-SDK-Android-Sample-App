@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view
+package com.ekoapp.sample.socialfeature.userfeeds.view
 
 import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
@@ -6,14 +6,12 @@ import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.EXTRA_EDIT_FEEDS
-import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_CREATE_FEEDS
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_EDIT_FEEDS
+import com.ekoapp.sample.socialfeature.constants.*
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
-import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsAdapter
+import com.ekoapp.sample.socialfeature.reactions.view.ReactionsSummaryFeedsActivity
+import com.ekoapp.sample.socialfeature.userfeeds.view.list.EkoUserFeedsAdapter
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import kotlinx.android.synthetic.main.activity_user_feeds.*
 import kotlinx.android.synthetic.main.item_touchable_create_feeds.view.*
@@ -62,6 +60,12 @@ class UserFeedsActivity : SingleViewModelActivity<UserFeedsViewModel>() {
             val intent = Intent(this, EditFeedsActivity::class.java)
             intent.putExtra(EXTRA_EDIT_FEEDS, it)
             startActivityForResult(intent, REQUEST_CODE_EDIT_FEEDS)
+        })
+
+        viewModel.observeReactionsSummaryPage().observeNotNull(this, {
+            val intent = Intent(this, ReactionsSummaryFeedsActivity::class.java)
+            intent.putExtra(EXTRA_USER_REACTION_DATA, it)
+            startActivityForResult(intent, REQUEST_CODE_REACTIONS_SUMMARY)
         })
     }
 

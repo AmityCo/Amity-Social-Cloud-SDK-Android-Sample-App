@@ -7,10 +7,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.sample.socialfeature.R
 
 
-class ActionFeedsComponent : ConstraintLayout {
+class AvatarReactionComponent : ConstraintLayout {
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.component_action_feeds, this, true)
+        LayoutInflater.from(context).inflate(R.layout.component_avatar_reaction, this, true)
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)

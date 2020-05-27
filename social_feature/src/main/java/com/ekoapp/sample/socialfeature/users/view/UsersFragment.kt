@@ -9,8 +9,8 @@ import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_USER_FEEDS
 import com.ekoapp.sample.socialfeature.di.DaggerSocialFragmentComponent
-import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsActivity
-import com.ekoapp.sample.socialfeature.users.list.EkoUsersAdapter
+import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsActivity
+import com.ekoapp.sample.socialfeature.users.view.list.EkoUsersAdapter
 import kotlinx.android.synthetic.main.fragment_users.*
 
 class UsersFragment : SingleViewModelFragment<UsersViewModel>() {

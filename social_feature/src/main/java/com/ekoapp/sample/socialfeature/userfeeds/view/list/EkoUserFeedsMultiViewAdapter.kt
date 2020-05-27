@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.list
+package com.ekoapp.sample.socialfeature.userfeeds.view.list
 
 
 import android.content.Context
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.userfeed.view.UserFeedsViewModel
-import com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder.*
+import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
+import com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder.*
 
 class EkoUserFeedsMultiViewAdapter(private val context: Context,
                                    private val lifecycleOwner: LifecycleOwner,
@@ -71,7 +71,8 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
                             },
                             actionSeeAllUsers = {
                                 viewModel.seeAllUsersActionRelay.postValue(Unit)
-                            }))
+                            },
+                            viewModel = viewModel))
                 })
             }
             is CreateFeedsViewHolder -> {

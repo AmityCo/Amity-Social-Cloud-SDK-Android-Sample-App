@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view
+package com.ekoapp.sample.socialfeature.userfeeds.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +9,8 @@ import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.socialfeature.constants.UPPERMOST
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
+import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
+import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.processors.PublishProcessor
@@ -28,12 +30,16 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     val createFeedsActionRelay = SingleLiveData<Unit>()
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
     val findUsersActionRelay = SingleLiveData<Unit>()
+    val usersActionRelay = SingleLiveData<UserData>()
     val seeAllUsersActionRelay = SingleLiveData<Unit>()
+    val reactionsSummaryActionRelay = SingleLiveData<UserReactionData>()
 
     fun observeCreateFeedsPage(): SingleLiveData<Unit> = createFeedsActionRelay
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
     fun observeFindUsersPage(): SingleLiveData<Unit> = findUsersActionRelay
+    fun observeUserPage(): SingleLiveData<UserData> = usersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
+    fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
 
     fun getIntentUserData(actionRelay: (UserData) -> Unit) {
         userDataIntent?.let(actionRelay::invoke)
@@ -71,5 +77,19 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
 
     fun updateFeeds() {
         feedsRelay.onNext(Unit)
+    }
+
+    fun reactionFeeds(item: ReactionData) = if (item.isChecked) addReaction(item) else removeReaction(item)
+
+    private fun removeReaction(item: ReactionData) {
+        item.item.react()
+                .removeReaction(item.text)
+                .subscribe()
+    }
+
+    private fun addReaction(item: ReactionData) {
+        item.item.react()
+                .addReaction(item.text)
+                .subscribe()
     }
 }

@@ -19,15 +19,15 @@
         android:id="@+id/text_full_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
-        android:layout_marginEnd="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
+        android:layout_marginStart="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+        android:layout_marginEnd="@dimen/material_component_bottom_sheet_edge_left_right_margins"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/temporarily_full_name"
         android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_body1"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/image_more_horiz"
+        app:layout_constraintEnd_toStartOf="@+id/image_favorite"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@id/avatar"
         tools:ignore="PrivateResource" />
@@ -47,9 +47,21 @@
         tools:ignore="PrivateResource" />
 
     <ImageView
+        android:id="@+id/image_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/material_component_bottom_sheet_edge_left_right_margins"
+        android:contentDescription="@string/temporarily_favorite"
+        android:src="@drawable/ic_favorite"
+        android:tint="@color/material_light_white"
+        app:layout_constraintEnd_toStartOf="@id/image_more_horiz"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
         android:id="@+id/image_more_horiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/temporarily_more"
         android:src="@drawable/ic_more_horiz"
         android:tint="@color/material_light_white"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view
+package com.ekoapp.sample.socialfeature.userfeeds.view
 
 import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
@@ -10,8 +10,9 @@ import com.ekoapp.sample.socialfeature.constants.*
 import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.di.DaggerSocialFragmentComponent
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
+import com.ekoapp.sample.socialfeature.reactions.view.ReactionsSummaryFeedsActivity
 import com.ekoapp.sample.socialfeature.search.SearchUsersActivity
-import com.ekoapp.sample.socialfeature.userfeed.view.list.EkoUserFeedsMultiViewAdapter
+import com.ekoapp.sample.socialfeature.userfeeds.view.list.EkoUserFeedsMultiViewAdapter
 import com.ekoapp.sample.socialfeature.users.view.SeeAllUsersActivity
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
 
@@ -51,6 +52,18 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
             val intent = Intent(context, SeeAllUsersActivity::class.java)
             intent.putExtra(EXTRA_USER_DATA, viewModel.getMyProfile())
             startActivityForResult(intent, REQUEST_CODE_SEE_ALL_USERS)
+        })
+
+        viewModel.observeReactionsSummaryPage().observeNotNull(viewLifecycleOwner, {
+            val intent = Intent(context, ReactionsSummaryFeedsActivity::class.java)
+            intent.putExtra(EXTRA_USER_REACTION_DATA, it)
+            startActivityForResult(intent, REQUEST_CODE_REACTIONS_SUMMARY)
+        })
+
+        viewModel.observeUserPage().observeNotNull(viewLifecycleOwner, {
+            val intent = Intent(context, UserFeedsActivity::class.java)
+            intent.putExtra(EXTRA_USER_DATA, it)
+            startActivityForResult(intent, REQUEST_CODE_USER_FEEDS)
         })
     }
 

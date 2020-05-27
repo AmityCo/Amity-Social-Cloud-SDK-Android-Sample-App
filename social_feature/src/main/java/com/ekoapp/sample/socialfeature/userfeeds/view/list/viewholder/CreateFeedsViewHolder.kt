@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.userfeed.view.list.viewholder
+package com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder
 
 import android.view.View
 import com.ekoapp.sample.core.base.list.BaseViewHolder
