@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import com.ekoapp.ekosdk.adapter.EkoPostReactionAdapter
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.reactions.view.ReactionsSummaryFeedsViewModel
 import com.ekoapp.sample.socialfeature.reactions.view.list.viewholder.UserReactionFeedsViewHolder
 
-class EkoUserReactionFeedsAdapter(private val context: Context,
-                                  private val viewModel: ReactionsSummaryFeedsViewModel) : EkoPostReactionAdapter<BaseViewHolder<*>>() {
+class EkoUserReactionFeedsAdapter(private val context: Context) : EkoPostReactionAdapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val view = LayoutInflater.from(context).inflate(R.layout.item_user_reaction, parent, false)
@@ -19,7 +17,7 @@ class EkoUserReactionFeedsAdapter(private val context: Context,
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        val item = getItem(position)?.apply {
+        getItem(position)?.apply {
             when (holder) {
                 is UserReactionFeedsViewHolder -> {
                     holder.bind(item = this)
