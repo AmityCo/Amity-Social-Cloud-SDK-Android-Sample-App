@@ -24,30 +24,24 @@ sealed class UserFeedsViewSeal {
 
 class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     private val feedsRelay = PublishProcessor.create<Unit>()
-    private var userDataIntent: UserData? = null
+    private lateinit var userDataIntent: UserData
     private val userFeeds = MutableLiveData<UserFeedsViewSeal>()
 
-    val createFeedsActionRelay = SingleLiveData<Unit>()
+    val createFeedsActionRelay = SingleLiveData<UserData>()
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
     val findUsersActionRelay = SingleLiveData<Unit>()
     val usersActionRelay = SingleLiveData<UserData>()
     val seeAllUsersActionRelay = SingleLiveData<Unit>()
     val reactionsSummaryActionRelay = SingleLiveData<UserReactionData>()
 
-    fun observeCreateFeedsPage(): SingleLiveData<Unit> = createFeedsActionRelay
+    fun observeCreateFeedsPage(): SingleLiveData<UserData> = createFeedsActionRelay
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
     fun observeFindUsersPage(): SingleLiveData<Unit> = findUsersActionRelay
     fun observeUserPage(): SingleLiveData<UserData> = usersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
 
-    fun getIntentUserData(actionRelay: (UserData) -> Unit) {
-        userDataIntent?.let(actionRelay::invoke)
-    }
-
-    fun getMyProfile() = UserData(userId = EkoClient.getUserId())
-
-    fun executeUserFeeds(data: UserData): LiveData<UserFeedsViewSeal> {
+    fun bindUserFeedsSeal(data: UserData): LiveData<UserFeedsViewSeal> {
         userFeeds.postValue(UserFeedsViewSeal.GetUserFeeds(data = getUserFeeds(data)))
         feedsRelay
                 .subscribeOn(Schedulers.io())
@@ -61,7 +55,7 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
 
     private fun getUserFeeds(data: UserData) = EkoClient.newFeedRepository().getUserFeed(data.userId, EkoUserFeedSortOption.LAST_CREATED)
 
-    fun getUserList(): LiveData<PagedList<EkoUser>> {
+    fun bindUserList(): LiveData<PagedList<EkoUser>> {
         return EkoClient.newUserRepository().getAllUsers(EkoUserSortOption.DISPLAYNAME)
     }
 
@@ -72,7 +66,12 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     }
 
     fun setupIntent(data: UserData?) {
-        userDataIntent = data
+        userDataIntent = data ?: UserData(userId = EkoClient.getUserId())
+    }
+
+    fun getIntentUserData(actionRelay: (UserData) -> Unit): UserData {
+        userDataIntent.let(actionRelay::invoke)
+        return userDataIntent
     }
 
     fun updateFeeds() {
