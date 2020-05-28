@@ -11,11 +11,14 @@ import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder.*
+import com.ekoapp.sample.socialfeature.users.data.UserData
 
-class EkoUserFeedsMultiViewAdapter(private val context: Context,
-                                   private val lifecycleOwner: LifecycleOwner,
-                                   private val viewModel: UserFeedsViewModel) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+class MainUserFeedsAdapter(private val context: Context,
+                           private val lifecycleOwner: LifecycleOwner,
+                           private val viewModel: UserFeedsViewModel) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+
     private val sections = ArrayList<Any>()
+    private val userData: UserData = viewModel.getIntentUserData { }
 
     companion object {
         private const val TYPE_PROFILE = 0
@@ -34,23 +37,19 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         return when (viewType) {
             TYPE_PROFILE -> {
-                val view = LayoutInflater.from(context)
-                        .inflate(R.layout.item_profile_feeds, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_profile_feeds, parent, false)
                 ProfileViewHolder(view)
             }
             TYPE_FRIENDS -> {
-                val view = LayoutInflater.from(context)
-                        .inflate(R.layout.item_friends_feeds, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_friends_feeds, parent, false)
                 FriendsViewHolder(view)
             }
             TYPE_CREATE_FEEDS -> {
-                val view = LayoutInflater.from(context)
-                        .inflate(R.layout.item_touchable_create_feeds, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_touchable_create_feeds, parent, false)
                 CreateFeedsViewHolder(view)
             }
             TYPE_USER_FEEDS -> {
-                val view = LayoutInflater.from(context)
-                        .inflate(R.layout.item_feeds, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_feeds, parent, false)
                 UserFeedsViewHolder(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
@@ -60,10 +59,10 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         when (holder) {
             is ProfileViewHolder -> {
-                holder.bind(viewModel.getMyProfile())
+                holder.bind(userData)
             }
             is FriendsViewHolder -> {
-                viewModel.getUserList().observeNotNull(lifecycleOwner, {
+                viewModel.bindUserList().observeNotNull(lifecycleOwner, {
                     holder.bind(FriendsViewData(
                             items = it,
                             actionFindUsers = {
@@ -76,10 +75,10 @@ class EkoUserFeedsMultiViewAdapter(private val context: Context,
                 })
             }
             is CreateFeedsViewHolder -> {
-                holder.bind { viewModel.createFeedsActionRelay.postValue(Unit) }
+                holder.bind { viewModel.createFeedsActionRelay.postValue(userData) }
             }
             is UserFeedsViewHolder -> {
-                viewModel.executeUserFeeds(viewModel.getMyProfile()).observeNotNull(lifecycleOwner, {
+                viewModel.bindUserFeedsSeal(userData).observeNotNull(lifecycleOwner, {
                     holder.bind(UserFeedsViewData(lifecycleOwner = lifecycleOwner, userFeedsViewSeal = it, viewModel = viewModel))
                 })
             }
