@@ -28,7 +28,9 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
 
-    fun bindUserFeeds(data: UserData) = EkoClient.newFeedRepository().getUserFeed(data.userId, EkoUserFeedSortOption.LAST_CREATED)
+    fun bindUserFeeds(data: UserData): LiveData<PagedList<EkoPost>> {
+        return EkoClient.newFeedRepository().getUserFeed(data.userId, EkoUserFeedSortOption.LAST_CREATED)
+    }
 
     fun bindUserList(): LiveData<PagedList<EkoUser>> {
         return EkoClient.newUserRepository().getAllUsers(EkoUserSortOption.DISPLAYNAME)
