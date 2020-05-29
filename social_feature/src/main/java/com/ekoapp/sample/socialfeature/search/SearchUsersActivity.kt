@@ -46,7 +46,7 @@ class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
             var newKeyword = keyword
             viewModel.getSearchUserList(newKeyword).observeNotNull(this, {
                 if (newKeyword.isNotEmpty()) {
-                    adapter = EkoUsersAdapter(viewModel)
+                    adapter = EkoUsersAdapter(this, viewModel)
                     RecyclerBuilder(context = this, recyclerView = recycler_users, spaceCount = spaceUsers)
                             .builder()
                             .build(adapter)

@@ -49,7 +49,7 @@ class MainUserFeedsAdapter(private val context: Context,
                 CreateFeedsViewHolder(view)
             }
             TYPE_USER_FEEDS -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.item_feeds, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_user_feeds, parent, false)
                 UserFeedsViewHolder(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
@@ -79,7 +79,11 @@ class MainUserFeedsAdapter(private val context: Context,
             }
             is UserFeedsViewHolder -> {
                 viewModel.bindUserFeedsSeal(userData).observeNotNull(lifecycleOwner, {
-                    holder.bind(UserFeedsViewData(lifecycleOwner = lifecycleOwner, userFeedsViewSeal = it, viewModel = viewModel))
+                    holder.bind(UserFeedsViewData(
+                            context = context,
+                            lifecycleOwner = lifecycleOwner,
+                            userFeedsViewSeal = it,
+                            viewModel = viewModel))
                 })
             }
             else -> throw IllegalArgumentException()

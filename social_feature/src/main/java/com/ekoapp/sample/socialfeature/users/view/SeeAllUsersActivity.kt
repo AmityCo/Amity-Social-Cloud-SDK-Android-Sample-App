@@ -40,7 +40,7 @@ class SeeAllUsersActivity : SingleViewModelActivity<UsersViewModel>() {
     }
 
     private fun renderList(viewModel: UsersViewModel) {
-        adapter = EkoUsersAdapter(viewModel)
+        adapter = EkoUsersAdapter(this, viewModel)
         RecyclerBuilder(context = this, recyclerView = recycler_users, spaceCount = spaceUsers)
                 .builder()
                 .build(adapter)

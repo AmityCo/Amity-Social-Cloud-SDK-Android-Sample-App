@@ -1,6 +1,5 @@
 package com.ekoapp.sample.socialfeature.userfeeds.view.renders
 
-import android.content.Context
 import android.view.View
 import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.socialfeature.components.BodyFeedsComponent
@@ -12,7 +11,7 @@ import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 
 data class ReactionData(val text: String, val isChecked: Boolean, val item: EkoPost)
-data class EkoUserFeedsRenderData(val context: Context, val item: EkoPost)
+data class EkoUserFeedsRenderData(val item: EkoPost)
 
 fun EkoUserFeedsRenderData.userFeedRender(
         header: HeaderFeedsComponent,

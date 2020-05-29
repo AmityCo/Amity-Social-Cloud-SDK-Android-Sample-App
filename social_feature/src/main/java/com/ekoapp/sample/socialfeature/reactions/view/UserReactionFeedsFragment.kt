@@ -30,7 +30,7 @@ class UserReactionFeedsFragment(val item: UserReactionData) : SingleViewModelFra
         adapter = EkoUserReactionFeedsAdapter(requireContext())
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_user_reactions, spaceCount = spaceUsers)
                 .builder()
-                .buildMultiView(adapter)
+                .build(adapter)
         viewModel.getPostReactionListByName(item.postId, item.reactionTypes.text).observeNotNull(viewLifecycleOwner, {
             adapter.submitList(it)
         })

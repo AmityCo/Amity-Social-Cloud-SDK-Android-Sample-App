@@ -43,7 +43,7 @@
         tools:ignore="PrivateResource" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_feeds"
+        android:id="@+id/recycler_friends"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/md_listitem_vertical_margin"
@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/text_find_friends"
         app:layout_constraintStart_toStartOf="@id/text_friends"
-        app:layout_constraintTop_toBottomOf="@id/recycler_feeds"
+        app:layout_constraintTop_toBottomOf="@id/recycler_friends"
         tools:ignore="PrivateResource" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

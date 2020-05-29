@@ -1,11 +1,10 @@
 package com.ekoapp.sample.socialfeature.users.view.renders
 
-import android.content.Context
 import android.view.View
 import android.widget.TextView
 import com.ekoapp.ekosdk.EkoUser
 
-data class EkoUsersRenderData(val context: Context, val item: EkoUser)
+data class EkoUsersRenderData(val item: EkoUser)
 
 fun EkoUsersRenderData.usersRender(
         view: View,

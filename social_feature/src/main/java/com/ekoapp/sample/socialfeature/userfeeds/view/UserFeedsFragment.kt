@@ -78,9 +78,9 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
                 lifecycleOwner = viewLifecycleOwner,
                 viewModel = viewModel)
 
-        RecyclerBuilder(context = requireContext(), recyclerView = recycler_feeds, spaceCount = spaceFeeds)
+        RecyclerBuilder(context = requireContext(), recyclerView = recycler_main_feeds, spaceCount = spaceFeeds)
                 .builder()
-                .buildMultiView(adapter)
+                .build(adapter)
     }
 
     override fun initDependencyInjection() {

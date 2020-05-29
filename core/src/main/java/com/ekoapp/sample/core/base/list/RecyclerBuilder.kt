@@ -15,12 +15,7 @@ data class RecyclerBuilder(
         return this
     }
 
-    fun build(setupAdapter: RecyclerView.Adapter<ViewHolder>): RecyclerBuilder {
-        recyclerView.adapter = setupAdapter
-        return this
-    }
-
-    fun buildMultiView(setupAdapter: RecyclerView.Adapter<BaseViewHolder<*>>): RecyclerBuilder {
+    fun build(setupAdapter: RecyclerView.Adapter<BaseViewHolder<*>>): RecyclerBuilder {
         recyclerView.adapter = setupAdapter
         return this
     }

@@ -27,7 +27,7 @@ class UsersFragment : SingleViewModelFragment<UsersViewModel>() {
     }
 
     private fun renderList(viewModel: UsersViewModel) {
-        adapter = EkoUsersAdapter(viewModel)
+        adapter = EkoUsersAdapter(requireContext(), viewModel)
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_users, spaceCount = spaceUsers)
                 .builder()
                 .build(adapter)
