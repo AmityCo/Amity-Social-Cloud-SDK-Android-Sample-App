@@ -1,26 +1,18 @@
 package com.ekoapp.sample.socialfeature.userfeeds.view
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.*
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
-import com.ekoapp.sample.socialfeature.constants.UPPERMOST
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import javax.inject.Inject
 
-sealed class UserFeedsViewSeal {
-    class GetUserFeeds(val data: LiveData<PagedList<EkoPost>>) : UserFeedsViewSeal()
-    class CreateUserFeeds(val scrollToPosition: Int = UPPERMOST) : UserFeedsViewSeal()
-}
-
 class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     private lateinit var userDataIntent: UserData
-    private val userFeeds = MutableLiveData<UserFeedsViewSeal>()
 
     val createFeedsActionRelay = SingleLiveData<UserData>()
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
