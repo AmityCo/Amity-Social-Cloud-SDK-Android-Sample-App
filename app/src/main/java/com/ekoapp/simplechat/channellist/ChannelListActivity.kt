@@ -68,6 +68,8 @@ class ChannelListActivity : AppCompatActivity() {
                     val totalUnreadCountString = getString(R.string.total_unread_d, totalUnreadCount)
                     total_unread_textview.text = totalUnreadCountString
                 })
+
+        observeChannelCollection()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
