@@ -78,11 +78,9 @@ class MainUserFeedsAdapter(private val context: Context,
                 holder.bind { viewModel.createFeedsActionRelay.postValue(userData) }
             }
             is UserFeedsViewHolder -> {
-                viewModel.bindUserFeedsSeal(userData).observeNotNull(lifecycleOwner, {
+                viewModel.bindUserFeeds(userData).observeNotNull(lifecycleOwner, {
                     holder.bind(UserFeedsViewData(
-                            context = context,
-                            lifecycleOwner = lifecycleOwner,
-                            userFeedsViewSeal = it,
+                            items = it,
                             viewModel = viewModel))
                 })
             }

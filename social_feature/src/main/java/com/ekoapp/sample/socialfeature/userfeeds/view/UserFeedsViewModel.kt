@@ -5,16 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.*
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
-import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.socialfeature.constants.UPPERMOST
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.processors.PublishProcessor
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 sealed class UserFeedsViewSeal {
@@ -23,7 +19,6 @@ sealed class UserFeedsViewSeal {
 }
 
 class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
-    private val feedsRelay = PublishProcessor.create<Unit>()
     private lateinit var userDataIntent: UserData
     private val userFeeds = MutableLiveData<UserFeedsViewSeal>()
 
@@ -41,19 +36,7 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
 
-    fun bindUserFeedsSeal(data: UserData): LiveData<UserFeedsViewSeal> {
-        userFeeds.postValue(UserFeedsViewSeal.GetUserFeeds(data = getUserFeeds(data)))
-        feedsRelay
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map {
-                    userFeeds.postValue(UserFeedsViewSeal.CreateUserFeeds())
-                }
-                .subscribe() into disposables
-        return userFeeds
-    }
-
-    private fun getUserFeeds(data: UserData) = EkoClient.newFeedRepository().getUserFeed(data.userId, EkoUserFeedSortOption.LAST_CREATED)
+    fun bindUserFeeds(data: UserData) = EkoClient.newFeedRepository().getUserFeed(data.userId, EkoUserFeedSortOption.LAST_CREATED)
 
     fun bindUserList(): LiveData<PagedList<EkoUser>> {
         return EkoClient.newUserRepository().getAllUsers(EkoUserSortOption.DISPLAYNAME)
@@ -72,10 +55,6 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     fun getIntentUserData(actionRelay: (UserData) -> Unit): UserData {
         userDataIntent.let(actionRelay::invoke)
         return userDataIntent
-    }
-
-    fun updateFeeds() {
-        feedsRelay.onNext(Unit)
     }
 
     fun reactionFeeds(item: ReactionData) = if (item.isChecked) addReaction(item) else removeReaction(item)

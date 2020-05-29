@@ -94,13 +94,4 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     override fun getViewModelClass(): Class<UserFeedsViewModel> {
         return UserFeedsViewModel::class.java
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            REQUEST_CODE_CREATE_FEEDS -> {
-                viewModel?.updateFeeds()
-            }
-        }
-    }
 }
