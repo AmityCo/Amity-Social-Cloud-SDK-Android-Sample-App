@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_users.header_users
 import kotlinx.android.synthetic.main.fragment_users.recycler_users
 
 class SeeAllUsersActivity : SingleViewModelActivity<UsersViewModel>() {
-    private val spaceUsers = 1
+
     private lateinit var adapter: EkoUsersAdapter
 
     override fun getLayout(): Int {
@@ -41,7 +41,7 @@ class SeeAllUsersActivity : SingleViewModelActivity<UsersViewModel>() {
 
     private fun renderList(viewModel: UsersViewModel) {
         adapter = EkoUsersAdapter(this, viewModel)
-        RecyclerBuilder(context = this, recyclerView = recycler_users, spaceCount = spaceUsers)
+        RecyclerBuilder(context = this, recyclerView = recycler_users)
                 .builder()
                 .build(adapter)
         viewModel.getUserList().observeNotNull(this, {

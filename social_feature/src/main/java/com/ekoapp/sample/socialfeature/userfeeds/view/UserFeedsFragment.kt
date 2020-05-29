@@ -18,11 +18,8 @@ import com.ekoapp.sample.socialfeature.users.view.SeeAllUsersActivity
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
 
 class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
-    private val spaceFeeds = 1
 
-    companion object {
-        lateinit var adapter: MainUserFeedsAdapter
-    }
+    private lateinit var adapter: MainUserFeedsAdapter
 
     override fun getLayout(): Int {
         return R.layout.fragment_user_feeds
@@ -78,7 +75,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
                 lifecycleOwner = viewLifecycleOwner,
                 viewModel = viewModel)
 
-        RecyclerBuilder(context = requireContext(), recyclerView = recycler_main_feeds, spaceCount = spaceFeeds)
+        RecyclerBuilder(context = requireContext(), recyclerView = recycler_main_feeds)
                 .builder()
                 .build(adapter)
     }

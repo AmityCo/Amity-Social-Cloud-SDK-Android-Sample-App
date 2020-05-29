@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.fragment_users.recycler_users
 import javax.inject.Inject
 
 class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
-    private val spaceUsers = 1
     private lateinit var adapter: EkoUsersAdapter
 
     @Inject
@@ -47,7 +46,7 @@ class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
             viewModel.getSearchUserList(newKeyword).observeNotNull(this, {
                 if (newKeyword.isNotEmpty()) {
                     adapter = EkoUsersAdapter(this, viewModel)
-                    RecyclerBuilder(context = this, recyclerView = recycler_users, spaceCount = spaceUsers)
+                    RecyclerBuilder(context = this, recyclerView = recycler_users)
                             .builder()
                             .build(adapter)
                     adapter.submitList(it)

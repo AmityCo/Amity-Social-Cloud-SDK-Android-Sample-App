@@ -11,7 +11,6 @@ import com.ekoapp.sample.socialfeature.reactions.view.list.EkoUserReactionFeedsA
 import kotlinx.android.synthetic.main.fragment_user_reactions.*
 
 class UserReactionFeedsFragment(val item: UserReactionData) : SingleViewModelFragment<ReactionsSummaryFeedsViewModel>() {
-    private val spaceUsers = 1
     lateinit var adapter: EkoUserReactionFeedsAdapter
 
     companion object {
@@ -28,7 +27,7 @@ class UserReactionFeedsFragment(val item: UserReactionData) : SingleViewModelFra
 
     private fun renderList(viewModel: ReactionsSummaryFeedsViewModel) {
         adapter = EkoUserReactionFeedsAdapter(requireContext())
-        RecyclerBuilder(context = requireContext(), recyclerView = recycler_user_reactions, spaceCount = spaceUsers)
+        RecyclerBuilder(context = requireContext(), recyclerView = recycler_user_reactions)
                 .builder()
                 .build(adapter)
         viewModel.getPostReactionListByName(item.postId, item.reactionTypes.text).observeNotNull(viewLifecycleOwner, {

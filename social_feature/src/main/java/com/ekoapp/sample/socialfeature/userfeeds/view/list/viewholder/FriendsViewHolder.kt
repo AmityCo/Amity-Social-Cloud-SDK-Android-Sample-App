@@ -6,6 +6,7 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
+import com.ekoapp.sample.core.base.list.TRIPLE_SPACE
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.FriendsFeedsAdapter
@@ -18,7 +19,6 @@ data class FriendsViewData(
         val viewModel: UserFeedsViewModel)
 
 class FriendsViewHolder(itemView: View) : BaseViewHolder<FriendsViewData>(itemView) {
-    private val spaceFriends = 3
     private lateinit var adapter: FriendsFeedsAdapter
 
     override fun bind(item: FriendsViewData) {
@@ -35,7 +35,7 @@ class FriendsViewHolder(itemView: View) : BaseViewHolder<FriendsViewData>(itemVi
 
     private fun Context.renderList(item: PagedList<EkoUser>, viewModel: UserFeedsViewModel) {
         adapter = FriendsFeedsAdapter(this, viewModel = viewModel)
-        RecyclerBuilder(context = this, recyclerView = itemView.recycler_friends, spaceCount = spaceFriends)
+        RecyclerBuilder(context = this, recyclerView = itemView.recycler_friends, spaceCount = TRIPLE_SPACE)
                 .builder()
                 .build(adapter)
         adapter.submitList(item)

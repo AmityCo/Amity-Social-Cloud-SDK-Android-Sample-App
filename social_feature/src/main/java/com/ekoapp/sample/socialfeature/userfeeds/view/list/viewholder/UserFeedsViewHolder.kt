@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.item_user_feeds.view.*
 data class UserFeedsViewData(val items: PagedList<EkoPost>, val viewModel: UserFeedsViewModel)
 
 class UserFeedsViewHolder(itemView: View) : BaseViewHolder<UserFeedsViewData>(itemView) {
-    private val spaceFeeds = 1
     private lateinit var adapter: FeedsAdapter
 
     override fun bind(item: UserFeedsViewData) {
@@ -23,7 +22,7 @@ class UserFeedsViewHolder(itemView: View) : BaseViewHolder<UserFeedsViewData>(it
 
     private fun Context.renderList(items: PagedList<EkoPost>, viewModel: UserFeedsViewModel) {
         adapter = FeedsAdapter(context = this, viewModel = viewModel)
-        RecyclerBuilder(context = this, recyclerView = itemView.recycler_user_feeds, spaceCount = spaceFeeds)
+        RecyclerBuilder(context = this, recyclerView = itemView.recycler_user_feeds)
                 .builder()
                 .build(adapter)
         adapter.submitList(items)
