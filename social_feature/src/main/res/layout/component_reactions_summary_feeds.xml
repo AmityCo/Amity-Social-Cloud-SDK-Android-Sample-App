@@ -8,7 +8,7 @@
     tools:background="@color/material_light_black"
     tools:parentTag="android.widget.LinearLayout">
 
-    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_reactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
