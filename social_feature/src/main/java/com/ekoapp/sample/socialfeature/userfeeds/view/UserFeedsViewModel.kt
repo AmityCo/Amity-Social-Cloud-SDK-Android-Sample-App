@@ -7,12 +7,14 @@ import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
+import com.ekoapp.sample.socialfeature.userfeeds.data.FeedsData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import javax.inject.Inject
 
 class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     private lateinit var userDataIntent: UserData
+    private lateinit var feedsDataIntent: FeedsData
 
     val createFeedsActionRelay = SingleLiveData<UserData>()
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
@@ -49,6 +51,15 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     fun getIntentUserData(actionRelay: (UserData) -> Unit): UserData {
         userDataIntent.let(actionRelay::invoke)
         return userDataIntent
+    }
+
+    fun setupIntent(data: FeedsData?) {
+        feedsDataIntent = data ?: FeedsData(postId = "")
+    }
+
+    fun getIntentFeedsData(actionRelay: (FeedsData) -> Unit): FeedsData {
+        feedsDataIntent.let(actionRelay::invoke)
+        return feedsDataIntent
     }
 
     fun reactionFeeds(item: ReactionData) = if (item.isChecked) addReaction(item) else removeReaction(item)

@@ -9,5 +9,6 @@ const val REQUEST_CODE_REACTIONS_SUMMARY = 4
 const val EXTRA_EDIT_FEEDS = "editFeeds"
 const val EXTRA_USER_DATA = "userData"
 const val EXTRA_USER_REACTION_DATA = "userReactionData"
+const val EXTRA_EKO_POST = "ekoPost"
 
 const val ZERO_COUNT = 0

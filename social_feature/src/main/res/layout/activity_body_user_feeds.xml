@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/defaultColorBackground"
+        android:orientation="vertical"
+        tools:ignore="PrivateResource">
+
+        <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
+            android:id="@+id/appbar_body_user_feeds"
+            style="@style/AppTheme.Appbar"
+            android:background="@color/material_light_black" />
+
+        <View
+            android:id="@+id/view_grid_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/material_component_grid_lists_padding_small"
+            android:layout_marginBottom="@dimen/material_component_cards_top_and_bottom_padding"
+            android:background="@color/material_light_white" />
+
+        <com.ekoapp.sample.socialfeature.components.FeedsComponent
+            android:id="@+id/feeds"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
