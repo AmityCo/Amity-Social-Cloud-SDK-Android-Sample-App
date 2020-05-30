@@ -78,11 +78,10 @@ class MainUserFeedsAdapter(private val context: Context,
                 holder.bind { viewModel.createFeedsActionRelay.postValue(userData) }
             }
             is UserFeedsViewHolder -> {
-                viewModel.bindUserFeeds(userData).observeNotNull(lifecycleOwner, {
-                    holder.bind(UserFeedsViewData(
-                            items = it,
-                            viewModel = viewModel))
-                })
+                holder.bind(UserFeedsViewData(
+                        userData = userData,
+                        lifecycleOwner = lifecycleOwner,
+                        viewModel = viewModel))
             }
             else -> throw IllegalArgumentException()
         }
