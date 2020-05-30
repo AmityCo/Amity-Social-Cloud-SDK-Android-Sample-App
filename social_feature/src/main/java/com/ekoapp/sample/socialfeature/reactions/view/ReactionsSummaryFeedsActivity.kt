@@ -21,22 +21,22 @@ class ReactionsSummaryFeedsActivity : SingleViewModelActivity<ReactionsSummaryFe
         setupView(viewModel)
     }
 
-    private fun setupView(viewModel: ReactionsSummaryFeedsViewModel) {
-        view_pager_reactions.offscreenPageLimit = 1
-        viewModel.getIntentUserData {
-            initTabLayout(viewModel, it)
-            val adapter = ReactionsSummaryFeedsAdapter(it, supportFragmentManager, lifecycle)
-            view_pager_reactions.adapter = adapter
-        }
-    }
-
     private fun setupAppBar() {
         appbar_reactions_summary_feeds.setup(this, true)
         appbar_reactions_summary_feeds.setTitle(getString(R.string.temporarily_app_bar_reactions_summary))
     }
 
+    private fun setupView(viewModel: ReactionsSummaryFeedsViewModel) {
+        view_pager_reactions.offscreenPageLimit = 1
+        viewModel.getIntentUserData {
+            val adapter = ReactionsSummaryFeedsAdapter(viewModel.getFragments(postId = it.postId), supportFragmentManager, lifecycle)
+            view_pager_reactions.adapter = adapter
+            initTabLayout(viewModel, it)
+        }
+    }
+
     private fun initTabLayout(viewModel: ReactionsSummaryFeedsViewModel, it: UserReactionData) {
-        viewModel.getPostReactionList(it.postId).observeNotNull(this, { items ->
+        viewModel.bindPostReactionList(it.postId).observeNotNull(this, { items ->
             val totalLike = viewModel.getTotal(items, ReactionTypes.LIKE)
             val totalFavorite = viewModel.getTotal(items, ReactionTypes.FAVORITE)
             TabLayoutMediator(tab_layout, view_pager_reactions) { tab, position ->
