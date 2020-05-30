@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 const val UPPERMOST = 0
 const val SINGLE_SPACE = 1
+const val DOUBLE_SPACE = 2
 const val TRIPLE_SPACE = 3
 
 data class RecyclerBuilder(

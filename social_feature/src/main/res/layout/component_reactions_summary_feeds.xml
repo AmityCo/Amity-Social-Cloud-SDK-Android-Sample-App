@@ -1,46 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_component_see_reaction"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     tools:background="@color/material_light_black"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+    tools:parentTag="android.widget.LinearLayout">
 
-    <ImageView
-        android:id="@+id/image_view_see_favorite"
-        android:layout_width="@dimen/material_layout_icon"
-        android:layout_height="@dimen/material_layout_icon"
-        android:layout_marginStart="@dimen/material_component_bottom_sheet_edge_left_right_margins"
-        android:contentDescription="@string/temporarily_favorite"
-        android:paddingStart="0dp"
-        android:paddingEnd="@dimen/material_component_grid_lists_padding_big"
-        android:src="@drawable/ic_see_favorite"
-        app:layout_constraintStart_toEndOf="@id/image_view_see_like"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="PrivateResource" />
-
-    <ImageView
-        android:id="@+id/image_view_see_like"
-        android:layout_width="@dimen/material_layout_icon"
-        android:layout_height="@dimen/material_layout_icon"
-        android:contentDescription="@string/temporarily_like"
-        android:paddingStart="0dp"
-        android:paddingEnd="@dimen/material_component_grid_lists_padding_big"
-        android:src="@drawable/ic_see_like"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="PrivateResource" />
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/recycler_reactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/text_total_reactions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/material_component_cards_action_button_row_padding"
         android:text="@string/general_default_zero_count"
         android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_caption"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/image_view_see_favorite"
-        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />
 </merge>
