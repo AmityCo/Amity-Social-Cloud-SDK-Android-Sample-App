@@ -8,7 +8,7 @@ import com.ekoapp.ekosdk.adapter.EkoUserAdapter
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.users.view.UsersViewModel
-import com.ekoapp.sample.socialfeature.users.view.list.viewholder.EkoUserData
+import com.ekoapp.sample.socialfeature.users.view.list.viewholder.UsersData
 import com.ekoapp.sample.socialfeature.users.view.list.viewholder.UsersViewHolder
 
 class EkoUsersAdapter(private val context: Context,
@@ -23,7 +23,7 @@ class EkoUsersAdapter(private val context: Context,
         when (holder) {
             is UsersViewHolder -> {
                 getItem(position)?.apply {
-                    holder.bind(EkoUserData(this, viewModel))
+                    holder.bind(UsersData(this, viewModel))
                 }
             }
             else -> throw IllegalArgumentException()

@@ -61,12 +61,10 @@ class MainUserFeedsAdapter(private val context: Context,
                 holder.bind(userData)
             }
             is FriendsViewHolder -> {
-                holder.bind(FriendsViewData(
-                        lifecycleOwner = lifecycleOwner,
-                        viewModel = viewModel))
+                holder.bind(FriendsViewData(lifecycleOwner = lifecycleOwner, viewModel = viewModel))
             }
             is CreateFeedsViewHolder -> {
-                holder.bind { viewModel.createFeedsActionRelay.postValue(userData) }
+                holder.bind(CreateFeedsData(userData = userData, viewModel = viewModel))
             }
             is UserFeedsViewHolder -> {
                 holder.bind(UserFeedsViewData(

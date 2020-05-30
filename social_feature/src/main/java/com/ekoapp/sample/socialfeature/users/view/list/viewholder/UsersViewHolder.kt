@@ -9,11 +9,11 @@ import com.ekoapp.sample.socialfeature.users.view.renders.EkoUsersRenderData
 import com.ekoapp.sample.socialfeature.users.view.renders.usersRender
 import kotlinx.android.synthetic.main.item_user.view.*
 
-data class EkoUserData(val item: EkoUser, val viewModel: UsersViewModel)
+data class UsersData(val item: EkoUser, val viewModel: UsersViewModel)
 
-class UsersViewHolder(itemView: View) : BaseViewHolder<EkoUserData>(itemView) {
+class UsersViewHolder(itemView: View) : BaseViewHolder<UsersData>(itemView) {
 
-    override fun bind(item: EkoUserData) {
+    override fun bind(item: UsersData) {
         item.apply {
             EkoUsersRenderData(item = this.item).usersRender(
                     itemView,

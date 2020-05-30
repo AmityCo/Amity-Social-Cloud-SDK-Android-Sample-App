@@ -24,16 +24,21 @@ class FriendsViewHolder(itemView: View) : BaseViewHolder<FriendsViewData>(itemVi
     override fun bind(item: FriendsViewData) {
         val context = itemView.context
         item.viewModel.bindUserList().observeNotNull(item.lifecycleOwner, {
-            itemView.text_total_friends.text = String.format(context.getString(R.string.temporarily_total_acquaintances), it.size)
-            itemView.button_see_all_friends.setOnClickListener {
-                item.viewModel.seeAllUsersActionRelay.postValue(Unit)
-            }
-            itemView.text_find_friends.setOnClickListener {
-                item.viewModel.findUsersActionRelay.postValue(Unit)
-            }
+            context.setupView(it.size, item)
             context.renderList(it, item.viewModel)
         })
+    }
 
+    private fun Context.setupView(total: Int, item: FriendsViewData) {
+        item.apply {
+            itemView.text_total_friends.text = String.format(getString(R.string.temporarily_total_acquaintances), total)
+            itemView.button_see_all_friends.setOnClickListener {
+                viewModel.seeAllUsersActionRelay.postValue(Unit)
+            }
+            itemView.text_find_friends.setOnClickListener {
+                viewModel.findUsersActionRelay.postValue(Unit)
+            }
+        }
     }
 
     private fun Context.renderList(item: PagedList<EkoUser>, viewModel: UserFeedsViewModel) {
