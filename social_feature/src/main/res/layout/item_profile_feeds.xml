@@ -15,22 +15,20 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/material_component_lists_three_line_height"
         android:background="@drawable/image_view_cover"
-        android:backgroundTint="@color/material_grey_500"
+        android:backgroundTint="@color/material_light_blue_50"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
-        android:id="@+id/image_avatar"
-        android:layout_width="@dimen/material_component_text_fields_floating_label_height"
-        android:layout_height="@dimen/material_component_text_fields_floating_label_height"
-        android:layout_marginTop="@dimen/material_component_text_fields_icon_height"
-        android:src="@drawable/ic_user"
+    <com.ekoapp.sample.socialfeature.components.AvatarComponent
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_large"
+        android:layout_height="@dimen/avatar_large"
+        android:layout_marginTop="@dimen/material_component_dialogs_padding_around_buttons"
+        android:src="@drawable/ic_avatar_oval"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:siShape="@drawable/image_view_rounded_rectangle"
-        app:siSquare="true" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_full_name"
@@ -47,6 +45,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_avatar" />
+        app:layout_constraintTop_toBottomOf="@id/avatar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

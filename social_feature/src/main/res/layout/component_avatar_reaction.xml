@@ -9,11 +9,10 @@
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <com.github.siyamed.shapeimageview.CircularImageView
-        android:id="@+id/image_avatar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
-        android:src="@drawable/ic_user"
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
+        android:src="@drawable/ic_avatar_oval"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

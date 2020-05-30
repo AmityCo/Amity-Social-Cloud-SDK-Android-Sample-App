@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+
+        <shape
+            android:shape="ring"
+            android:thickness="2dp"
+            android:useLevel="false">
+
+            <padding
+                android:bottom="@dimen/material_component_floating_action_button_margin"
+                android:left="@dimen/material_component_floating_action_button_margin"
+                android:right="@dimen/material_component_floating_action_button_margin"
+                android:top="@dimen/material_component_floating_action_button_margin" />
+
+            <gradient
+                android:angle="270"
+                android:endColor="@color/colorAccent"
+                android:startColor="@color/colorPrimary" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_user"
+        android:gravity="center" />
+</layer-list>

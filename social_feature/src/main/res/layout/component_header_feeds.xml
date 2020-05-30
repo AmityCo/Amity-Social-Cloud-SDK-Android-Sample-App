@@ -10,10 +10,10 @@
 
     <com.ekoapp.sample.socialfeature.components.AvatarComponent
         android:id="@+id/avatar"
-        android:layout_width="@dimen/material_layout_avatar"
-        android:layout_height="@dimen/material_layout_avatar"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/text_full_name" />
 
     <TextView
         android:id="@+id/text_full_name"
@@ -40,7 +40,6 @@
         android:text="@string/temporarily_time"
         android:textColor="@color/material_grey_600"
         android:textSize="@dimen/material_typography_caption"
-        app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintEnd_toEndOf="@id/text_full_name"
         app:layout_constraintStart_toStartOf="@id/text_full_name"
         app:layout_constraintTop_toBottomOf="@id/text_full_name"

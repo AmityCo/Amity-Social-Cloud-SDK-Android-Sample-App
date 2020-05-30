@@ -10,8 +10,8 @@
 
     <com.ekoapp.sample.socialfeature.components.AvatarComponent
         android:id="@+id/avatar"
-        android:layout_width="@dimen/material_component_lists_single_line_with_avatar_height"
-        android:layout_height="@dimen/material_component_lists_single_line_with_avatar_height"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
