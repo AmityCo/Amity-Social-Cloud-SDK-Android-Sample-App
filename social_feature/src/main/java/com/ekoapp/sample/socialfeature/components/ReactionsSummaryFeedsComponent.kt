@@ -8,10 +8,12 @@ import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.core.base.list.DOUBLE_SPACE
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.list.SINGLE_SPACE
+import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.ZERO_COUNT
 import com.ekoapp.sample.socialfeature.enums.ReactionTypes
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.ReactionsAdapter
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.component_reactions_summary_feeds.view.*
 
 
@@ -56,5 +58,9 @@ class ReactionsSummaryFeedsComponent : LinearLayout {
         } else {
             SINGLE_SPACE
         }
+    }
+
+    fun itemsClick(action: () -> Unit) {
+        adapter.reactions().subscribe { action.invoke() } into CompositeDisposable()
     }
 }

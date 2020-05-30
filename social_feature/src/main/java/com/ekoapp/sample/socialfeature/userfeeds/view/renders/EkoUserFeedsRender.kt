@@ -43,6 +43,7 @@ fun EkoUserFeedsRenderData.userFeedRender(
         reactionsSummary.visibility = View.VISIBLE
         reactionsSummary.setupView(item)
         reactionsSummary.setOnClickListener { eventReactionsSummary.invoke() }
+        reactionsSummary.itemsClick { eventReactionsSummary.invoke() }
     }
 
     footer.setupView(item)
