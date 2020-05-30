@@ -9,10 +9,11 @@ import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.EkoUserFeedsRenderData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.userFeedRender
+import com.ekoapp.sample.socialfeature.users.data.UserData
 import kotlinx.android.synthetic.main.item_feeds.view.*
 
 
-data class FeedsData(val item: EkoPost, val viewModel: UserFeedsViewModel)
+data class FeedsData(val userData: UserData, val item: EkoPost, val viewModel: UserFeedsViewModel)
 
 class FeedsViewHolder(itemView: View) : BaseViewHolder<FeedsData>(itemView) {
 
@@ -23,6 +24,11 @@ class FeedsViewHolder(itemView: View) : BaseViewHolder<FeedsData>(itemView) {
                     body = itemView.body_feeds,
                     reactionsSummary = itemView.reactions_summary,
                     footer = itemView.footer_feeds,
+                    eventViewProfile = {
+                        if (this.item.postedUserId != userData.userId) {
+                            viewModel.usersActionRelay.postValue(it)
+                        }
+                    },
                     eventFavorite = {
                         viewModel.reactionFeeds(ReactionData(text = ReactionTypes.FAVORITE.text, isChecked = it, item = this.item))
                     },
@@ -38,5 +44,4 @@ class FeedsViewHolder(itemView: View) : BaseViewHolder<FeedsData>(itemView) {
                     })
         }
     }
-
 }

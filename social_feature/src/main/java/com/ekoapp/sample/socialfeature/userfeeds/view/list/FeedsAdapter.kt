@@ -10,8 +10,12 @@ import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder.FeedsData
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder.FeedsViewHolder
+import com.ekoapp.sample.socialfeature.users.data.UserData
 
-class FeedsAdapter(private val context: Context, private val viewModel: UserFeedsViewModel) : EkoPostAdapter<BaseViewHolder<*>>() {
+class FeedsAdapter(
+        private val context: Context,
+        private val userData: UserData,
+        private val viewModel: UserFeedsViewModel) : EkoPostAdapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val view = LayoutInflater.from(context).inflate(R.layout.item_feeds, parent, false)
@@ -22,7 +26,7 @@ class FeedsAdapter(private val context: Context, private val viewModel: UserFeed
         when (holder) {
             is FeedsViewHolder -> {
                 getItem(position)?.apply {
-                    holder.bind(FeedsData(this, viewModel))
+                    holder.bind(FeedsData(userData, this, viewModel))
                 }
             }
             else -> throw IllegalArgumentException()

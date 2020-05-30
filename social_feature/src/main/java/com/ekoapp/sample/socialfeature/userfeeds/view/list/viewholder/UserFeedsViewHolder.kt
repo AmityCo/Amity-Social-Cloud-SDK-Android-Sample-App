@@ -26,7 +26,7 @@ class UserFeedsViewHolder(itemView: View) : BaseViewHolder<UserFeedsViewData>(it
     }
 
     private fun Context.renderList(item: UserFeedsViewData) {
-        adapter = FeedsAdapter(context = this, viewModel = item.viewModel)
+        adapter = FeedsAdapter(context = this, userData = item.userData, viewModel = item.viewModel)
         RecyclerBuilder(context = this, recyclerView = itemView.recycler_user_feeds)
                 .builder()
                 .build(adapter)

@@ -88,4 +88,10 @@ class HeaderFeedsComponent : ConstraintLayout {
             feedsMoreHorizBottomSheet.dialog?.cancel()
         }
     }
+
+    fun onClickFullName(action: () -> Unit) {
+        text_full_name.setOnClickListener {
+            action.invoke()
+        }
+    }
 }

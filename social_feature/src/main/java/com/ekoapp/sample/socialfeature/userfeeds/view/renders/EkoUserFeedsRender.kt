@@ -18,6 +18,7 @@ fun EkoUserFeedsRenderData.userFeedRender(
         body: BodyFeedsComponent,
         reactionsSummary: ReactionsSummaryFeedsComponent,
         footer: FooterFeedsComponent,
+        eventViewProfile: (UserData) -> Unit,
         eventFavorite: (Boolean) -> Unit,
         eventReactionsSummary: () -> Unit,
         eventLike: (Boolean) -> Unit,
@@ -25,6 +26,9 @@ fun EkoUserFeedsRenderData.userFeedRender(
         eventDelete: (Boolean) -> Unit) {
 
     header.setupView(item)
+    header.onClickFullName {
+        eventViewProfile.invoke(UserData(item.postedUserId))
+    }
     header.favoriteFeeds(eventFavorite::invoke)
     header.editFeeds {
         eventEdit.invoke(
