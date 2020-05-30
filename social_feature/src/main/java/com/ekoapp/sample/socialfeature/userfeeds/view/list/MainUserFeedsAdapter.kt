@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.core.base.list.BaseViewHolder
-import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder.*
@@ -49,7 +48,7 @@ class MainUserFeedsAdapter(private val context: Context,
                 CreateFeedsViewHolder(view)
             }
             TYPE_USER_FEEDS -> {
-                val view = LayoutInflater.from(context).inflate(R.layout.item_feeds, parent, false)
+                val view = LayoutInflater.from(context).inflate(R.layout.item_user_feeds, parent, false)
                 UserFeedsViewHolder(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
@@ -62,25 +61,16 @@ class MainUserFeedsAdapter(private val context: Context,
                 holder.bind(userData)
             }
             is FriendsViewHolder -> {
-                viewModel.bindUserList().observeNotNull(lifecycleOwner, {
-                    holder.bind(FriendsViewData(
-                            items = it,
-                            actionFindUsers = {
-                                viewModel.findUsersActionRelay.postValue(Unit)
-                            },
-                            actionSeeAllUsers = {
-                                viewModel.seeAllUsersActionRelay.postValue(Unit)
-                            },
-                            viewModel = viewModel))
-                })
+                holder.bind(FriendsViewData(lifecycleOwner = lifecycleOwner, viewModel = viewModel))
             }
             is CreateFeedsViewHolder -> {
-                holder.bind { viewModel.createFeedsActionRelay.postValue(userData) }
+                holder.bind(CreateFeedsData(userData = userData, viewModel = viewModel))
             }
             is UserFeedsViewHolder -> {
-                viewModel.bindUserFeedsSeal(userData).observeNotNull(lifecycleOwner, {
-                    holder.bind(UserFeedsViewData(lifecycleOwner = lifecycleOwner, userFeedsViewSeal = it, viewModel = viewModel))
-                })
+                holder.bind(UserFeedsViewData(
+                        userData = userData,
+                        lifecycleOwner = lifecycleOwner,
+                        viewModel = viewModel))
             }
             else -> throw IllegalArgumentException()
         }

@@ -14,7 +14,6 @@ import com.ekoapp.sample.socialfeature.users.view.list.EkoUsersAdapter
 import kotlinx.android.synthetic.main.fragment_users.*
 
 class UsersFragment : SingleViewModelFragment<UsersViewModel>() {
-    private val spaceUsers = 1
     private lateinit var adapter: EkoUsersAdapter
 
     override fun getLayout(): Int {
@@ -27,11 +26,11 @@ class UsersFragment : SingleViewModelFragment<UsersViewModel>() {
     }
 
     private fun renderList(viewModel: UsersViewModel) {
-        adapter = EkoUsersAdapter(viewModel)
-        RecyclerBuilder(context = requireContext(), recyclerView = recycler_users, spaceCount = spaceUsers)
+        adapter = EkoUsersAdapter(requireContext(), viewModel)
+        RecyclerBuilder(context = requireContext(), recyclerView = recycler_users)
                 .builder()
                 .build(adapter)
-        viewModel.getUserList().observeNotNull(viewLifecycleOwner, {
+        viewModel.bindUserList().observeNotNull(viewLifecycleOwner, {
             header_users.setupView(it)
             adapter.submitList(it)
         })

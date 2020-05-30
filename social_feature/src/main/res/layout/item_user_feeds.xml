@@ -4,55 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/md_listitem_control_margin"
     android:background="@color/material_light_black"
-    android:paddingLeft="@dimen/material_component_dialogs_padding_around_content_area"
-    android:paddingTop="@dimen/material_component_dialogs_padding_around_content_area"
-    android:paddingRight="@dimen/material_component_dialogs_padding_around_content_area"
     tools:ignore="PrivateResource">
 
-    <com.ekoapp.sample.socialfeature.components.HeaderFeedsComponent
-        android:id="@+id/header_feeds"
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/recycler_user_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.ekoapp.sample.socialfeature.components.BodyFeedsComponent
-        android:id="@+id/body_feeds"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
-        android:paddingBottom="@dimen/material_component_cards_supporting_text_top_padding"
-        app:layout_constraintEnd_toEndOf="@id/header_feeds"
-        app:layout_constraintStart_toStartOf="@id/header_feeds"
-        app:layout_constraintTop_toBottomOf="@id/header_feeds" />
-
-    <com.ekoapp.sample.socialfeature.components.ReactionsSummaryFeedsComponent
-        android:id="@+id/reactions_summary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
-        app:layout_constraintEnd_toEndOf="@id/header_feeds"
-        app:layout_constraintStart_toStartOf="@id/header_feeds"
-        app:layout_constraintTop_toBottomOf="@id/body_feeds" />
-
-    <View
-        android:id="@+id/view_grid_content"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/material_component_grid_lists_padding_small"
-        android:background="@color/material_grey_600"
-        app:layout_constraintEnd_toEndOf="@id/header_feeds"
-        app:layout_constraintStart_toStartOf="@id/header_feeds"
-        app:layout_constraintTop_toBottomOf="@id/reactions_summary" />
-
-    <com.ekoapp.sample.socialfeature.components.FooterFeedsComponent
-        android:id="@+id/footer_feeds"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
-        app:layout_constraintEnd_toEndOf="@id/header_feeds"
-        app:layout_constraintStart_toStartOf="@id/header_feeds"
-        app:layout_constraintTop_toBottomOf="@id/view_grid_content" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="10"
+        app:shimmer_demo_grid_child_count="1"
+        app:shimmer_demo_layout="@layout/default_shimmer_contents"
+        app:shimmer_demo_layout_manager_type="grid"
+        app:shimmer_demo_shimmer_color="@color/demo_light_transparent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

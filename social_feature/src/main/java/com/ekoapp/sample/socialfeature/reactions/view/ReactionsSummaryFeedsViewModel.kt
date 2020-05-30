@@ -1,5 +1,6 @@
 package com.ekoapp.sample.socialfeature.reactions.view
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoClient
@@ -26,11 +27,11 @@ class ReactionsSummaryFeedsViewModel @Inject constructor() : DisposableViewModel
         userReactionIntent = data
     }
 
-    fun getPostReactionList(postId: String): LiveData<PagedList<EkoPostReaction>> {
+    fun bindPostReactionList(postId: String): LiveData<PagedList<EkoPostReaction>> {
         return EkoClient.newFeedRepository().getPostReactionCollection(postId)
     }
 
-    fun getPostReactionListByName(postId: String, reactionName: String): LiveData<PagedList<EkoPostReaction>> {
+    fun bindPostReactionListByName(postId: String, reactionName: String): LiveData<PagedList<EkoPostReaction>> {
         return EkoClient.newFeedRepository().getPostReactionCollectionByReactionName(postId, reactionName)
     }
 
@@ -50,5 +51,12 @@ class ReactionsSummaryFeedsViewModel @Inject constructor() : DisposableViewModel
 
     fun getTotal(items: List<EkoPostReaction>, reactionTypes: ReactionTypes): Int {
         return items.filter { item -> item.reactionName == reactionTypes.text }.size
+    }
+
+    fun getFragments(postId: String): ArrayList<Fragment> {
+        val fragments = ArrayList<Fragment>()
+        fragments.add(UserReactionFeedsFragment.newInstance(UserReactionData(postId = postId, reactionTypes = ReactionTypes.LIKE)))
+        fragments.add(UserReactionFeedsFragment.newInstance(UserReactionData(postId = postId, reactionTypes = ReactionTypes.FAVORITE)))
+        return fragments
     }
 }

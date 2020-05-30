@@ -22,6 +22,7 @@
         <activity android:name=".search.SearchUsersActivity" />
         <activity android:name=".users.view.SeeAllUsersActivity" />
         <activity android:name=".reactions.view.ReactionsSummaryFeedsActivity" />
+        <activity android:name=".userfeeds.view.BodyUserFeedsActivity" />
     </application>
 
 </manifest>

@@ -24,8 +24,8 @@
 
     <com.ekoapp.sample.socialfeature.components.AvatarComponent
         android:id="@+id/avatar"
-        android:layout_width="@dimen/material_component_text_fields_icon_height"
-        android:layout_height="@dimen/material_component_text_fields_icon_height"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
         android:layout_marginTop="@dimen/md_listitem_vertical_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/text_post"

@@ -10,10 +10,10 @@
 
     <com.ekoapp.sample.socialfeature.components.AvatarComponent
         android:id="@+id/avatar"
-        android:layout_width="@dimen/material_layout_avatar"
-        android:layout_height="@dimen/material_layout_avatar"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/text_full_name" />
 
     <TextView
         android:id="@+id/text_full_name"
@@ -23,6 +23,7 @@
         android:layout_marginEnd="@dimen/material_component_bottom_sheet_edge_left_right_margins"
         android:ellipsize="end"
         android:maxLines="1"
+        android:paddingTop="@dimen/md_action_button_frame_padding_neutral"
         android:text="@string/temporarily_full_name"
         android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_body1"
@@ -40,7 +41,7 @@
         android:text="@string/temporarily_time"
         android:textColor="@color/material_grey_600"
         android:textSize="@dimen/material_typography_caption"
-        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/text_full_name"
         app:layout_constraintStart_toStartOf="@id/text_full_name"
         app:layout_constraintTop_toBottomOf="@id/text_full_name"
@@ -52,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/material_component_bottom_sheet_edge_left_right_margins"
         android:contentDescription="@string/temporarily_favorite"
+        android:paddingTop="@dimen/md_action_button_frame_padding_neutral"
         android:src="@drawable/ic_favorite"
         android:tint="@color/material_light_white"
         app:layout_constraintEnd_toStartOf="@id/image_more_horiz"
@@ -62,6 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/temporarily_more"
+        android:paddingTop="@dimen/md_action_button_frame_padding_neutral"
         android:src="@drawable/ic_more_horiz"
         android:tint="@color/material_light_white"
         app:layout_constraintEnd_toEndOf="parent"

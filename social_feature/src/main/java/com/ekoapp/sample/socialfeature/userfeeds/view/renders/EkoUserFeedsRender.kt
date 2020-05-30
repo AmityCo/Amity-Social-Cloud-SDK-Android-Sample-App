@@ -1,6 +1,5 @@
 package com.ekoapp.sample.socialfeature.userfeeds.view.renders
 
-import android.content.Context
 import android.view.View
 import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.sample.socialfeature.components.BodyFeedsComponent
@@ -12,13 +11,14 @@ import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 
 data class ReactionData(val text: String, val isChecked: Boolean, val item: EkoPost)
-data class EkoUserFeedsRenderData(val context: Context, val item: EkoPost)
+data class EkoUserFeedsRenderData(val item: EkoPost)
 
 fun EkoUserFeedsRenderData.userFeedRender(
         header: HeaderFeedsComponent,
         body: BodyFeedsComponent,
         reactionsSummary: ReactionsSummaryFeedsComponent,
         footer: FooterFeedsComponent,
+        eventViewProfile: (UserData) -> Unit,
         eventFavorite: (Boolean) -> Unit,
         eventReactionsSummary: () -> Unit,
         eventLike: (Boolean) -> Unit,
@@ -26,6 +26,9 @@ fun EkoUserFeedsRenderData.userFeedRender(
         eventDelete: (Boolean) -> Unit) {
 
     header.setupView(item)
+    header.onClickFullName {
+        eventViewProfile.invoke(UserData(item.postedUserId))
+    }
     header.favoriteFeeds(eventFavorite::invoke)
     header.editFeeds {
         eventEdit.invoke(
@@ -44,6 +47,7 @@ fun EkoUserFeedsRenderData.userFeedRender(
         reactionsSummary.visibility = View.VISIBLE
         reactionsSummary.setupView(item)
         reactionsSummary.setOnClickListener { eventReactionsSummary.invoke() }
+        reactionsSummary.itemsClick { eventReactionsSummary.invoke() }
     }
 
     footer.setupView(item)

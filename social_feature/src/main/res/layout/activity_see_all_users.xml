@@ -18,17 +18,9 @@
         android:layout_height="@dimen/material_component_grid_lists_padding_small"
         android:background="@color/material_light_white" />
 
-    <com.ekoapp.sample.socialfeature.components.HeaderUsersComponent
-        android:id="@+id/header_users"
+    <FrameLayout
+        android:id="@+id/main_content_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
-        android:padding="@dimen/material_component_lists_padding_above_list" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_users"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/material_component_lists_padding_above_list" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
 import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
 import com.ekoapp.sample.socialfeature.reactions.view.ReactionsSummaryFeedsActivity
 import com.ekoapp.sample.socialfeature.search.SearchUsersActivity
+import com.ekoapp.sample.socialfeature.userfeeds.view.BodyUserFeedsActivity
 import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsActivity
 import com.ekoapp.sample.socialfeature.users.view.SeeAllUsersActivity
 import dagger.Component
@@ -23,4 +24,5 @@ interface SocialActivityComponent {
     fun inject(activity: SearchUsersActivity)
     fun inject(activity: SeeAllUsersActivity)
     fun inject(activity: ReactionsSummaryFeedsActivity)
+    fun inject(activity: BodyUserFeedsActivity)
 }

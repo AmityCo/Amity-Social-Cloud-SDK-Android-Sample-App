@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,12 +9,15 @@
     android:paddingLeft="@dimen/material_component_dialogs_padding_around_content_area"
     android:paddingTop="@dimen/material_component_dialogs_padding_around_content_area"
     android:paddingRight="@dimen/material_component_dialogs_padding_around_content_area"
-    tools:ignore="PrivateResource">
+    tools:ignore="PrivateResource"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <com.ekoapp.sample.socialfeature.components.HeaderFeedsComponent
         android:id="@+id/header_feeds"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingStart="@dimen/material_component_dialogs_padding_around_buttons"
+        android:paddingEnd="@dimen/material_component_dialogs_padding_around_buttons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,6 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
+        android:paddingStart="@dimen/material_component_dialogs_padding_around_buttons"
+        android:paddingEnd="@dimen/material_component_dialogs_padding_around_buttons"
         android:paddingBottom="@dimen/material_component_cards_supporting_text_top_padding"
         app:layout_constraintEnd_toEndOf="@id/header_feeds"
         app:layout_constraintStart_toStartOf="@id/header_feeds"
@@ -55,4 +60,4 @@
         app:layout_constraintStart_toStartOf="@id/header_feeds"
         app:layout_constraintTop_toBottomOf="@id/view_grid_content" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
