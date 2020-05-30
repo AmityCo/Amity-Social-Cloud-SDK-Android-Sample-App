@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.core.base.list.BaseViewHolder
-import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsViewModel
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.viewholder.*
@@ -62,17 +61,9 @@ class MainUserFeedsAdapter(private val context: Context,
                 holder.bind(userData)
             }
             is FriendsViewHolder -> {
-                viewModel.bindUserList().observeNotNull(lifecycleOwner, {
-                    holder.bind(FriendsViewData(
-                            items = it,
-                            actionFindUsers = {
-                                viewModel.findUsersActionRelay.postValue(Unit)
-                            },
-                            actionSeeAllUsers = {
-                                viewModel.seeAllUsersActionRelay.postValue(Unit)
-                            },
-                            viewModel = viewModel))
-                })
+                holder.bind(FriendsViewData(
+                        lifecycleOwner = lifecycleOwner,
+                        viewModel = viewModel))
             }
             is CreateFeedsViewHolder -> {
                 holder.bind { viewModel.createFeedsActionRelay.postValue(userData) }

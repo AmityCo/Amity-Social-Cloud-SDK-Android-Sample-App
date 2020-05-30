@@ -21,11 +21,11 @@ class UserFeedsViewHolder(itemView: View) : BaseViewHolder<UserFeedsViewData>(it
 
     override fun bind(item: UserFeedsViewData) {
         val context = itemView.context
-        context.renderUserFeedsList(item)
+        context.renderList(item)
         item.viewModel.bindUserFeeds(item.userData).observeNotNull(item.lifecycleOwner, adapter::submitList)
     }
 
-    private fun Context.renderUserFeedsList(item: UserFeedsViewData) {
+    private fun Context.renderList(item: UserFeedsViewData) {
         adapter = FeedsAdapter(context = this, viewModel = item.viewModel)
         RecyclerBuilder(context = this, recyclerView = itemView.recycler_user_feeds)
                 .builder()
