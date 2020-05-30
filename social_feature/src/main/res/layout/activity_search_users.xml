@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar_search" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
         android:id="@+id/recycler_users"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,6 +30,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/keyword_search" />
+        app:layout_constraintTop_toBottomOf="@id/keyword_search"
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="100"
+        app:shimmer_demo_grid_child_count="1"
+        app:shimmer_demo_layout="@layout/default_shimmer_contacts"
+        app:shimmer_demo_layout_manager_type="grid"
+        app:shimmer_demo_shimmer_color="@color/demo_light_transparent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

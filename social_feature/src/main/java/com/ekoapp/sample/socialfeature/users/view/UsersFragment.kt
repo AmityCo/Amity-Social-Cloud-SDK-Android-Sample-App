@@ -30,7 +30,7 @@ class UsersFragment : SingleViewModelFragment<UsersViewModel>() {
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_users)
                 .builder()
                 .build(adapter)
-        viewModel.getUserList().observeNotNull(viewLifecycleOwner, {
+        viewModel.bindUserList().observeNotNull(viewLifecycleOwner, {
             header_users.setupView(it)
             adapter.submitList(it)
         })

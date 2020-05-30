@@ -44,7 +44,7 @@ class SeeAllUsersActivity : SingleViewModelActivity<UsersViewModel>() {
         RecyclerBuilder(context = this, recyclerView = recycler_users)
                 .builder()
                 .build(adapter)
-        viewModel.getUserList().observeNotNull(this, {
+        viewModel.bindUserList().observeNotNull(this, {
             header_users.setupView(it)
             adapter.submitList(it)
         })

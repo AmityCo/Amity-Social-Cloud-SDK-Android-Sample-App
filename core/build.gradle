@@ -123,4 +123,7 @@ dependencies {
     //Shape ImageView
     api 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
 
+    //Shimmer
+    api 'com.github.sharish:ShimmerRecyclerView:v1.3'
+
 }

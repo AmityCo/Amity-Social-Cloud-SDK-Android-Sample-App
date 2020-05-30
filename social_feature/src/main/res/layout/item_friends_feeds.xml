@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@id/text_friends"
         tools:ignore="PrivateResource" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
         android:id="@+id/recycler_friends"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -50,6 +50,12 @@
         app:layout_constraintEnd_toEndOf="@id/text_find_friends"
         app:layout_constraintStart_toStartOf="@id/text_friends"
         app:layout_constraintTop_toBottomOf="@+id/text_total_friends"
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="6"
+        app:shimmer_demo_grid_child_count="3"
+        app:shimmer_demo_layout="@layout/default_shimmer_avatars"
+        app:shimmer_demo_layout_manager_type="grid"
+        app:shimmer_demo_shimmer_color="@color/demo_light_transparent"
         tools:ignore="PrivateResource" />
 
     <androidx.appcompat.widget.AppCompatButton

@@ -6,6 +6,7 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
+import com.ekoapp.sample.core.ui.extensions.observeOnce
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
 import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_USER_FEEDS
@@ -38,19 +39,17 @@ class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
     }
 
     private fun renderList(viewModel: UsersViewModel) {
-        //TODO Refactor
         viewModel.search(appbar_search.keyword())
         viewModel.observeKeyword().observeNotNull(this, { keyword ->
             keyword_search.render(keyword = keyword)
             var newKeyword = keyword
-            viewModel.getSearchUserList(newKeyword).observeNotNull(this, {
-                if (newKeyword.isNotEmpty()) {
-                    adapter = EkoUsersAdapter(this, viewModel)
-                    RecyclerBuilder(context = this, recyclerView = recycler_users)
-                            .builder()
-                            .build(adapter)
-                    adapter.submitList(it)
-                }
+
+            adapter = EkoUsersAdapter(this, viewModel)
+            RecyclerBuilder(context = this, recyclerView = recycler_users)
+                    .builder()
+                    .build(adapter)
+            viewModel.bindSearchUserList(newKeyword).observeOnce(this, {
+                adapter.submitList(it)
                 newKeyword = ""
             })
         })

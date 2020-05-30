@@ -25,11 +25,15 @@ class UsersViewModel @Inject constructor() : DisposableViewModel() {
     fun observeUserPage(): SingleLiveData<UserData> = usersActionRelay
     fun observeKeyword(): LiveData<String> = keywordRelay
 
-    fun getUserList(): LiveData<PagedList<EkoUser>> {
+    init {
+        keywordRelay.postValue("")
+    }
+
+    fun bindUserList(): LiveData<PagedList<EkoUser>> {
         return EkoClient.newUserRepository().getAllUsers(EkoUserSortOption.DISPLAYNAME)
     }
 
-    fun getSearchUserList(keyword: String): LiveData<PagedList<EkoUser>> {
+    fun bindSearchUserList(keyword: String): LiveData<PagedList<EkoUser>> {
         return EkoClient.newUserRepository().searchUserByDisplayName(keyword, EkoUserSortOption.DISPLAYNAME)
     }
 
