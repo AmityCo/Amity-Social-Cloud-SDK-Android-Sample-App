@@ -1,13 +1,12 @@
 package com.ekoapp.sample.entry
 
-import android.content.Intent
-import com.ekoapp.sample.MainNavigationActivity
 import com.ekoapp.sample.R
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.di.DaggerMainNavigationComponent
-import com.ekoapp.sample.register.RegisterActivity
+import com.ekoapp.sample.intents.openMainNavigationPage
+import com.ekoapp.sample.intents.openRegisterPage
 
 
 class EntryActivity : SingleViewModelActivity<EntryViewModel>() {
@@ -19,12 +18,8 @@ class EntryActivity : SingleViewModelActivity<EntryViewModel>() {
     private fun navigationPage(viewModel: EntryViewModel) {
         viewModel.observeEntryAction().observeNotNull(this, {
             when (it) {
-                is EntryNavigation.MainPage -> {
-                    startActivity(Intent(this, MainNavigationActivity::class.java))
-                }
-                is EntryNavigation.RegisterPage -> {
-                    startActivity(Intent(this, RegisterActivity::class.java))
-                }
+                is EntryNavigation.MainPage -> openMainNavigationPage()
+                is EntryNavigation.RegisterPage -> openRegisterPage()
             }
         })
     }
