@@ -23,7 +23,7 @@ class FriendsViewHolder(itemView: View) : BaseViewHolder<FriendsViewData>(itemVi
 
     override fun bind(item: FriendsViewData) {
         val context = itemView.context
-        item.viewModel.bindUserList().observeNotNull(item.lifecycleOwner, {
+        item.viewModel.bindUsers().observeNotNull(item.lifecycleOwner, {
             context.setupView(it.size, item)
             context.renderList(it, item.viewModel)
         })

@@ -30,7 +30,7 @@ class UserReactionFeedsFragment(val item: UserReactionData) : SingleViewModelFra
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_user_reactions)
                 .builder()
                 .build(adapter)
-        viewModel.bindPostReactionListByName(item.postId, item.reactionTypes.text).observeNotNull(viewLifecycleOwner, {
+        viewModel.bindPostReactionsByName(item.postId, item.reactionTypes.text).observeNotNull(viewLifecycleOwner, {
             adapter.submitList(it)
         })
     }

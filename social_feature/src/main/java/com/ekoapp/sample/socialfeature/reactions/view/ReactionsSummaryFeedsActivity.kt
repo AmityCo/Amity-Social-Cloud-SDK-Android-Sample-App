@@ -36,7 +36,7 @@ class ReactionsSummaryFeedsActivity : SingleViewModelActivity<ReactionsSummaryFe
     }
 
     private fun initTabLayout(viewModel: ReactionsSummaryFeedsViewModel, it: UserReactionData) {
-        viewModel.bindPostReactionList(it.postId).observeNotNull(this, { items ->
+        viewModel.bindPostReactions(it.postId).observeNotNull(this, { items ->
             val totalLike = viewModel.getTotal(items, ReactionTypes.LIKE)
             val totalFavorite = viewModel.getTotal(items, ReactionTypes.FAVORITE)
             TabLayoutMediator(tab_layout, view_pager_reactions) { tab, position ->
