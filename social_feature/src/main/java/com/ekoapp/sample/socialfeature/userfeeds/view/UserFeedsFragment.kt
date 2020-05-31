@@ -1,20 +1,15 @@
 package com.ekoapp.sample.socialfeature.userfeeds.view
 
-import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.*
-import com.ekoapp.sample.socialfeature.createfeeds.CreateFeedsActivity
+import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
 import com.ekoapp.sample.socialfeature.di.DaggerSocialFragmentComponent
-import com.ekoapp.sample.socialfeature.editfeeds.EditFeedsActivity
-import com.ekoapp.sample.socialfeature.reactions.view.ReactionsSummaryFeedsActivity
-import com.ekoapp.sample.socialfeature.search.SearchUsersActivity
+import com.ekoapp.sample.socialfeature.intents.*
 import com.ekoapp.sample.socialfeature.userfeeds.view.list.MainUserFeedsAdapter
 import com.ekoapp.sample.socialfeature.users.data.UserData
-import com.ekoapp.sample.socialfeature.users.view.SeeAllUsersActivity
 import kotlinx.android.synthetic.main.fragment_user_feeds.*
 
 class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
@@ -33,41 +28,14 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
     }
 
     private fun setupEvent(viewModel: UserFeedsViewModel) {
-        viewModel.observeCreateFeedsPage().observeNotNull(viewLifecycleOwner, {
-            val intent = Intent(requireActivity(), CreateFeedsActivity::class.java)
-            intent.putExtra(EXTRA_USER_DATA, it)
-            startActivityForResult(intent, REQUEST_CODE_CREATE_FEEDS)
-        })
-
-        viewModel.observeEditFeedsPage().observeNotNull(viewLifecycleOwner, {
-            val intent = Intent(requireActivity(), EditFeedsActivity::class.java)
-            intent.putExtra(EXTRA_EDIT_FEEDS, it)
-            startActivityForResult(intent, REQUEST_CODE_EDIT_FEEDS)
-        })
-
-        viewModel.observeFindUsersPage().observeNotNull(viewLifecycleOwner, {
-            startActivity(Intent(context, SearchUsersActivity::class.java))
-        })
-
+        viewModel.observeCreateFeedsPage().observeNotNull(viewLifecycleOwner, this::openCreateFeedsPage)
+        viewModel.observeEditFeedsPage().observeNotNull(viewLifecycleOwner, this::openEditFeedsPage)
+        viewModel.observeFindUsersPage().observeNotNull(viewLifecycleOwner, { this.openSearchUsersPage() })
         viewModel.observeSeeAllUsersPage().observeNotNull(viewLifecycleOwner, {
-            viewModel.getIntentUserData {
-                val intent = Intent(context, SeeAllUsersActivity::class.java)
-                intent.putExtra(EXTRA_USER_DATA, it)
-                startActivityForResult(intent, REQUEST_CODE_SEE_ALL_USERS)
-            }
+            viewModel.getIntentUserData(this::openSeeAllUsersPage)
         })
-
-        viewModel.observeReactionsSummaryPage().observeNotNull(viewLifecycleOwner, {
-            val intent = Intent(context, ReactionsSummaryFeedsActivity::class.java)
-            intent.putExtra(EXTRA_USER_REACTION_DATA, it)
-            startActivityForResult(intent, REQUEST_CODE_REACTIONS_SUMMARY)
-        })
-
-        viewModel.observeUserPage().observeNotNull(viewLifecycleOwner, {
-            val intent = Intent(context, UserFeedsActivity::class.java)
-            intent.putExtra(EXTRA_USER_DATA, it)
-            startActivityForResult(intent, REQUEST_CODE_USER_FEEDS)
-        })
+        viewModel.observeReactionsSummaryPage().observeNotNull(viewLifecycleOwner, this::openReactionsSummaryFeedsPage)
+        viewModel.observeUserPage().observeNotNull(viewLifecycleOwner, this::openUserFeedsPage)
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
