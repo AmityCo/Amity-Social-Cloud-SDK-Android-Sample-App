@@ -3,18 +3,18 @@ package com.ekoapp.sample.socialfeature.reactions.view
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.internal.data.model.EkoPostReaction
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.ZERO_COUNT
 import com.ekoapp.sample.socialfeature.enums.ReactionTypes
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
+import com.ekoapp.sample.socialfeature.repository.FeedRepository
 import javax.inject.Inject
 
 data class TabLayoutData(val icon: Int, val title: Int, val total: Int)
 
-class ReactionsSummaryFeedsViewModel @Inject constructor() : DisposableViewModel() {
+class ReactionsSummaryFeedsViewModel @Inject constructor(private val feedRepository: FeedRepository) : DisposableViewModel() {
     private var userReactionIntent: UserReactionData? = null
     private val pageLike = 0
     private val pageFavorite = 1
@@ -27,12 +27,12 @@ class ReactionsSummaryFeedsViewModel @Inject constructor() : DisposableViewModel
         userReactionIntent = data
     }
 
-    fun bindPostReactionList(postId: String): LiveData<PagedList<EkoPostReaction>> {
-        return EkoClient.newFeedRepository().getPostReactionCollection(postId)
+    fun bindPostReactions(postId: String): LiveData<PagedList<EkoPostReaction>> {
+        return feedRepository.getPostReactionCollection(postId)
     }
 
-    fun bindPostReactionListByName(postId: String, reactionName: String): LiveData<PagedList<EkoPostReaction>> {
-        return EkoClient.newFeedRepository().getPostReactionCollectionByReactionName(postId, reactionName)
+    fun bindPostReactionsByName(postId: String, reactionName: String): LiveData<PagedList<EkoPostReaction>> {
+        return feedRepository.getPostReactionCollectionByReactionName(postId, reactionName)
     }
 
     fun getTabLayout(totalLike: Int = ZERO_COUNT, totalFavorite: Int = ZERO_COUNT, position: Int): TabLayoutData {

@@ -2,17 +2,22 @@ package com.ekoapp.sample.socialfeature.userfeeds.view
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.ekoapp.ekosdk.*
+import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.ekosdk.EkoPost
+import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
+import com.ekoapp.sample.socialfeature.repository.FeedRepository
+import com.ekoapp.sample.socialfeature.repository.UserRepository
 import com.ekoapp.sample.socialfeature.userfeeds.data.FeedsData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import javax.inject.Inject
 
-class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
+class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRepository,
+                                             private val userRepository: UserRepository) : DisposableViewModel() {
     private lateinit var userDataIntent: UserData
     private lateinit var feedsDataIntent: FeedsData
 
@@ -29,20 +34,6 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
     fun observeUserPage(): SingleLiveData<UserData> = usersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
-
-    fun bindUserFeeds(data: UserData): LiveData<PagedList<EkoPost>> {
-        return EkoClient.newFeedRepository().getUserFeed(data.userId, EkoUserFeedSortOption.LAST_CREATED)
-    }
-
-    fun bindUserList(): LiveData<PagedList<EkoUser>> {
-        return EkoClient.newUserRepository().getAllUsers(EkoUserSortOption.DISPLAYNAME)
-    }
-
-    fun deletePost(item: EkoPost) {
-        EkoClient.newFeedRepository().editPost(item.postId)
-                .delete()
-                .subscribe()
-    }
 
     fun setupIntent(data: UserData?) {
         userDataIntent = data ?: UserData(userId = EkoClient.getUserId())
@@ -62,17 +53,28 @@ class UserFeedsViewModel @Inject constructor() : DisposableViewModel() {
         return feedsDataIntent
     }
 
-    fun reactionFeeds(item: ReactionData) = if (item.isChecked) addReaction(item) else removeReaction(item)
+    fun bindUserFeeds(data: UserData): LiveData<PagedList<EkoPost>> = feedRepository.getUserFeed(data)
 
-    private fun removeReaction(item: ReactionData) {
-        item.item.react()
-                .removeReaction(item.text)
+    fun bindUsers(): LiveData<PagedList<EkoUser>> = userRepository.getAllUsers()
+
+    fun bindDeletePost(item: EkoPost) {
+        feedRepository
+                .deletePost(item)
                 .subscribe()
     }
 
-    private fun addReaction(item: ReactionData) {
-        item.item.react()
-                .addReaction(item.text)
+    fun reactionFeeds(item: ReactionData) = if (item.isChecked) bindAddReaction(item) else bindRemoveReaction(item)
+
+    private fun bindAddReaction(item: ReactionData) {
+        feedRepository
+                .addReaction(item)
                 .subscribe()
     }
+
+    private fun bindRemoveReaction(item: ReactionData) {
+        feedRepository
+                .removeReaction(item)
+                .subscribe()
+    }
+
 }

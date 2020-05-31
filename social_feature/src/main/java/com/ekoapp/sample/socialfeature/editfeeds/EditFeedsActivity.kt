@@ -76,7 +76,7 @@ class EditFeedsActivity : SingleViewModelActivity<EditFeedsViewModel>() {
 
     private fun sendResult(description: String) {
         viewModel?.apply {
-            getIntentUserData { editPost(postId = it.postId, description = description) }
+            getIntentUserData { bindEditPost(postId = it.postId, description = description) }
         }
     }
 }

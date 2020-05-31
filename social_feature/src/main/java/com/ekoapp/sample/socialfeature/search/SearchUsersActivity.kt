@@ -1,17 +1,14 @@
 package com.ekoapp.sample.socialfeature.search
 
 import android.content.Context
-import android.content.Intent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.core.ui.extensions.observeOnce
 import com.ekoapp.sample.socialfeature.R
-import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
-import com.ekoapp.sample.socialfeature.constants.REQUEST_CODE_USER_FEEDS
 import com.ekoapp.sample.socialfeature.di.DaggerSocialActivityComponent
-import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsActivity
+import com.ekoapp.sample.socialfeature.intents.openUserFeedsPage
 import com.ekoapp.sample.socialfeature.users.view.UsersViewModel
 import com.ekoapp.sample.socialfeature.users.view.list.EkoUsersAdapter
 import kotlinx.android.synthetic.main.activity_search_users.*
@@ -56,11 +53,7 @@ class SearchUsersActivity : SingleViewModelActivity<UsersViewModel>() {
     }
 
     private fun setupEvent(viewModel: UsersViewModel) {
-        viewModel.observeUserPage().observeNotNull(this, {
-            val intent = Intent(this, UserFeedsActivity::class.java)
-            intent.putExtra(EXTRA_USER_DATA, it)
-            startActivityForResult(intent, REQUEST_CODE_USER_FEEDS)
-        })
+        viewModel.observeUserPage().observeNotNull(this, this::openUserFeedsPage)
     }
 
     override fun getViewModelClass(): Class<UsersViewModel> {

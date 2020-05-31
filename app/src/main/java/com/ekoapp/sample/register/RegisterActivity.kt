@@ -1,12 +1,11 @@
 package com.ekoapp.sample.register
 
-import android.content.Intent
-import com.ekoapp.sample.MainNavigationActivity
 import com.ekoapp.sample.R
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.di.DaggerMainNavigationComponent
+import com.ekoapp.sample.intents.openMainNavigationPage
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : SingleViewModelActivity<RegisterViewModel>() {
@@ -24,7 +23,7 @@ class RegisterActivity : SingleViewModelActivity<RegisterViewModel>() {
     }
 
     private fun navMainNavigation() {
-        startActivity(Intent(this, MainNavigationActivity::class.java))
+        openMainNavigationPage()
         finish()
     }
 

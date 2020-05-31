@@ -77,7 +77,7 @@ class CreateFeedsActivity : SingleViewModelActivity<CreateFeedsViewModel>() {
     private fun sendResult(description: String) {
         viewModel?.apply {
             getIntentUserData {
-                createPost(userId = it.userId, description = description)
+                bindCreatePost(userId = it.userId, description = description)
             }
         }
     }
