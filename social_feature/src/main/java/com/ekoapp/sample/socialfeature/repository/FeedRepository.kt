@@ -9,6 +9,7 @@ import com.ekoapp.ekosdk.internal.data.model.EkoPostReaction
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import javax.inject.Inject
 
 class FeedRepository @Inject constructor() {
@@ -54,6 +55,12 @@ class FeedRepository @Inject constructor() {
         return item.item
                 .react()
                 .addReaction(item.text)
+    }
+
+    fun myReaction(item: ReactionData): Maybe<EkoPostReaction> {
+        return item.item
+                .react()
+                .myReaction(item.text)
     }
 
 }

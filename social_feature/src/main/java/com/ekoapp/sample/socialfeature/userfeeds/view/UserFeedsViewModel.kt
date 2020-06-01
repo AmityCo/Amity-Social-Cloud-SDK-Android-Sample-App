@@ -1,12 +1,15 @@
 package com.ekoapp.sample.socialfeature.userfeeds.view
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.ekosdk.EkoUser
+import com.ekoapp.ekosdk.internal.data.model.EkoPostReaction
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
+import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
 import com.ekoapp.sample.socialfeature.repository.FeedRepository
@@ -14,6 +17,7 @@ import com.ekoapp.sample.socialfeature.repository.UserRepository
 import com.ekoapp.sample.socialfeature.userfeeds.data.FeedsData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRepository,
@@ -27,6 +31,7 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
     val usersActionRelay = SingleLiveData<UserData>()
     val seeAllUsersActionRelay = SingleLiveData<Unit>()
     val reactionsSummaryActionRelay = SingleLiveData<UserReactionData>()
+    val myReactionRelay = MutableLiveData<EkoPostReaction>()
 
     fun observeCreateFeedsPage(): SingleLiveData<UserData> = createFeedsActionRelay
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
@@ -34,6 +39,7 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
     fun observeUserPage(): SingleLiveData<UserData> = usersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
+    fun observeMyReaction(): LiveData<EkoPostReaction> = myReactionRelay
 
     fun setupIntent(data: UserData?) {
         userDataIntent = data ?: UserData(userId = EkoClient.getUserId())
@@ -60,6 +66,16 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
     fun bindDeletePost(item: EkoPost) {
         feedRepository
                 .deletePost(item)
+                .subscribe()
+    }
+
+    fun bindMyReaction(item: ReactionData) {
+        feedRepository
+                .myReaction(item)
+                .doOnSuccess(myReactionRelay::postValue)
+                .doOnError {
+                    Timber.d("${getCurrentClassAndMethodNames()}${it.message}")
+                }
                 .subscribe()
     }
 
