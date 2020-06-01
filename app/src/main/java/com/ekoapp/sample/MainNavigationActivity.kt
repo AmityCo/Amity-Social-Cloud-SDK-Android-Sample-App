@@ -17,8 +17,13 @@ class MainNavigationActivity : SingleViewModelActivity<MainNavigationViewModel>(
     @Named("social")
     lateinit var socialRequest: SplitInstallRequest
 
+    @Inject
+    @Named("chat")
+    lateinit var chatRequest: SplitInstallRequest
+
     override fun bindViewModel(viewModel: MainNavigationViewModel) {
         setupAppBar()
+        viewModel.installModule(chatRequest)
         viewModel.installModule(socialRequest)
         setUpNavigation()
     }

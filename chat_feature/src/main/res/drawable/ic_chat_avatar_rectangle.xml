@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item>
+        <shape android:id="@+id/listview_background_shape">
+            <padding
+                android:bottom="@dimen/material_component_dialogs_padding_around_buttons"
+                android:left="@dimen/material_component_dialogs_padding_around_buttons"
+                android:right="@dimen/material_component_dialogs_padding_around_buttons"
+                android:top="@dimen/material_component_dialogs_padding_around_buttons" />
+            <corners
+                android:radius="@dimen/cardview_default_radius"
+                tools:ignore="PrivateResource" />
+            <solid android:color="@color/material_light_blue_50" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_chat_users"
+        android:gravity="center" />
+</layer-list>

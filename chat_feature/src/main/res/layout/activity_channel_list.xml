@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:context="com.ekoapp.sample.chatfeature.channellist.ChannelListActivity"
+        tools:context="com.ekoapp.sample.chatfeature.channels.ChannelListActivity"
         tools:showIn="@layout/activity_channel_list" />
 
 </RelativeLayout>

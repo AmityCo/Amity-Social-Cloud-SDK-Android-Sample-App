@@ -9,8 +9,16 @@ fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment) {
     supportFragmentManager.doTransaction { add(frameId, fragment) }
 }
 
+fun Fragment.addFragment(frameId: Int, fragment: Fragment) {
+    childFragmentManager.doTransaction { add(frameId, fragment) }
+}
+
 fun AppCompatActivity.replaceFragment(frameId: Int, fragment: Fragment) {
     supportFragmentManager.doTransaction { replace(frameId, fragment) }
+}
+
+fun Fragment.replaceFragment(frameId: Int, fragment: Fragment) {
+    childFragmentManager.doTransaction { replace(frameId, fragment) }
 }
 
 fun AppCompatActivity.removeFragment(fragment: Fragment) {

@@ -1,16 +1,15 @@
 package com.ekoapp.sample.chatfeature.channellist
 
-import android.view.LayoutInflater
+/*import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.ekosdk.EkoObjects
 import com.ekoapp.ekosdk.adapter.EkoChannelAdapter
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.chatfeature.channellist.ChannelListAdapter.ChannelViewHolder
+import com.ekoapp.sample.chatfeature.channels.ChannelListAdapter.ChannelViewHolder
 import com.ekoapp.sample.chatfeature.intent.ViewParentMessagesIntent
 import com.google.common.base.Joiner
-import kotlinx.android.synthetic.main.item_channel.view.*
 
 class ChannelListAdapter : EkoChannelAdapter<ChannelViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChannelViewHolder {
@@ -20,7 +19,7 @@ class ChannelListAdapter : EkoChannelAdapter<ChannelViewHolder>() {
 
     override fun onBindViewHolder(holder: ChannelViewHolder, position: Int) {
         val channel = getItem(position)
-        if (EkoObjects.isProxy(channel)) {
+        *//*if (EkoObjects.isProxy(channel)) {
             holder.channelId = null
             holder.itemView.channel_textview.text = "loading..."
         } else {
@@ -42,7 +41,7 @@ class ChannelListAdapter : EkoChannelAdapter<ChannelViewHolder>() {
                     .toString()
             holder.channelId = channel.channelId
             holder.itemView.channel_textview.text = text
-        }
+        }*//*
     }
 
     class ChannelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,4 +55,4 @@ class ChannelListAdapter : EkoChannelAdapter<ChannelViewHolder>() {
             }
         }
     }
-}
+}*/
