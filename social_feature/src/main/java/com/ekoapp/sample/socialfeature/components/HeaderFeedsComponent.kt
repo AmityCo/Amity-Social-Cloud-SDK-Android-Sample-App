@@ -36,6 +36,7 @@ class HeaderFeedsComponent : ConstraintLayout {
         text_full_name.text = item.postedUserId
         text_time.text = item.createdAt.toDate().getTimeAgo()
 
+        //TODO Use get my reaction from value view model instead
         val match = item.myReactions.filter { ReactionTypes.FAVORITE.text.contains(it, ignoreCase = true) }
         isFavorited = match.contains(ReactionTypes.FAVORITE.text)
         selectorFavorite(isFavorited)

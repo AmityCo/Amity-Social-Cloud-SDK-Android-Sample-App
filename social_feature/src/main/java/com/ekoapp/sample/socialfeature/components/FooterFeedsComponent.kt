@@ -23,6 +23,8 @@ class FooterFeedsComponent : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
     fun setupView(item: EkoPost) {
+
+        //TODO Use get my reaction from value view model instead
         val match = item.myReactions.filter { ReactionTypes.LIKE.text.contains(it, ignoreCase = true) }
         isLiked = match.contains(ReactionTypes.LIKE.text)
         selectorLike(isLiked)
