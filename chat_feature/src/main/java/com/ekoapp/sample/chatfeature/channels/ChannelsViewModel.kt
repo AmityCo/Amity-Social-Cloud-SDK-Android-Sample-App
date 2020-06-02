@@ -8,6 +8,7 @@ import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.preferences.SimplePreferences
+import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.google.common.collect.FluentIterable
 import io.reactivex.Completable
@@ -15,6 +16,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
 class ChannelsViewModel @Inject constructor(private val channelRepository: ChannelRepository) : DisposableViewModel() {
+
+    private val aboutActionRelay = SingleLiveData<EkoChannel>()
+
+    fun observeAboutPage(): SingleLiveData<EkoChannel> = aboutActionRelay
+
+    fun renderAboutChannel(item: EkoChannel) {
+        aboutActionRelay.postValue(item)
+    }
 
     fun bindTotalUnreadCount(): LiveData<Int> = channelRepository.getTotalUnreadCount().toLiveData()
 

@@ -23,6 +23,7 @@ class ChannelsAdapter(private val context: Context, private val viewModel: Chann
                 getItem(position)?.apply {
                     holder.bind(this)
                     holder.joinChannel { viewModel.bindJoinChannel(this.channelId) }
+                    holder.aboutChannel { viewModel.renderAboutChannel(this) }
                 }
             }
             else -> throw IllegalArgumentException()

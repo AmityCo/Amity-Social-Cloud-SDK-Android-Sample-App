@@ -19,6 +19,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
     override fun bindViewModel(viewModel: ChannelsViewModel) {
         setupView(viewModel)
         renderList(viewModel)
+        setupEvent(viewModel)
     }
 
     private fun setupView(viewModel: ChannelsViewModel) {
@@ -32,6 +33,12 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
                 .build(adapter)
         viewModel.bindChannelCollection().observeNotNull(viewLifecycleOwner, {
             adapter.submitList(it)
+        })
+    }
+
+    private fun setupEvent(viewModel: ChannelsViewModel) {
+        viewModel.observeAboutPage().observeNotNull(viewLifecycleOwner, {
+            //TODO Implement open AboutChannel page
         })
     }
 
