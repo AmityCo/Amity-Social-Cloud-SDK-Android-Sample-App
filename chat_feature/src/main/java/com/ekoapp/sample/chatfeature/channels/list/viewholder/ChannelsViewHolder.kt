@@ -1,13 +1,17 @@
 package com.ekoapp.sample.chatfeature.channels.list.viewholder
 
+import android.content.Context
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.sample.chatfeature.channels.list.renders.EkoChannelsRenderData
 import com.ekoapp.sample.chatfeature.channels.list.renders.channelRender
+import com.ekoapp.sample.chatfeature.dialogs.ChannelsMoreHorizBottomSheetFragment
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import kotlinx.android.synthetic.main.item_channel.view.*
 
 class ChannelsViewHolder(itemView: View) : BaseViewHolder<EkoChannel>(itemView) {
+    private var channelsHorizBottomSheet: ChannelsMoreHorizBottomSheetFragment = ChannelsMoreHorizBottomSheetFragment()
 
     override fun bind(item: EkoChannel) {
         val context = itemView.context
@@ -18,6 +22,28 @@ class ChannelsViewHolder(itemView: View) : BaseViewHolder<EkoChannel>(itemView) 
                 itemView.text_chat_room_member,
                 itemView.image_more_horiz
         )
+
+        itemView.image_more_horiz.setOnClickListener {
+            context.renderBottomSheet()
+        }
+    }
+
+    private fun Context.renderBottomSheet() {
+        channelsHorizBottomSheet.show((this as AppCompatActivity).supportFragmentManager, channelsHorizBottomSheet.tag)
+    }
+
+    fun joinChannel(join: (Boolean) -> Unit) {
+        channelsHorizBottomSheet.renderJoin {
+            join.invoke(it)
+            channelsHorizBottomSheet.dialog?.cancel()
+        }
+    }
+
+    fun aboutChannel(about: () -> Unit) {
+        channelsHorizBottomSheet.renderAbout {
+            about.invoke()
+            channelsHorizBottomSheet.dialog?.cancel()
+        }
     }
 
 }

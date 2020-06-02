@@ -33,4 +33,6 @@
 
     <string name="temporarily_members">%s Members</string>
     <string name="temporarily_anonymous">Anonymous</string>
+    <string name="temporarily_join">Join</string>
+    <string name="temporarily_about">About</string>
 </resources>

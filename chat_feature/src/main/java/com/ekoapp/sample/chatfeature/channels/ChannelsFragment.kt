@@ -26,7 +26,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
     }
 
     private fun renderList(viewModel: ChannelsViewModel) {
-        adapter = ChannelsAdapter(requireContext())
+        adapter = ChannelsAdapter(requireContext(), viewModel)
         RecyclerBuilder(context = requireContext(), recyclerView = recycler_channels)
                 .builder()
                 .build(adapter)
