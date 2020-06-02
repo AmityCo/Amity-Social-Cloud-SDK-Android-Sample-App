@@ -52,8 +52,8 @@ class UserListActivity : AppCompatActivity() {
             val sortingOptions = ArrayList<String>()
             sortingOptions.run {
                 add("Displayname")
-                add("Stack from top")
-                add("Stack from end")
+                add("First created")
+                add("Last created")
             }
 
             MaterialDialog(this).show {
@@ -62,11 +62,11 @@ class UserListActivity : AppCompatActivity() {
                         "Displayname" -> {
                             sortBy = EkoUserSortOption.DISPLAYNAME
                         }
-                        "Stack from top" -> {
-                            sortBy = EkoUserSortOption.STACK_FROM_TOP
+                        "First created" -> {
+                            sortBy = EkoUserSortOption.FIRST_CREATED
                         }
-                        "Stack from end" -> {
-                            sortBy = EkoUserSortOption.STACK_FROM_END
+                        "Last created" -> {
+                            sortBy = EkoUserSortOption.LAST_CREATED
                         }
                     }
                     observeUserCollection()
