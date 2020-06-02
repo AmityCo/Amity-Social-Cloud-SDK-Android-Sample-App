@@ -17,8 +17,8 @@
 
     <ImageView
         android:id="@+id/image_chat_room_type"
-        android:layout_width="@dimen/material_layout_icon"
-        android:layout_height="@dimen/material_layout_icon"
+        android:layout_width="@dimen/md_icon_margin"
+        android:layout_height="@dimen/md_icon_margin"
         android:layout_marginStart="@dimen/material_component_lists_icon_left_padding"
         android:layout_marginTop="@dimen/material_layout_vertical_spacing_between_content_areas"
         android:src="@drawable/ic_channel_public"

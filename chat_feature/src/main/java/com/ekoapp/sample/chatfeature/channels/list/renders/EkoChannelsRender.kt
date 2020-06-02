@@ -8,7 +8,6 @@ import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.components.AvatarChatRoomWithTotalComponent
 import com.ekoapp.sample.chatfeature.enums.ChannelTypes
-import com.ekoapp.sample.core.utils.setTint
 
 
 data class EkoChannelsRenderData(val context: Context, val item: EkoChannel)
@@ -24,19 +23,15 @@ fun EkoChannelsRenderData.channelRender(avatar: AvatarChatRoomWithTotalComponent
     when (item.channelType) {
         ChannelTypes.STANDARD.text -> {
             chatRoomType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_channel_public))
-            chatRoomType.setTint(ContextCompat.getColor(context, R.color.colorStandardChannel))
         }
         ChannelTypes.PRIVATE.text -> {
             chatRoomType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_channel_private))
-            chatRoomType.setTint(ContextCompat.getColor(context, R.color.colorPrivateChannel))
         }
         ChannelTypes.BROADCAST.text -> {
             chatRoomType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_channel_broadcast))
-            chatRoomType.setTint(ContextCompat.getColor(context, R.color.colorBroadCastChannel))
         }
         ChannelTypes.CONVERSATION.text -> {
             chatRoomType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_channel_chat))
-            chatRoomType.setTint(ContextCompat.getColor(context, R.color.colorConversationChannel))
         }
     }
 

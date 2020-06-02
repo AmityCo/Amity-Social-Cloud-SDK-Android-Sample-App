@@ -7,6 +7,6 @@
     <color name="colorOnline">@color/material_green_accent_400</color>
     <color name="colorStandardChannel">@color/colorPrimary</color>
     <color name="colorPrivateChannel">@color/colorAccent</color>
-    <color name="colorBroadCastChannel">@color/material_orange_accent_400</color>
-    <color name="colorConversationChannel">@color/material_green_accent_400</color>
+    <color name="colorBroadCastChannel">@color/material_orange_300</color>
+    <color name="colorConversationChannel">@color/material_blue_300</color>
 </resources>
