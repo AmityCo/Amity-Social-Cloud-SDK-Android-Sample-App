@@ -19,8 +19,7 @@ class ChannelsViewHolder(itemView: View) : BaseViewHolder<EkoChannel>(itemView) 
                 itemView.avatar_chat_room_with_total,
                 itemView.image_chat_room_type,
                 itemView.text_chat_room_name,
-                itemView.text_chat_room_member,
-                itemView.image_more_horiz
+                itemView.text_chat_room_member
         )
 
         itemView.image_more_horiz.setOnClickListener {

@@ -16,8 +16,7 @@ data class EkoChannelsRenderData(val context: Context, val item: EkoChannel)
 fun EkoChannelsRenderData.channelRender(avatar: AvatarChatRoomWithTotalComponent,
                                         chatRoomType: ImageView,
                                         name: TextView,
-                                        member: TextView,
-                                        more: ImageView) {
+                                        member: TextView) {
 
     avatar.setupView(item.unreadCount)
 

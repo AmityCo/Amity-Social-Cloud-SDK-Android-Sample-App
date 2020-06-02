@@ -31,6 +31,7 @@
     <string name="unregister_push_for_all">Un-register Push for All Users</string>
 
 
+    <string name="temporarily_chat">Chat</string>
     <string name="temporarily_members">%s Members</string>
     <string name="temporarily_anonymous">Anonymous</string>
     <string name="temporarily_join">Join</string>

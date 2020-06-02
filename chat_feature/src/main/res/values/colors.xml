@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#0abab5</color>
     <color name="colorAccent">#f9b9b6</color>
 
+    <color name="colorOnline">@color/material_green_accent_400</color>
     <color name="colorStandardChannel">@color/colorPrimary</color>
     <color name="colorPrivateChannel">@color/colorAccent</color>
     <color name="colorBroadCastChannel">@color/material_orange_accent_400</color>

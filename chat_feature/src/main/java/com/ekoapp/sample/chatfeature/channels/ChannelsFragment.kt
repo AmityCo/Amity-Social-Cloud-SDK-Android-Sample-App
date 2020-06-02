@@ -23,7 +23,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
     }
 
     private fun setupView(viewModel: ChannelsViewModel) {
-        viewModel.bindTotalUnreadCount().observeNotNull(viewLifecycleOwner, avatar_with_total::setupView)
+        viewModel.bindTotalUnreadCount().observeNotNull(viewLifecycleOwner, header_channels::setupView)
     }
 
     private fun renderList(viewModel: ChannelsViewModel) {
