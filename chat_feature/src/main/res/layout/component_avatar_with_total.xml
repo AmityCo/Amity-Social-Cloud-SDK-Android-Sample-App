@@ -20,6 +20,7 @@
         android:id="@+id/button_total"
         android:layout_width="@dimen/material_layout_icon"
         android:layout_height="@dimen/material_layout_icon"
+        android:layout_margin="@dimen/material_component_grid_lists_padding_big"
         android:background="@drawable/default_oval"
         android:backgroundTint="@color/material_red_400"
         android:gravity="center"
