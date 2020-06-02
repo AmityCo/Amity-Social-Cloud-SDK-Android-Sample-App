@@ -81,4 +81,10 @@
         android:title="@string/request_write_settings_permissions"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_view_user_list"
+        android:orderInCategory="1400"
+        android:title="@string/user_list"
+        app:showAsAction="never" />
+
 </menu>

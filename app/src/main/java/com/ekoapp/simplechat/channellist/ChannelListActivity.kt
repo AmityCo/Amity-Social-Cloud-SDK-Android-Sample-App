@@ -28,19 +28,16 @@ import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.ekosdk.sdk.BuildConfig
 import com.ekoapp.simplechat.R
-import com.ekoapp.simplechat.SimpleConfig
 import com.ekoapp.simplechat.SimplePreferences
 import com.ekoapp.simplechat.channellist.filter.ChannelQueryFilterActivity
 import com.ekoapp.simplechat.intent.IntentRequestCode
 import com.ekoapp.simplechat.intent.OpenChangeMetadataIntent
-import com.google.android.material.snackbar.Snackbar
+import com.ekoapp.simplechat.userlist.UserListActivity
 import com.google.common.base.Joiner
-import com.google.common.base.MoreObjects
 import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
-import org.bson.types.ObjectId
 import java.util.*
 
 
@@ -61,20 +58,6 @@ class ChannelListActivity : AppCompatActivity() {
         toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
 
-        val userId = MoreObjects.firstNonNull(EkoClient.getUserId(), SimpleConfig.DEFAULT_USER_ID)
-        val displayName = MoreObjects.firstNonNull(EkoClient.getDisplayName(), "Android " + ObjectId.get())
-
-        EkoClient.registerDevice(userId, displayName)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { this.observeChannelCollection() }
-                .subscribe()
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null)
-                    .show()
-        }
-
         query_filter_textview.setOnClickListener {
             startActivityForResult(Intent(this, ChannelQueryFilterActivity::class.java),
                     IntentRequestCode.REQUEST_CHANNEL_FILTER_OPTION)
@@ -84,8 +67,9 @@ class ChannelListActivity : AppCompatActivity() {
                 .observe(this, Observer<Int> { totalUnreadCount ->
                     val totalUnreadCountString = getString(R.string.total_unread_d, totalUnreadCount)
                     total_unread_textview.text = totalUnreadCountString
-
                 })
+
+        observeChannelCollection()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -99,6 +83,7 @@ class ChannelListActivity : AppCompatActivity() {
         if (id == R.id.action_register) {
             showDialog(R.string.register, "", EkoClient.getUserId(), false, { dialog, input ->
                 val userId = input.toString()
+
                 EkoClient.registerDevice(userId, userId)
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnComplete { observeChannelCollection() }
@@ -217,6 +202,9 @@ class ChannelListActivity : AppCompatActivity() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }
+            return true
+        } else if (id == R.id.action_view_user_list) {
+            startActivity(Intent(this, UserListActivity::class.java))
             return true
         }
         return super.onOptionsItemSelected(item)

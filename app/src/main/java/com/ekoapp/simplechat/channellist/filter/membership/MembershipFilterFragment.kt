@@ -39,7 +39,7 @@ class MembershipFilterFragment : Fragment() {
     private fun setUpSpinner() {
         val modes = mutableListOf(EkoChannelFilter.ALL.apiKey, EkoChannelFilter.MEMBER.getApiKey(), EkoChannelFilter.NOT_MEMBER.apiKey)
 
-        filter_spinner.adapter = ArrayAdapter<String>(context,
+        filter_spinner.adapter = ArrayAdapter(activity!!.baseContext,
                 android.R.layout.simple_spinner_dropdown_item,
                 modes)
 
