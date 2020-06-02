@@ -25,6 +25,7 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
     private lateinit var userDataIntent: UserData
     private lateinit var feedsDataIntent: FeedsData
 
+    //TODO refactor make it private
     val createFeedsActionRelay = SingleLiveData<UserData>()
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
     val findUsersActionRelay = SingleLiveData<Unit>()
