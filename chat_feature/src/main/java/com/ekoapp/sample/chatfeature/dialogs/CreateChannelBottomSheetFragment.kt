@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_create_channel.*
 
-class CreateChannelBottomSheetFragment : BottomSheetDialogFragment() {
+class CreateChannelBottomSheetFragment(val title: CharSequence) : BottomSheetDialogFragment() {
 
     private var fragmentView: View? = null
 
@@ -43,6 +43,7 @@ class CreateChannelBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun initView() {
+        text_create_channel_display.text = title
         button_ok.setOnClickListener {
             val channelId = edit_text_channel_id.text.toString()
             callbackOk(channelId)

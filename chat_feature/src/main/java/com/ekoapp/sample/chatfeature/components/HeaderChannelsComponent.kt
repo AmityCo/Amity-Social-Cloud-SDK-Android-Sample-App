@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.component_header_channels.view.*
 data class CreateChannelData(val id: String, val type: String)
 class HeaderChannelsComponent : ConstraintLayout {
     private var selectChannelBottomSheet: SelectChannelBottomSheetFragment = SelectChannelBottomSheetFragment()
-    private var createChannelBottomSheet: CreateChannelBottomSheetFragment = CreateChannelBottomSheetFragment()
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_header_channels, this, true)
@@ -49,6 +48,7 @@ class HeaderChannelsComponent : ConstraintLayout {
     }
 
     private fun createChannel(fm: FragmentManager, type: ChannelTypes, action: (CreateChannelData) -> Unit) {
+        val createChannelBottomSheet = CreateChannelBottomSheetFragment(String.format(context.getString(R.string.temporarily_create_channel_display), type.text))
         createChannelBottomSheet.show(fm, createChannelBottomSheet.tag)
         createChannelBottomSheet.renderOk {
             action.invoke(CreateChannelData(id = it, type = type.text))

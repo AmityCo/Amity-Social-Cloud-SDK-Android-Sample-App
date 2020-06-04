@@ -38,7 +38,7 @@
     <string name="temporarily_about">About</string>
     <string name="temporarily_standard">Standard</string>
     <string name="temporarily_private">Private</string>
-    <string name="temporarily_create_channel_display">Create Channel</string>
+    <string name="temporarily_create_channel_display">Create %s channel</string>
     <string name="temporarily_create_channel_subtitle">You can either specify your own channelId, or leave it to Eko to generate one for you.</string>
     <string name="temporarily_channel_id">Channel ID</string>
 </resources>
