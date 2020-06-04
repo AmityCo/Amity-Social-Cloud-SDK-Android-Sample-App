@@ -9,7 +9,7 @@ import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.ZERO_COUNT
 import com.ekoapp.sample.socialfeature.enums.ReactionTypes
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
-import com.ekoapp.sample.socialfeature.repository.FeedRepository
+import com.ekoapp.sample.socialfeature.repositories.FeedRepository
 import javax.inject.Inject
 
 data class TabLayoutData(val icon: Int, val title: Int, val total: Int)

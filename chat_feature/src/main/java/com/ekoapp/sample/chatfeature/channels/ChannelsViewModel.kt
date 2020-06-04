@@ -5,8 +5,10 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.sample.chatfeature.components.CreateChannelData
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
+import com.ekoapp.sample.chatfeature.repositories.UserRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.preferences.SimplePreferences
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
@@ -16,7 +18,8 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
 
-class ChannelsViewModel @Inject constructor(private val channelRepository: ChannelRepository) : DisposableViewModel() {
+class ChannelsViewModel @Inject constructor(private val channelRepository: ChannelRepository,
+                                            private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val aboutActionRelay = SingleLiveData<EkoChannel>()
 
@@ -30,12 +33,6 @@ class ChannelsViewModel @Inject constructor(private val channelRepository: Chann
 
     fun bindCreateChannel(item: CreateChannelData): Completable {
         return channelRepository.createChannel(item.id, item.type)
-    }
-
-    fun bindCreateConversation(userId: String) {
-        channelRepository.createConversation(userId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
     }
 
     fun bindJoinChannel(channelId: String) {
@@ -52,5 +49,13 @@ class ChannelsViewModel @Inject constructor(private val channelRepository: Chann
         val excludingTags = EkoTags(SimplePreferences.getExcludingChannelTags().get())
 
         return channelRepository.channelCollection(types, filter, includingTags, excludingTags)
+    }
+
+    fun bindUsers(): LiveData<PagedList<EkoUser>> = userRepository.getAllUsers()
+
+    fun bindCreateConversation(userId: String) {
+        channelRepository.createConversation(userId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
     }
 }

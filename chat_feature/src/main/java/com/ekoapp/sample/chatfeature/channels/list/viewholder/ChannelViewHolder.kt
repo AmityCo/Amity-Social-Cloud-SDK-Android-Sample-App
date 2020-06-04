@@ -10,7 +10,7 @@ import com.ekoapp.sample.chatfeature.dialogs.ChannelsMoreHorizBottomSheetFragmen
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import kotlinx.android.synthetic.main.item_channel.view.*
 
-class ChannelsViewHolder(itemView: View) : BaseViewHolder<EkoChannel>(itemView) {
+class ChannelViewHolder(itemView: View) : BaseViewHolder<EkoChannel>(itemView) {
     private var channelsHorizBottomSheet: ChannelsMoreHorizBottomSheetFragment = ChannelsMoreHorizBottomSheetFragment()
 
     override fun bind(item: EkoChannel) {
@@ -44,5 +44,4 @@ class ChannelsViewHolder(itemView: View) : BaseViewHolder<EkoChannel>(itemView) 
             channelsHorizBottomSheet.dialog?.cancel()
         }
     }
-
 }

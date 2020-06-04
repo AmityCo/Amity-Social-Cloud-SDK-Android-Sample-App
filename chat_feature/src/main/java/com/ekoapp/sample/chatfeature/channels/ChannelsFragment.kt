@@ -1,7 +1,7 @@
 package com.ekoapp.sample.chatfeature.channels
 
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.chatfeature.channels.list.ChannelsAdapter
+import com.ekoapp.sample.chatfeature.channels.list.MainChannelsAdapter
 import com.ekoapp.sample.chatfeature.di.DaggerChatFragmentComponent
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
@@ -10,7 +10,8 @@ import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import kotlinx.android.synthetic.main.fragment_channels.*
 
 class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
-    private lateinit var adapter: ChannelsAdapter
+    private lateinit var adapter: MainChannelsAdapter
+    private lateinit var recyclerBuilder: RecyclerBuilder
 
     override fun getLayout(): Int {
         return R.layout.fragment_channels
@@ -26,15 +27,17 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
         viewModel.bindTotalUnreadCount().observeNotNull(viewLifecycleOwner, header_channels::setupView)
         header_channels.createStandardChannel(childFragmentManager) {
             viewModel.bindCreateChannel(it)
+            recyclerBuilder.smoothScrollToPosition()
         }
         header_channels.createPrivateChannel(childFragmentManager) {
             viewModel.bindCreateChannel(it)
+            recyclerBuilder.smoothScrollToPosition()
         }
     }
 
     private fun renderList(viewModel: ChannelsViewModel) {
-        adapter = ChannelsAdapter(requireContext(), viewModel)
-        RecyclerBuilder(context = requireContext(), recyclerView = recycler_channels)
+        adapter = MainChannelsAdapter(requireContext(), viewModel)
+        recyclerBuilder = RecyclerBuilder(context = requireContext(), recyclerView = recycler_main_channels)
                 .builder()
                 .build(adapter)
         viewModel.bindChannelCollection().observeNotNull(viewLifecycleOwner, {

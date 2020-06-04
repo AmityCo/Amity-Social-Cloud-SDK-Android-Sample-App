@@ -7,7 +7,7 @@ import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
-import com.ekoapp.sample.socialfeature.repository.UserRepository
+import com.ekoapp.sample.socialfeature.repositories.UserRepository
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -1,4 +1,4 @@
-package com.ekoapp.sample.socialfeature.repository
+package com.ekoapp.sample.socialfeature.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
