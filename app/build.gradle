@@ -3,16 +3,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def ekoSdkVersion = '3.1.1'
+def ekoSdkVersion = '3.2.1'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.ekoapp.simplechat"
 
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
 
         versionCode 1
         versionName ekoSdkVersion
@@ -63,15 +63,21 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'com.afollestad.material-dialogs:core:3.1.1'
     implementation 'com.afollestad.material-dialogs:input:3.1.1'
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.1.0'
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.1.0"
-
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation "androidx.activity:activity-ktx:1.1.0"
+    implementation "androidx.fragment:fragment-ktx:1.2.2"
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.2.0'
 
     implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.4"
     implementation "androidx.tonyodev.fetch2:xfetch2:3.1.4"
@@ -81,20 +87,20 @@ dependencies {
     implementation "com.github.bumptech.glide:okhttp3-integration:4.10.0"
     implementation "com.github.bumptech.glide:recyclerview-integration:4.10.0"
 
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0'
 
     implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
 
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
-    baidu_with_fcmImplementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
+    implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
 
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
-    implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-core:17.3.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.5'
 
     implementation 'com.google.guava:guava:28.1-android'
 
@@ -106,9 +112,8 @@ dependencies {
 
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
