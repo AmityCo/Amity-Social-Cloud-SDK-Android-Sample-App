@@ -10,6 +10,7 @@ import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import kotlinx.android.synthetic.main.fragment_channels.*
 
 class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
+
     private lateinit var adapter: ChannelsAdapter
 
     override fun getLayout(): Int {
@@ -24,6 +25,12 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
 
     private fun setupView(viewModel: ChannelsViewModel) {
         viewModel.bindTotalUnreadCount().observeNotNull(viewLifecycleOwner, header_channels::setupView)
+        header_channels.createStandardChannel {
+
+        }
+        header_channels.createPrivateChannel {
+
+        }
     }
 
     private fun renderList(viewModel: ChannelsViewModel) {

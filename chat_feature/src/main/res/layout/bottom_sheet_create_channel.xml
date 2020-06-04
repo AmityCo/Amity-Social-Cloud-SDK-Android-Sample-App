@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/default_bottom_sheet"
+    android:backgroundTint="@color/material_grey_900"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="@dimen/material_component_bottom_sheet_list_item_height"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    tools:ignore="PrivateResource">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_standard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_channel_public"
+        android:drawablePadding="@dimen/material_layout_app_bar_icon_padding"
+        android:gravity="center_vertical"
+        android:padding="@dimen/material_layout_app_bar_icon_padding"
+        android:text="@string/temporarily_standard"
+        android:textColor="@color/material_grey_50"
+        android:textSize="@dimen/material_typography_body1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_private"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_channel_private"
+        android:drawablePadding="@dimen/material_layout_app_bar_icon_padding"
+        android:gravity="center_vertical"
+        android:padding="@dimen/material_layout_app_bar_icon_padding"
+        android:text="@string/temporarily_private"
+        android:textColor="@color/material_grey_50"
+        android:textSize="@dimen/material_typography_body1"
+        app:layout_constraintTop_toBottomOf="@id/text_standard"
+        tools:ignore="PrivateResource" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

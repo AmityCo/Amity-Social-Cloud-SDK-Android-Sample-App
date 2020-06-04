@@ -36,4 +36,7 @@
     <string name="temporarily_anonymous">Anonymous</string>
     <string name="temporarily_join">Join</string>
     <string name="temporarily_about">About</string>
+    <string name="temporarily_standard">Standard</string>
+    <string name="temporarily_private">Private</string>
+    <string name="temporarily_channel_id">channelId</string>
 </resources>
