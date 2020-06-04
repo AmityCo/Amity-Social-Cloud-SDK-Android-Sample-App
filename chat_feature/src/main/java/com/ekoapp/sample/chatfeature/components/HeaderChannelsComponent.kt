@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.chatfeature.dialogs.CreateChannelBottomSheetFragment
+import com.ekoapp.sample.chatfeature.dialogs.SelectChannelBottomSheetFragment
 import kotlinx.android.synthetic.main.component_header_channels.view.*
 
 class HeaderChannelsComponent : ConstraintLayout {
-    private var createChannelBottomSheet: CreateChannelBottomSheetFragment = CreateChannelBottomSheetFragment()
+    private var selectChannelBottomSheet: SelectChannelBottomSheetFragment = SelectChannelBottomSheetFragment()
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_header_channels, this, true)
@@ -26,20 +26,20 @@ class HeaderChannelsComponent : ConstraintLayout {
     }
 
     private fun Context.renderBottomSheet() {
-        createChannelBottomSheet.show((this as AppCompatActivity).supportFragmentManager, createChannelBottomSheet.tag)
+        selectChannelBottomSheet.show((this as AppCompatActivity).supportFragmentManager, selectChannelBottomSheet.tag)
     }
 
     fun createStandardChannel(standard: () -> Unit) {
-        createChannelBottomSheet.renderStandard {
+        selectChannelBottomSheet.renderStandard {
             standard.invoke()
-            createChannelBottomSheet.dialog?.cancel()
+            selectChannelBottomSheet.dialog?.cancel()
         }
     }
 
     fun createPrivateChannel(private: () -> Unit) {
-        createChannelBottomSheet.renderPrivate {
+        selectChannelBottomSheet.renderPrivate {
             private.invoke()
-            createChannelBottomSheet.dialog?.cancel()
+            selectChannelBottomSheet.dialog?.cancel()
         }
     }
 }

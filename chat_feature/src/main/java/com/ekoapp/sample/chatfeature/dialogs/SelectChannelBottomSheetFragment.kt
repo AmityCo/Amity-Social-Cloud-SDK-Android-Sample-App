@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import com.ekoapp.sample.chatfeature.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_create_channel.*
+import kotlinx.android.synthetic.main.bottom_sheet_select_channel.*
 
-class CreateChannelBottomSheetFragment : BottomSheetDialogFragment() {
+class SelectChannelBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var fragmentView: View? = null
 
@@ -20,7 +20,7 @@ class CreateChannelBottomSheetFragment : BottomSheetDialogFragment() {
     lateinit var callbackPrivate: () -> Unit
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        fragmentView = inflater.inflate(R.layout.bottom_sheet_create_channel, container, false)
+        fragmentView = inflater.inflate(R.layout.bottom_sheet_select_channel, container, false)
         return fragmentView
     }
 
