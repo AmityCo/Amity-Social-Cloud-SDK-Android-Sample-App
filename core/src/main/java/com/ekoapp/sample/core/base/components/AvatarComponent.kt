@@ -1,10 +1,10 @@
-package com.ekoapp.sample.socialfeature.components
+package com.ekoapp.sample.core.base.components
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.ekoapp.sample.socialfeature.R
+import com.ekoapp.sample.core.R
 
 
 class AvatarComponent : ConstraintLayout {

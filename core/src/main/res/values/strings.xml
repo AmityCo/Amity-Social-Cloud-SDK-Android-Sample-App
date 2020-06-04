@@ -4,4 +4,6 @@
     <string name="title_chat_feature">Chat feature</string>
     <string name="temporarily_more">More</string>
     <string name="general_search">Search</string>
+    <string name="general_submit">Submit</string>
+    <string name="general_cancel">Cancel</string>
 </resources>

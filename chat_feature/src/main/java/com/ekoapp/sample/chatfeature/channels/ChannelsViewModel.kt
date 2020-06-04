@@ -5,6 +5,7 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.sample.chatfeature.components.CreateChannelData
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.preferences.SimplePreferences
@@ -27,8 +28,8 @@ class ChannelsViewModel @Inject constructor(private val channelRepository: Chann
 
     fun bindTotalUnreadCount(): LiveData<Int> = channelRepository.getTotalUnreadCount().toLiveData()
 
-    fun bindCreateChannel(channelId: String, type: String): Completable {
-        return channelRepository.createChannel(channelId, type)
+    fun bindCreateChannel(item: CreateChannelData): Completable {
+        return channelRepository.createChannel(item.id, item.type)
     }
 
     fun bindCreateConversation(userId: String) {

@@ -5,12 +5,17 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.dialogs.CreateChannelBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.SelectChannelBottomSheetFragment
+import com.ekoapp.sample.chatfeature.enums.ChannelTypes
 import kotlinx.android.synthetic.main.component_header_channels.view.*
 
+data class CreateChannelData(val id: String, val type: String)
 class HeaderChannelsComponent : ConstraintLayout {
     private var selectChannelBottomSheet: SelectChannelBottomSheetFragment = SelectChannelBottomSheetFragment()
+    private var createChannelBottomSheet: CreateChannelBottomSheetFragment = CreateChannelBottomSheetFragment()
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_header_channels, this, true)
@@ -29,17 +34,25 @@ class HeaderChannelsComponent : ConstraintLayout {
         selectChannelBottomSheet.show((this as AppCompatActivity).supportFragmentManager, selectChannelBottomSheet.tag)
     }
 
-    fun createStandardChannel(standard: () -> Unit) {
+    fun createStandardChannel(fm: FragmentManager, action: (CreateChannelData) -> Unit) {
         selectChannelBottomSheet.renderStandard {
-            standard.invoke()
+            createChannel(fm, ChannelTypes.STANDARD, action)
             selectChannelBottomSheet.dialog?.cancel()
         }
     }
 
-    fun createPrivateChannel(private: () -> Unit) {
+    fun createPrivateChannel(fm: FragmentManager, action: (CreateChannelData) -> Unit) {
         selectChannelBottomSheet.renderPrivate {
-            private.invoke()
+            createChannel(fm, ChannelTypes.PRIVATE, action)
             selectChannelBottomSheet.dialog?.cancel()
+        }
+    }
+
+    private fun createChannel(fm: FragmentManager, type: ChannelTypes, action: (CreateChannelData) -> Unit) {
+        createChannelBottomSheet.show(fm, createChannelBottomSheet.tag)
+        createChannelBottomSheet.renderOk {
+            action.invoke(CreateChannelData(id = it, type = type.text))
+            createChannelBottomSheet.dialog?.cancel()
         }
     }
 }
