@@ -24,7 +24,10 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
     }
 
     private fun setupView(viewModel: ChannelsViewModel) {
-        viewModel.bindTotalUnreadCount().observeNotNull(viewLifecycleOwner, header_channels::setupView)
+        viewModel.bindTotalUnreadCount().observeNotNull(viewLifecycleOwner, header_channels::setTotal)
+        header_channels.setupEvent {
+            header_channels.renderUsers(childFragmentManager, viewLifecycleOwner, viewModel)
+        }
         header_channels.createStandardChannel(childFragmentManager) {
             viewModel.bindCreateChannel(it)
             recyclerBuilder.smoothScrollToPosition()

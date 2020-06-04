@@ -14,7 +14,7 @@ import com.ekoapp.sample.core.base.list.BaseViewHolder
 class ConversationWithUserAdapter(private val context: Context, private val viewModel: ChannelsViewModel) : EkoUserAdapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_suggestion_user, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_user_conversation, parent, false)
         return UserChannelsViewHolder(view)
     }
 

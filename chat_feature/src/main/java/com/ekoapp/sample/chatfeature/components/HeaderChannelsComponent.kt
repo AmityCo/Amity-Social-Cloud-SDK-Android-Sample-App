@@ -6,13 +6,17 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.channels.ChannelsViewModel
+import com.ekoapp.sample.chatfeature.dialogs.ConversationWithUsersBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.CreateChannelBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.SelectChannelBottomSheetFragment
 import com.ekoapp.sample.chatfeature.enums.ChannelTypes
 import kotlinx.android.synthetic.main.component_header_channels.view.*
 
 data class CreateChannelData(val id: String, val type: String)
+
 class HeaderChannelsComponent : ConstraintLayout {
     private var selectChannelBottomSheet: SelectChannelBottomSheetFragment = SelectChannelBottomSheetFragment()
 
@@ -24,9 +28,13 @@ class HeaderChannelsComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(total: Int) {
-        avatar_with_total.setupView(total)
+    fun setupEvent(actionConversation: () -> Unit) {
+        image_chat.setOnClickListener { actionConversation.invoke() }
         image_create.setOnClickListener { context.renderBottomSheet() }
+    }
+
+    fun setTotal(total: Int) {
+        avatar_with_total.setupView(total)
     }
 
     private fun Context.renderBottomSheet() {
@@ -54,5 +62,10 @@ class HeaderChannelsComponent : ConstraintLayout {
             action.invoke(CreateChannelData(id = it, type = type.text))
             createChannelBottomSheet.dialog?.cancel()
         }
+    }
+
+    fun renderUsers(fm: FragmentManager, lifecycleOwner: LifecycleOwner, viewModel: ChannelsViewModel) {
+        val conversationWithUsersBottomSheet = ConversationWithUsersBottomSheetFragment(lifecycleOwner, viewModel)
+        conversationWithUsersBottomSheet.show(fm, conversationWithUsersBottomSheet.tag)
     }
 }

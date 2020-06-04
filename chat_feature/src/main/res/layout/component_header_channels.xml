@@ -22,9 +22,23 @@
         android:textSize="@dimen/material_typography_headline"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/image_create"
+        app:layout_constraintEnd_toStartOf="@id/image_chat"
         app:layout_constraintStart_toEndOf="@id/avatar_with_total"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_chat"
+        android:layout_width="@dimen/material_layout_button_height"
+        android:layout_height="@dimen/material_layout_button_height"
+        android:layout_marginEnd="@dimen/md_listitem_control_margin"
+        android:background="@drawable/default_oval"
+        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
+        android:src="@drawable/ic_chat"
+        android:tint="@color/material_light_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_create"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
 
     <ImageView
         android:id="@+id/image_create"
