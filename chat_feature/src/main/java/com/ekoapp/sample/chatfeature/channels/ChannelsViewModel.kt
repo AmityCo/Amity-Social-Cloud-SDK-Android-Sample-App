@@ -48,7 +48,6 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
         items.add(String.format(context.getString(R.string.temporarily_about_channel_id), item.channelId))
         items.add(String.format(context.getString(R.string.temporarily_about_channel_name), item.displayName))
         items.add(String.format(context.getString(R.string.temporarily_about_channel_member), item.memberCount))
-        items.add(String.format(context.getString(R.string.temporarily_about_channel_count_messages), item.messageCount))
         items.add(String.format(context.getString(R.string.temporarily_about_channel_tags), item.tags))
         return items
     }
