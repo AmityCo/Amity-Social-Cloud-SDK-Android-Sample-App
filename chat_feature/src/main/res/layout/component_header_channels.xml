@@ -12,31 +12,17 @@
         android:layout_width="@dimen/avatar_medium"
         android:layout_height="@dimen/avatar_medium" />
 
-    <TextView
-        android:id="@+id/text_title_chat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/material_component_lists_icon_left_padding"
-        android:text="@string/temporarily_chat"
-        android:textColor="@color/material_light_white"
-        android:textSize="@dimen/material_typography_headline"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/image_chat"
-        app:layout_constraintStart_toEndOf="@id/avatar_with_total"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/image_chat"
         android:layout_width="@dimen/material_layout_button_height"
         android:layout_height="@dimen/material_layout_button_height"
-        android:layout_marginEnd="@dimen/md_listitem_control_margin"
+        android:layout_marginStart="@dimen/material_component_lists_icon_left_padding"
         android:background="@drawable/default_oval"
         android:padding="@dimen/material_component_dialogs_padding_around_buttons"
         android:src="@drawable/ic_chat"
         android:tint="@color/material_light_white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/image_create"
+        app:layout_constraintStart_toEndOf="@id/avatar_with_total"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />
 
@@ -44,10 +30,24 @@
         android:id="@+id/image_create"
         android:layout_width="@dimen/material_layout_button_height"
         android:layout_height="@dimen/material_layout_button_height"
-        android:layout_marginEnd="@dimen/material_component_grid_lists_padding_big"
+        android:layout_marginStart="@dimen/md_listitem_control_margin"
         android:background="@drawable/default_oval"
         android:padding="@dimen/material_component_dialogs_padding_around_buttons"
         android:src="@drawable/ic_create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_chat"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_settings"
+        android:layout_width="@dimen/material_layout_button_height"
+        android:layout_height="@dimen/material_layout_button_height"
+        android:layout_marginEnd="@dimen/material_component_grid_lists_padding_big"
+        android:background="@drawable/default_oval"
+        android:padding="@dimen/material_component_dialogs_padding_around_buttons"
+        android:src="@drawable/ic_settings"
+        android:tint="@color/material_light_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
