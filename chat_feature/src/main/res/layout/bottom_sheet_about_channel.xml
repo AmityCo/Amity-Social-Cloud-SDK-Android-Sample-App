@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/default_gradient_bottom_sheet"
+    android:padding="@dimen/material_component_dialogs_padding_around_content_area"
+    tools:ignore="PrivateResource">
+
+    <TextView
+        android:id="@+id/text_about_channel_display"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/temporarily_about_channel_display"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_headline"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_component_text_full_width_single_line_text_field_text_top_and_bottom_padding"
+        app:layout_constraintTop_toBottomOf="@id/text_about_channel_display" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

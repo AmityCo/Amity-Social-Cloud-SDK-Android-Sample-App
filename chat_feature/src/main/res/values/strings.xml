@@ -41,4 +41,11 @@
     <string name="temporarily_create_channel_display">Create %s channel</string>
     <string name="temporarily_create_channel_subtitle">You can either specify your own channelId, or leave it to Eko to generate one for you.</string>
     <string name="temporarily_channel_id">Channel ID</string>
+    <string name="temporarily_about_channel_display">About Channel</string>
+    <string name="temporarily_about_channel_type">%s Channel</string>
+    <string name="temporarily_about_channel_id">Channel ID: %s</string>
+    <string name="temporarily_about_channel_name">Name: %s</string>
+    <string name="temporarily_about_channel_member">%s Members</string>
+    <string name="temporarily_about_channel_count_messages">%s Messages</string>
+    <string name="temporarily_about_channel_tags">Tags : </string>
 </resources>

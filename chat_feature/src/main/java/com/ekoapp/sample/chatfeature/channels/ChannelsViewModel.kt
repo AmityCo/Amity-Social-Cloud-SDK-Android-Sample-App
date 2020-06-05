@@ -1,5 +1,6 @@
 package com.ekoapp.sample.chatfeature.channels
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -7,6 +8,7 @@ import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.ekosdk.EkoUser
+import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.components.CreateChannelData
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.chatfeature.repositories.UserRepository
@@ -22,7 +24,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ChannelsViewModel @Inject constructor(private val channelRepository: ChannelRepository,
+class ChannelsViewModel @Inject constructor(private val context: Context,
+                                            private val channelRepository: ChannelRepository,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val keywordRelay = MutableLiveData<String>()
@@ -37,6 +40,17 @@ class ChannelsViewModel @Inject constructor(private val channelRepository: Chann
 
     fun renderAboutChannel(item: EkoChannel) {
         aboutActionRelay.postValue(item)
+    }
+
+    fun getAboutContent(item: EkoChannel): ArrayList<String> {
+        val items = ArrayList<String>()
+        items.add(String.format(context.getString(R.string.temporarily_about_channel_type), item.channelType).capitalize())
+        items.add(String.format(context.getString(R.string.temporarily_about_channel_id), item.channelId))
+        items.add(String.format(context.getString(R.string.temporarily_about_channel_name), item.displayName))
+        items.add(String.format(context.getString(R.string.temporarily_about_channel_member), item.memberCount))
+        items.add(String.format(context.getString(R.string.temporarily_about_channel_count_messages), item.messageCount))
+        items.add(String.format(context.getString(R.string.temporarily_about_channel_tags), item.tags))
+        return items
     }
 
     fun bindTotalUnreadCount(): LiveData<Int> = channelRepository.getTotalUnreadCount().toLiveData()
@@ -78,4 +92,5 @@ class ChannelsViewModel @Inject constructor(private val channelRepository: Chann
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
     }
+
 }

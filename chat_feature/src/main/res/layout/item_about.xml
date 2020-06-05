@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:background="@color/material_grey_900"
+    tools:ignore="PrivateResource">
+
+    <TextView
+        android:id="@+id/text_about_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/md_listitem_vertical_margin"
+        android:text="@string/temporarily_about_channel_type"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_subheading"
+        tools:text="@string/temporarily_about" />
+
+</LinearLayout>

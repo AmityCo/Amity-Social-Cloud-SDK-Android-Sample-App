@@ -4,6 +4,7 @@ package com.ekoapp.sample.chatfeature.channels.list
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.ekoapp.ekosdk.adapter.EkoChannelAdapter
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channels.ChannelsViewModel
@@ -23,7 +24,7 @@ class MainChannelsAdapter(private val context: Context, private val viewModel: C
                 getItem(position)?.apply {
                     holder.bind(this)
                     holder.joinChannel { viewModel.bindJoinChannel(this.channelId) }
-                    holder.aboutChannel { viewModel.renderAboutChannel(this) }
+                    holder.aboutChannel(viewModel.getAboutContent(this), (context as AppCompatActivity).supportFragmentManager)
                 }
             }
             else -> throw IllegalArgumentException()
