@@ -23,6 +23,7 @@
     </dist:module>
 
     <application>
+        <activity android:name=".settings.ChannelSettingsActivity" />
 
         <activity
             android:name="com.ekoapp.sample.chatfeature.messagelist.ParentMessageListActivity"

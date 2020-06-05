@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:background="@color/material_light_black">
+
+    <CheckBox
+        android:id="@+id/checkbox_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/md_listitem_margin_left"
+        android:buttonTint="@color/material_light_white"
+        android:text="@string/temporarily_standard"
+        android:textColor="@color/material_light_white"
+        tools:ignore="PrivateResource" />
+
+</LinearLayout>

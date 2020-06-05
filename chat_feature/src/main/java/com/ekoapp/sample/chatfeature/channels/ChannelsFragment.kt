@@ -3,6 +3,7 @@ package com.ekoapp.sample.chatfeature.channels
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channels.list.MainChannelsAdapter
 import com.ekoapp.sample.chatfeature.di.DaggerChatFragmentComponent
+import com.ekoapp.sample.chatfeature.intents.openChannelSettingsPage
 import com.ekoapp.sample.core.base.list.IMMEDIATELY_SCROLL
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
@@ -37,9 +38,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
                             general = {
 
                             },
-                            channel = {
-
-                            })
+                            channel = this::openChannelSettingsPage)
                 })
         header_channels.createStandardChannel(childFragmentManager) {
             viewModel.bindCreateChannel(it)
