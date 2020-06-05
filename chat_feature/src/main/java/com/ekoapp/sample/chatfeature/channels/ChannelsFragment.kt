@@ -3,6 +3,7 @@ package com.ekoapp.sample.chatfeature.channels
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channels.list.MainChannelsAdapter
 import com.ekoapp.sample.chatfeature.di.DaggerChatFragmentComponent
+import com.ekoapp.sample.core.base.list.IMMEDIATELY_SCROLL
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
@@ -30,11 +31,11 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
         }
         header_channels.createStandardChannel(childFragmentManager) {
             viewModel.bindCreateChannel(it)
-            recyclerBuilder.smoothScrollToPosition()
+            recyclerBuilder.smoothScrollToPosition(delay = IMMEDIATELY_SCROLL)
         }
         header_channels.createPrivateChannel(childFragmentManager) {
             viewModel.bindCreateChannel(it)
-            recyclerBuilder.smoothScrollToPosition()
+            recyclerBuilder.smoothScrollToPosition(delay = IMMEDIATELY_SCROLL)
         }
     }
 

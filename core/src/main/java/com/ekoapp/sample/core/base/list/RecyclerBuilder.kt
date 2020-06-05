@@ -10,6 +10,9 @@ const val SINGLE_SPACE = 1
 const val DOUBLE_SPACE = 2
 const val TRIPLE_SPACE = 3
 
+const val FLASH_SCROLL = 100L
+const val IMMEDIATELY_SCROLL = 500L
+
 data class RecyclerBuilder(
         val context: Context,
         val recyclerView: RecyclerView,
@@ -25,8 +28,7 @@ data class RecyclerBuilder(
         return this
     }
 
-    fun smoothScrollToPosition(position: Int = UPPERMOST) {
-        val delay = 100L
+    fun smoothScrollToPosition(delay: Long = FLASH_SCROLL, position: Int = UPPERMOST) {
         Handler().postDelayed({
             recyclerView.smoothScrollToPosition(position)
         }, delay)
