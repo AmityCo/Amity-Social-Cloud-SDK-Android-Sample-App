@@ -9,6 +9,7 @@ import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.settings.ChannelSettingsViewModel
 import com.ekoapp.sample.chatfeature.settings.list.viewholder.ChannelTypesData
 import com.ekoapp.sample.chatfeature.settings.list.viewholder.ChannelTypesViewHolder
+import com.ekoapp.sample.chatfeature.settings.list.viewholder.MembershipViewHolder
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 
 
@@ -19,10 +20,12 @@ class MainChannelSettingsAdapter(private val context: Context,
 
     companion object {
         private const val TYPE_CHANNEL_TYPES = 0
+        private const val TYPE_MEMBERSHIP = 1
     }
 
     init {
         sections.add(TYPE_CHANNEL_TYPES)
+        sections.add(TYPE_MEMBERSHIP)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -30,6 +33,10 @@ class MainChannelSettingsAdapter(private val context: Context,
             TYPE_CHANNEL_TYPES -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.item_settings_channel_types, parent, false)
                 ChannelTypesViewHolder(view)
+            }
+            TYPE_MEMBERSHIP -> {
+                val view = LayoutInflater.from(context).inflate(R.layout.item_settings_membership, parent, false)
+                MembershipViewHolder(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
@@ -40,6 +47,9 @@ class MainChannelSettingsAdapter(private val context: Context,
             is ChannelTypesViewHolder -> {
                 holder.bind(ChannelTypesData(viewModel))
             }
+            is MembershipViewHolder -> {
+                holder.bind(viewModel)
+            }
             else -> throw IllegalArgumentException()
         }
     }
@@ -48,6 +58,9 @@ class MainChannelSettingsAdapter(private val context: Context,
         return when {
             sections[position] == TYPE_CHANNEL_TYPES -> {
                 TYPE_CHANNEL_TYPES
+            }
+            sections[position] == TYPE_MEMBERSHIP -> {
+                TYPE_MEMBERSHIP
             }
             else -> {
                 TYPE_CHANNEL_TYPES

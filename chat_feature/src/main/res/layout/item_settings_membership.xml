@@ -12,14 +12,20 @@
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/temporarily_channel_type_display"
+        android:text="@string/temporarily_membership_display"
         android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_subheading"
         android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_channel_types"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <Spinner
+        android:id="@+id/spinner_membership"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginStart="@dimen/md_listitem_margin_left"
+        android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
+        android:background="@drawable/default_button_transparent"
+        android:gravity="center"
+        android:padding="@dimen/md_listitem_control_margin"
+        android:popupBackground="@drawable/default_small_button" />
 
 </LinearLayout>
