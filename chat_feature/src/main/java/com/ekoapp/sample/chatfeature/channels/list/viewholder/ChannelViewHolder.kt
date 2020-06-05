@@ -3,7 +3,6 @@ package com.ekoapp.sample.chatfeature.channels.list.viewholder
 import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.sample.chatfeature.channels.list.renders.EkoChannelsRenderData
 import com.ekoapp.sample.chatfeature.channels.list.renders.channelRender
@@ -40,10 +39,10 @@ class ChannelViewHolder(itemView: View) : BaseViewHolder<EkoChannel>(itemView) {
         }
     }
 
-    fun aboutChannel(items: ArrayList<String>, fm: FragmentManager) {
+    fun aboutChannel(context: Context, items: ArrayList<String>) {
         channelsHorizBottomSheet.renderAbout {
             val aboutChannelBottomSheet = AboutChannelBottomSheetFragment(items)
-            aboutChannelBottomSheet.show(fm, aboutChannelBottomSheet.tag)
+            aboutChannelBottomSheet.show((context as AppCompatActivity).supportFragmentManager, aboutChannelBottomSheet.tag)
             channelsHorizBottomSheet.dialog?.cancel()
         }
     }
