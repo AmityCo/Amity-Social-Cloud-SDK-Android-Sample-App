@@ -50,4 +50,6 @@
     <string name="temporarily_about_channel_tags">Tags : </string>
     <string name="temporarily_filters">Filters</string>
     <string name="temporarily_settings">Settings</string>
+    <string name="temporarily_general">General</string>
+    <string name="temporarily_channel">Channel</string>
 </resources>

@@ -25,9 +25,22 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
 
     private fun setupView(viewModel: ChannelsViewModel) {
         viewModel.bindTotalUnreadCount().observeNotNull(viewLifecycleOwner, header_channels::setTotal)
-        header_channels.setupEvent {
-            header_channels.renderUsers(childFragmentManager, viewLifecycleOwner, viewModel)
-        }
+        header_channels.setupEvent(
+                actionConversation = {
+                    header_channels.renderUsers(childFragmentManager, viewLifecycleOwner, viewModel)
+                },
+                actionCreateChannel = {
+                    header_channels.renderCreateChannel(childFragmentManager)
+                },
+                actionSettings = {
+                    header_channels.renderSettings(childFragmentManager,
+                            general = {
+
+                            },
+                            channel = {
+
+                            })
+                })
         header_channels.createStandardChannel(childFragmentManager) {
             viewModel.bindCreateChannel(it)
             recyclerBuilder.smoothScrollToPosition(delay = IMMEDIATELY_SCROLL)
@@ -36,6 +49,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
             viewModel.bindCreateChannel(it)
             recyclerBuilder.smoothScrollToPosition(delay = IMMEDIATELY_SCROLL)
         }
+
     }
 
     private fun renderList(viewModel: ChannelsViewModel) {

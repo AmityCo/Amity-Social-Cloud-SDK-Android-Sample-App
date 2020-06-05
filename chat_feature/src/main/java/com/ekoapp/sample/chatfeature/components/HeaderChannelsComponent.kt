@@ -3,7 +3,6 @@ package com.ekoapp.sample.chatfeature.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
@@ -12,12 +11,14 @@ import com.ekoapp.sample.chatfeature.channels.ChannelsViewModel
 import com.ekoapp.sample.chatfeature.dialogs.ConversationWithUsersBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.CreateChannelBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.SelectChannelBottomSheetFragment
+import com.ekoapp.sample.chatfeature.dialogs.SettingsChatPageBottomSheetFragment
 import com.ekoapp.sample.chatfeature.enums.ChannelTypes
 import kotlinx.android.synthetic.main.component_header_channels.view.*
 
 data class CreateChannelData(val id: String, val type: String)
 
 class HeaderChannelsComponent : ConstraintLayout {
+
     private var selectChannelBottomSheet: SelectChannelBottomSheetFragment = SelectChannelBottomSheetFragment()
 
     init {
@@ -28,17 +29,18 @@ class HeaderChannelsComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupEvent(actionConversation: () -> Unit) {
+    fun setupEvent(actionConversation: () -> Unit, actionCreateChannel: () -> Unit, actionSettings: () -> Unit) {
         image_chat.setOnClickListener { actionConversation.invoke() }
-        image_create.setOnClickListener { context.renderBottomSheet() }
+        image_create.setOnClickListener { actionCreateChannel.invoke() }
+        image_settings.setOnClickListener { actionSettings.invoke() }
     }
 
     fun setTotal(total: Int) {
         avatar_with_total.setupView(total)
     }
 
-    private fun Context.renderBottomSheet() {
-        selectChannelBottomSheet.show((this as AppCompatActivity).supportFragmentManager, selectChannelBottomSheet.tag)
+    fun renderCreateChannel(fm: FragmentManager) {
+        selectChannelBottomSheet.show(fm, selectChannelBottomSheet.tag)
     }
 
     fun createStandardChannel(fm: FragmentManager, action: (CreateChannelData) -> Unit) {
@@ -67,5 +69,18 @@ class HeaderChannelsComponent : ConstraintLayout {
     fun renderUsers(fm: FragmentManager, lifecycleOwner: LifecycleOwner, viewModel: ChannelsViewModel) {
         val conversationWithUsersBottomSheet = ConversationWithUsersBottomSheetFragment(lifecycleOwner, viewModel)
         conversationWithUsersBottomSheet.show(fm, conversationWithUsersBottomSheet.tag)
+    }
+
+    fun renderSettings(fm: FragmentManager, general: () -> Unit, channel: () -> Unit) {
+        val settingsChatPageBottomSheet = SettingsChatPageBottomSheetFragment()
+        settingsChatPageBottomSheet.show(fm, settingsChatPageBottomSheet.tag)
+        settingsChatPageBottomSheet.renderGeneral {
+            general.invoke()
+            settingsChatPageBottomSheet.dialog?.cancel()
+        }
+        settingsChatPageBottomSheet.renderChannel {
+            channel.invoke()
+            settingsChatPageBottomSheet.dialog?.cancel()
+        }
     }
 }
