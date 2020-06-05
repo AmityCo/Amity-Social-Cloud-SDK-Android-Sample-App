@@ -48,4 +48,6 @@
     <string name="temporarily_about_channel_member">%s Members</string>
     <string name="temporarily_about_channel_count_messages">%s Messages</string>
     <string name="temporarily_about_channel_tags">Tags : </string>
+    <string name="temporarily_filters">Filters</string>
+    <string name="temporarily_settings">Settings</string>
 </resources>
