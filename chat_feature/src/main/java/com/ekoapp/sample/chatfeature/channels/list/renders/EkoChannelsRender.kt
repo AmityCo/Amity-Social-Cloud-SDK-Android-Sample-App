@@ -35,10 +35,10 @@ fun EkoChannelsRenderData.channelRender(avatar: AvatarChatRoomWithTotalComponent
         }
     }
 
-    if (item.displayName.isNullOrBlank()) {
+    if (item.id.isNullOrBlank()) {
         name.text = context.getString(R.string.temporarily_anonymous)
     } else {
-        name.text = item.displayName
+        name.text = item.id
     }
 
     member.text = String.format(context.getString(R.string.temporarily_members), item.memberCount)

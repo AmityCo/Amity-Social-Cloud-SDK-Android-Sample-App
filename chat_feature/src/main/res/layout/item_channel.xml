@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/material_component_grid_lists_padding_big"
         android:maxLines="1"
+        android:paddingRight="@dimen/material_component_lists_right_padding"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/material_typography_subheading"
         app:layout_constraintBottom_toBottomOf="@id/image_chat_room_type"
