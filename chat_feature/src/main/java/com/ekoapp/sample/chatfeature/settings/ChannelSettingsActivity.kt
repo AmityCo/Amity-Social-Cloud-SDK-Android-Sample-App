@@ -1,26 +1,32 @@
 package com.ekoapp.sample.chatfeature.settings
 
+import android.content.SharedPreferences
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
 import com.ekoapp.sample.chatfeature.settings.list.MainChannelSettingsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
+import com.ekoapp.sample.core.preferences.PreferenceHelper.channelTypes
+import com.ekoapp.sample.core.preferences.PreferenceHelper.defaultPreference
+import com.ekoapp.sample.core.preferences.PreferenceHelper.excludeTags
+import com.ekoapp.sample.core.preferences.PreferenceHelper.includeTags
+import com.ekoapp.sample.core.preferences.PreferenceHelper.membership
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
-import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import kotlinx.android.synthetic.main.activity_settings.*
-import timber.log.Timber
 
 
 class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel>() {
 
     private lateinit var adapter: MainChannelSettingsAdapter
+    private lateinit var prefs: SharedPreferences
 
     override fun getLayout(): Int {
         return R.layout.activity_settings
     }
 
     override fun bindViewModel(viewModel: ChannelSettingsViewModel) {
+        prefs = defaultPreference(this)
         setupAppBar()
         renderList(viewModel)
         setupView(viewModel)
@@ -40,23 +46,19 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
 
     private fun setupView(viewModel: ChannelSettingsViewModel) {
         viewModel.observeChannelTypes().observeNotNull(this, {
-            //TODO Save Preference
-//            Timber.d(getCurrentClassAndMethodNames() +" observeChannelTypes " + it)
+            prefs.channelTypes = it
         })
         viewModel.observeMembership().observeNotNull(this, {
-            //TODO Save Preference
-//            Timber.d(getCurrentClassAndMethodNames() +" observeMembership " + it)
+            prefs.membership = it
         })
         viewModel.observeIncludeTags().observeNotNull(this, {
-            //TODO Save Preference
-            Timber.d(getCurrentClassAndMethodNames() +" observeIncludeTags " + it)
+            prefs.includeTags = it
         })
         viewModel.observeExcludeTags().observeNotNull(this, {
-            //TODO Save Preference
-            Timber.d(getCurrentClassAndMethodNames() +" observeExcludeTags " + it)
+            prefs.excludeTags = it
         })
 
-        viewModel.observeSave().observeNotNull(this,{
+        viewModel.observeSave().observeNotNull(this, {
 
         })
     }

@@ -45,13 +45,45 @@ object PreferenceHelper {
             }
         }
 
+    var SharedPreferences.channelTypes: Set<String>?
+        get() = getStringSet(PREF_SETTINGS_CHANNEL_TYPES, emptySet())
+        set(value) {
+            editMe {
+                it.putStringSet(PREF_SETTINGS_CHANNEL_TYPES, value)
+            }
+        }
+
+    var SharedPreferences.membership
+        get() = getString(PREF_SETTINGS_MEMBERSHIP, "")
+        set(value) {
+            editMe {
+                it.putString(PREF_SETTINGS_MEMBERSHIP, value)
+            }
+        }
+
+    var SharedPreferences.includeTags: Set<String>?
+        get() = getStringSet(PREF_SETTINGS_INCLUDE_TAGS, emptySet())
+        set(value) {
+            editMe {
+                it.putStringSet(PREF_SETTINGS_INCLUDE_TAGS, value)
+            }
+        }
+
+    var SharedPreferences.excludeTags: Set<String>?
+        get() = getStringSet(PREF_SETTINGS_EXCLUDE_TAGS, emptySet())
+        set(value) {
+            editMe {
+                it.putStringSet(PREF_SETTINGS_EXCLUDE_TAGS, value)
+            }
+        }
+
     var SharedPreferences.clearValues
         get() = { }
         set(value) {
             editMe {
-                it.remove(EKO_CLIENT_PREF_REGISTER_DEVICE)
-                it.remove(EKO_CLIENT_PREF_DISPLAY_NAME)
-//                it.clear()
+//                it.remove(EKO_CLIENT_PREF_REGISTER_DEVICE)
+//                it.remove(EKO_CLIENT_PREF_DISPLAY_NAME)
+                it.clear()
             }
         }
 }
