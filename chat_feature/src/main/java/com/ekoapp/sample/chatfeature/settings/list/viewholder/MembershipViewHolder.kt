@@ -20,7 +20,7 @@ class MembershipViewHolder(itemView: View) : BaseViewHolder<ChannelSettingsViewM
         itemView.spinner_membership.adapter = ArrayAdapter(this, R.layout.spinner_item, viewModel.getMembership())
         itemView.spinner_membership.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
+                viewModel.membershipType(itemView.spinner_membership.selectedItem.toString())
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) = Unit

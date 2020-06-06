@@ -18,6 +18,10 @@ class ChannelRepository @Inject constructor() {
             EkoChannel.Type.BROADCAST,
             EkoChannel.Type.CONVERSATION)
 
+    val channelFilters = setOf(EkoChannelFilter.ALL,
+            EkoChannelFilter.MEMBER,
+            EkoChannelFilter.NOT_MEMBER)
+
     fun getTotalUnreadCount(): Flowable<Int> {
         return EkoClient.newChannelRepository().totalUnreadCount
     }

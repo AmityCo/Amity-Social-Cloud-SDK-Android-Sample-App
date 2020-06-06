@@ -12,7 +12,7 @@ import com.ekoapp.sample.chatfeature.dialogs.ConversationWithUsersBottomSheetFra
 import com.ekoapp.sample.chatfeature.dialogs.CreateChannelBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.SelectChannelBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.SettingsChatPageBottomSheetFragment
-import com.ekoapp.sample.chatfeature.enums.ChannelTypes
+import com.ekoapp.sample.chatfeature.enums.ChannelType
 import kotlinx.android.synthetic.main.component_header_channels.view.*
 
 data class CreateChannelData(val id: String, val type: String)
@@ -45,19 +45,19 @@ class HeaderChannelsComponent : ConstraintLayout {
 
     fun createStandardChannel(fm: FragmentManager, action: (CreateChannelData) -> Unit) {
         selectChannelBottomSheet.renderStandard {
-            createChannel(fm, ChannelTypes.STANDARD, action)
+            createChannel(fm, ChannelType.STANDARD, action)
             selectChannelBottomSheet.dialog?.cancel()
         }
     }
 
     fun createPrivateChannel(fm: FragmentManager, action: (CreateChannelData) -> Unit) {
         selectChannelBottomSheet.renderPrivate {
-            createChannel(fm, ChannelTypes.PRIVATE, action)
+            createChannel(fm, ChannelType.PRIVATE, action)
             selectChannelBottomSheet.dialog?.cancel()
         }
     }
 
-    private fun createChannel(fm: FragmentManager, type: ChannelTypes, action: (CreateChannelData) -> Unit) {
+    private fun createChannel(fm: FragmentManager, type: ChannelType, action: (CreateChannelData) -> Unit) {
         val createChannelBottomSheet = CreateChannelBottomSheetFragment(String.format(context.getString(R.string.temporarily_create_channel_display), type.text))
         createChannelBottomSheet.show(fm, createChannelBottomSheet.tag)
         createChannelBottomSheet.renderOk {

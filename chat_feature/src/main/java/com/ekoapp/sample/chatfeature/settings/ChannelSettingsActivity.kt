@@ -7,7 +7,9 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
+import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import kotlinx.android.synthetic.main.activity_settings.*
+import timber.log.Timber
 
 
 class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel>() {
@@ -39,6 +41,19 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
     private fun setupView(viewModel: ChannelSettingsViewModel) {
         viewModel.observeChannelTypes().observeNotNull(this, {
             //TODO Save Preference
+            Timber.d(getCurrentClassAndMethodNames() +" observeChannelTypes " + it)
+        })
+        viewModel.observeMembership().observeNotNull(this, {
+            //TODO Save Preference
+            Timber.d(getCurrentClassAndMethodNames() +" observeMembership " + it)
+        })
+        viewModel.observeIncludeTags().observeNotNull(this, {
+            //TODO Save Preference
+            Timber.d(getCurrentClassAndMethodNames() +" observeIncludeTags " + it)
+        })
+        viewModel.observeExcludeTags().observeNotNull(this, {
+            //TODO Save Preference
+            Timber.d(getCurrentClassAndMethodNames() +" observeExcludeTags " + it)
         })
     }
 

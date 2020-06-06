@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.components.AvatarChatRoomWithTotalComponent
-import com.ekoapp.sample.chatfeature.enums.ChannelTypes
+import com.ekoapp.sample.chatfeature.enums.ChannelType
 
 
 data class EkoChannelsRenderData(val context: Context, val item: EkoChannel)
@@ -21,16 +21,16 @@ fun EkoChannelsRenderData.channelRender(avatar: AvatarChatRoomWithTotalComponent
 
     //TODO Refactor
     when (item.channelType) {
-        ChannelTypes.STANDARD.text -> {
+        ChannelType.STANDARD.text -> {
             chatRoomType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_channel_public))
         }
-        ChannelTypes.PRIVATE.text -> {
+        ChannelType.PRIVATE.text -> {
             chatRoomType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_channel_private))
         }
-        ChannelTypes.BROADCAST.text -> {
+        ChannelType.BROADCAST.text -> {
             chatRoomType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_channel_broadcast))
         }
-        ChannelTypes.CONVERSATION.text -> {
+        ChannelType.CONVERSATION.text -> {
             chatRoomType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_channel_chat))
         }
     }
