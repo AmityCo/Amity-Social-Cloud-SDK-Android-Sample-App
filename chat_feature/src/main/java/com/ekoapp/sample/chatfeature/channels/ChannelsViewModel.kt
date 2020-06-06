@@ -44,7 +44,6 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
 
     init {
         keywordRelay.postValue("")
-        settingsAction()
     }
 
     fun settingsAction() {
@@ -75,7 +74,7 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
         channelRepository.joinChannel(channelId).subscribe()
     }
 
-    fun bindChannelCollection(): LiveData<PagedList<EkoChannel>> {
+    fun bindChannelCollection(action: (LiveData<PagedList<EkoChannel>>) -> Unit) {
         val types = FluentIterable.from(prefs.channelTypes)
                 .transform { EkoChannel.Type.fromJson(it) }
                 .toSet()
@@ -84,7 +83,7 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
         val includingTags = prefs.includeTags?.let(::EkoTags) ?: EkoTags(emptySet())
         val excludingTags = prefs.excludeTags?.let(::EkoTags) ?: EkoTags(emptySet())
 
-        return channelRepository.channelCollection(types, filter, includingTags, excludingTags)
+        action.invoke(channelRepository.channelCollection(types, filter, includingTags, excludingTags))
     }
 
     fun bindUsers(): LiveData<PagedList<EkoUser>> = userRepository.getAllUsers()

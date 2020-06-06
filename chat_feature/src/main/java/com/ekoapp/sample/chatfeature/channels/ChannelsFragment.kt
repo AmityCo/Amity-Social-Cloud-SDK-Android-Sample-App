@@ -2,8 +2,6 @@ package com.ekoapp.sample.chatfeature.channels
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import androidx.paging.PagedList
-import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channels.list.MainChannelsAdapter
 import com.ekoapp.sample.chatfeature.constants.REQUEST_CODE_CHANNEL_SETTINGS
@@ -14,6 +12,7 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
+import com.ekoapp.sample.core.ui.extensions.observeOnce
 import kotlinx.android.synthetic.main.fragment_channels.*
 
 class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
@@ -57,20 +56,23 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
     }
 
     private fun renderList(viewModel: ChannelsViewModel) {
-        viewModel.observeSettings().observeNotNull(viewLifecycleOwner, {
-            var newItems: PagedList<EkoChannel>
-            adapter = MainChannelsAdapter(requireContext(), viewModel)
-            recyclerBuilder = RecyclerBuilder(context = requireContext(), recyclerView = recycler_main_channels)
-                    .builder()
-                    .build(adapter)
-            viewModel.bindChannelCollection().observeNotNull(viewLifecycleOwner, {
-                adapter.submitList(null)
-                newItems = it
-                if (newItems.isNotEmpty()) {
-                    adapter.submitList(newItems)
+        setupAdapter(viewModel)
+        viewModel.bindChannelCollection {
+            it.observeNotNull(viewLifecycleOwner, adapter::submitList)
+            viewModel.observeSettings().observeNotNull(viewLifecycleOwner, {
+                viewModel.bindChannelCollection { newResult ->
+                    setupAdapter(viewModel)
+                    newResult.observeOnce(adapter::submitList)
                 }
             })
-        })
+        }
+    }
+
+    private fun setupAdapter(viewModel: ChannelsViewModel) {
+        adapter = MainChannelsAdapter(requireContext(), viewModel)
+        recyclerBuilder = RecyclerBuilder(context = requireContext(), recyclerView = recycler_main_channels)
+                .builder()
+                .build(adapter)
     }
 
     override fun getViewModelClass(): Class<ChannelsViewModel> {
