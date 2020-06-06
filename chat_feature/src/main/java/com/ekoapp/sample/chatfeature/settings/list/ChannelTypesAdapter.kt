@@ -23,7 +23,7 @@ class ChannelTypesAdapter(private val context: Context,
         when (holder) {
             is CheckboxTypeViewHolder -> {
                 holder.bind(items[position])
-                holder.checked(action = viewModel::channelTypes, viewModel = viewModel)
+                holder.checked(action = viewModel::channelTypes)
             }
             else -> throw IllegalArgumentException()
         }

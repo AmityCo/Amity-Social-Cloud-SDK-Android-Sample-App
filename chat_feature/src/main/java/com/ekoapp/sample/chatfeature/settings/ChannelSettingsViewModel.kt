@@ -12,11 +12,11 @@ import javax.inject.Inject
 class ChannelSettingsViewModel @Inject constructor(private val context: Context,
                                                    private val channelRepository: ChannelRepository) : DisposableViewModel() {
 
-    private val typesRelay = PublishProcessor.create<Set<EkoChannel.Type>>()
+    private val typesRelay = PublishProcessor.create<Set<String>>()
 
     fun observeChannelTypes() = typesRelay.toLiveData()
 
-    fun channelTypes(types: Set<EkoChannel.Type>) {
+    fun channelTypes(types: Set<String>) {
         typesRelay.onNext(types)
     }
 
