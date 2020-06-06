@@ -21,6 +21,7 @@ class MainChannelSettingsAdapter(private val context: Context,
         private const val TYPE_MEMBERSHIP = 1
         private const val TYPE_INCLUDE_TAGS = 2
         private const val TYPE_EXCLUDE_TAGS = 3
+        private const val TYPE_SAVE_SETTINGS = 4
     }
 
     init {
@@ -28,6 +29,7 @@ class MainChannelSettingsAdapter(private val context: Context,
         sections.add(TYPE_MEMBERSHIP)
         sections.add(TYPE_INCLUDE_TAGS)
         sections.add(TYPE_EXCLUDE_TAGS)
+        sections.add(TYPE_SAVE_SETTINGS)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -47,6 +49,10 @@ class MainChannelSettingsAdapter(private val context: Context,
             TYPE_EXCLUDE_TAGS -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.item_settings_tags, parent, false)
                 ExcludeTagsViewHolder(view)
+            }
+            TYPE_SAVE_SETTINGS -> {
+                val view = LayoutInflater.from(context).inflate(R.layout.item_settings_button_save, parent, false)
+                SaveSettingsViewHolder(view)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
@@ -70,6 +76,9 @@ class MainChannelSettingsAdapter(private val context: Context,
                         title = R.string.temporarily_exclude_tags_display,
                         hint = R.string.temporarily_exclude_tags_hint))
             }
+            is SaveSettingsViewHolder -> {
+                holder.bind(SaveSettingsViewData(viewModel))
+            }
             else -> throw IllegalArgumentException()
         }
     }
@@ -87,6 +96,9 @@ class MainChannelSettingsAdapter(private val context: Context,
             }
             sections[position] == TYPE_EXCLUDE_TAGS -> {
                 TYPE_EXCLUDE_TAGS
+            }
+            sections[position] == TYPE_SAVE_SETTINGS -> {
+                TYPE_SAVE_SETTINGS
             }
             else -> {
                 TYPE_CHANNEL_TYPES
