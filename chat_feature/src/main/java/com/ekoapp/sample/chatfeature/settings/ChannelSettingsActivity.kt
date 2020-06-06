@@ -13,6 +13,7 @@ import com.ekoapp.sample.core.preferences.PreferenceHelper.includeTags
 import com.ekoapp.sample.core.preferences.PreferenceHelper.membership
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
+import com.ekoapp.sample.core.ui.extensions.observeOnce
 import kotlinx.android.synthetic.main.activity_settings.*
 
 
@@ -45,21 +46,25 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
     }
 
     private fun setupView(viewModel: ChannelSettingsViewModel) {
-        viewModel.observeChannelTypes().observeNotNull(this, {
-            prefs.channelTypes = it
+        viewModel.observeChannelTypes().observeNotNull(this, { value ->
+            viewModel.observeSave().observeOnce {
+                prefs.channelTypes = value
+            }
         })
-        viewModel.observeMembership().observeNotNull(this, {
-            prefs.membership = it
+        viewModel.observeMembership().observeNotNull(this, { value ->
+            viewModel.observeSave().observeOnce {
+                prefs.membership = value
+            }
         })
-        viewModel.observeIncludeTags().observeNotNull(this, {
-            prefs.includeTags = it
+        viewModel.observeIncludeTags().observeNotNull(this, { value ->
+            viewModel.observeSave().observeOnce {
+                prefs.includeTags = value
+            }
         })
-        viewModel.observeExcludeTags().observeNotNull(this, {
-            prefs.excludeTags = it
-        })
-
-        viewModel.observeSave().observeNotNull(this, {
-
+        viewModel.observeExcludeTags().observeNotNull(this, { value ->
+            viewModel.observeSave().observeOnce {
+                prefs.excludeTags = value
+            }
         })
     }
 
