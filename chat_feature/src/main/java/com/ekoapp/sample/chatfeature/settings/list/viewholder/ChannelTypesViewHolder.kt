@@ -20,7 +20,7 @@ class ChannelTypesViewHolder(itemView: View) : BaseViewHolder<ChannelTypesViewDa
     }
 
     private fun Context.renderList(viewModel: ChannelSettingsViewModel) {
-        adapter = ChannelTypesAdapter(this, viewModel.getChannelTypes())
+        adapter = ChannelTypesAdapter(this, viewModel.getChannelTypes(), viewModel)
         RecyclerBuilder(context = this, recyclerView = itemView.recycler_channel_types)
                 .builder()
                 .build(adapter)

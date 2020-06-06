@@ -1,11 +1,24 @@
 package com.ekoapp.sample.chatfeature.settings
 
 import android.content.Context
+import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
+import com.ekoapp.sample.core.ui.extensions.toLiveData
+import io.reactivex.processors.PublishProcessor
 import javax.inject.Inject
 
-class ChannelSettingsViewModel @Inject constructor(private val context: Context) : DisposableViewModel() {
+class ChannelSettingsViewModel @Inject constructor(private val context: Context,
+                                                   private val channelRepository: ChannelRepository) : DisposableViewModel() {
+
+    private val typesRelay = PublishProcessor.create<Set<EkoChannel.Type>>()
+
+    fun observeChannelTypes() = typesRelay.toLiveData()
+
+    fun channelTypes(types: Set<EkoChannel.Type>) {
+        typesRelay.onNext(types)
+    }
 
     fun getChannelTypes(): ArrayList<String> {
         val items = ArrayList<String>()
@@ -17,4 +30,8 @@ class ChannelSettingsViewModel @Inject constructor(private val context: Context)
     }
 
     fun getMembership(): Array<String> = context.resources.getStringArray(R.array.Membership)
+
+    fun mapValue(text: String): EkoChannel.Type {
+        return channelRepository.channelTypes.first { value -> value.apiKey.contains(text, ignoreCase = true) }
+    }
 }

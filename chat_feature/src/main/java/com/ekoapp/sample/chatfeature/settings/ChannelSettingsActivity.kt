@@ -6,6 +6,7 @@ import com.ekoapp.sample.chatfeature.settings.list.MainChannelSettingsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
+import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import kotlinx.android.synthetic.main.activity_settings.*
 
 
@@ -20,6 +21,7 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
     override fun bindViewModel(viewModel: ChannelSettingsViewModel) {
         setupAppBar()
         renderList(viewModel)
+        setupView(viewModel)
     }
 
     private fun setupAppBar() {
@@ -32,6 +34,12 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
         RecyclerBuilder(context = this, recyclerView = recycler_settings)
                 .builder()
                 .build(adapter)
+    }
+
+    private fun setupView(viewModel: ChannelSettingsViewModel) {
+        viewModel.observeChannelTypes().observeNotNull(this, {
+            //TODO Save Preference
+        })
     }
 
     override fun getViewModelClass(): Class<ChannelSettingsViewModel> {
