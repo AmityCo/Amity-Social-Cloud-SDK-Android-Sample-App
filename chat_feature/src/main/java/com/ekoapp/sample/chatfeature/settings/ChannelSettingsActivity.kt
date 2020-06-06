@@ -41,11 +41,11 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
     private fun setupView(viewModel: ChannelSettingsViewModel) {
         viewModel.observeChannelTypes().observeNotNull(this, {
             //TODO Save Preference
-            Timber.d(getCurrentClassAndMethodNames() +" observeChannelTypes " + it)
+//            Timber.d(getCurrentClassAndMethodNames() +" observeChannelTypes " + it)
         })
         viewModel.observeMembership().observeNotNull(this, {
             //TODO Save Preference
-            Timber.d(getCurrentClassAndMethodNames() +" observeMembership " + it)
+//            Timber.d(getCurrentClassAndMethodNames() +" observeMembership " + it)
         })
         viewModel.observeIncludeTags().observeNotNull(this, {
             //TODO Save Preference
@@ -54,6 +54,10 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
         viewModel.observeExcludeTags().observeNotNull(this, {
             //TODO Save Preference
             Timber.d(getCurrentClassAndMethodNames() +" observeExcludeTags " + it)
+        })
+
+        viewModel.observeSave().observeNotNull(this,{
+
         })
     }
 

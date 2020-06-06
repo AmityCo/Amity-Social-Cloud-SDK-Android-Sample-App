@@ -15,8 +15,6 @@ class MainChannelSettingsAdapter(private val context: Context,
                                  private val viewModel: ChannelSettingsViewModel) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     private val sections = ArrayList<Any>()
-    private val includeTags = ArrayList<String>()
-    private val excludeTags = ArrayList<String>()
 
     companion object {
         private const val TYPE_CHANNEL_TYPES = 0
@@ -72,16 +70,16 @@ class MainChannelSettingsAdapter(private val context: Context,
                 holder.bind(TagsViewData(
                         title = R.string.temporarily_include_tags_display,
                         hint = R.string.temporarily_include_tags_hint))
-//                holder.includeTags(viewModel::includeTags)
+                holder.includeTags(viewModel::includeTags)
             }
             is ExcludeTagsViewHolder -> {
                 holder.bind(TagsViewData(
                         title = R.string.temporarily_exclude_tags_display,
                         hint = R.string.temporarily_exclude_tags_hint))
-//                holder.excludeTags(viewModel::excludeTags)
+                holder.excludeTags(viewModel::excludeTags)
             }
             is SaveSettingsViewHolder -> {
-                holder.bind(SaveSettingsViewData(viewModel))
+                holder.bind { viewModel.saveSettings() }
             }
             else -> throw IllegalArgumentException()
         }

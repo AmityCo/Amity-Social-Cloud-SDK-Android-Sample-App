@@ -18,16 +18,19 @@ class ChannelSettingsViewModel @Inject constructor(private val context: Context,
     private val membershipRelay = PublishProcessor.create<String>()
     private val includeTagsRelay = PublishProcessor.create<Set<String>>()
     private val excludeTagsRelay = PublishProcessor.create<Set<String>>()
+    private val saveRelay = PublishProcessor.create<Unit>()
 
     fun observeChannelTypes() = typesRelay.toLiveData()
     fun observeMembership() = membershipRelay.toLiveData()
     fun observeIncludeTags() = includeTagsRelay.toLiveData()
     fun observeExcludeTags() = excludeTagsRelay.toLiveData()
+    fun observeSave() = saveRelay.toLiveData()
 
     fun channelTypes(types: Set<String>) = typesRelay.onNext(types)
     fun membershipType(types: String) = membershipRelay.onNext(mapMembership(types).apiKey)
     fun includeTags(tags: Set<String>) = includeTagsRelay.onNext(tags)
     fun excludeTags(tags: Set<String>) = excludeTagsRelay.onNext(tags)
+    fun saveSettings() = saveRelay.onNext(Unit)
 
     fun getChannelTypes(): ArrayList<String> {
         val items = ArrayList<String>()
