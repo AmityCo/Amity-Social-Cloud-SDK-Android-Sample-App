@@ -3,6 +3,7 @@ package com.ekoapp.sample.core.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.ekoapp.ekosdk.EkoChannelFilter
 
 object PreferenceHelper {
 
@@ -54,7 +55,7 @@ object PreferenceHelper {
         }
 
     var SharedPreferences.membership
-        get() = getString(PREF_SETTINGS_MEMBERSHIP, "")
+        get() = getString(PREF_SETTINGS_MEMBERSHIP, EkoChannelFilter.ALL.apiKey)
         set(value) {
             editMe {
                 it.putString(PREF_SETTINGS_MEMBERSHIP, value)
