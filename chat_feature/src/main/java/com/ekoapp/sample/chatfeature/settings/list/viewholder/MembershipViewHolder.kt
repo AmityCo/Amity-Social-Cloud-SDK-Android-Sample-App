@@ -1,7 +1,6 @@
 package com.ekoapp.sample.chatfeature.settings.list.viewholder
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -20,9 +19,8 @@ class MembershipViewHolder(itemView: View) : BaseViewHolder<ChannelSettingsViewM
 
     override fun bind(item: ChannelSettingsViewModel) {
         val context = itemView.context
-        val prefs = PreferenceHelper.defaultPreference(context)
         context.renderSpinner(item)
-        context.setupView(prefs)
+        context.setupView()
     }
 
     private fun Context.renderSpinner(viewModel: ChannelSettingsViewModel) {
@@ -36,7 +34,8 @@ class MembershipViewHolder(itemView: View) : BaseViewHolder<ChannelSettingsViewM
         }
     }
 
-    private fun Context.setupView(prefs: SharedPreferences) {
+    private fun Context.setupView() {
+        val prefs = PreferenceHelper.defaultPreference(this)
         membership = prefs.membership
         if (membership == EkoChannelFilter.NOT_MEMBER.apiKey) {
             membership = MembershipType.NOT_MEMBER.text
