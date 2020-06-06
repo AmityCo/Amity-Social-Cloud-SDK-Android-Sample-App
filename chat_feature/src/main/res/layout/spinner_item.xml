@@ -6,8 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:paddingBottom="@dimen/material_component_grid_lists_padding_big"
+    android:padding="@dimen/material_component_grid_lists_padding_big"
     android:singleLine="true"
+    android:textAlignment="center"
     android:textColor="@color/material_light_white"
     android:textSize="@dimen/material_typography_body1"
     tools:ignore="PrivateResource" />

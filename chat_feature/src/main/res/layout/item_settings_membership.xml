@@ -19,13 +19,12 @@
 
     <Spinner
         android:id="@+id/spinner_membership"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/material_component_button_height"
+        style="@style/MD_ListItem.Choice"
+        android:layout_width="@dimen/spinner_medium"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/md_listitem_margin_left"
         android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
         android:background="@drawable/default_button_transparent"
-        android:gravity="center"
-        android:padding="@dimen/md_listitem_control_margin"
         android:popupBackground="@drawable/default_small_button" />
 
 </LinearLayout>

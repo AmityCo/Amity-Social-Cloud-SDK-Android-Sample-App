@@ -2,4 +2,5 @@
 <resources>
     <dimen name="avatar_large">140dp</dimen>
     <dimen name="avatar_medium">@dimen/material_layout_vertical_spacing_tool_bar</dimen>
+    <dimen name="spinner_medium">122dp</dimen>
 </resources>

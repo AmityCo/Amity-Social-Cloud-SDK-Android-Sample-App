@@ -14,6 +14,7 @@
         android:buttonTint="@color/material_light_white"
         android:text="@string/temporarily_standard"
         android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_body1"
         tools:ignore="PrivateResource" />
 
 </LinearLayout>

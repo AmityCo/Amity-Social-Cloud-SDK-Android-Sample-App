@@ -62,4 +62,9 @@
     <string name="temporarily_include_tags_hint">Hotels, Flights, Deals</string>
     <string name="temporarily_exclude_tags_display">Exclude tags</string>
     <string name="temporarily_exclude_tags_hint">Meals, Travel Protection</string>
+    <string-array name="Membership">
+        <item>All</item>
+        <item>Member</item>
+        <item>Guest</item>
+    </string-array>
 </resources>
