@@ -2,21 +2,19 @@ package com.ekoapp.sample.chatfeature.channels
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import androidx.paging.PagedList
+import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channels.list.MainChannelsAdapter
-import com.ekoapp.sample.chatfeature.constants.EXTRA_CHANNEL_SETTINGS
 import com.ekoapp.sample.chatfeature.constants.REQUEST_CODE_CHANNEL_SETTINGS
 import com.ekoapp.sample.chatfeature.di.DaggerChatFragmentComponent
 import com.ekoapp.sample.chatfeature.intents.openChannelSettingsPage
-import com.ekoapp.sample.chatfeature.settings.data.ChannelSettingsData
 import com.ekoapp.sample.core.base.list.IMMEDIATELY_SCROLL
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
-import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import kotlinx.android.synthetic.main.fragment_channels.*
-import timber.log.Timber
 
 class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
     private lateinit var adapter: MainChannelsAdapter
@@ -59,12 +57,19 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
     }
 
     private fun renderList(viewModel: ChannelsViewModel) {
-        adapter = MainChannelsAdapter(requireContext(), viewModel)
-        recyclerBuilder = RecyclerBuilder(context = requireContext(), recyclerView = recycler_main_channels)
-                .builder()
-                .build(adapter)
-        viewModel.bindChannelCollection().observeNotNull(viewLifecycleOwner, {
-            adapter.submitList(it)
+        viewModel.observeSettings().observeNotNull(viewLifecycleOwner, {
+            var newItems: PagedList<EkoChannel>
+            adapter = MainChannelsAdapter(requireContext(), viewModel)
+            recyclerBuilder = RecyclerBuilder(context = requireContext(), recyclerView = recycler_main_channels)
+                    .builder()
+                    .build(adapter)
+            viewModel.bindChannelCollection().observeNotNull(viewLifecycleOwner, {
+                adapter.submitList(null)
+                newItems = it
+                if (newItems.isNotEmpty()) {
+                    adapter.submitList(newItems)
+                }
+            })
         })
     }
 
@@ -83,9 +88,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_CHANNEL_SETTINGS) {
-            val result = data?.extras?.getParcelable<ChannelSettingsData>(EXTRA_CHANNEL_SETTINGS)
-            Timber.d(getCurrentClassAndMethodNames() + result)
+            viewModel?.settingsAction()
         }
-
     }
 }

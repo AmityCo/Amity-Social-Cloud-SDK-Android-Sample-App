@@ -1,6 +1,7 @@
 package com.ekoapp.sample.chatfeature.channels
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -13,7 +14,11 @@ import com.ekoapp.sample.chatfeature.components.CreateChannelData
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.chatfeature.repositories.UserRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
-import com.ekoapp.sample.core.preferences.SimplePreferences
+import com.ekoapp.sample.core.preferences.PreferenceHelper
+import com.ekoapp.sample.core.preferences.PreferenceHelper.channelTypes
+import com.ekoapp.sample.core.preferences.PreferenceHelper.excludeTags
+import com.ekoapp.sample.core.preferences.PreferenceHelper.includeTags
+import com.ekoapp.sample.core.preferences.PreferenceHelper.membership
 import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.ui.extensions.toLiveData
@@ -28,14 +33,22 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
                                             private val channelRepository: ChannelRepository,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
+    private val prefs: SharedPreferences = PreferenceHelper.defaultPreference(context)
     private val keywordRelay = MutableLiveData<String>()
     private val aboutActionRelay = SingleLiveData<EkoChannel>()
+    private val settingsRelay = MutableLiveData<Unit>()
 
+    fun observeSettings(): LiveData<Unit> = settingsRelay
     fun observeKeyword(): LiveData<String> = keywordRelay
     fun observeAboutPage(): SingleLiveData<EkoChannel> = aboutActionRelay
 
     init {
         keywordRelay.postValue("")
+        settingsAction()
+    }
+
+    fun settingsAction() {
+        settingsRelay.postValue(Unit)
     }
 
     fun renderAboutChannel(item: EkoChannel) {
@@ -63,13 +76,13 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
     }
 
     fun bindChannelCollection(): LiveData<PagedList<EkoChannel>> {
-        val types = FluentIterable.from(SimplePreferences.getChannelTypeOptions().get())
+        val types = FluentIterable.from(prefs.channelTypes)
                 .transform { EkoChannel.Type.fromJson(it) }
                 .toSet()
 
-        val filter = EkoChannelFilter.fromApiKey(SimplePreferences.getChannelMembershipOption().get())
-        val includingTags = EkoTags(SimplePreferences.getIncludingChannelTags().get())
-        val excludingTags = EkoTags(SimplePreferences.getExcludingChannelTags().get())
+        val filter = EkoChannelFilter.fromApiKey(prefs.membership)
+        val includingTags = prefs.includeTags?.let(::EkoTags) ?: EkoTags(emptySet())
+        val excludingTags = prefs.excludeTags?.let(::EkoTags) ?: EkoTags(emptySet())
 
         return channelRepository.channelCollection(types, filter, includingTags, excludingTags)
     }

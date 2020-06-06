@@ -15,7 +15,8 @@ fun EditText.renderEventTags(action: (Set<String>) -> Unit) {
     clearComposingText()
     addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            addTags(action, s?.trim().toString())
+            val text = s?.trim().toString()
+            addTags(action, text)
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
