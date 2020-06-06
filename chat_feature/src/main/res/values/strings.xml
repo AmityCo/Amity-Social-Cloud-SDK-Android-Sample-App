@@ -59,5 +59,7 @@
     <string name="temporarily_member">Member</string>
     <string name="temporarily_not_member">Not Member</string>
     <string name="temporarily_include_tags_display">Include tags</string>
+    <string name="temporarily_include_tags_hint">Hotels, Flights, Deals</string>
     <string name="temporarily_exclude_tags_display">Exclude tags</string>
+    <string name="temporarily_exclude_tags_hint">Meals, Travel Protection</string>
 </resources>

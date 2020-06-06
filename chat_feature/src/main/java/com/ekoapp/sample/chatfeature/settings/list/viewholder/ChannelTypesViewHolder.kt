@@ -8,13 +8,13 @@ import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import kotlinx.android.synthetic.main.item_settings_channel_types.view.*
 
-data class ChannelTypesData(val viewModel: ChannelSettingsViewModel)
+data class ChannelTypesViewData(val viewModel: ChannelSettingsViewModel)
 
-class ChannelTypesViewHolder(itemView: View) : BaseViewHolder<ChannelTypesData>(itemView) {
+class ChannelTypesViewHolder(itemView: View) : BaseViewHolder<ChannelTypesViewData>(itemView) {
 
     private lateinit var adapter: ChannelTypesAdapter
 
-    override fun bind(item: ChannelTypesData) {
+    override fun bind(item: ChannelTypesViewData) {
         val context = itemView.context
         context.renderList(item.viewModel)
     }

@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.settings.ChannelSettingsViewModel
-import com.ekoapp.sample.chatfeature.settings.list.viewholder.ChannelTypesData
-import com.ekoapp.sample.chatfeature.settings.list.viewholder.ChannelTypesViewHolder
-import com.ekoapp.sample.chatfeature.settings.list.viewholder.MembershipViewHolder
+import com.ekoapp.sample.chatfeature.settings.list.viewholder.*
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 
 
@@ -21,11 +19,15 @@ class MainChannelSettingsAdapter(private val context: Context,
     companion object {
         private const val TYPE_CHANNEL_TYPES = 0
         private const val TYPE_MEMBERSHIP = 1
+        private const val TYPE_INCLUDE_TAGS = 2
+        private const val TYPE_EXCLUDE_TAGS = 3
     }
 
     init {
         sections.add(TYPE_CHANNEL_TYPES)
         sections.add(TYPE_MEMBERSHIP)
+        sections.add(TYPE_INCLUDE_TAGS)
+        sections.add(TYPE_EXCLUDE_TAGS)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
@@ -38,6 +40,14 @@ class MainChannelSettingsAdapter(private val context: Context,
                 val view = LayoutInflater.from(context).inflate(R.layout.item_settings_membership, parent, false)
                 MembershipViewHolder(view)
             }
+            TYPE_INCLUDE_TAGS -> {
+                val view = LayoutInflater.from(context).inflate(R.layout.item_settings_tags, parent, false)
+                IncludeTagsViewHolder(view)
+            }
+            TYPE_EXCLUDE_TAGS -> {
+                val view = LayoutInflater.from(context).inflate(R.layout.item_settings_tags, parent, false)
+                ExcludeTagsViewHolder(view)
+            }
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }
@@ -45,10 +55,20 @@ class MainChannelSettingsAdapter(private val context: Context,
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
         when (holder) {
             is ChannelTypesViewHolder -> {
-                holder.bind(ChannelTypesData(viewModel))
+                holder.bind(ChannelTypesViewData(viewModel))
             }
             is MembershipViewHolder -> {
                 holder.bind(viewModel)
+            }
+            is IncludeTagsViewHolder -> {
+                holder.bind(TagsViewData(
+                        title = R.string.temporarily_include_tags_display,
+                        hint = R.string.temporarily_include_tags_hint))
+            }
+            is ExcludeTagsViewHolder -> {
+                holder.bind(TagsViewData(
+                        title = R.string.temporarily_exclude_tags_display,
+                        hint = R.string.temporarily_exclude_tags_hint))
             }
             else -> throw IllegalArgumentException()
         }
@@ -61,6 +81,12 @@ class MainChannelSettingsAdapter(private val context: Context,
             }
             sections[position] == TYPE_MEMBERSHIP -> {
                 TYPE_MEMBERSHIP
+            }
+            sections[position] == TYPE_INCLUDE_TAGS -> {
+                TYPE_INCLUDE_TAGS
+            }
+            sections[position] == TYPE_EXCLUDE_TAGS -> {
+                TYPE_EXCLUDE_TAGS
             }
             else -> {
                 TYPE_CHANNEL_TYPES

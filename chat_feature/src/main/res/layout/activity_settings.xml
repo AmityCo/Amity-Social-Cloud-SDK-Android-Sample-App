@@ -19,7 +19,6 @@
         android:id="@+id/recycler_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/material_component_text_full_width_single_line_text_field_text_top_and_bottom_padding"
         android:padding="@dimen/material_component_lists_padding_above_list" />
 
 </LinearLayout>
