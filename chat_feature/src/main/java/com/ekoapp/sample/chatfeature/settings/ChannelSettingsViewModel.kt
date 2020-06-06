@@ -68,6 +68,12 @@ class ChannelSettingsViewModel @Inject constructor(private val context: Context,
         if (value.isNotEmpty()) {
             prefs.channelTypes = value
         }
+
+        prefs.channelTypes?.let {
+            if (it.isNotEmpty() && value.isEmpty()) {
+                prefs.channelTypes = emptySet()
+            }
+        }
     }
 
     fun saveMembership(value: String) {
