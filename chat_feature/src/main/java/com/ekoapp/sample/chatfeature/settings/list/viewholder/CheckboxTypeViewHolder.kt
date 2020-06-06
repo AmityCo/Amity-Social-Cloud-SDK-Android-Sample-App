@@ -14,8 +14,8 @@ class CheckboxTypeViewHolder(itemView: View) : BaseViewHolder<String>(itemView) 
 
     override fun bind(item: String) {
         val context = itemView.context
-        val prefs = defaultPreference(context)
         itemView.checkbox_type.text = item
+        val prefs = defaultPreference(context)
         prefs.channelTypes?.forEach {
             if (itemView.checkbox_type.text == it) itemView.checkbox_type.isChecked = true
         }

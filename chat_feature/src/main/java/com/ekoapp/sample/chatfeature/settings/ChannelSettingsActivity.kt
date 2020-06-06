@@ -1,33 +1,24 @@
 package com.ekoapp.sample.chatfeature.settings
 
-import android.content.SharedPreferences
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
 import com.ekoapp.sample.chatfeature.settings.list.MainChannelSettingsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
-import com.ekoapp.sample.core.preferences.PreferenceHelper.channelTypes
-import com.ekoapp.sample.core.preferences.PreferenceHelper.defaultPreference
-import com.ekoapp.sample.core.preferences.PreferenceHelper.excludeTags
-import com.ekoapp.sample.core.preferences.PreferenceHelper.includeTags
-import com.ekoapp.sample.core.preferences.PreferenceHelper.membership
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
-import com.ekoapp.sample.core.ui.extensions.observeOnce
 import kotlinx.android.synthetic.main.activity_settings.*
 
 
 class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel>() {
 
     private lateinit var adapter: MainChannelSettingsAdapter
-    private lateinit var prefs: SharedPreferences
 
     override fun getLayout(): Int {
         return R.layout.activity_settings
     }
 
     override fun bindViewModel(viewModel: ChannelSettingsViewModel) {
-        prefs = defaultPreference(this)
         setupAppBar()
         renderList(viewModel)
         setupView(viewModel)
@@ -46,26 +37,30 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
     }
 
     private fun setupView(viewModel: ChannelSettingsViewModel) {
+        var types: Set<String> = emptySet()
+        var filter = ""
+        var includingTags: Set<String> = emptySet()
+        var excludingTags: Set<String> = emptySet()
+
         viewModel.observeChannelTypes().observeNotNull(this, { value ->
-            viewModel.observeSave().observeOnce {
-                prefs.channelTypes = value
-            }
+            types = value
         })
         viewModel.observeMembership().observeNotNull(this, { value ->
-            viewModel.observeSave().observeOnce {
-                prefs.membership = value
-            }
+            filter = value
         })
         viewModel.observeIncludeTags().observeNotNull(this, { value ->
-            viewModel.observeSave().observeOnce {
-                prefs.includeTags = value
-            }
+            includingTags = value
         })
         viewModel.observeExcludeTags().observeNotNull(this, { value ->
-            viewModel.observeSave().observeOnce {
-                prefs.excludeTags = value
-            }
+            excludingTags = value
         })
+        viewModel.observeSave().observeNotNull(this, {
+            viewModel.saveChannelTypes(types)
+            viewModel.saveMembership(filter)
+            viewModel.saveIncludeTags(includingTags)
+            viewModel.saveExcludeTags(excludingTags)
+        })
+
     }
 
     override fun getViewModelClass(): Class<ChannelSettingsViewModel> {

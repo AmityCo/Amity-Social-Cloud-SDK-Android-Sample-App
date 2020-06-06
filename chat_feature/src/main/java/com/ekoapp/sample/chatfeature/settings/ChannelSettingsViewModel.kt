@@ -1,12 +1,18 @@
 package com.ekoapp.sample.chatfeature.settings
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.enums.MembershipType
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
+import com.ekoapp.sample.core.preferences.PreferenceHelper
+import com.ekoapp.sample.core.preferences.PreferenceHelper.channelTypes
+import com.ekoapp.sample.core.preferences.PreferenceHelper.excludeTags
+import com.ekoapp.sample.core.preferences.PreferenceHelper.includeTags
+import com.ekoapp.sample.core.preferences.PreferenceHelper.membership
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import io.reactivex.processors.PublishProcessor
 import javax.inject.Inject
@@ -14,6 +20,7 @@ import javax.inject.Inject
 class ChannelSettingsViewModel @Inject constructor(private val context: Context,
                                                    private val channelRepository: ChannelRepository) : DisposableViewModel() {
 
+    private val prefs: SharedPreferences = PreferenceHelper.defaultPreference(context)
     private val typesRelay = PublishProcessor.create<Set<String>>()
     private val membershipRelay = PublishProcessor.create<String>()
     private val includeTagsRelay = PublishProcessor.create<Set<String>>()
@@ -53,5 +60,29 @@ class ChannelSettingsViewModel @Inject constructor(private val context: Context,
             newText = EkoChannelFilter.NOT_MEMBER.name
         }
         return channelRepository.channelFilters.first { value -> value.name.contains(newText, ignoreCase = true) }
+    }
+
+    fun saveChannelTypes(value: Set<String>) {
+        if (value.isNotEmpty()) {
+            prefs.channelTypes = value
+        }
+    }
+
+    fun saveMembership(value: String) {
+        if (value.isNotEmpty()) {
+            prefs.membership = value
+        }
+    }
+
+    fun saveIncludeTags(value: Set<String>) {
+        if (value.isNotEmpty()) {
+            prefs.includeTags = value
+        }
+    }
+
+    fun saveExcludeTags(value: Set<String>) {
+        if (value.isNotEmpty()) {
+            prefs.excludeTags = value
+        }
     }
 }
