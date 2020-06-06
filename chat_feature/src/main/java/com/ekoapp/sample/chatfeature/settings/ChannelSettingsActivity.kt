@@ -1,6 +1,8 @@
 package com.ekoapp.sample.chatfeature.settings
 
+import android.content.Intent
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.constants.EXTRA_CHANNEL_SETTINGS
 import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
 import com.ekoapp.sample.chatfeature.settings.list.MainChannelSettingsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
@@ -59,8 +61,15 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
             viewModel.saveMembership(filter)
             viewModel.saveIncludeTags(includingTags)
             viewModel.saveExcludeTags(excludingTags)
+            send(viewModel)
         })
+    }
 
+    private fun send(viewModel: ChannelSettingsViewModel) {
+        val returnIntent = Intent()
+        returnIntent.putExtra(EXTRA_CHANNEL_SETTINGS, viewModel.getChannelSettingsData())
+        setResult(RESULT_OK, returnIntent)
+        finish()
     }
 
     override fun getViewModelClass(): Class<ChannelSettingsViewModel> {

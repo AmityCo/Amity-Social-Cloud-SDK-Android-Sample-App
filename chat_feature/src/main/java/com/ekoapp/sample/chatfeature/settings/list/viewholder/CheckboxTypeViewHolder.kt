@@ -7,22 +7,24 @@ import com.ekoapp.sample.core.preferences.PreferenceHelper.defaultPreference
 import kotlinx.android.synthetic.main.item_checkbox_type.view.*
 
 class CheckboxTypeViewHolder(itemView: View) : BaseViewHolder<String>(itemView) {
+    private val context = itemView.context
+    private val prefs = defaultPreference(context)
 
     companion object {
         private var selecteds = ArrayList<String>()
     }
 
     override fun bind(item: String) {
-        val context = itemView.context
-        itemView.checkbox_type.text = item
-        val prefs = defaultPreference(context)
-        prefs.channelTypes?.forEach {
-            if (itemView.checkbox_type.text == it) itemView.checkbox_type.isChecked = true
+        itemView.checkbox_type.text = item.capitalize()
+        prefs.channelTypes?.forEach { result ->
+            if (result.capitalize() == itemView.checkbox_type.text) {
+                itemView.checkbox_type.isChecked = true
+            }
         }
     }
 
     fun checked(action: (Set<String>) -> Unit) {
-        val text = itemView.checkbox_type.text.toString()
+        val text = itemView.checkbox_type.text.toString().decapitalize()
         itemView.checkbox_type.setOnClickListener {
             if (itemView.checkbox_type.isChecked) {
                 selecteds.add(text)

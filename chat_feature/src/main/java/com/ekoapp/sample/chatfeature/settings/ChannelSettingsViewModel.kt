@@ -5,8 +5,10 @@ import android.content.SharedPreferences
 import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.enums.ChannelType
 import com.ekoapp.sample.chatfeature.enums.MembershipType
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
+import com.ekoapp.sample.chatfeature.settings.data.ChannelSettingsData
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.preferences.PreferenceHelper
 import com.ekoapp.sample.core.preferences.PreferenceHelper.channelTypes
@@ -41,10 +43,10 @@ class ChannelSettingsViewModel @Inject constructor(private val context: Context,
 
     fun getChannelTypes(): ArrayList<String> {
         val items = ArrayList<String>()
-        items.add(context.getString(R.string.temporarily_standard))
-        items.add(context.getString(R.string.temporarily_private))
-        items.add(context.getString(R.string.temporarily_broadcast))
-        items.add(context.getString(R.string.temporarily_conversation))
+        items.add(ChannelType.STANDARD.text)
+        items.add(ChannelType.PRIVATE.text)
+        items.add(ChannelType.BROADCAST.text)
+        items.add(ChannelType.CONVERSATION.text)
         return items
     }
 
@@ -84,5 +86,13 @@ class ChannelSettingsViewModel @Inject constructor(private val context: Context,
         if (value.isNotEmpty()) {
             prefs.excludeTags = value
         }
+    }
+
+    fun getChannelSettingsData(): ChannelSettingsData {
+        return ChannelSettingsData(
+                prefs.channelTypes ?: emptySet(),
+                prefs.membership ?: EkoChannelFilter.ALL.apiKey,
+                prefs.includeTags ?: emptySet(),
+                prefs.excludeTags ?: emptySet())
     }
 }
