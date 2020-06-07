@@ -15,7 +15,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
@@ -37,9 +36,9 @@ import com.ekoapp.sample.chatfeature.intent.OpenMessageReactionListIntent
 import com.ekoapp.sample.chatfeature.intent.ViewChannelMembershipsIntent
 import com.ekoapp.sample.chatfeature.messagelist.option.MessageOption
 import com.ekoapp.sample.chatfeature.messagelist.option.ReactionOption
+import com.ekoapp.sample.core.base.BaseActivity
 import com.ekoapp.sample.core.file.FileManager
 import com.ekoapp.sample.core.preferences.SimplePreferences
-import com.ekoapp.sample.core.base.BaseActivity
 import com.google.common.base.Joiner
 import com.google.common.collect.Sets
 import com.google.gson.JsonObject
@@ -95,11 +94,9 @@ abstract class MessageListActivity : BaseActivity() {
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
-        toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        appbar_message.setup(this,true)
         setTitleName()
         setSubtitleName()
-        setSupportActionBar(toolbar)
         setUpInputLayout()
         initialMessageCollection()
     }

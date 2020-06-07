@@ -6,6 +6,7 @@ import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channels.list.MainChannelsAdapter
 import com.ekoapp.sample.chatfeature.constants.REQUEST_CODE_CHANNEL_SETTINGS
 import com.ekoapp.sample.chatfeature.di.DaggerChatFragmentComponent
+import com.ekoapp.sample.chatfeature.intent.ViewParentMessagesIntent
 import com.ekoapp.sample.chatfeature.intents.openChannelSettingsPage
 import com.ekoapp.sample.core.base.list.IMMEDIATELY_SCROLL
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
@@ -53,6 +54,10 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
             recyclerBuilder.smoothScrollToPosition(delay = IMMEDIATELY_SCROLL)
         }
 
+        viewModel.observeJoinChannel().observeNotNull(viewLifecycleOwner, {
+            val intent = ViewParentMessagesIntent(requireContext(), it)
+            startActivity(intent)
+        })
     }
 
     private fun renderList(viewModel: ChannelsViewModel) {

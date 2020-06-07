@@ -37,10 +37,12 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
     private val keywordRelay = MutableLiveData<String>()
     private val aboutActionRelay = SingleLiveData<EkoChannel>()
     private val settingsRelay = MutableLiveData<Unit>()
+    private val joinChannelRelay = MutableLiveData<String>()
 
     fun observeSettings(): LiveData<Unit> = settingsRelay
     fun observeKeyword(): LiveData<String> = keywordRelay
     fun observeAboutPage(): SingleLiveData<EkoChannel> = aboutActionRelay
+    fun observeJoinChannel(): LiveData<String> = joinChannelRelay
 
     init {
         keywordRelay.postValue("")
@@ -71,7 +73,12 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
     }
 
     fun bindJoinChannel(channelId: String) {
-        channelRepository.joinChannel(channelId).subscribe()
+        channelRepository
+                .joinChannel(channelId)
+                .doOnComplete {
+                    joinChannelRelay.postValue(channelId)
+                }
+                .subscribe()
     }
 
     fun bindChannelCollection(action: (LiveData<PagedList<EkoChannel>>) -> Unit) {
