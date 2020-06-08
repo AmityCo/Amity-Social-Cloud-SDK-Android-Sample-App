@@ -8,7 +8,8 @@ import android.widget.EditText
 fun addTags(action: (Set<String>) -> Unit, text: String) {
     val tags = ArrayList<String>()
     tags.add(text)
-    action.invoke(tags.toSet())
+
+    if (text.isEmpty()) action.invoke(emptySet()) else action.invoke(tags.toSet())
 }
 
 fun EditText.renderEventTags(action: (Set<String>) -> Unit) {
