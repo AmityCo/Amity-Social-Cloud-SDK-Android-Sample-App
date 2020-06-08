@@ -13,7 +13,6 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
-import com.ekoapp.sample.core.ui.extensions.observeOnce
 import kotlinx.android.synthetic.main.fragment_channels.*
 
 class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
@@ -67,7 +66,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
             viewModel.observeSettings().observeNotNull(viewLifecycleOwner, {
                 viewModel.bindChannelCollection { newResult ->
                     setupAdapter(viewModel)
-                    newResult.observeOnce(adapter::submitList)
+                    newResult.observeNotNull(this, adapter::submitList)
                 }
             })
         }
