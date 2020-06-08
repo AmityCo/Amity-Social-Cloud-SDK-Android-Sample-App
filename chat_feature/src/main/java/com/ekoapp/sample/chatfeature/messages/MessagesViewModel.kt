@@ -13,7 +13,7 @@ import com.ekoapp.sample.chatfeature.repositories.MessageRepository
 import com.ekoapp.sample.chatfeature.repositories.UserRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.toLiveData
-import com.google.common.collect.Sets
+import com.ekoapp.sample.core.utils.stringToSet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.processors.PublishProcessor
 import io.reactivex.schedulers.Schedulers
@@ -33,13 +33,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     fun bindStopReading(channelId: String) = channelRepository.stopReading(channelId)
 
     fun bindGetMessageCollectionByTags(data: MessageData): LiveData<PagedList<EkoMessage>> {
-        return messageRepository.getMessageCollectionByTags(
-                channelId = data.channelId,
-                parentId = data.parentId,
-                includingTags = EkoTags(data.includingTags.tagsSet()),
-                excludingTags = EkoTags(data.excludingTags.tagsSet()),
-                stackFromEnd = data.stackFromEnd
-        )
+        return messageRepository.getMessageCollectionByTags(data)
     }
 
     fun bindTextMessage(data: SendMessageData) {
@@ -49,13 +43,13 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     }
 
     fun bindSetTagsChannel(channelId: String, tags: String) {
-        channelRepository.setTags(channelId, EkoTags(tags.tagsSet()))
+        channelRepository.setTags(channelId, EkoTags(tags.stringToSet()))
                 .subscribeOn(Schedulers.io())
                 .subscribe()
     }
 
     fun bindSetTagsMessage(messageId: String, tags: String) {
-        messageRepository.setTags(messageId, EkoTags(tags.tagsSet()))
+        messageRepository.setTags(messageId, EkoTags(tags.stringToSet()))
                 .subscribeOn(Schedulers.io())
                 .subscribe()
     }
@@ -98,11 +92,5 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                 .subscribe()
     }
 
-    private fun String.tagsSet(): Set<String> {
-        val set = Sets.newConcurrentHashSet<String>()
-        for (tag in split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
-            if (tag.isNotEmpty()) set.add(tag)
-        }
-        return set
-    }
+
 }

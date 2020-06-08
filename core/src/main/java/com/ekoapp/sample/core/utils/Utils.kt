@@ -5,6 +5,7 @@ import android.graphics.PorterDuff
 import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.core.widget.ImageViewCompat
+import com.google.common.collect.Sets
 import java.util.*
 
 fun getCurrentClassAndMethodNames(): String {
@@ -58,4 +59,12 @@ fun ImageView.setTint(@ColorInt color: Int?) {
     }
     ImageViewCompat.setImageTintMode(this, PorterDuff.Mode.SRC_ATOP)
     ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(color))
+}
+
+fun String.stringToSet(): Set<String> {
+    val set = Sets.newConcurrentHashSet<String>()
+    for (tag in split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+        if (tag.isNotEmpty()) set.add(tag)
+    }
+    return set
 }

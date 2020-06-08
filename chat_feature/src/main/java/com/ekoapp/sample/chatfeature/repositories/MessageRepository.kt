@@ -5,6 +5,7 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.data.SendMessageData
 import com.google.gson.JsonObject
 import io.reactivex.Completable
@@ -20,16 +21,14 @@ class MessageRepository @Inject constructor() {
         return EkoClient.newMessageRepository().setTags(messageId, tags)
     }
 
-    fun getMessageCollectionByTags(channelId: String,
-                                   parentId: String?,
-                                   includingTags: EkoTags,
-                                   excludingTags: EkoTags,
-                                   stackFromEnd: Boolean): LiveData<PagedList<EkoMessage>> {
-        return EkoClient.newMessageRepository().getMessageCollectionByTags(channelId,
-                parentId,
-                EkoTags(includingTags),
-                EkoTags(excludingTags),
-                stackFromEnd)
+    fun getMessageCollectionByTags(data: MessageData): LiveData<PagedList<EkoMessage>> {
+        data.apply {
+            return EkoClient.newMessageRepository().getMessageCollectionByTags(channelId,
+                    parentId,
+                    EkoTags(includingTags),
+                    EkoTags(excludingTags),
+                    stackFromEnd)
+        }
     }
 
     fun textMessage(data: SendMessageData): Completable {
