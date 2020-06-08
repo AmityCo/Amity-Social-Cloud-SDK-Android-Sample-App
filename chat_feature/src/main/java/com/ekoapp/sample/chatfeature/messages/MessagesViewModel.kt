@@ -5,6 +5,7 @@ import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.sample.chatfeature.data.NotificationData
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.chatfeature.repositories.MessageRepository
+import com.ekoapp.sample.chatfeature.repositories.UserRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.google.common.collect.Sets
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 class MessagesViewModel @Inject constructor(private val context: Context,
                                             private val channelRepository: ChannelRepository,
-                                            private val messageRepository: MessageRepository) : DisposableViewModel() {
+                                            private val messageRepository: MessageRepository,
+                                            private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val notificationRelay = PublishProcessor.create<NotificationData>()
 
@@ -55,6 +57,18 @@ class MessagesViewModel @Inject constructor(private val context: Context,
 
     fun bindFlagMessage(messageId: String) {
         messageRepository.flag(messageId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+    }
+
+    fun bindUnFlagUser(userId: String) {
+        userRepository.unFlag(userId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+    }
+
+    fun bindFlagUser(userId: String) {
+        userRepository.flag(userId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
     }

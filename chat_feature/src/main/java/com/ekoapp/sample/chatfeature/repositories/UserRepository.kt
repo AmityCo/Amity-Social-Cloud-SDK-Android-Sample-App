@@ -5,6 +5,7 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.ekosdk.EkoUserSortOption
+import io.reactivex.Completable
 import javax.inject.Inject
 
 class UserRepository @Inject constructor() {
@@ -17,4 +18,7 @@ class UserRepository @Inject constructor() {
         return EkoClient.newUserRepository().searchUserByDisplayName(keyword, EkoUserSortOption.DISPLAYNAME)
     }
 
+    fun unFlag(userId: String): Completable = EkoClient.newUserRepository().report(userId).unflag()
+
+    fun flag(userId: String): Completable = EkoClient.newUserRepository().report(userId).flag()
 }
