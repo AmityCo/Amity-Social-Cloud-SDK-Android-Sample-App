@@ -1,7 +1,11 @@
 package com.ekoapp.sample.chatfeature.messages
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
+import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.data.NotificationData
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.chatfeature.repositories.MessageRepository
@@ -26,6 +30,15 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     fun bindStartReading(channelId: String) = channelRepository.startReading(channelId)
 
     fun bindStopReading(channelId: String) = channelRepository.stopReading(channelId)
+
+    fun bindGetMessageCollectionByTags(data: MessageData): LiveData<PagedList<EkoMessage>> {
+        return messageRepository.getMessageCollectionByTags(
+                channelId = data.channelId,
+                includingTags = EkoTags(data.includingTags.tagsSet()),
+                excludingTags = EkoTags(data.excludingTags.tagsSet()),
+                stackFromEnd = data.stackFromEnd
+        )
+    }
 
     fun bindSetTagsChannel(channelId: String, tags: String) {
         channelRepository.setTags(channelId, EkoTags(tags.tagsSet()))
