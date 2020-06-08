@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_like_action"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/defaultColorBackground"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_text_message"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/md_icon_margin"
+        android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
+        android:background="@drawable/default_button"
+        android:backgroundTint="@color/material_grey_900"
+        android:gravity="top"
+        android:hint="@string/temporarily_send_message_hint"
+        android:paddingStart="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
+        android:paddingEnd="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
+        android:textColor="@color/material_light_white"
+        android:textColorHint="@color/material_grey_700"
+        app:layout_constraintBottom_toTopOf="@id/image_camera"
+        app:layout_constraintEnd_toStartOf="@id/image_send"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_send"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:layout_marginEnd="@dimen/material_component_lists_right_padding"
+        android:padding="@dimen/material_component_cards_action_button_row_padding"
+        android:src="@drawable/ic_send"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/edit_text_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_text_message"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_camera"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:padding="@dimen/material_component_grid_lists_padding_small"
+        android:src="@drawable/ic_camera_oval"
+        app:layout_constraintBottom_toBottomOf="@id/image_attach"
+        app:layout_constraintStart_toStartOf="@id/edit_text_message"
+        app:layout_constraintTop_toTopOf="@id/image_attach"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_attach"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:padding="@dimen/material_component_grid_lists_padding_small"
+        android:src="@drawable/ic_attach_oval"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_camera"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_message"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_code"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:padding="@dimen/material_component_grid_lists_padding_small"
+        android:src="@drawable/ic_code_oval"
+        app:layout_constraintBottom_toBottomOf="@id/image_attach"
+        app:layout_constraintStart_toEndOf="@id/image_attach"
+        app:layout_constraintTop_toTopOf="@id/image_attach"
+        tools:ignore="PrivateResource" />
+
+</merge>

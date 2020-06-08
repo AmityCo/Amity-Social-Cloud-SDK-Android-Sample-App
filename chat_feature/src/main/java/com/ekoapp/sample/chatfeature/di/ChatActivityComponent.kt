@@ -1,5 +1,6 @@
 package com.ekoapp.sample.chatfeature.di
 
+import com.ekoapp.sample.chatfeature.messages.MessagesActivity
 import com.ekoapp.sample.chatfeature.settings.ChannelSettingsActivity
 import com.ekoapp.sample.core.di.CoreComponent
 import com.ekoapp.sample.core.di.SplitInstallModule
@@ -13,4 +14,5 @@ import dagger.Component
 )
 interface ChatActivityComponent {
     fun inject(activity: ChannelSettingsActivity)
+    fun inject(activity: MessagesActivity)
 }
