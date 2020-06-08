@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MessageData(val channelId: String,
+                       val parentId: String? = null,
                        val includingTags: String,
                        val excludingTags: String,
                        val stackFromEnd: Boolean) : Parcelable

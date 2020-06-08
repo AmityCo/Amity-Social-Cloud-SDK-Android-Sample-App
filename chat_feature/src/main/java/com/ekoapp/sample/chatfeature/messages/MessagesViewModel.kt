@@ -34,6 +34,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     fun bindGetMessageCollectionByTags(data: MessageData): LiveData<PagedList<EkoMessage>> {
         return messageRepository.getMessageCollectionByTags(
                 channelId = data.channelId,
+                parentId = data.parentId,
                 includingTags = EkoTags(data.includingTags.tagsSet()),
                 excludingTags = EkoTags(data.excludingTags.tagsSet()),
                 stackFromEnd = data.stackFromEnd

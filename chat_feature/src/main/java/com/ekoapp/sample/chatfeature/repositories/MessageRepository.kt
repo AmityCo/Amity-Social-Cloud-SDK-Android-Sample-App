@@ -19,11 +19,12 @@ class MessageRepository @Inject constructor() {
     }
 
     fun getMessageCollectionByTags(channelId: String,
+                                   parentId: String?,
                                    includingTags: EkoTags,
                                    excludingTags: EkoTags,
                                    stackFromEnd: Boolean): LiveData<PagedList<EkoMessage>> {
         return EkoClient.newMessageRepository().getMessageCollectionByTags(channelId,
-                null,
+                parentId,
                 EkoTags(includingTags),
                 EkoTags(excludingTags),
                 stackFromEnd)
