@@ -7,6 +7,7 @@ import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.data.NotificationData
+import com.ekoapp.sample.chatfeature.data.SendMessageData
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.chatfeature.repositories.MessageRepository
 import com.ekoapp.sample.chatfeature.repositories.UserRepository
@@ -41,8 +42,10 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         )
     }
 
-    fun bindCreateMessage(channelId: String, text: String) {
-        messageRepository.createMessage(channelId, text)
+    fun bindTextMessage(data: SendMessageData) {
+        messageRepository.textMessage(data)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
     }
 
     fun bindSetTagsChannel(channelId: String, tags: String) {

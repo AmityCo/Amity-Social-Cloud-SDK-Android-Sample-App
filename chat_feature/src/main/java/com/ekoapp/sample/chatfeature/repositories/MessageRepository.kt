@@ -5,6 +5,7 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.sample.chatfeature.data.SendMessageData
 import com.google.gson.JsonObject
 import io.reactivex.Completable
 import javax.inject.Inject
@@ -31,21 +32,46 @@ class MessageRepository @Inject constructor() {
                 stackFromEnd)
     }
 
-    fun createMessage(channelId: String, text: String): Completable {
-        return EkoClient.newMessageRepository().createMessage(channelId)
-                .text(text)
-                .build()
-                .send()
+    fun textMessage(data: SendMessageData): Completable {
+        data.apply {
+            return EkoClient.newMessageRepository().createMessage(channelId)
+                    .text(text)
+                    .parentId(parentId)
+                    .build()
+                    .send()
+        }
     }
 
-    fun customMessage(channelId: String, parentId: String? = null, data: JsonObject): Completable {
-        val builder = EkoClient.newMessageRepository().createMessage(channelId).custom(data)
-        return if (parentId.isNullOrEmpty())
-            builder.build()
+    fun customMessage(data: SendMessageData): Completable {
+        val metadata = JsonObject()
+        data.apply {
+            custom?.map { metadata.addProperty(it.key, it.value); }
+            return EkoClient.newMessageRepository().createMessage(channelId)
+                    .custom(metadata)
+                    .parentId(parentId)
+                    .build()
                     .send()
-        else builder.parentId(parentId)
-                .build()
-                .send()
+        }
+    }
+
+    fun fileMessage(data: SendMessageData): Completable {
+        data.apply {
+            return EkoClient.newMessageRepository().createMessage(channelId)
+                    .file(file)
+                    .parentId(parentId)
+                    .build()
+                    .send()
+        }
+    }
+
+    fun imageMessage(data: SendMessageData): Completable {
+        data.apply {
+            return EkoClient.newMessageRepository().createMessage(channelId)
+                    .image(image)
+                    .parentId(parentId)
+                    .build()
+                    .send()
+        }
     }
 
 }
