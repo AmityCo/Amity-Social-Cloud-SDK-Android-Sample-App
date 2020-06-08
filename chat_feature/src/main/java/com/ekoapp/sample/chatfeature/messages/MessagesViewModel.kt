@@ -4,6 +4,7 @@ import android.content.Context
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.sample.chatfeature.data.NotificationData
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
+import com.ekoapp.sample.chatfeature.repositories.MessageRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.google.common.collect.Sets
@@ -13,18 +14,21 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MessagesViewModel @Inject constructor(private val context: Context,
-                                            private val channelRepository: ChannelRepository) : DisposableViewModel() {
+                                            private val channelRepository: ChannelRepository,
+                                            private val messageRepository: MessageRepository) : DisposableViewModel() {
 
     private val notificationRelay = PublishProcessor.create<NotificationData>()
 
     fun observeNotification() = notificationRelay.toLiveData()
 
-    fun bindSetTags(channelId: String, tags: String) {
-        val set = Sets.newConcurrentHashSet<String>()
-        for (tag in tags.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
-            if (tag.isNotEmpty()) set.add(tag)
-        }
-        channelRepository.setTags(channelId, EkoTags(set))
+    fun bindSetTagsChannel(channelId: String, tags: String) {
+        channelRepository.setTags(channelId, EkoTags(tags.tagsSet()))
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+    }
+
+    fun bindSetTagsMessage(messageId: String, tags: String) {
+        messageRepository.setTags(messageId, EkoTags(tags.tagsSet()))
                 .subscribeOn(Schedulers.io())
                 .subscribe()
     }
@@ -43,4 +47,23 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                 .subscribe()
     }
 
+    fun bindUnFlagMessage(messageId: String) {
+        messageRepository.unFlag(messageId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+    }
+
+    fun bindFlagMessage(messageId: String) {
+        messageRepository.flag(messageId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+    }
+
+    private fun String.tagsSet(): Set<String> {
+        val set = Sets.newConcurrentHashSet<String>()
+        for (tag in split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+            if (tag.isNotEmpty()) set.add(tag)
+        }
+        return set
+    }
 }
