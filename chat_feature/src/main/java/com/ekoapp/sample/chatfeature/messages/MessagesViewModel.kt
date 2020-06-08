@@ -92,5 +92,4 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                 .subscribe()
     }
 
-
 }
