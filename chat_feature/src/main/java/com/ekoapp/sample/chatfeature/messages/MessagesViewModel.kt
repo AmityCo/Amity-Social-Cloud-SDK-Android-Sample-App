@@ -40,6 +40,10 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         )
     }
 
+    fun bindCreateMessage(channelId: String, text: String) {
+        messageRepository.createMessage(channelId, text)
+    }
+
     fun bindSetTagsChannel(channelId: String, tags: String) {
         channelRepository.setTags(channelId, EkoTags(tags.tagsSet()))
                 .subscribeOn(Schedulers.io())

@@ -28,4 +28,12 @@ class MessageRepository @Inject constructor() {
                 EkoTags(excludingTags),
                 stackFromEnd)
     }
+
+    fun createMessage(channelId: String, text: String): Completable {
+        return EkoClient.newMessageRepository().createMessage(channelId)
+                .text(text)
+                .build()
+                .send()
+    }
+
 }
