@@ -6,9 +6,11 @@ import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.sample.chatfeature.data.NotificationData
 import com.google.common.collect.ImmutableSet
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 import javax.inject.Inject
 
 class ChannelRepository @Inject constructor() {
@@ -40,6 +42,10 @@ class ChannelRepository @Inject constructor() {
         return EkoClient.newChannelRepository().joinChannel(channelId)
     }
 
+    fun leaveChannel(channelId: String): Completable {
+        return EkoClient.newChannelRepository().leaveChannel(channelId)
+    }
+
     fun channelCollection(types: ImmutableSet<EkoChannel.Type>,
                           filter: EkoChannelFilter,
                           includingTags: EkoTags,
@@ -53,6 +59,21 @@ class ChannelRepository @Inject constructor() {
                 .excludingTags(excludingTags)
                 .build()
                 .query()
+    }
+
+    fun setTags(channelId: String, tags: EkoTags): Completable {
+        return EkoClient.newChannelRepository().setTags(channelId, tags)
+    }
+
+    fun notification(channelId: String): Single<NotificationData> {
+        return EkoClient.newChannelRepository().notification(channelId)
+                .isAllowed
+                .map { NotificationData(channelId, it) }
+    }
+
+    fun setNotification(channelId: String, isArrowed: Boolean): Completable {
+        return EkoClient.newChannelRepository().notification(channelId)
+                .setAllowed(isArrowed)
     }
 
 }
