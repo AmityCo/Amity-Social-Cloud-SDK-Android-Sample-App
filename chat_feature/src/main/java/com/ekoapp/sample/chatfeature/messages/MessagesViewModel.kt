@@ -23,6 +23,10 @@ class MessagesViewModel @Inject constructor(private val context: Context,
 
     fun observeNotification() = notificationRelay.toLiveData()
 
+    fun bindStartReading(channelId: String) = channelRepository.startReading(channelId)
+
+    fun bindStopReading(channelId: String) = channelRepository.stopReading(channelId)
+
     fun bindSetTagsChannel(channelId: String, tags: String) {
         channelRepository.setTags(channelId, EkoTags(tags.tagsSet()))
                 .subscribeOn(Schedulers.io())

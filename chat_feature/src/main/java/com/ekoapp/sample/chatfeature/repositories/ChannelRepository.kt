@@ -76,4 +76,8 @@ class ChannelRepository @Inject constructor() {
                 .setAllowed(isArrowed)
     }
 
+    fun startReading(channelId: String) = EkoClient.newChannelRepository().membership(channelId).startReading()
+
+    fun stopReading(channelId: String) = EkoClient.newChannelRepository().membership(channelId).stopReading()
+
 }
