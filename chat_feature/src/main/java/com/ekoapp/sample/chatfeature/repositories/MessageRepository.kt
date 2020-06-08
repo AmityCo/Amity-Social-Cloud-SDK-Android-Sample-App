@@ -25,8 +25,8 @@ class MessageRepository @Inject constructor() {
         data.apply {
             return EkoClient.newMessageRepository().getMessageCollectionByTags(channelId,
                     parentId,
-                    EkoTags(includingTags),
-                    EkoTags(excludingTags),
+                    includingTags,
+                    excludingTags,
                     stackFromEnd)
         }
     }
