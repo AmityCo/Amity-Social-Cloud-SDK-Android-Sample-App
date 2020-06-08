@@ -9,6 +9,7 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
+import com.ekoapp.sample.core.ui.extensions.observeOnce
 import kotlinx.android.synthetic.main.activity_settings.*
 
 
@@ -39,29 +40,29 @@ class ChannelSettingsActivity : SingleViewModelActivity<ChannelSettingsViewModel
     }
 
     private fun setupView(viewModel: ChannelSettingsViewModel) {
-        var types: Set<String> = emptySet()
-        var filter = ""
-        var includingTags: Set<String> = emptySet()
-        var excludingTags: Set<String> = emptySet()
-
-        viewModel.observeChannelTypes().observeNotNull(this, { value ->
-            types = value
+        viewModel.observeChannelTypes().observeNotNull(this, { types ->
+            viewModel.observeSave().observeOnce(this, {
+                viewModel.saveChannelTypes(types)
+                send(viewModel)
+            })
         })
-        viewModel.observeMembership().observeNotNull(this, { value ->
-            filter = value
+        viewModel.observeMembership().observeNotNull(this, { filter ->
+            viewModel.observeSave().observeOnce(this, {
+                viewModel.saveMembership(filter)
+                send(viewModel)
+            })
         })
-        viewModel.observeIncludeTags().observeNotNull(this, { value ->
-            includingTags = value
+        viewModel.observeIncludeTags().observeNotNull(this, { includingTags ->
+            viewModel.observeSave().observeOnce(this, {
+                viewModel.saveIncludeTags(includingTags)
+                send(viewModel)
+            })
         })
-        viewModel.observeExcludeTags().observeNotNull(this, { value ->
-            excludingTags = value
-        })
-        viewModel.observeSave().observeNotNull(this, {
-            viewModel.saveChannelTypes(types)
-            viewModel.saveMembership(filter)
-            viewModel.saveIncludeTags(includingTags)
-            viewModel.saveExcludeTags(excludingTags)
-            send(viewModel)
+        viewModel.observeExcludeTags().observeNotNull(this, { excludingTags ->
+            viewModel.observeSave().observeOnce(this, {
+                viewModel.saveExcludeTags(excludingTags)
+                send(viewModel)
+            })
         })
     }
 

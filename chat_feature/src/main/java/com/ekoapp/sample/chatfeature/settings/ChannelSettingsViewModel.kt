@@ -65,27 +65,19 @@ class ChannelSettingsViewModel @Inject constructor(private val context: Context,
     }
 
     fun saveChannelTypes(value: Set<String>) {
-        if (value.isNotEmpty()) {
-            prefs.channelTypes = value
-        }
+        prefs.channelTypes = value
     }
 
     fun saveMembership(value: String) {
-        if (value.isNotEmpty()) {
-            prefs.membership = value
-        }
+        prefs.membership = value
     }
 
     fun saveIncludeTags(value: Set<String>) {
-        if (value.isNotEmpty()) {
-            prefs.includeTags = value
-        }
+        prefs.includeTags = value
     }
 
     fun saveExcludeTags(value: Set<String>) {
-        if (value.isNotEmpty()) {
-            prefs.excludeTags = value
-        }
+        prefs.excludeTags = value
     }
 
     fun getChannelSettingsData(): ChannelSettingsData {
