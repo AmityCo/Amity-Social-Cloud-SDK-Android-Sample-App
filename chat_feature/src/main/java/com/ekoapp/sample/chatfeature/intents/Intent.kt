@@ -6,7 +6,7 @@ import com.ekoapp.sample.chatfeature.constants.EXTRA_CHANNEL_MESSAGES
 import com.ekoapp.sample.chatfeature.constants.REQUEST_CODE_CHANNEL_SETTINGS
 import com.ekoapp.sample.chatfeature.constants.REQUEST_CODE_MESSAGES
 import com.ekoapp.sample.chatfeature.data.ChannelData
-import com.ekoapp.sample.chatfeature.messages.MessagesActivity
+import com.ekoapp.sample.chatfeature.messages.view.MessagesActivity
 import com.ekoapp.sample.chatfeature.settings.ChannelSettingsActivity
 
 fun Fragment.openChannelSettingsPage() {

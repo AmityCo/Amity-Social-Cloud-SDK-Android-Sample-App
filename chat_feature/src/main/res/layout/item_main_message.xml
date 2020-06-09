@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/md_listitem_control_margin"
+    android:background="@color/material_light_black"
+    tools:ignore="PrivateResource">
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/md_disabled_text_dark_theme"
+        android:textSize="@dimen/material_typography_body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/date/hhmm" />
+
+    <com.ekoapp.sample.chatfeature.components.TextMessageComponent
+        android:id="@+id/text_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/text_time"
+        tools:visibility="visible" />
+
+    <com.ekoapp.sample.chatfeature.components.ImageMessageComponent
+        android:id="@+id/image_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/text_time"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

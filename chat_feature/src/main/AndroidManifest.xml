@@ -23,7 +23,7 @@
 
     <application>
         <activity android:name=".settings.ChannelSettingsActivity" />
-        <activity android:name=".messages.MessagesActivity" />
+        <activity android:name=".messages.view.MessagesActivity" />
 
         <activity android:name=".messagelist.ParentMessageListActivity" />
         <activity android:name=".messagelist.ChildMessageListActivity" />

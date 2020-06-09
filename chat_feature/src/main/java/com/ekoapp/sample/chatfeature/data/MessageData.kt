@@ -7,6 +7,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class MessageData(val channelId: String,
                        val parentId: String? = null,
-                       val includingTags: EkoTags,
-                       val excludingTags: EkoTags,
-                       val stackFromEnd: Boolean) : Parcelable
+                       val includingTags: EkoTags = EkoTags(emptySet()),
+                       val excludingTags: EkoTags = EkoTags(emptySet()),
+                       val stackFromEnd: Boolean = false) : Parcelable

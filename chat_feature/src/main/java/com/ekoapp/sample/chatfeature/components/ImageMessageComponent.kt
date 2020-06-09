@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.sample.chatfeature.R
 
 class ImageMessageComponent : ConstraintLayout {
@@ -15,4 +16,8 @@ class ImageMessageComponent : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
+
+    fun setupView(item: EkoMessage) {
+
+    }
 }

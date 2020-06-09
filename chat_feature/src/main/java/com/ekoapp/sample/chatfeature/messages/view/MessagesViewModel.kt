@@ -1,10 +1,11 @@
-package com.ekoapp.sample.chatfeature.messages
+package com.ekoapp.sample.chatfeature.messages.view
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.data.NotificationData
 import com.ekoapp.sample.chatfeature.data.SendMessageData
@@ -25,6 +26,15 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val notificationRelay = PublishProcessor.create<NotificationData>()
+    private var channelDataIntent: ChannelData? = null
+
+    fun getIntentChannelData(actionRelay: (ChannelData) -> Unit) {
+        channelDataIntent?.let(actionRelay::invoke)
+    }
+
+    fun setupIntent(data: ChannelData?) {
+        channelDataIntent = data
+    }
 
     fun observeNotification() = notificationRelay.toLiveData()
 

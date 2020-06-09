@@ -5,9 +5,10 @@ import android.content.Intent
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.channels.list.MainChannelsAdapter
 import com.ekoapp.sample.chatfeature.constants.REQUEST_CODE_CHANNEL_SETTINGS
+import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.di.DaggerChatFragmentComponent
-import com.ekoapp.sample.chatfeature.intent.ViewParentMessagesIntent
 import com.ekoapp.sample.chatfeature.intents.openChannelSettingsPage
+import com.ekoapp.sample.chatfeature.intents.openMessagesPage
 import com.ekoapp.sample.core.base.list.IMMEDIATELY_SCROLL
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
@@ -54,8 +55,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
         }
 
         viewModel.observeJoinChannel().observeNotNull(viewLifecycleOwner, {
-            val intent = ViewParentMessagesIntent(requireContext(), it)
-            startActivity(intent)
+            openMessagesPage(ChannelData(channelId = it))
         })
     }
 

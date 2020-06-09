@@ -1,6 +1,6 @@
 package com.ekoapp.sample.chatfeature.di
 
-import com.ekoapp.sample.chatfeature.messages.MessagesActivity
+import com.ekoapp.sample.chatfeature.messages.view.MessagesActivity
 import com.ekoapp.sample.chatfeature.settings.ChannelSettingsActivity
 import com.ekoapp.sample.core.di.CoreComponent
 import com.ekoapp.sample.core.di.SplitInstallModule
