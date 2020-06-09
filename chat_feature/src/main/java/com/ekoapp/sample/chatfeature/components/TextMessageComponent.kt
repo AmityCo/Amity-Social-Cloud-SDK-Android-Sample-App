@@ -20,6 +20,6 @@ class TextMessageComponent : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
     fun setupView(item: EkoMessage) {
-        text_content.text = item.getData(TextData::class.java).text
+        text_message_content.text = item.getData(TextData::class.java).text
     }
 }

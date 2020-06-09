@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:background="@color/material_light_black"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
@@ -16,16 +16,30 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
-        android:id="@+id/image_message"
-        android:layout_width="0dp"
+        android:id="@+id/image_message_content"
+        android:layout_width="@dimen/message_image_max_width"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/md_listitem_control_margin"
+        android:adjustViewBounds="true"
+        android:background="@drawable/default_background_message"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="parent"
         app:siShape="@drawable/default_background_message"
         app:siSquare="true"
         tools:ignore="PrivateResource"
         tools:src="@tools:sample/backgrounds/scenic" />
+
+    <ImageView
+        android:id="@+id/image_share"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:layout_margin="@dimen/material_component_grid_lists_padding_small"
+        android:padding="@dimen/material_component_grid_lists_padding_big"
+        android:src="@drawable/ic_share_oval"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/image_message_content"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
 </merge>

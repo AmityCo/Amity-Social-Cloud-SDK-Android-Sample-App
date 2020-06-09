@@ -5,7 +5,7 @@
         <shape android:shape="oval">
 
             <solid
-                android:color="@color/colorPrimary"
+                android:color="@color/material_grey_700"
                 tools:ignore="PrivateResource" />
 
             <size
@@ -19,6 +19,6 @@
         </shape>
     </item>
     <item
-        android:drawable="@drawable/ic_send"
+        android:drawable="@drawable/ic_share"
         android:gravity="center" />
 </layer-list>

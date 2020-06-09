@@ -2,7 +2,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:background="@color/material_light_black"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
@@ -16,17 +16,29 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_content"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:id="@+id/text_message_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/md_listitem_control_margin"
         android:background="@drawable/default_background_message"
-        android:padding="@dimen/material_component_cards_left_and_right_padding"
+        android:maxWidth="@dimen/message_text_max_width"
+        android:padding="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
         android:textColor="@color/material_light_white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource"
         tools:text="@tools:sample/lorem/random" />
+
+    <ImageView
+        android:id="@+id/image_share"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:layout_margin="@dimen/material_component_grid_lists_padding_small"
+        android:padding="@dimen/material_component_grid_lists_padding_big"
+        android:src="@drawable/ic_share_oval"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_message_content"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
 </merge>

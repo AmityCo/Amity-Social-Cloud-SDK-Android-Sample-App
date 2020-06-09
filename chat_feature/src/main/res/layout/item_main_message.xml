@@ -13,7 +13,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/md_disabled_text_dark_theme"
+        android:paddingBottom="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+        android:textColor="@color/material_grey_600"
         android:textSize="@dimen/material_typography_body1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,17 +23,19 @@
 
     <com.ekoapp.sample.chatfeature.components.TextMessageComponent
         android:id="@+id/text_message"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_time"
         tools:visibility="visible" />
 
     <com.ekoapp.sample.chatfeature.components.ImageMessageComponent
         android:id="@+id/image_message"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_time"
         tools:visibility="visible" />
 
