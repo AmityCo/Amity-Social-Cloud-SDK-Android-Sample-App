@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:background="@color/material_light_black"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
+        android:src="@drawable/ic_avatar_oval"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_message"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/md_listitem_control_margin"
+        android:background="@drawable/default_background_message"
+        android:padding="@dimen/material_component_cards_left_and_right_padding"
+        android:textColor="@color/material_light_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource"
+        tools:text="@tools:sample/lorem/random" />
+</merge>
