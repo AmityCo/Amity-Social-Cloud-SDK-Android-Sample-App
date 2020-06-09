@@ -46,6 +46,14 @@ object PreferenceHelper {
             }
         }
 
+    var SharedPreferences.joinChannel
+        get() = getBoolean(PREF_JOIN_CHANNEL, false)
+        set(value) {
+            editMe {
+                it.putBoolean(PREF_JOIN_CHANNEL, value)
+            }
+        }
+
     var SharedPreferences.channelTypes: Set<String>?
         get() = getStringSet(PREF_SETTINGS_CHANNEL_TYPES, emptySet())
         set(value) {

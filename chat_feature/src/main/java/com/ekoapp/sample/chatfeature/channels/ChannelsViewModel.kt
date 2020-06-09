@@ -23,7 +23,6 @@ import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.google.common.collect.FluentIterable
-import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -68,8 +67,10 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
 
     fun bindTotalUnreadCount(): LiveData<Int> = channelRepository.getTotalUnreadCount().toLiveData()
 
-    fun bindCreateChannel(item: CreateChannelData): Completable {
-        return channelRepository.createChannel(item.id, item.type)
+    fun bindCreateChannel(item: CreateChannelData) {
+        channelRepository.createChannel(item.id, item.type)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
     }
 
     fun bindJoinChannel(channelId: String) {
