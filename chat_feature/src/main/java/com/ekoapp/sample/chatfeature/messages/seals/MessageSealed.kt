@@ -1,4 +1,4 @@
-package com.ekoapp.sample.chatfeature.messages.sealed
+package com.ekoapp.sample.chatfeature.messages.seals
 
 import com.ekoapp.ekosdk.EkoMessage
 

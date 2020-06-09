@@ -8,6 +8,7 @@
     <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
         android:id="@+id/appbar_message"
         style="@style/AppTheme.Appbar"
+        android:background="@color/material_light_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

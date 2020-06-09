@@ -7,7 +7,7 @@ import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.sample.chatfeature.components.ImageMessageComponent
 import com.ekoapp.sample.chatfeature.components.TextMessageComponent
-import com.ekoapp.sample.chatfeature.messages.sealed.MessageSealed
+import com.ekoapp.sample.chatfeature.messages.seals.MessageSealed
 import com.ekoapp.sample.core.utils.getTimeAgo
 
 data class MessageRenderData(val context: Context, val item: EkoMessage)

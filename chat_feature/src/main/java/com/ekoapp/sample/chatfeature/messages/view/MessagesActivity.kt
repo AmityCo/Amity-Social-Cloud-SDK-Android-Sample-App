@@ -19,6 +19,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     override fun bindViewModel(viewModel: MessagesViewModel) {
         val item = intent.extras?.getParcelable<ChannelData>(EXTRA_CHANNEL_MESSAGES)
         viewModel.setupIntent(item)
+        setupAppBar()
         renderList(viewModel)
     }
 
@@ -31,6 +32,11 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
             viewModel.bindGetMessageCollectionByTags(MessageData(channelId = it.channelId))
                     .observeNotNull(this, adapter::submitList)
         }
+    }
+
+    private fun setupAppBar() {
+        appbar_message.setup(this, true)
+        appbar_message.setTitle(getString(R.string.temporarily_chat))
     }
 
     override fun getViewModelClass(): Class<MessagesViewModel> {
