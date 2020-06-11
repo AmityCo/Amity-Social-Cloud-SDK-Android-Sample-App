@@ -36,10 +36,12 @@
         android:padding="@dimen/material_component_cards_action_button_row_padding"
         android:src="@drawable/ic_send"
         android:tint="@color/colorPrimary"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/edit_text_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/edit_text_message"
-        tools:ignore="PrivateResource" />
+        tools:ignore="PrivateResource"
+        tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/image_camera"

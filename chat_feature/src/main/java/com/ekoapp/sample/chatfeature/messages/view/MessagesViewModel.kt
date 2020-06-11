@@ -2,6 +2,7 @@ package com.ekoapp.sample.chatfeature.messages.view
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
@@ -13,8 +14,10 @@ import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.chatfeature.repositories.MessageRepository
 import com.ekoapp.sample.chatfeature.repositories.UserRepository
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
+import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.ekoapp.sample.core.utils.stringToSet
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.processors.PublishProcessor
 import io.reactivex.schedulers.Schedulers
@@ -25,8 +28,17 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                                             private val messageRepository: MessageRepository,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
+    private val textRelay = MutableLiveData<SendMessageData>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
+
+    fun observeMessage(): LiveData<SendMessageData> = textRelay
+
+    init {
+        getIntentChannelData {
+            textRelay.postValue(SendMessageData(channelId = it.channelId, text = ""))
+        }
+    }
 
     fun getIntentChannelData(actionRelay: (ChannelData) -> Unit) {
         channelDataIntent?.let(actionRelay::invoke)
@@ -34,6 +46,14 @@ class MessagesViewModel @Inject constructor(private val context: Context,
 
     fun setupIntent(data: ChannelData?) {
         channelDataIntent = data
+    }
+
+    fun message(channelId: String, message: Flowable<String>) {
+        message.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    textRelay.postValue(SendMessageData(channelId = channelId, text = it))
+                } into disposables
     }
 
     fun observeNotification() = notificationRelay.toLiveData()
@@ -46,7 +66,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         return messageRepository.getMessageCollectionByTags(data)
     }
 
-    fun bindTextMessage(data: SendMessageData) {
+    fun bindSendTextMessage(data: SendMessageData) {
         messageRepository.textMessage(data)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
@@ -101,5 +121,4 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
     }
-
 }

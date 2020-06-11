@@ -31,7 +31,11 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         viewModel.getIntentChannelData {
             viewModel.bindGetMessageCollectionByTags(MessageData(channelId = it.channelId))
                     .observeNotNull(this, adapter::submitList)
+
+            viewModel.message(it.channelId, send_message.text())
+            viewModel.observeMessage().observeNotNull(this, viewModel::bindSendTextMessage)
         }
+
     }
 
     private fun setupAppBar() {
