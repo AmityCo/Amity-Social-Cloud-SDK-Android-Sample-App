@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.DataType
+import com.ekoapp.sample.chatfeature.components.FileMessageComponent
 import com.ekoapp.sample.chatfeature.components.ImageMessageComponent
 import com.ekoapp.sample.chatfeature.components.TextMessageComponent
 import com.ekoapp.sample.chatfeature.messages.seals.MessageSealed
@@ -24,25 +25,34 @@ fun EkoMessage.getMessageSealed(): MessageSealed {
 
 fun MessageRenderData.messageRender(textTime: TextView,
                                     textMessage: TextMessageComponent,
-                                    imageMessage: ImageMessageComponent) {
+                                    imageMessage: ImageMessageComponent,
+                                    fileMessage: FileMessageComponent) {
 
     textTime.text = item.createdAt.toDate().getTimeAgo()
     when (item.getMessageSealed()) {
         is MessageSealed.Text -> {
             textMessage.visibility = View.VISIBLE
             imageMessage.visibility = View.GONE
+            fileMessage.visibility = View.GONE
             textMessage.setupView(item)
         }
         is MessageSealed.Image -> {
             imageMessage.visibility = View.VISIBLE
             textMessage.visibility = View.GONE
+            fileMessage.visibility = View.GONE
             imageMessage.setupView(item)
         }
         is MessageSealed.File -> {
-
+            fileMessage.visibility = View.VISIBLE
+            textMessage.visibility = View.GONE
+            imageMessage.visibility = View.GONE
+            fileMessage.setupView(item)
         }
         is MessageSealed.Custom -> {
-
+            textMessage.visibility = View.VISIBLE
+            imageMessage.visibility = View.GONE
+            fileMessage.visibility = View.GONE
+            textMessage.setupView(item)
         }
     }
 }

@@ -39,4 +39,13 @@
         app:layout_constraintTop_toBottomOf="@id/text_time"
         tools:visibility="visible" />
 
+    <com.ekoapp.sample.chatfeature.components.FileMessageComponent
+        android:id="@+id/file_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_time"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

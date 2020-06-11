@@ -14,6 +14,7 @@ class MessageViewHolder(itemView: View) : BaseViewHolder<EkoMessage>(itemView) {
         MessageRenderData(context = context, item = item)
                 .messageRender(itemView.text_time,
                         itemView.text_message,
-                        itemView.image_message)
+                        itemView.image_message,
+                        itemView.file_message)
     }
 }
