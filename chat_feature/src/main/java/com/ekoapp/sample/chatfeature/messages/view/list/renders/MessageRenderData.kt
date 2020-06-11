@@ -39,7 +39,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             fileMessage.visibility = View.GONE
             textMessage.apply {
                 setMessage(item)
-                renderSenderAndReceiver(iAMSender)
+                renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
         }
@@ -49,7 +49,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             fileMessage.visibility = View.GONE
             imageMessage.apply {
                 setMessage(item)
-                renderSenderAndReceiver(iAMSender)
+                renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
         }
@@ -58,11 +58,10 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             textMessage.visibility = View.GONE
             imageMessage.visibility = View.GONE
             fileMessage.setMessage(item)
-            fileMessage.renderSenderAndReceiver(iAMSender)
-
+            fileMessage.renderLayoutSenderAndReceiver(iAMSender)
             fileMessage.apply {
                 setMessage(item)
-                renderSenderAndReceiver(iAMSender)
+                renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
         }
@@ -72,14 +71,14 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             fileMessage.visibility = View.GONE
             textMessage.apply {
                 setMessage(item)
-                renderSenderAndReceiver(iAMSender)
+                renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
         }
     }
 }
 
-private fun ConstraintLayout.renderSenderAndReceiver(iAMSender: Boolean) {
+private fun ConstraintLayout.renderLayoutSenderAndReceiver(iAMSender: Boolean) {
     val params = layoutParams as ConstraintLayout.LayoutParams
     if (iAMSender) {
         params.startToStart = -1
