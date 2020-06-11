@@ -3,6 +3,7 @@ package com.ekoapp.sample.chatfeature.messages.view.list.renders
 import android.content.Context
 import android.view.View
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.sample.chatfeature.components.FileMessageComponent
@@ -11,7 +12,8 @@ import com.ekoapp.sample.chatfeature.components.TextMessageComponent
 import com.ekoapp.sample.chatfeature.messages.seals.MessageSealed
 import com.ekoapp.sample.core.utils.getTimeAgo
 
-data class MessageRenderData(val context: Context, val item: EkoMessage)
+
+data class MessageRenderData(val context: Context, val item: EkoMessage, val iAMSender: Boolean)
 
 fun EkoMessage.getMessageSealed(): MessageSealed {
     return when {
@@ -23,36 +25,69 @@ fun EkoMessage.getMessageSealed(): MessageSealed {
     }
 }
 
-fun MessageRenderData.messageRender(textTime: TextView,
+fun MessageRenderData.renderMessage(textTime: TextView,
                                     textMessage: TextMessageComponent,
                                     imageMessage: ImageMessageComponent,
                                     fileMessage: FileMessageComponent) {
 
     textTime.text = item.createdAt.toDate().getTimeAgo()
+
     when (item.getMessageSealed()) {
         is MessageSealed.Text -> {
             textMessage.visibility = View.VISIBLE
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
-            textMessage.setupView(item)
+            textMessage.apply {
+                setMessage(item)
+                renderSenderAndReceiver(iAMSender)
+                iAMSender.showOrHideAvatar()
+            }
         }
         is MessageSealed.Image -> {
             imageMessage.visibility = View.VISIBLE
             textMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
-            imageMessage.setupView(item)
+            imageMessage.apply {
+                setMessage(item)
+                renderSenderAndReceiver(iAMSender)
+                iAMSender.showOrHideAvatar()
+            }
         }
         is MessageSealed.File -> {
             fileMessage.visibility = View.VISIBLE
             textMessage.visibility = View.GONE
             imageMessage.visibility = View.GONE
-            fileMessage.setupView(item)
+            fileMessage.setMessage(item)
+            fileMessage.renderSenderAndReceiver(iAMSender)
+
+            fileMessage.apply {
+                setMessage(item)
+                renderSenderAndReceiver(iAMSender)
+                iAMSender.showOrHideAvatar()
+            }
         }
         is MessageSealed.Custom -> {
             textMessage.visibility = View.VISIBLE
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
-            textMessage.setupView(item)
+            textMessage.apply {
+                setMessage(item)
+                renderSenderAndReceiver(iAMSender)
+                iAMSender.showOrHideAvatar()
+            }
         }
     }
+}
+
+private fun ConstraintLayout.renderSenderAndReceiver(iAMSender: Boolean) {
+    val params = layoutParams as ConstraintLayout.LayoutParams
+    if (iAMSender) {
+        params.startToStart = -1
+        params.endToEnd = 0
+    } else {
+        params.startToStart = 0
+        params.endToEnd = -1
+    }
+
+    requestLayout()
 }

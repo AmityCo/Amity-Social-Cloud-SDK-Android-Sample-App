@@ -20,7 +20,7 @@ class FileMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(item: EkoMessage) {
+    fun setMessage(item: EkoMessage) {
         item.getData(FileData::class.java).apply {
             text_message_url.text = url
             setFileName()
@@ -43,6 +43,14 @@ class FileMessageComponent : ConstraintLayout {
         } else {
             text_message_caption.visibility = View.VISIBLE
             text_message_caption.text = caption
+        }
+    }
+
+    fun Boolean.showOrHideAvatar() {
+        if (this) {
+            avatar.visibility = View.INVISIBLE
+        } else {
+            avatar.visibility = View.VISIBLE
         }
     }
 }

@@ -3,6 +3,7 @@ package com.ekoapp.sample.chatfeature.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.ekoapp.ekosdk.EkoMessage
@@ -20,9 +21,17 @@ class ImageMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(item: EkoMessage) {
+    fun setMessage(item: EkoMessage) {
         Glide.with(context).load(item.getData(ImageData::class.java).url)
                 .placeholder(R.drawable.ic_placeholder_file)
                 .into(image_message_content)
+    }
+
+    fun Boolean.showOrHideAvatar() {
+        if (this) {
+            avatar.visibility = View.INVISIBLE
+        } else {
+            avatar.visibility = View.VISIBLE
+        }
     }
 }

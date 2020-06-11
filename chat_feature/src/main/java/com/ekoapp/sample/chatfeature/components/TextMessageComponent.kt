@@ -3,6 +3,7 @@ package com.ekoapp.sample.chatfeature.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.TextData
@@ -19,7 +20,15 @@ class TextMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(item: EkoMessage) {
+    fun setMessage(item: EkoMessage) {
         text_message_content.text = item.getData(TextData::class.java).text
+    }
+
+    fun Boolean.showOrHideAvatar() {
+        if (this) {
+            avatar.visibility = View.INVISIBLE
+        } else {
+            avatar.visibility = View.VISIBLE
+        }
     }
 }
