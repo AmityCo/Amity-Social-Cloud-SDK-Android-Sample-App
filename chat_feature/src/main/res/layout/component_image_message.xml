@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/md_listitem_control_margin"
         android:adjustViewBounds="true"
-        android:background="@drawable/default_background_message"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/avatar"

@@ -21,6 +21,8 @@ class ImageMessageComponent : ConstraintLayout {
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
     fun setupView(item: EkoMessage) {
-        Glide.with(context).load(item.getData(ImageData::class.java).url).into(image_message_content)
+        Glide.with(context).load(item.getData(ImageData::class.java).url)
+                .placeholder(R.drawable.ic_placeholder_file)
+                .into(image_message_content)
     }
 }
