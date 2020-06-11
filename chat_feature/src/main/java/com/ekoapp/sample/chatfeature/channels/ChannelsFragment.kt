@@ -55,7 +55,7 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
         }
 
         viewModel.observeJoinChannel().observeNotNull(viewLifecycleOwner, {
-            openMessagesPage(ChannelData(channelId = it))
+            openMessagesPage(ChannelData(channelId = it ?: ""))
         })
     }
 
