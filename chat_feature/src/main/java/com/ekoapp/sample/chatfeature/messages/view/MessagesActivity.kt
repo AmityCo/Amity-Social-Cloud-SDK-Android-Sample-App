@@ -1,5 +1,7 @@
 package com.ekoapp.sample.chatfeature.messages.view
 
+import androidx.paging.PagedList
+import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.constants.EXTRA_CHANNEL_MESSAGES
 import com.ekoapp.sample.chatfeature.data.ChannelData
@@ -25,17 +27,26 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     private fun renderList(viewModel: MessagesViewModel) {
         adapter = MainMessageAdapter(this, viewModel)
-        RecyclerBuilder(context = this, recyclerView = recycler_message)
+        val recyclerBuilder = RecyclerBuilder(context = this, recyclerView = recycler_message)
                 .builder()
                 .build(adapter)
         viewModel.getIntentChannelData {
             viewModel.bindGetMessageCollectionByTags(MessageData(channelId = it.channelId))
-                    .observeNotNull(this, adapter::submitList)
+                    .observeNotNull(this, { items ->
+                        adapter.submitList(items)
+                        recyclerBuilder.observeScrollToBottom(viewModel, items)
+                    })
 
             viewModel.message(it.channelId, send_message.text())
             viewModel.observeMessage().observeNotNull(this, viewModel::bindSendTextMessage)
         }
 
+    }
+
+    private fun RecyclerBuilder.observeScrollToBottom(viewModel: MessagesViewModel, items: PagedList<EkoMessage>) {
+        viewModel.observeScrollToBottom().observeNotNull(this@MessagesActivity, {
+            smoothScrollToPosition(position = items.size - 1)
+        })
     }
 
     private fun setupAppBar() {
