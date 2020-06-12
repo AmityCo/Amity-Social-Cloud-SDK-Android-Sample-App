@@ -1,6 +1,5 @@
 package com.ekoapp.sample.chatfeature.messages.view
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -23,25 +22,21 @@ import io.reactivex.processors.PublishProcessor
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MessagesViewModel @Inject constructor(private val context: Context,
-                                            private val channelRepository: ChannelRepository,
+class MessagesViewModel @Inject constructor(private val channelRepository: ChannelRepository,
                                             private val messageRepository: MessageRepository,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val textRelay = MutableLiveData<SendMessageData>()
-    private val textReply = MutableLiveData<SendMessageData>()
     private val replyingRelay = MutableLiveData<EkoMessage>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
 
     fun observeMessage(): LiveData<SendMessageData> = textRelay
-    fun observeReplyMessage(): LiveData<SendMessageData> = textReply
     fun observeReplying(): LiveData<EkoMessage> = replyingRelay
 
     init {
         getIntentChannelData {
             textRelay.postValue(SendMessageData(channelId = it.channelId, text = ""))
-            textReply.postValue(SendMessageData(channelId = it.channelId, text = ""))
         }
     }
 
