@@ -3,6 +3,7 @@ package com.ekoapp.sample.core.base.list
 import android.content.Context
 import android.os.Handler
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 const val UPPERMOST = 0
@@ -20,6 +21,17 @@ data class RecyclerBuilder(
 
     fun builder(): RecyclerBuilder {
         recyclerView.apply { layoutManager = GridLayoutManager(context, spaceCount) }
+        return this
+    }
+
+    fun stackFromEnd(stackFromEnd: Boolean): RecyclerBuilder {
+        recyclerView.apply {
+            val linearLayoutManager = LinearLayoutManager(context)
+            linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+            linearLayoutManager.stackFromEnd = stackFromEnd
+            linearLayoutManager.reverseLayout = false
+            layoutManager = linearLayoutManager
+        }
         return this
     }
 

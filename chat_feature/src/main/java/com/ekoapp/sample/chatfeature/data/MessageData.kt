@@ -9,4 +9,4 @@ data class MessageData(val channelId: String,
                        val parentId: String? = null,
                        val includingTags: EkoTags = EkoTags(emptySet()),
                        val excludingTags: EkoTags = EkoTags(emptySet()),
-                       val stackFromEnd: Boolean = false) : Parcelable
+                       val stackFromEnd: Boolean = true) : Parcelable

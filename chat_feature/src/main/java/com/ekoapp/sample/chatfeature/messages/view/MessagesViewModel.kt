@@ -29,12 +29,10 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val textRelay = MutableLiveData<SendMessageData>()
-    private val scrollToBottom = MutableLiveData<Unit>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
 
     fun observeMessage(): LiveData<SendMessageData> = textRelay
-    fun observeScrollToBottom(): LiveData<Unit> = scrollToBottom
 
     init {
         getIntentChannelData {
@@ -71,9 +69,6 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     fun bindSendTextMessage(data: SendMessageData) {
         messageRepository.textMessage(data)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete {
-                    scrollToBottom.postValue(Unit)
-                }
                 .subscribe()
     }
 
