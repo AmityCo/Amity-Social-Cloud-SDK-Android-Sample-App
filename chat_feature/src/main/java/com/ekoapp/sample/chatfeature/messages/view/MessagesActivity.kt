@@ -69,4 +69,18 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
                 .build()
                 .inject(this)
     }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel?.apply {
+            getIntentChannelData { bindStartReading(it.channelId) }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel?.apply {
+            getIntentChannelData { bindStopReading(it.channelId) }
+        }
+    }
 }
