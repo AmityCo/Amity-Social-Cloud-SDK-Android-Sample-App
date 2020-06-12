@@ -41,4 +41,16 @@
         app:layout_constraintStart_toEndOf="@id/text_message_content"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_reply"
+        android:layout_width="@dimen/material_component_button_height"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginEnd="@dimen/material_layout_button_height"
+        android:padding="@dimen/material_component_button_corner_radius"
+        android:src="@drawable/ic_reply_oval"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="PrivateResource"
+        tools:visibility="visible" />
 </merge>

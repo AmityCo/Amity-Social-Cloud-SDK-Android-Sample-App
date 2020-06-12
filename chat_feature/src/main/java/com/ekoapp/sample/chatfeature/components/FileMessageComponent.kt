@@ -20,11 +20,20 @@ class FileMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setMessage(item: EkoMessage) {
+    fun setMessage(item: EkoMessage, action: (EkoMessage) -> Unit) {
         item.getData(FileData::class.java).apply {
             text_message_url.text = url
             setFileName()
             setCaption()
+
+            view_message.setOnLongClickListener {
+                image_reply.visibility = View.VISIBLE
+                return@setOnLongClickListener true
+            }
+            image_reply.setOnClickListener {
+                image_reply.visibility = View.INVISIBLE
+                action.invoke(item)
+            }
         }
     }
 

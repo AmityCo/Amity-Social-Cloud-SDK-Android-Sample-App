@@ -49,7 +49,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             textMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             imageMessage.apply {
-                setMessage(item)
+                setMessage(item, eventReply::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -58,10 +58,8 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             fileMessage.visibility = View.VISIBLE
             textMessage.visibility = View.GONE
             imageMessage.visibility = View.GONE
-            fileMessage.setMessage(item)
-            fileMessage.renderLayoutSenderAndReceiver(iAMSender)
             fileMessage.apply {
-                setMessage(item)
+                setMessage(item, eventReply::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }

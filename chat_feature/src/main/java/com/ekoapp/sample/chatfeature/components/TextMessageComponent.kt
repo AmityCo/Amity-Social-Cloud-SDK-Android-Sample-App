@@ -22,9 +22,14 @@ class TextMessageComponent : ConstraintLayout {
 
     fun setMessage(item: EkoMessage, action: (EkoMessage) -> Unit) {
         text_message_content.text = item.getData(TextData::class.java).text
+
         text_message_content.setOnLongClickListener {
-            action.invoke(item)
+            image_reply.visibility = View.VISIBLE
             return@setOnLongClickListener true
+        }
+        image_reply.setOnClickListener {
+            image_reply.visibility = View.INVISIBLE
+            action.invoke(item)
         }
     }
 

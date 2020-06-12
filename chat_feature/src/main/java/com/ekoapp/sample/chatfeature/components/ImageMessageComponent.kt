@@ -21,10 +21,19 @@ class ImageMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setMessage(item: EkoMessage) {
+    fun setMessage(item: EkoMessage, action: (EkoMessage) -> Unit) {
         Glide.with(context).load(item.getData(ImageData::class.java).url)
                 .placeholder(R.drawable.ic_placeholder_file)
                 .into(image_message_content)
+
+        image_message_content.setOnLongClickListener {
+            image_reply.visibility = View.VISIBLE
+            return@setOnLongClickListener true
+        }
+        image_reply.setOnClickListener {
+            image_reply.visibility = View.INVISIBLE
+            action.invoke(item)
+        }
     }
 
     fun Boolean.showOrHideAvatar() {
