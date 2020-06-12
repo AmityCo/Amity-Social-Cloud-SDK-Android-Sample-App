@@ -3,11 +3,11 @@ package com.ekoapp.sample.chatfeature.components
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.sample.chatfeature.R
 import kotlinx.android.synthetic.main.component_main_send_message.view.*
 
-class MainSendMessageComponent : LinearLayout {
+class MainSendMessageComponent : ConstraintLayout {
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_main_send_message, this, true)

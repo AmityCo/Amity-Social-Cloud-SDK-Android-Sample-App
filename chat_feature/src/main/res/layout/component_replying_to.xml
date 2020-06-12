@@ -5,24 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/defaultColorBackground"
-    android:padding="@dimen/material_component_text_fields_floating_label_padding_below_text_divider"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <TextView
         android:id="@+id/text_replying_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/temporarily_replying_to"
         android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_caption"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/text_replying_subtitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_replying_subtitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxWidth="@dimen/message_text_max_width"
@@ -40,7 +38,7 @@
         android:layout_height="@dimen/md_icon_size"
         android:layout_marginEnd="@dimen/md_icon_margin"
         android:src="@drawable/ic_placeholder_file"
-        android:visibility="gone"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/image_cancel"
         app:layout_constraintTop_toTopOf="parent"
