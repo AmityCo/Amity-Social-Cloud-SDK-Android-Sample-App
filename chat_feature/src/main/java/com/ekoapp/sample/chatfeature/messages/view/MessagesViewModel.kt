@@ -29,16 +29,19 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val textRelay = MutableLiveData<SendMessageData>()
+    private val textReply = MutableLiveData<SendMessageData>()
     private val replyingRelay = MutableLiveData<EkoMessage>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
 
     fun observeMessage(): LiveData<SendMessageData> = textRelay
+    fun observeReplyMessage(): LiveData<SendMessageData> = textReply
     fun observeReplying(): LiveData<EkoMessage> = replyingRelay
 
     init {
         getIntentChannelData {
             textRelay.postValue(SendMessageData(channelId = it.channelId, text = ""))
+            textReply.postValue(SendMessageData(channelId = it.channelId, text = ""))
         }
     }
 
@@ -54,11 +57,11 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         replyingRelay.postValue(item)
     }
 
-    fun message(channelId: String, message: Flowable<String>) {
-        message.subscribeOn(Schedulers.io())
+    fun message(item: Flowable<SendMessageData>) {
+        item.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    textRelay.postValue(SendMessageData(channelId = channelId, text = it))
+                    textRelay.postValue(SendMessageData(channelId = it.channelId, parentId = it.parentId, text = it.text))
                 } into disposables
     }
 
