@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/material_layout_app_bar_height"
         android:padding="@dimen/material_component_text_fields_floating_label_padding_below_text_divider"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

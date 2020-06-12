@@ -30,6 +30,10 @@ class ReplyingToComponent : ConstraintLayout {
         item.setMessage()
     }
 
+    fun cancelReplying(action: () -> Unit) {
+        image_cancel.setOnClickListener { action.invoke() }
+    }
+
     private fun String.getDisplayNameReplyTo(): String {
         return if (this == EkoClient.getUserId()) context.getString(R.string.temporarily_yourself) else this
     }

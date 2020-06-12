@@ -20,8 +20,12 @@ class TextMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setMessage(item: EkoMessage) {
+    fun setMessage(item: EkoMessage, action: (EkoMessage) -> Unit) {
         text_message_content.text = item.getData(TextData::class.java).text
+        text_message_content.setOnLongClickListener {
+            action.invoke(item)
+            return@setOnLongClickListener true
+        }
     }
 
     fun Boolean.showOrHideAvatar() {

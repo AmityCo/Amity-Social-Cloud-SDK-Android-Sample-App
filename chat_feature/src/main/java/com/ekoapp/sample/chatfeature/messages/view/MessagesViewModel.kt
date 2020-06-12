@@ -29,10 +29,12 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val textRelay = MutableLiveData<SendMessageData>()
+    private val replyingRelay = MutableLiveData<EkoMessage>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
 
     fun observeMessage(): LiveData<SendMessageData> = textRelay
+    fun observeReplying(): LiveData<EkoMessage> = replyingRelay
 
     init {
         getIntentChannelData {
@@ -46,6 +48,10 @@ class MessagesViewModel @Inject constructor(private val context: Context,
 
     fun setupIntent(data: ChannelData?) {
         channelDataIntent = data
+    }
+
+    fun renderReplying(item: EkoMessage) {
+        replyingRelay.postValue(item)
     }
 
     fun message(channelId: String, message: Flowable<String>) {

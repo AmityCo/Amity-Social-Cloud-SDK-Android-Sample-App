@@ -21,6 +21,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         viewModel.setupIntent(item)
         setupAppBar()
         renderList(viewModel)
+        setupView(viewModel)
     }
 
     private fun renderList(viewModel: MessagesViewModel) {
@@ -34,9 +35,13 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
                         recyclerBuilder.smoothScrollToPosition(position = items.size)
                         adapter.submitList(items)
                     })
-            viewModel.message(it.channelId, main_send_message.textRelay())
+            viewModel.message(it.channelId, main_send_message.messageRelay())
             viewModel.observeMessage().observeNotNull(this, viewModel::bindSendTextMessage)
         }
+    }
+
+    private fun setupView(viewModel: MessagesViewModel) {
+        viewModel.observeReplying().observeNotNull(this, main_send_message::replyingRelay)
     }
 
     private fun setupAppBar() {

@@ -28,7 +28,8 @@ fun EkoMessage.getMessageSealed(): MessageSealed {
 fun MessageRenderData.renderMessage(textTime: TextView,
                                     textMessage: TextMessageComponent,
                                     imageMessage: ImageMessageComponent,
-                                    fileMessage: FileMessageComponent) {
+                                    fileMessage: FileMessageComponent,
+                                    eventReply: (EkoMessage) -> Unit) {
 
     textTime.text = item.createdAt.toDate().getTimeAgo()
 
@@ -38,7 +39,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(item)
+                setMessage(item, eventReply::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -70,7 +71,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(item)
+                setMessage(item, eventReply::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
