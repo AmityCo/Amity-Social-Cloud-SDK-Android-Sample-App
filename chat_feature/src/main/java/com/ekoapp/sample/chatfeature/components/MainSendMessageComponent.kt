@@ -30,11 +30,9 @@ class MainSendMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun textRender(channelId: String) {
+    fun sendingRender(channelId: String) {
         send_message.sendMessage {
-            textRelay.onNext(SendMessageData(
-                    channelId = channelId,
-                    text = it))
+            textRelay.onNext(SendMessageData(channelId = channelId, text = it))
         }
     }
 

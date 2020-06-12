@@ -31,7 +31,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         viewModel.getIntentChannelData {
             viewModel.bindGetMessageCollectionByTags(MessageData(channelId = it.channelId))
                     .observeNotNull(this, { items ->
-                        recyclerBuilder.smoothScrollToPosition(position = items.size)
+                        recyclerBuilder.smoothScrollToPosition(position = items.size - 1)
                         adapter.submitList(items)
                     })
             it.renderSendMessage(viewModel)
@@ -39,7 +39,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     }
 
     private fun ChannelData.renderSendMessage(viewModel: MessagesViewModel) {
-        main_send_message.textRender(channelId = channelId)
+        main_send_message.sendingRender(channelId = channelId)
         viewModel.observeReplying().observeNotNull(this@MessagesActivity, main_send_message::replyingRender)
         viewModel.message(main_send_message.text())
         viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendTextMessage)

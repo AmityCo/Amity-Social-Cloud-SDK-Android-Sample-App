@@ -55,9 +55,7 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
     fun message(item: Flowable<SendMessageData>) {
         item.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    textRelay.postValue(SendMessageData(channelId = it.channelId, parentId = it.parentId, text = it.text))
-                } into disposables
+                .subscribe(textRelay::postValue) into disposables
     }
 
     fun observeNotification() = notificationRelay.toLiveData()
