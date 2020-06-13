@@ -72,4 +72,6 @@
     <string name="temporarily_yourself">yourself</string>
     <string name="temporarily_photo">Photo</string>
     <string name="temporarily_attachment">Attachment</string>
+    <string name="temporarily_camera">Camera</string>
+    <string name="temporarily_gallery">Gallery</string>
 </resources>

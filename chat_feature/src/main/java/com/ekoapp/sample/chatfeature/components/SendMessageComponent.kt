@@ -1,5 +1,6 @@
 package com.ekoapp.sample.chatfeature.components
 
+import android.Manifest
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,8 +8,17 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.dialogs.SelectPhotoBottomSheetFragment
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.component_send_message.view.*
+
 
 class SendMessageComponent : ConstraintLayout {
 
@@ -37,11 +47,29 @@ class SendMessageComponent : ConstraintLayout {
         })
     }
 
-    fun sendMessage(action: (String) -> Unit) {
+    fun textMessage(action: (String) -> Unit) {
         image_send.setOnClickListener {
             action.invoke(edit_text_message.text.toString())
             edit_text_message.setText("")
             edit_text_message.clearComposingText()
+        }
+    }
+
+    fun imageMessage(fm: FragmentManager, action: (String) -> Unit) {
+        image_camera.setOnClickListener {
+            renderSelectPhoto(fm)
+        }
+    }
+
+    fun attachMessage(action: (String) -> Unit) {
+        image_attach.setOnClickListener {
+
+        }
+    }
+
+    fun customMessage(action: (String) -> Unit) {
+        image_code.setOnClickListener {
+
         }
     }
 
@@ -51,5 +79,35 @@ class SendMessageComponent : ConstraintLayout {
         } else {
             image_send.visibility = View.GONE
         }
+    }
+
+    private fun renderSelectPhoto(fm: FragmentManager) {
+        val selectPhotoBottomSheet = SelectPhotoBottomSheetFragment()
+        selectPhotoBottomSheet.show(fm, selectPhotoBottomSheet.tag)
+        selectPhotoBottomSheet.renderCamera {
+            selectPhotoBottomSheet.requestPermission(Manifest.permission.CAMERA)
+        }
+        selectPhotoBottomSheet.renderGallery {
+            selectPhotoBottomSheet.requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            selectPhotoBottomSheet.dialog?.cancel()
+        }
+    }
+
+    private fun SelectPhotoBottomSheetFragment.requestPermission(permission: String) {
+        Dexter.withContext(context)
+                .withPermission(permission)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                        dialog?.cancel()
+                    }
+
+                    override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                        dialog?.cancel()
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+                        token.continuePermissionRequest()
+                    }
+                }).check()
     }
 }

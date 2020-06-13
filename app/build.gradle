@@ -84,4 +84,7 @@ dependencies {
 
     //Arrow-KT
     kapt "io.arrow-kt:arrow-meta:$arrow_version"
+
+    //Dexter
+    api 'com.karumi:dexter:6.2.0'
 }

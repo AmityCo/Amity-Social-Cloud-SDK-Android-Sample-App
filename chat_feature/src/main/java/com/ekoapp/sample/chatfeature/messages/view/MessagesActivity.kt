@@ -42,8 +42,10 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     }
 
     private fun ChannelData.renderSendMessage(viewModel: MessagesViewModel) {
-        main_send_message.sendingRender(channelId = channelId)
-        viewModel.observeReplying().observeNotNull(this@MessagesActivity, main_send_message::replyingRender)
+        main_send_message.renderTextSending(channelId = channelId)
+        main_send_message.renderPhotoSending(channelId = channelId, fm = supportFragmentManager)
+
+        viewModel.observeReplying().observeNotNull(this@MessagesActivity, main_send_message::renderReplying)
         viewModel.initMessage(main_send_message.message())
         viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendMessage)
     }

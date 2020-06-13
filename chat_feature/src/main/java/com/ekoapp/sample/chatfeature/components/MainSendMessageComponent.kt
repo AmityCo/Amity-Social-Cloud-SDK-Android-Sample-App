@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentManager
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.SendMessageData
@@ -29,15 +30,21 @@ class MainSendMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun sendingRender(channelId: String) {
-        send_message.sendMessage {
+    fun renderTextSending(channelId: String) {
+        send_message.textMessage {
             hideReplying()
             textRelay.onNext(SendMessageData(channelId = channelId, parentId = parentId, text = it))
             parentId = null
         }
     }
 
-    fun replyingRender(item: EkoMessage) {
+    fun renderPhotoSending(channelId: String, fm: FragmentManager) {
+        send_message.imageMessage(fm) {
+
+        }
+    }
+
+    fun renderReplying(item: EkoMessage) {
         parentId = item.messageId
         replying_to.visibility = View.VISIBLE
         replying_to.setView(item)
