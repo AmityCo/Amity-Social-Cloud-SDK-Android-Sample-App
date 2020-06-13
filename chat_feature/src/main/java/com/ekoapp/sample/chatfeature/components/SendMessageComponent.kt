@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.dialogs.SelectPhotoBottomSheetFragment
+import com.ekoapp.sample.core.utils.openCamera
 import com.ekoapp.sample.core.utils.openGalleryForImage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -87,20 +88,24 @@ class SendMessageComponent : ConstraintLayout {
         val selectPhotoBottomSheet = SelectPhotoBottomSheetFragment()
         selectPhotoBottomSheet.show(fm, selectPhotoBottomSheet.tag)
         selectPhotoBottomSheet.renderCamera {
-            selectPhotoBottomSheet.requestPermission(Manifest.permission.CAMERA)
+            selectPhotoBottomSheet.requestPermission(Manifest.permission.CAMERA) {
+                (context as AppCompatActivity).openCamera()
+            }
         }
         selectPhotoBottomSheet.renderGallery {
-            selectPhotoBottomSheet.requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            selectPhotoBottomSheet.requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE) {
+                (context as AppCompatActivity).openGalleryForImage()
+            }
             selectPhotoBottomSheet.dialog?.cancel()
         }
     }
 
-    private fun SelectPhotoBottomSheetFragment.requestPermission(permission: String) {
+    private fun SelectPhotoBottomSheetFragment.requestPermission(permission: String, action: () -> Unit) {
         Dexter.withContext(context)
                 .withPermission(permission)
                 .withListener(object : PermissionListener {
                     override fun onPermissionGranted(response: PermissionGrantedResponse) {
-                        (context as AppCompatActivity).openGalleryForImage()
+                        action.invoke()
                         dialog?.cancel()
                     }
 

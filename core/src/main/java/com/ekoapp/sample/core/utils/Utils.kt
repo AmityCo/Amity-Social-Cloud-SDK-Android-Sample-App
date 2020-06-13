@@ -1,13 +1,10 @@
 package com.ekoapp.sample.core.utils
 
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.widget.ImageView
 import androidx.annotation.ColorInt
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.ImageViewCompat
-import com.ekoapp.sample.core.constants.REQUEST_CODE_PHOTO
 import com.google.common.collect.Sets
 import java.util.*
 
@@ -70,10 +67,4 @@ fun String.stringToSet(): Set<String> {
         if (tag.isNotEmpty()) set.add(tag)
     }
     return set
-}
-
-fun AppCompatActivity.openGalleryForImage() {
-    val intent = Intent(Intent.ACTION_PICK)
-    intent.type = "image/*"
-    startActivityForResult(intent, REQUEST_CODE_PHOTO)
 }
