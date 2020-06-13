@@ -44,8 +44,8 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     private fun ChannelData.renderSendMessage(viewModel: MessagesViewModel) {
         main_send_message.sendingRender(channelId = channelId)
         viewModel.observeReplying().observeNotNull(this@MessagesActivity, main_send_message::replyingRender)
-        viewModel.message(main_send_message.text())
-        viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendTextMessage)
+        viewModel.initMessage(main_send_message.message())
+        viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendMessage)
     }
 
     private fun RecyclerBuilder.afterSent(viewModel: MessagesViewModel, items: PagedList<EkoMessage>) {

@@ -54,7 +54,7 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
         replyingRelay.postValue(item)
     }
 
-    fun message(item: Flowable<SendMessageData>) {
+    fun initMessage(item: Flowable<SendMessageData>) {
         item.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(textRelay::postValue) into disposables
@@ -70,11 +70,33 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
         return messageRepository.getMessageCollectionByTags(data)
     }
 
-    fun bindSendTextMessage(data: SendMessageData) {
-        messageRepository.textMessage(data)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnComplete { afterSentRelay.postValue(Unit) }
-                .subscribe()
+    fun bindSendMessage(data: SendMessageData) {
+        when {
+            data.text != null -> {
+                messageRepository.textMessage(data)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { afterSentRelay.postValue(Unit) }
+                        .subscribe()
+            }
+            data.image != null -> {
+                messageRepository.imageMessage(data)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { afterSentRelay.postValue(Unit) }
+                        .subscribe()
+            }
+            data.file != null -> {
+                messageRepository.fileMessage(data)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { afterSentRelay.postValue(Unit) }
+                        .subscribe()
+            }
+            else -> {
+                messageRepository.customMessage(data)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { afterSentRelay.postValue(Unit) }
+                        .subscribe()
+            }
+        }
     }
 
     fun bindSetTagsChannel(channelId: String, tags: String) {
