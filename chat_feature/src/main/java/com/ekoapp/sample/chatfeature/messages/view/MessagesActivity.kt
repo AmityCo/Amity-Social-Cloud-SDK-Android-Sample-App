@@ -25,15 +25,12 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     private fun renderList(viewModel: MessagesViewModel) {
         adapter = MainMessageAdapter(this, viewModel)
-        val recyclerBuilder = RecyclerBuilder(context = this, recyclerView = recycler_message)
+        RecyclerBuilder(context = this, recyclerView = recycler_message)
                 .stackFromEnd(true)
                 .build(adapter)
         viewModel.getIntentChannelData {
             viewModel.bindGetMessageCollectionByTags(MessageData(channelId = it.channelId))
-                    .observeNotNull(this, { items ->
-                        recyclerBuilder.smoothScrollToPosition(position = items.size - 1)
-                        adapter.submitList(items)
-                    })
+                    .observeNotNull(this, adapter::submitList)
             it.renderSendMessage(viewModel)
         }
     }

@@ -26,6 +26,7 @@ data class RecyclerBuilder(
 
     fun stackFromEnd(stackFromEnd: Boolean): RecyclerBuilder {
         recyclerView.apply {
+            setHasFixedSize(true)
             val linearLayoutManager = LinearLayoutManager(context)
             linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
             linearLayoutManager.stackFromEnd = stackFromEnd
