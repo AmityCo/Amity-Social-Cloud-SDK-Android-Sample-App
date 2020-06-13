@@ -26,17 +26,17 @@
 
     <ImageView
         android:id="@+id/image_send"
-        android:layout_width="@dimen/md_icon_size"
-        android:layout_height="@dimen/md_icon_size"
-        android:padding="@dimen/material_component_cards_action_button_row_padding"
+        android:layout_width="@dimen/material_component_button_height"
+        android:layout_height="@dimen/material_component_button_height"
+        android:padding="@dimen/material_component_grid_lists_padding_big"
         android:src="@drawable/ic_send"
         android:tint="@color/colorPrimary"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/edit_text_message"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/edit_text_message"
-        app:layout_constraintTop_toTopOf="@id/edit_text_message"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource"
         tools:visibility="visible" />
 
