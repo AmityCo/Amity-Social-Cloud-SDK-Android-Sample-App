@@ -74,4 +74,10 @@
     <string name="temporarily_attachment">Attachment</string>
     <string name="temporarily_camera">Camera</string>
     <string name="temporarily_gallery">Gallery</string>
+    <string name="temporarily_menu_members">Members</string>
+    <string name="temporarily_menu_with_tags">With Tag(s)</string>
+    <string name="temporarily_menu_without_tags">Without Tag(s)</string>
+    <string name="temporarily_menu_set_tags">Set Tag(s)</string>
+    <string name="temporarily_menu_notification">Notification</string>
+    <string name="temporarily_menu_leave">Leave</string>
 </resources>

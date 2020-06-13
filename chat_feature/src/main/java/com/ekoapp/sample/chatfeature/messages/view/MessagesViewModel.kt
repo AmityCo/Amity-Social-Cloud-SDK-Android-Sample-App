@@ -128,6 +128,15 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
     fun bindSetNotification(data: NotificationData) {
         channelRepository.setNotification(data.channelId, data.isAllowed)
                 .subscribeOn(Schedulers.io())
+                .doOnSubscribe {
+                    notificationRelay.onNext(NotificationData(data.channelId, data.isAllowed))
+                }
+                .doOnComplete {
+                    notificationRelay.onNext(NotificationData(data.channelId, data.isAllowed))
+                }
+                .doOnError {
+                    notificationRelay.onNext(NotificationData(data.channelId, !data.isAllowed))
+                }
                 .subscribe()
     }
 
@@ -151,6 +160,12 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
 
     fun bindFlagUser(userId: String) {
         userRepository.flag(userId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+    }
+
+    fun bindLeaveChannel(channelId: String) {
+        channelRepository.leaveChannel(channelId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
     }

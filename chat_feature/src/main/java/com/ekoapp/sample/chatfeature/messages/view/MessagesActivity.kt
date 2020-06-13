@@ -3,6 +3,7 @@ package com.ekoapp.sample.chatfeature.messages.view
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.view.Menu
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.sample.chatfeature.R
@@ -11,6 +12,8 @@ import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
 import com.ekoapp.sample.chatfeature.messages.view.list.MainMessageAdapter
+import com.ekoapp.sample.chatfeature.toolbars.MessageToolbarMenu
+import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.constants.REQUEST_CODE_CAMERA
@@ -21,14 +24,36 @@ import com.ekoapp.sample.core.ui.extensions.observeOnce
 import com.ekoapp.sample.core.utils.getImageUri
 import kotlinx.android.synthetic.main.activity_messages.*
 
+
 class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     private lateinit var adapter: MainMessageAdapter
 
+    override fun getToolbar(): ToolbarMenu? {
+        return MessageToolbarMenu(
+                eventMember = {
+
+                },
+                eventNotification = {
+
+                },
+                eventLeaveChannel = {
+                    viewModel?.getIntentChannelData {
+                        viewModel?.bindLeaveChannel(it.channelId)
+                        onBackPressed()
+                    }
+                })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_message, menu)
+        return true
+    }
+
     override fun bindViewModel(viewModel: MessagesViewModel) {
         val item = intent.extras?.getParcelable<ChannelData>(EXTRA_CHANNEL_MESSAGES)
         viewModel.setupIntent(item)
-        setupAppBar()
+        setupAppBar(viewModel)
         renderList(viewModel)
     }
 
@@ -62,9 +87,11 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         })
     }
 
-    private fun setupAppBar() {
+    private fun setupAppBar(viewModel: MessagesViewModel) {
         appbar_message.setup(this, true)
-        appbar_message.setTitle(getString(R.string.temporarily_chat))
+        viewModel.getIntentChannelData {
+            appbar_message.setTitle(it.channelId)
+        }
     }
 
     override fun getViewModelClass(): Class<MessagesViewModel> {
