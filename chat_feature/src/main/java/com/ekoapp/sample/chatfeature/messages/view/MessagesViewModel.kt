@@ -90,8 +90,14 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
                         .doOnComplete { afterSentRelay.postValue(Unit) }
                         .subscribe()
             }
-            else -> {
+            data.custom != null -> {
                 messageRepository.customMessage(data)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnComplete { afterSentRelay.postValue(Unit) }
+                        .subscribe()
+            }
+            else -> {
+                messageRepository.textMessage(data)
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnComplete { afterSentRelay.postValue(Unit) }
                         .subscribe()
