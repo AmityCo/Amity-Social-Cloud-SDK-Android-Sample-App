@@ -28,11 +28,13 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
 
     private val textRelay = MutableLiveData<SendMessageData>()
     private val replyingRelay = MutableLiveData<EkoMessage>()
+    private val afterSentRelay = MutableLiveData<Unit>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
 
     fun observeMessage(): LiveData<SendMessageData> = textRelay
     fun observeReplying(): LiveData<EkoMessage> = replyingRelay
+    fun observeAfterSent(): LiveData<Unit> = afterSentRelay
 
     init {
         getIntentChannelData {
@@ -71,6 +73,7 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
     fun bindSendTextMessage(data: SendMessageData) {
         messageRepository.textMessage(data)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete { afterSentRelay.postValue(Unit) }
                 .subscribe()
     }
 

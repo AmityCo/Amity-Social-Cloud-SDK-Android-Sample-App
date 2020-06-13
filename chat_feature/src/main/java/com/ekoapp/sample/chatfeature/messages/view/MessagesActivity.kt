@@ -1,5 +1,7 @@
 package com.ekoapp.sample.chatfeature.messages.view
 
+import androidx.paging.PagedList
+import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.constants.EXTRA_CHANNEL_MESSAGES
 import com.ekoapp.sample.chatfeature.data.ChannelData
@@ -10,6 +12,7 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
+import com.ekoapp.sample.core.ui.extensions.observeOnce
 import kotlinx.android.synthetic.main.activity_messages.*
 
 class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
@@ -25,12 +28,15 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     private fun renderList(viewModel: MessagesViewModel) {
         adapter = MainMessageAdapter(this, viewModel)
-        RecyclerBuilder(context = this, recyclerView = recycler_message)
+        val recyclerBuilder = RecyclerBuilder(context = this, recyclerView = recycler_message)
                 .stackFromEnd(true)
                 .build(adapter)
         viewModel.getIntentChannelData {
             viewModel.bindGetMessageCollectionByTags(MessageData(channelId = it.channelId))
-                    .observeNotNull(this, adapter::submitList)
+                    .observeNotNull(this, { items ->
+                        adapter.submitList(items)
+                        recyclerBuilder.afterSent(viewModel, items)
+                    })
             it.renderSendMessage(viewModel)
         }
     }
@@ -40,6 +46,12 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         viewModel.observeReplying().observeNotNull(this@MessagesActivity, main_send_message::replyingRender)
         viewModel.message(main_send_message.text())
         viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendTextMessage)
+    }
+
+    private fun RecyclerBuilder.afterSent(viewModel: MessagesViewModel, items: PagedList<EkoMessage>) {
+        viewModel.observeAfterSent().observeOnce(this@MessagesActivity, {
+            smoothScrollToPosition(position = items.size - 1)
+        })
     }
 
     private fun setupAppBar() {
