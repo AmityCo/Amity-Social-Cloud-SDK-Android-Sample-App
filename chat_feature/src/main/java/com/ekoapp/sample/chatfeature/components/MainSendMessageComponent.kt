@@ -32,6 +32,7 @@ class MainSendMessageComponent : ConstraintLayout {
 
     fun sendingRender(channelId: String) {
         send_message.sendMessage {
+            hideReplying()
             textRelay.onNext(SendMessageData(channelId = channelId, text = it))
         }
     }
@@ -70,8 +71,10 @@ class MainSendMessageComponent : ConstraintLayout {
 
         replying_to.visibility = View.VISIBLE
         replying_to.setView(item)
-        replying_to.cancelReplying {
-            replying_to.visibility = View.GONE
-        }
+        replying_to.cancelReplying(this::hideReplying)
+    }
+
+    fun hideReplying() {
+        replying_to.visibility = View.GONE
     }
 }
