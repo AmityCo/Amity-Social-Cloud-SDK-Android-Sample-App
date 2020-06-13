@@ -19,10 +19,9 @@
         android:paddingEnd="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
         android:textColor="@color/material_light_white"
         android:textColorHint="@color/material_grey_700"
-        app:layout_constraintBottom_toTopOf="@id/image_camera"
-        app:layout_constraintEnd_toStartOf="@id/image_send"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_send"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image_code"
         tools:ignore="PrivateResource" />
 
     <ImageView
@@ -35,37 +34,43 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/edit_text_message"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/edit_text_message"
         app:layout_constraintTop_toTopOf="@id/edit_text_message"
         tools:ignore="PrivateResource"
         tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/image_camera"
-        android:layout_width="@dimen/md_icon_size"
-        android:layout_height="@dimen/md_icon_size"
-        android:padding="@dimen/material_component_grid_lists_padding_small"
+        android:layout_width="@dimen/material_component_button_height"
+        android:layout_height="@dimen/material_component_button_height"
         android:src="@drawable/ic_camera_oval"
-        app:layout_constraintStart_toStartOf="@id/edit_text_message"
+        app:layout_constraintEnd_toStartOf="@+id/image_attach"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/image_attach"
         tools:ignore="PrivateResource" />
 
     <ImageView
         android:id="@+id/image_attach"
-        android:layout_width="@dimen/md_icon_size"
-        android:layout_height="@dimen/md_icon_size"
-        android:padding="@dimen/material_component_grid_lists_padding_small"
+        android:layout_width="@dimen/material_component_button_height"
+        android:layout_height="@dimen/material_component_button_height"
         android:src="@drawable/ic_attach_oval"
-        app:layout_constraintStart_toEndOf="@id/image_camera"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_message"
+        app:layout_constraintEnd_toStartOf="@+id/image_code"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image_camera"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />
 
     <ImageView
         android:id="@+id/image_code"
-        android:layout_width="@dimen/md_icon_size"
-        android:layout_height="@dimen/md_icon_size"
-        android:padding="@dimen/material_component_grid_lists_padding_small"
+        android:layout_width="@dimen/material_component_button_height"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginEnd="@dimen/material_component_cards_space_between_cards"
         android:src="@drawable/ic_code_oval"
-        app:layout_constraintStart_toEndOf="@id/image_attach"
+        app:layout_constraintEnd_toStartOf="@+id/edit_text_message"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image_attach"
         app:layout_constraintTop_toTopOf="@id/image_attach"
         tools:ignore="PrivateResource" />
 
