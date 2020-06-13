@@ -1,6 +1,7 @@
 package com.ekoapp.sample.chatfeature.components
 
 import android.content.Context
+import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -38,9 +39,13 @@ class MainSendMessageComponent : ConstraintLayout {
         }
     }
 
-    fun renderPhotoSending(channelId: String, fm: FragmentManager) {
-        send_message.imageMessage(fm) {
+    fun renderSelectPhoto(fm: FragmentManager) = send_message.imageMessage(fm)
 
+    fun renderImageSending(channelId: String, uri: Uri) {
+        send_image.visibility = View.VISIBLE
+        send_image.setupView(uri) {
+            send_image.visibility = View.GONE
+            textRelay.onNext(SendMessageData(channelId = channelId, parentId = parentId, image = it))
         }
     }
 

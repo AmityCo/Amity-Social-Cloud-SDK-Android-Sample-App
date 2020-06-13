@@ -1,5 +1,7 @@
 package com.ekoapp.sample.chatfeature.messages.view
 
+import android.app.Activity
+import android.content.Intent
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.sample.chatfeature.R
@@ -10,6 +12,7 @@ import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
 import com.ekoapp.sample.chatfeature.messages.view.list.MainMessageAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
+import com.ekoapp.sample.core.constants.REQUEST_CODE_PHOTO
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.core.ui.extensions.observeOnce
@@ -43,7 +46,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     private fun ChannelData.renderSendMessage(viewModel: MessagesViewModel) {
         main_send_message.renderTextSending(channelId = channelId)
-        main_send_message.renderPhotoSending(channelId = channelId, fm = supportFragmentManager)
+        main_send_message.renderSelectPhoto(fm = supportFragmentManager)
 
         viewModel.observeReplying().observeNotNull(this@MessagesActivity, main_send_message::renderReplying)
         viewModel.initMessage(main_send_message.message())
@@ -88,6 +91,15 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         super.onStop()
         viewModel?.apply {
             getIntentChannelData { bindStopReading(it.channelId) }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_PHOTO) {
+            viewModel?.getIntentChannelData {
+                data?.data?.apply { main_send_message.renderImageSending(it.channelId, this) }
+            }
         }
     }
 }

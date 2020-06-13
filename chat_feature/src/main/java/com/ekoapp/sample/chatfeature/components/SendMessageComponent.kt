@@ -7,10 +7,12 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.dialogs.SelectPhotoBottomSheetFragment
+import com.ekoapp.sample.core.utils.openGalleryForImage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -55,7 +57,7 @@ class SendMessageComponent : ConstraintLayout {
         }
     }
 
-    fun imageMessage(fm: FragmentManager, action: (String) -> Unit) {
+    fun imageMessage(fm: FragmentManager) {
         image_camera.setOnClickListener {
             renderSelectPhoto(fm)
         }
@@ -98,6 +100,7 @@ class SendMessageComponent : ConstraintLayout {
                 .withPermission(permission)
                 .withListener(object : PermissionListener {
                     override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                        (context as AppCompatActivity).openGalleryForImage()
                         dialog?.cancel()
                     }
 
