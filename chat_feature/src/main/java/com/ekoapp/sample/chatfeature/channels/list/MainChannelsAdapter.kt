@@ -24,6 +24,10 @@ class MainChannelsAdapter(private val context: Context, private val viewModel: C
                     holder.bind(this)
                     holder.joinChannel { viewModel.bindJoinChannel(this.channelId) }
                     holder.aboutChannel(context, viewModel.getAboutContent(this))
+                    holder.itemView.setOnClickListener {
+                        //TODO Check isJoined from server if api available
+                        viewModel.bindJoinChannel(this.channelId)
+                    }
                 }
             }
             else -> throw IllegalArgumentException()
