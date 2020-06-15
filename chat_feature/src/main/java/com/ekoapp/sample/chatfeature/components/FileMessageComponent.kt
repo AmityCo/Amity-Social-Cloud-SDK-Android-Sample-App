@@ -28,10 +28,12 @@ class FileMessageComponent : ConstraintLayout {
 
             view_message.setOnLongClickListener {
                 image_reply.visibility = View.VISIBLE
+                recycler_reactions_file.visibility = View.VISIBLE
                 return@setOnLongClickListener true
             }
             image_reply.setOnClickListener {
-                image_reply.visibility = View.INVISIBLE
+                recycler_reactions_file.visibility = View.GONE
+                image_reply.visibility = View.GONE
                 action.invoke(item)
             }
         }

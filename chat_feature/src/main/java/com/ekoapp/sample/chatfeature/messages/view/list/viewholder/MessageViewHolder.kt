@@ -10,6 +10,7 @@ import com.ekoapp.sample.chatfeature.messages.view.list.renders.MessageRenderDat
 import com.ekoapp.sample.chatfeature.messages.view.list.renders.renderMessage
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
+import kotlinx.android.synthetic.main.component_file_message.view.*
 import kotlinx.android.synthetic.main.component_image_message.view.*
 import kotlinx.android.synthetic.main.component_text_message.view.*
 import kotlinx.android.synthetic.main.item_main_message.view.*
@@ -30,6 +31,7 @@ class MessageViewHolder(itemView: View) : BaseViewHolder<MessageViewData>(itemVi
                         item.viewModel::renderReplying)
         itemView.recycler_reactions_text.renderSelectReactions(item.viewModel)
         itemView.recycler_reactions_image.renderSelectReactions(item.viewModel)
+        itemView.recycler_reactions_file.renderSelectReactions(item.viewModel)
     }
 
     private fun RecyclerView.renderSelectReactions(viewModel: MessagesViewModel) {
