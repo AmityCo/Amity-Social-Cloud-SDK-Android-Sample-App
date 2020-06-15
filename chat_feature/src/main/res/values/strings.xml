@@ -80,4 +80,8 @@
     <string name="temporarily_menu_set_tags">Set Tag(s)</string>
     <string name="temporarily_menu_notification">Notification</string>
     <string name="temporarily_menu_leave">Leave</string>
+    <string name="temporarily_emoji_love">love</string>
+    <string name="temporarily_emoji_sad">sad</string>
+    <string name="temporarily_emoji_sleep">sleep</string>
+    <string name="temporarily_emoji_smile">smile</string>
 </resources>

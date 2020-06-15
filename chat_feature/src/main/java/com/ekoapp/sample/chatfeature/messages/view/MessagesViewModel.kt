@@ -1,14 +1,13 @@
 package com.ekoapp.sample.chatfeature.messages.view
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
-import com.ekoapp.sample.chatfeature.data.ChannelData
-import com.ekoapp.sample.chatfeature.data.MessageData
-import com.ekoapp.sample.chatfeature.data.NotificationData
-import com.ekoapp.sample.chatfeature.data.SendMessageData
+import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.data.*
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.chatfeature.repositories.MessageRepository
 import com.ekoapp.sample.chatfeature.repositories.UserRepository
@@ -22,7 +21,8 @@ import io.reactivex.processors.PublishProcessor
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class MessagesViewModel @Inject constructor(private val channelRepository: ChannelRepository,
+class MessagesViewModel @Inject constructor(private val context: Context,
+                                            private val channelRepository: ChannelRepository,
                                             private val messageRepository: MessageRepository,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
@@ -168,5 +168,14 @@ class MessagesViewModel @Inject constructor(private val channelRepository: Chann
         channelRepository.leaveChannel(channelId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
+    }
+
+    fun getReactions(): ArrayList<ReactionData> {
+        val items = ArrayList<ReactionData>()
+        items.add(ReactionData(name = context.getString(R.string.temporarily_emoji_love), icon = R.drawable.ic_emoji_love))
+        items.add(ReactionData(name = context.getString(R.string.temporarily_emoji_sad), icon = R.drawable.ic_emoji_sad))
+        items.add(ReactionData(name = context.getString(R.string.temporarily_emoji_sleep), icon = R.drawable.ic_emoji_sleep))
+        items.add(ReactionData(name = context.getString(R.string.temporarily_emoji_smile), icon = R.drawable.ic_emoji_smile))
+        return items
     }
 }
