@@ -11,7 +11,7 @@ class ReactionViewHolder(itemView: View) : BaseViewHolder<Int>(itemView) {
     override fun bind(item: Int) {
         val context = itemView.context
         Glide.with(context).load(item)
-                .placeholder(R.drawable.ic_placeholder_file)
+                .placeholder(R.drawable.ic_emoji_smile)
                 .into(itemView.image_reaction)
     }
 }
