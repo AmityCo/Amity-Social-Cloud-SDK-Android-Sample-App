@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.dialogs.SelectPhotoBottomSheetFragment
+import com.ekoapp.sample.core.utils.dispatchSearchFileIntent
 import com.ekoapp.sample.core.utils.dispatchSearchImageFileIntent
 import com.ekoapp.sample.core.utils.dispatchTakePictureIntent
 import com.karumi.dexter.Dexter
@@ -64,9 +65,23 @@ class SendMessageComponent : ConstraintLayout {
         }
     }
 
-    fun attachMessage(action: (String) -> Unit) {
+    fun attachMessage() {
         image_attach.setOnClickListener {
+            Dexter.withContext(context)
+                    .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    .withListener(object : PermissionListener {
+                        override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                            (context as AppCompatActivity).dispatchSearchFileIntent()
+                        }
 
+                        override fun onPermissionDenied(response: PermissionDeniedResponse) {
+
+                        }
+
+                        override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+                            token.continuePermissionRequest()
+                        }
+                    }).check()
         }
     }
 

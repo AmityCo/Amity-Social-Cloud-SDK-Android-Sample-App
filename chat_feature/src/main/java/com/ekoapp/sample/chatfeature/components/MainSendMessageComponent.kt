@@ -54,6 +54,18 @@ class MainSendMessageComponent : ConstraintLayout {
         }
     }
 
+    fun renderAttachSending(channelId: String, uri: Uri? = null) {
+        if (uri != null) currentPhotoPath = RealPathUtil.getRealPath(context, uri)
+        send_image.visibility = View.VISIBLE
+        send_image.setupView(currentPhotoPath) {
+            send_image.visibility = View.GONE
+            textRelay.onNext(
+                    SendMessageData(channelId = channelId, parentId = parentId, file = currentPhotoPath.getRealUri()))
+        }
+    }
+
+    fun renderSelectFile() = send_message.attachMessage()
+
     fun renderReplying(item: EkoMessage) {
         parentId = item.messageId
         replying_to.visibility = View.VISIBLE

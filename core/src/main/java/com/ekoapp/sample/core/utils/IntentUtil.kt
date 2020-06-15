@@ -7,12 +7,14 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.ekoapp.sample.core.constants.PICKFILE_REQUEST_CODE
 import com.ekoapp.sample.core.intent.IntentRequestCode
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 fun AppCompatActivity.dispatchTakePictureIntent(path: (String) -> Unit) {
     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -53,6 +55,12 @@ fun AppCompatActivity.dispatchSearchImageFileIntent() {
         type = "image/*"
     }
     startActivityForResult(intent, IntentRequestCode.REQUEST_SELECT_PHOTO)
+}
+
+fun AppCompatActivity.dispatchSearchFileIntent() {
+    val intent = Intent(Intent.ACTION_GET_CONTENT)
+    intent.type = "*/*"
+    startActivityForResult(intent, PICKFILE_REQUEST_CODE)
 }
 
 fun String.getRealUri(): Uri {

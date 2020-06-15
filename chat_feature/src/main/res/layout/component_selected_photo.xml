@@ -12,8 +12,8 @@
         android:layout_width="@dimen/message_image_max_width"
         android:layout_height="@dimen/message_image_max_height"
         android:scaleType="centerCrop"
-        tools:ignore="PrivateResource"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        android:src="@drawable/ic_thumbnail_file"
+        tools:ignore="PrivateResource" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_send"

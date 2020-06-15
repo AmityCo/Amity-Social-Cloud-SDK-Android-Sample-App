@@ -15,6 +15,7 @@ import com.ekoapp.sample.chatfeature.toolbars.MessageToolbarMenu
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
+import com.ekoapp.sample.core.constants.PICKFILE_REQUEST_CODE
 import com.ekoapp.sample.core.intent.IntentRequestCode
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
@@ -72,6 +73,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     private fun ChannelData.renderSendMessage(viewModel: MessagesViewModel) {
         main_send_message.renderTextSending(channelId = channelId)
         main_send_message.renderSelectPhoto(fm = supportFragmentManager)
+        main_send_message.renderSelectFile()
 
         viewModel.observeReplying().observeNotNull(this@MessagesActivity, main_send_message::renderReplying)
         viewModel.initMessage(main_send_message.message())
@@ -132,6 +134,12 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_SELECT_PHOTO) {
             viewModel?.getIntentChannelData {
                 main_send_message.renderImageSending(it.channelId, data?.data)
+            }
+        }
+
+        if (resultCode == Activity.RESULT_OK && requestCode == PICKFILE_REQUEST_CODE) {
+            viewModel?.getIntentChannelData {
+                main_send_message.renderAttachSending(it.channelId, data?.data)
             }
         }
     }
