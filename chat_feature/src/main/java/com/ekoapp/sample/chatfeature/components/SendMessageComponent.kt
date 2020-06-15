@@ -12,8 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.dialogs.SelectPhotoBottomSheetFragment
-import com.ekoapp.sample.core.utils.PhotoUtils
-import com.ekoapp.sample.core.utils.openGalleryForImage
+import com.ekoapp.sample.core.utils.dispatchSearchImageFileIntent
+import com.ekoapp.sample.core.utils.dispatchTakePictureIntent
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -24,8 +24,6 @@ import kotlinx.android.synthetic.main.component_send_message.view.*
 
 
 class SendMessageComponent : ConstraintLayout {
-
-    private var photoUtils: PhotoUtils = PhotoUtils()
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_send_message, this, true)
@@ -91,14 +89,12 @@ class SendMessageComponent : ConstraintLayout {
         selectPhotoBottomSheet.show(fm, selectPhotoBottomSheet.tag)
         selectPhotoBottomSheet.renderCamera {
             selectPhotoBottomSheet.requestPermission(Manifest.permission.CAMERA) {
-                photoUtils.apply {
-                    (context as AppCompatActivity).dispatchTakePictureIntent(path)
-                }
+                (context as AppCompatActivity).dispatchTakePictureIntent(path)
             }
         }
         selectPhotoBottomSheet.renderGallery {
             selectPhotoBottomSheet.requestPermission(Manifest.permission.READ_EXTERNAL_STORAGE) {
-                (context as AppCompatActivity).openGalleryForImage()
+                (context as AppCompatActivity).dispatchSearchImageFileIntent()
             }
             selectPhotoBottomSheet.dialog?.cancel()
         }

@@ -15,7 +15,6 @@ import com.ekoapp.sample.chatfeature.toolbars.MessageToolbarMenu
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
-import com.ekoapp.sample.core.constants.REQUEST_CODE_GALLERY
 import com.ekoapp.sample.core.intent.IntentRequestCode
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
@@ -130,11 +129,10 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
             }
         }
 
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_GALLERY) {
-            /*viewModel?.getIntentChannelData {
-                val uri = data?.data
-                uri?.apply { main_send_message.renderImageSending(it.channelId, this) }
-            }*/
+        if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_SELECT_PHOTO) {
+            viewModel?.getIntentChannelData {
+                main_send_message.renderImageSending(it.channelId, data?.data)
+            }
         }
     }
 }
