@@ -28,10 +28,12 @@ class ImageMessageComponent : ConstraintLayout {
 
         image_message_content.setOnLongClickListener {
             image_reply.visibility = View.VISIBLE
+            recycler_reactions_image.visibility = View.VISIBLE
             return@setOnLongClickListener true
         }
         image_reply.setOnClickListener {
-            image_reply.visibility = View.INVISIBLE
+            image_reply.visibility = View.GONE
+            recycler_reactions_image.visibility = View.GONE
             action.invoke(item)
         }
     }

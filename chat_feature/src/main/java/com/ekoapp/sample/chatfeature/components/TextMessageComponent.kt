@@ -25,12 +25,12 @@ class TextMessageComponent : ConstraintLayout {
 
         text_message_content.setOnLongClickListener {
             image_reply.visibility = View.VISIBLE
-            recycler_reactions.visibility = View.VISIBLE
+            recycler_reactions_text.visibility = View.VISIBLE
             return@setOnLongClickListener true
         }
         image_reply.setOnClickListener {
             image_reply.visibility = View.GONE
-            recycler_reactions.visibility = View.GONE
+            recycler_reactions_text.visibility = View.GONE
             action.invoke(item)
         }
     }
