@@ -12,8 +12,11 @@ import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.SendMessageData
 import io.reactivex.processors.PublishProcessor
 import kotlinx.android.synthetic.main.component_main_send_message.view.*
+import java.io.File
 
 class MainSendMessageComponent : ConstraintLayout {
+    private var currentPhotoPath: String = ""
+    private var currentPhotoUri: Uri? = null
 
     companion object {
         var parentId: String? = null
@@ -39,13 +42,20 @@ class MainSendMessageComponent : ConstraintLayout {
         }
     }
 
-    fun renderSelectPhoto(fm: FragmentManager) = send_message.imageMessage(fm)
+    fun renderSelectPhoto(fm: FragmentManager) {
+        send_message.imageMessage(fm) {
+            currentPhotoPath = it
+            val f = File(currentPhotoPath)
+            val contentUri = Uri.fromFile(f)
+            currentPhotoUri = contentUri
+        }
+    }
 
-    fun renderImageSending(channelId: String, uri: Uri) {
+    fun renderImageSending(channelId: String) {
         send_image.visibility = View.VISIBLE
-        send_image.setupView(uri) {
+        send_image.setupView(currentPhotoPath) {
             send_image.visibility = View.GONE
-            textRelay.onNext(SendMessageData(channelId = channelId, parentId = parentId, image = it))
+            textRelay.onNext(SendMessageData(channelId = channelId, parentId = parentId, image = currentPhotoUri))
         }
     }
 

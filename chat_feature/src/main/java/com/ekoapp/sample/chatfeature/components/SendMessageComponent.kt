@@ -12,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.dialogs.SelectPhotoBottomSheetFragment
-import com.ekoapp.sample.core.utils.openCamera
+import com.ekoapp.sample.core.utils.PhotoUtils
 import com.ekoapp.sample.core.utils.openGalleryForImage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -24,6 +24,8 @@ import kotlinx.android.synthetic.main.component_send_message.view.*
 
 
 class SendMessageComponent : ConstraintLayout {
+
+    private var photoUtils: PhotoUtils = PhotoUtils()
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_send_message, this, true)
@@ -58,9 +60,9 @@ class SendMessageComponent : ConstraintLayout {
         }
     }
 
-    fun imageMessage(fm: FragmentManager) {
+    fun imageMessage(fm: FragmentManager, path: (String) -> Unit) {
         image_camera.setOnClickListener {
-            renderSelectPhoto(fm)
+            renderSelectPhoto(fm, path)
         }
     }
 
@@ -84,12 +86,14 @@ class SendMessageComponent : ConstraintLayout {
         }
     }
 
-    private fun renderSelectPhoto(fm: FragmentManager) {
+    private fun renderSelectPhoto(fm: FragmentManager, path: (String) -> Unit) {
         val selectPhotoBottomSheet = SelectPhotoBottomSheetFragment()
         selectPhotoBottomSheet.show(fm, selectPhotoBottomSheet.tag)
         selectPhotoBottomSheet.renderCamera {
             selectPhotoBottomSheet.requestPermission(Manifest.permission.CAMERA) {
-                (context as AppCompatActivity).openCamera()
+                photoUtils.apply {
+                    (context as AppCompatActivity).dispatchTakePictureIntent(path)
+                }
             }
         }
         selectPhotoBottomSheet.renderGallery {

@@ -1,10 +1,11 @@
 package com.ekoapp.sample.chatfeature.components
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.BitmapFactory
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.bumptech.glide.Glide
 import com.ekoapp.sample.chatfeature.R
 import kotlinx.android.synthetic.main.component_selected_photo.view.*
 
@@ -18,8 +19,13 @@ class SelectedPhotoComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(uri: Uri, action: (Uri) -> Unit) {
-        image_selected_photo.setImageURI(uri)
-        button_send.setOnClickListener { action.invoke(uri) }
+    fun setupView(path: String, action: () -> Unit) {
+        BitmapFactory.decodeFile(path)?.also { bitmap ->
+            Glide.with(this)
+                    .load(bitmap)
+                    .into(image_selected_photo)
+        }
+
+        button_send.setOnClickListener { action.invoke() }
     }
 }

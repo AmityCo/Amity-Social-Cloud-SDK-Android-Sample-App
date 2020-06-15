@@ -2,7 +2,6 @@ package com.ekoapp.sample.chatfeature.messages.view
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.view.Menu
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
@@ -16,12 +15,11 @@ import com.ekoapp.sample.chatfeature.toolbars.MessageToolbarMenu
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelActivity
-import com.ekoapp.sample.core.constants.REQUEST_CODE_CAMERA
 import com.ekoapp.sample.core.constants.REQUEST_CODE_GALLERY
+import com.ekoapp.sample.core.intent.IntentRequestCode
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.core.ui.extensions.observeOnce
-import com.ekoapp.sample.core.utils.getImageUri
 import kotlinx.android.synthetic.main.activity_messages.*
 
 
@@ -126,19 +124,17 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CAMERA) {
+        if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_TAKE_PHOTO) {
             viewModel?.getIntentChannelData {
-                val bitmap = data?.extras?.get("data") as Bitmap
-                main_send_message.renderImageSending(it.channelId,
-                        getImageUri(bitmap, Bitmap.CompressFormat.JPEG, 100))
+                main_send_message.renderImageSending(it.channelId)
             }
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_GALLERY) {
-            viewModel?.getIntentChannelData {
+            /*viewModel?.getIntentChannelData {
                 val uri = data?.data
                 uri?.apply { main_send_message.renderImageSending(it.channelId, this) }
-            }
+            }*/
         }
     }
 }
