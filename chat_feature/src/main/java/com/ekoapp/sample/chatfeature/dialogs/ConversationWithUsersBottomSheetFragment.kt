@@ -48,7 +48,7 @@ class ConversationWithUsersBottomSheetFragment(private val lifecycleOwner: Lifec
     }
 
     private fun Context.renderList() {
-        adapter = ConversationWithUserAdapter(this, viewModel)
+        adapter = ConversationWithUserAdapter(this, viewModel, isClicked = { dialog?.cancel() })
         RecyclerBuilder(context = this, recyclerView = recycler_users)
                 .builder()
                 .build(adapter)

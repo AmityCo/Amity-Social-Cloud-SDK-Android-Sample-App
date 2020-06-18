@@ -82,7 +82,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     private fun RecyclerBuilder.afterSent(viewModel: MessagesViewModel, items: PagedList<EkoMessage>) {
         viewModel.observeAfterSent().observeOnce(this@MessagesActivity, {
-            smoothScrollToPosition(position = items.size - 1)
+            smoothScrollToPosition(position = viewModel.getScrollPosition(items.size))
         })
     }
 

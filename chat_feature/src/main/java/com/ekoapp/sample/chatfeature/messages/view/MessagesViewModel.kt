@@ -11,6 +11,7 @@ import com.ekoapp.sample.chatfeature.data.*
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
 import com.ekoapp.sample.chatfeature.repositories.MessageRepository
 import com.ekoapp.sample.chatfeature.repositories.UserRepository
+import com.ekoapp.sample.core.base.list.UPPERMOST
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.ui.extensions.toLiveData
@@ -178,4 +179,6 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         items.add(ReactionData(name = context.getString(R.string.temporarily_emoji_smile), icon = R.drawable.ic_emoji_smile))
         return items
     }
+
+    fun getScrollPosition(size: Int): Int = if (size > UPPERMOST) size - 1 else UPPERMOST
 }

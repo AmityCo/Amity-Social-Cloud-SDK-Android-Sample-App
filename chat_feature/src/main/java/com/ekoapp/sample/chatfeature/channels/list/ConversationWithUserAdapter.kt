@@ -11,7 +11,9 @@ import com.ekoapp.sample.chatfeature.channels.list.viewholder.UserChannelsViewHo
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 
 
-class ConversationWithUserAdapter(private val context: Context, private val viewModel: ChannelsViewModel) : EkoUserAdapter<BaseViewHolder<*>>() {
+class ConversationWithUserAdapter(private val context: Context,
+                                  private val viewModel: ChannelsViewModel,
+                                  private val isClicked: (Boolean) -> Unit) : EkoUserAdapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val view = LayoutInflater.from(context).inflate(R.layout.item_user_conversation, parent, false)
@@ -23,7 +25,10 @@ class ConversationWithUserAdapter(private val context: Context, private val view
             is UserChannelsViewHolder -> {
                 getItem(position)?.apply {
                     holder.bind(this)
-                    holder.onClick { viewModel.bindCreateConversation(this.userId) }
+                    holder.onClick {
+                        isClicked.invoke(true)
+                        viewModel.bindCreateConversation(this.userId)
+                    }
                 }
             }
             else -> throw IllegalArgumentException()

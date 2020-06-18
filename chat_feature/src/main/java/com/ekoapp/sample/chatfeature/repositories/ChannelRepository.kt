@@ -28,13 +28,13 @@ class ChannelRepository @Inject constructor() {
         return EkoClient.newChannelRepository().totalUnreadCount
     }
 
-    fun createChannel(channelId: String, type: String): Completable {
+    fun createChannel(channelId: String, type: String): Single<EkoChannel> {
         return EkoClient.newChannelRepository().createChannel(channelId,
                 EkoChannel.CreationType.fromJson(type),
                 EkoChannel.CreateOption.none())
     }
 
-    fun createConversation(userId: String): Completable {
+    fun createConversation(userId: String): Single<EkoChannel> {
         return EkoClient.newChannelRepository().createConversation(userId)
     }
 

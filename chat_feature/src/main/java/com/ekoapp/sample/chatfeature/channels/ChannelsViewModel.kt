@@ -70,6 +70,9 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
     fun bindCreateChannel(item: CreateChannelData) {
         channelRepository.createChannel(item.id, item.type)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    joinChannelRelay.postValue(it.channelId)
+                }
                 .subscribe()
     }
 
@@ -109,6 +112,9 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
     fun bindCreateConversation(userId: String) {
         channelRepository.createConversation(userId)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    joinChannelRelay.postValue(it.channelId)
+                }
                 .subscribe()
     }
 
