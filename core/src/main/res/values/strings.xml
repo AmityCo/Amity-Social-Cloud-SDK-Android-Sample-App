@@ -2,6 +2,11 @@
 <resources>
     <string name="title_social_feature">Social</string>
     <string name="title_chat_feature">Chat feature</string>
-
+    <string name="temporarily_more">More</string>
     <string name="general_search">Search</string>
+    <string name="general_submit">Submit</string>
+    <string name="general_cancel">Cancel</string>
+    <string name="general_save">Save</string>
+    <string name="general_send">Send</string>
+    <string name="general_menu">Menu</string>
 </resources>

@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/material_light_white">
 
     <RelativeLayout
         android:id="@+id/message_input_layout"
@@ -54,20 +55,16 @@
 
     </RelativeLayout>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="8dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+    <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
+        android:id="@+id/appbar_message"
+        style="@style/AppTheme.Appbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_list_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/message_input_layout"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/appbar_message"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
         app:layoutManager="LinearLayoutManager"

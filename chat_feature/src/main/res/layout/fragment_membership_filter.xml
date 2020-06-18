@@ -5,7 +5,7 @@
 
         <variable
             name="model"
-            type="com.ekoapp.sample.chatfeature.channellist.filter.membership.MembershipFilterViewModel" />
+            type="com.ekoapp.sample.chatfeature.channels.filter.membership.MembershipFilterViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

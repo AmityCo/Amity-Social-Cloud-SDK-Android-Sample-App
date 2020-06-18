@@ -2,9 +2,7 @@ package com.ekoapp.sample.chatfeature.messagelist
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.sample.chatfeature.R
@@ -25,15 +23,15 @@ class ParentMessageListActivity : MessageListActivity() {
     }
 
     override fun setTitleName() {
-        toolbar.title = getChannelId()
+        appbar_message.setTitle(getChannelId())
     }
     override fun setSubtitleName() {
-        channelRepository.getChannel(getChannelId())
+        /*channelRepository.getChannel(getChannelId())
                 .observe(this, Observer { channel: EkoChannel ->
                     toolbar.setSubtitle(String.format("unreadCount: %s messageCount:%s",
                             channel.unreadCount,
                             channel.messageCount))
-                })
+                })*/
     }
 
     override fun getMenu(): Int {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/md_listitem_control_margin"
+    android:orientation="vertical"
+    tools:background="@color/material_light_black"
+    tools:ignore="PrivateResource">
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_subheading"
+        android:textStyle="bold"
+        tools:text="@string/temporarily_include_tags_display" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edit_text_tags"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/material_component_text_fields_icon_height"
+        android:layout_marginStart="@dimen/md_listitem_margin_left"
+        android:layout_marginTop="@dimen/material_component_cards_supporting_text_top_padding"
+        android:layout_marginEnd="@dimen/md_listitem_margin_left"
+        android:background="@drawable/text_field_transparent"
+        android:gravity="center_vertical"
+        android:inputType="text"
+        android:paddingStart="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
+        android:paddingEnd="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
+        android:textColor="@color/material_light_white"
+        android:textColorHint="@color/material_grey_300"
+        tools:hint="@string/temporarily_include_tags_hint" />
+
+</LinearLayout>

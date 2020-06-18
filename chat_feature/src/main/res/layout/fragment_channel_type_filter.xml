@@ -4,7 +4,7 @@
     <data>
         <variable
             name="model"
-            type="com.ekoapp.sample.chatfeature.channellist.filter.channeltype.ChannelTypeFilterViewModel" />
+            type="com.ekoapp.sample.chatfeature.channels.filter.channeltype.ChannelTypeFilterViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

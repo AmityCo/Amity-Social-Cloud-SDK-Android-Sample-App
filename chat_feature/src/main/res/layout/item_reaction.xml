@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:background="@color/material_light_black">
+
+    <ImageView
+        android:id="@+id/image_reaction"
+        android:layout_width="@dimen/material_layout_icon"
+        android:layout_height="@dimen/material_layout_icon"
+        android:layout_marginEnd="@dimen/material_component_grid_lists_padding_big"
+        android:padding="@dimen/material_component_grid_lists_padding_small"
+        tools:ignore="PrivateResource"
+        tools:src="@drawable/ic_emoji_smile" />
+</LinearLayout>

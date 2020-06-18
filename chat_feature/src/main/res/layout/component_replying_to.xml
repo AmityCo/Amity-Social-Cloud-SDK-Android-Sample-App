@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/defaultColorBackground"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/text_replying_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temporarily_replying_to"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_caption"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_replying_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/message_text_max_width"
+        android:maxLines="1"
+        android:textColor="@color/material_grey_500"
+        android:textSize="@dimen/material_typography_caption"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/text_replying_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_replying_title"
+        tools:text="@tools:sample/lorem/random" />
+
+    <ImageView
+        android:id="@+id/image_replying"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:layout_marginEnd="@dimen/md_icon_margin"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_placeholder_file"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/image_cancel"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/image_cancel"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:padding="@dimen/material_component_lists_padding_above_list"
+        android:src="@drawable/ic_cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+</merge>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:background="@color/material_light_black"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/md_listitem_control_margin"
+        android:background="@drawable/default_background_message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        tools:ignore="PrivateResource">
+
+        <TextView
+            android:id="@+id/text_message_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:maxWidth="@dimen/message_text_max_width"
+            android:maxLines="20"
+            android:padding="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            android:textColor="@color/material_light_white"
+            android:textColorLink="@color/material_light_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="PrivateResource"
+            tools:text="@tools:sample/lorem/random" />
+
+        <ImageView
+            android:id="@+id/image_message_poster"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@drawable/ic_placeholder_file"
+            android:maxHeight="@dimen/message_image_max_height"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_placeholder_file"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_message_url"
+            tools:ignore="PrivateResource" />
+
+        <TextView
+            android:id="@+id/text_message_file_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/material_grey_400"
+            android:maxWidth="@dimen/message_text_max_width"
+            android:maxLines="3"
+            android:paddingStart="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            android:paddingTop="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            android:paddingEnd="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            android:textColor="@color/material_grey_900"
+            android:textSize="@dimen/material_typography_body1"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_message_poster"
+            tools:ignore="PrivateResource"
+            tools:text="@tools:sample/lorem/random" />
+
+        <TextView
+            android:id="@+id/text_message_caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_description_message"
+            android:ellipsize="end"
+            android:maxWidth="@dimen/message_text_max_width"
+            android:maxLines="8"
+            android:padding="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+            android:textColor="@color/colorTextDisable"
+            android:textSize="@dimen/material_typography_caption"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_message_file_name"
+            tools:ignore="PrivateResource"
+            tools:text="@tools:sample/lorem/random" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/image_share"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:layout_margin="@dimen/material_component_grid_lists_padding_small"
+        android:padding="@dimen/material_component_grid_lists_padding_big"
+        android:src="@drawable/ic_share_oval"
+        app:layout_constraintBottom_toBottomOf="@id/view_message"
+        app:layout_constraintStart_toEndOf="@id/view_message"
+        app:layout_constraintTop_toTopOf="@id/view_message"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_reply"
+        android:layout_width="@dimen/material_component_button_height"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginStart="@dimen/md_listitem_control_margin"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:padding="@dimen/material_component_button_corner_radius"
+        android:src="@drawable/ic_reply_oval"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recycler_reactions_file"
+        app:layout_constraintStart_toEndOf="@id/recycler_reactions_file"
+        app:layout_constraintTop_toTopOf="@id/recycler_reactions_file"
+        tools:ignore="PrivateResource"
+        tools:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_reactions_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/material_component_grid_lists_padding_big"
+        android:background="@drawable/default_button"
+        android:backgroundTint="@color/material_light_white"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="@id/image_share"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/view_message"
+        tools:ignore="PrivateResource"
+        tools:visibility="visible" />
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
+        android:src="@drawable/ic_avatar_oval"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</merge>

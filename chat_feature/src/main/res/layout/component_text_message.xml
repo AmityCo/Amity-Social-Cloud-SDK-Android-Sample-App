@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:background="@color/material_light_black"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <TextView
+        android:id="@+id/text_message_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/md_listitem_control_margin"
+        android:background="@drawable/default_background_message"
+        android:maxWidth="@dimen/message_text_max_width"
+        android:padding="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
+        android:textColor="@color/material_light_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        tools:ignore="PrivateResource"
+        tools:text="@tools:sample/lorem/random" />
+
+    <ImageView
+        android:id="@+id/image_share"
+        android:layout_width="@dimen/md_icon_size"
+        android:layout_height="@dimen/md_icon_size"
+        android:layout_margin="@dimen/material_component_grid_lists_padding_small"
+        android:padding="@dimen/material_component_grid_lists_padding_big"
+        android:src="@drawable/ic_share_oval"
+        app:layout_constraintBottom_toBottomOf="@id/text_message_content"
+        app:layout_constraintStart_toEndOf="@id/text_message_content"
+        app:layout_constraintTop_toTopOf="@id/text_message_content"
+        tools:ignore="PrivateResource" />
+
+    <ImageView
+        android:id="@+id/image_reply"
+        android:layout_width="@dimen/material_component_button_height"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginStart="@dimen/md_listitem_control_margin"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:padding="@dimen/material_component_button_corner_radius"
+        android:src="@drawable/ic_reply_oval"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/recycler_reactions_text"
+        app:layout_constraintStart_toEndOf="@id/recycler_reactions_text"
+        app:layout_constraintTop_toTopOf="@id/recycler_reactions_text"
+        tools:ignore="PrivateResource"
+        tools:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_reactions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/material_component_grid_lists_padding_big"
+        android:background="@drawable/default_button"
+        android:backgroundTint="@color/material_light_white"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="@id/image_share"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_message_content"
+        tools:ignore="PrivateResource"
+        tools:visibility="visible" />
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/avatar_medium"
+        android:layout_height="@dimen/avatar_medium"
+        android:src="@drawable/ic_avatar_oval"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</merge>

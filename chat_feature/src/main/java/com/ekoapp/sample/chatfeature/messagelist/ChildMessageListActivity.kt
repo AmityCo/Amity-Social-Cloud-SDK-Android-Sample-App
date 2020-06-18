@@ -32,10 +32,10 @@ class ChildMessageListActivity : MessageListActivity() {
         get() = ViewChildMessagesIntent.getData(intent)
 
     override fun setTitleName() {
-        toolbar.title = getString(R.string.toolbar_child_message_list)
+        appbar_message.setTitle(getString(R.string.toolbar_child_message_list))
     }
     override fun setSubtitleName() {
-        toolbar.subtitle = data
+       /* toolbar.subtitle = data*/
     }
 
     override fun getMenu(): Int {

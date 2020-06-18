@@ -12,8 +12,8 @@ import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
-import com.ekoapp.sample.socialfeature.repository.FeedRepository
-import com.ekoapp.sample.socialfeature.repository.UserRepository
+import com.ekoapp.sample.socialfeature.repositories.FeedRepository
+import com.ekoapp.sample.socialfeature.repositories.UserRepository
 import com.ekoapp.sample.socialfeature.userfeeds.data.FeedsData
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
@@ -25,6 +25,7 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
     private lateinit var userDataIntent: UserData
     private lateinit var feedsDataIntent: FeedsData
 
+    //TODO refactor make it private
     val createFeedsActionRelay = SingleLiveData<UserData>()
     val editFeedsActionRelay = SingleLiveData<EditUserFeedsData>()
     val findUsersActionRelay = SingleLiveData<Unit>()

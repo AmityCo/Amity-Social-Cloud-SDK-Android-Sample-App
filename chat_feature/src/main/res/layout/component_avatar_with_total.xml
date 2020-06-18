@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_component_like_action"
+    android:layout_width="@dimen/avatar_medium"
+    android:layout_height="@dimen/avatar_medium"
+    android:background="@color/material_light_black"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/avatar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_avatar_oval"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_total"
+        android:layout_width="@dimen/material_layout_icon"
+        android:layout_height="@dimen/material_layout_icon"
+        android:layout_margin="@dimen/material_component_grid_lists_padding_big"
+        android:background="@drawable/default_oval"
+        android:backgroundTint="@color/material_red_400"
+        android:gravity="center"
+        android:maxLines="1"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_caption"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="PrivateResource"
+        tools:text="0" />
+
+</merge>

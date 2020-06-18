@@ -1,5 +1,6 @@
 package com.ekoapp.sample.chatfeature.channellist
 
+/*
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -152,4 +153,34 @@ class ChannelListActivity : BaseActivity() {
         }
     }
 
-}
+}*/
+/*
+class ChannelMembershipAdapter : EkoChannelMembershipAdapter<EkoUserViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EkoUserViewHolder {
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_channel_membership, parent, false)
+        return EkoUserViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: EkoUserViewHolder, position: Int) {
+        val channelMembership = getItem(position)
+        if (EkoObjects.isProxy(channelMembership)) {
+            holder.itemView.channel_membership_textview.text = "loading..."
+        } else {
+            holder.itemView.channel_membership_textview.text = StringBuilder()
+                    .append(position + 1)
+                    .append("\nid: ")
+                    .append(channelMembership!!.userId)
+                    .append("\ndisplay name: ")
+                    .append(if (channelMembership.user != null) channelMembership.user!!.displayName else "null")
+                    .append("\nmembership: ")
+                    .append(channelMembership.membership)
+                    .append("\nis muted: ")
+                    .append(channelMembership.isMuted)
+                    .append("\nis banned: ")
+                    .append(channelMembership.isBanned)
+                    .toString()
+        }
+    }
+
+    class EkoUserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+}*/

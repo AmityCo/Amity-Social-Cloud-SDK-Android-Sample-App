@@ -3,6 +3,7 @@ package com.ekoapp.sample.core.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.ekoapp.ekosdk.EkoChannelFilter
 
 object PreferenceHelper {
 
@@ -45,13 +46,53 @@ object PreferenceHelper {
             }
         }
 
+    var SharedPreferences.joinChannel
+        get() = getBoolean(PREF_JOIN_CHANNEL, false)
+        set(value) {
+            editMe {
+                it.putBoolean(PREF_JOIN_CHANNEL, value)
+            }
+        }
+
+    var SharedPreferences.channelTypes: Set<String>?
+        get() = getStringSet(PREF_SETTINGS_CHANNEL_TYPES, emptySet())
+        set(value) {
+            editMe {
+                it.putStringSet(PREF_SETTINGS_CHANNEL_TYPES, value)
+            }
+        }
+
+    var SharedPreferences.membership
+        get() = getString(PREF_SETTINGS_MEMBERSHIP, EkoChannelFilter.ALL.apiKey)
+        set(value) {
+            editMe {
+                it.putString(PREF_SETTINGS_MEMBERSHIP, value)
+            }
+        }
+
+    var SharedPreferences.includeTags: Set<String>?
+        get() = getStringSet(PREF_SETTINGS_INCLUDE_TAGS, emptySet())
+        set(value) {
+            editMe {
+                it.putStringSet(PREF_SETTINGS_INCLUDE_TAGS, value)
+            }
+        }
+
+    var SharedPreferences.excludeTags: Set<String>?
+        get() = getStringSet(PREF_SETTINGS_EXCLUDE_TAGS, emptySet())
+        set(value) {
+            editMe {
+                it.putStringSet(PREF_SETTINGS_EXCLUDE_TAGS, value)
+            }
+        }
+
     var SharedPreferences.clearValues
         get() = { }
         set(value) {
             editMe {
-                it.remove(EKO_CLIENT_PREF_REGISTER_DEVICE)
-                it.remove(EKO_CLIENT_PREF_DISPLAY_NAME)
-//                it.clear()
+//                it.remove(EKO_CLIENT_PREF_REGISTER_DEVICE)
+//                it.remove(EKO_CLIENT_PREF_DISPLAY_NAME)
+                it.clear()
             }
         }
 }

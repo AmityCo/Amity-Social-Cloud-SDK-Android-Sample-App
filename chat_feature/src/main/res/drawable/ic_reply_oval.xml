@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item>
+        <shape android:shape="oval">
+
+            <solid
+                android:color="@color/material_light_white"
+                tools:ignore="PrivateResource" />
+
+            <size
+                android:width="@dimen/md_icon_size"
+                android:height="@dimen/md_icon_size"
+                tools:ignore="PrivateResource" />
+        </shape>
+    </item>
+    <item
+        android:drawable="@drawable/ic_reply"
+        android:gravity="center" />
+</layer-list>

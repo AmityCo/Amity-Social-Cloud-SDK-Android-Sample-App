@@ -2,7 +2,7 @@ package com.ekoapp.sample.socialfeature.createfeeds
 
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
-import com.ekoapp.sample.socialfeature.repository.FeedRepository
+import com.ekoapp.sample.socialfeature.repositories.FeedRepository
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import javax.inject.Inject
 

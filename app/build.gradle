@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def eko_sdk_version = '3.8.2-beta7'
+def eko_sdk_version = '3.8.3-beta7'
 
 android {
     compileSdkVersion 29
@@ -84,4 +84,7 @@ dependencies {
 
     //Arrow-KT
     kapt "io.arrow-kt:arrow-meta:$arrow_version"
+
+    //Dexter
+    api 'com.karumi:dexter:6.2.0'
 }

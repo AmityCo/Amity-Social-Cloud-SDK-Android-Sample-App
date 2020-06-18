@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/chatsFragment"
-        android:name="com.ekoapp.sample.navigation.fragments.NotAvailable"
+        android:name="com.ekoapp.sample.chatfeature.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_not_available">
+        app:moduleName="chat_feature">
         <action
             android:id="@+id/action_chatsFragment_to_feedsFragment"
             app:destination="@id/feedsFragment" />

@@ -2,7 +2,7 @@ package com.ekoapp.sample.socialfeature.editfeeds
 
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
-import com.ekoapp.sample.socialfeature.repository.FeedRepository
+import com.ekoapp.sample.socialfeature.repositories.FeedRepository
 import javax.inject.Inject
 
 class EditFeedsViewModel @Inject constructor(private val feedRepository: FeedRepository) : DisposableViewModel() {
