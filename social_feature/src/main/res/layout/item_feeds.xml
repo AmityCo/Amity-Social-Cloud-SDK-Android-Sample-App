@@ -30,10 +30,9 @@
 
     <com.ekoapp.sample.socialfeature.components.ReactionsSummaryFeedsComponent
         android:id="@+id/reactions_summary"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/material_component_dialogs_padding_around_buttons"
-        app:layout_constraintEnd_toEndOf="@id/header_feeds"
         app:layout_constraintStart_toStartOf="@id/header_feeds"
         app:layout_constraintTop_toBottomOf="@id/body_feeds" />
 
