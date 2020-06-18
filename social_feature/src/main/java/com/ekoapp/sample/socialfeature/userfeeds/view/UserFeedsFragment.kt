@@ -36,6 +36,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
         })
         viewModel.observeReactionsSummaryPage().observeNotNull(viewLifecycleOwner, this::openReactionsSummaryFeedsPage)
         viewModel.observeUserPage().observeNotNull(viewLifecycleOwner, this::openUserFeedsPage)
+        viewModel.observeFeedsByIdPage().observeNotNull(viewLifecycleOwner, this::openFeedsById)
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {
