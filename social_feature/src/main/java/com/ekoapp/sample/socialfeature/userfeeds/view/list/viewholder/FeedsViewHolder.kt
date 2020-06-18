@@ -13,11 +13,11 @@ import com.ekoapp.sample.socialfeature.users.data.UserData
 import kotlinx.android.synthetic.main.item_feeds.view.*
 
 
-data class FeedsData(val userData: UserData, val item: EkoPost, val viewModel: UserFeedsViewModel)
+data class FeedsViewData(val userData: UserData, val item: EkoPost, val viewModel: UserFeedsViewModel)
 
-class FeedsViewHolder(itemView: View) : BaseViewHolder<FeedsData>(itemView) {
+class FeedsViewHolder(itemView: View) : BaseViewHolder<FeedsViewData>(itemView) {
 
-    override fun bind(item: FeedsData) {
+    override fun bind(item: FeedsViewData) {
         item.apply {
             EkoUserFeedsRenderData(this.item).userFeedRender(
                     header = itemView.header_feeds,

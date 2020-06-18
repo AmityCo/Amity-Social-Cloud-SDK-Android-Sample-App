@@ -9,6 +9,7 @@ import com.ekoapp.ekosdk.internal.data.model.EkoPostReaction
 import com.ekoapp.sample.socialfeature.userfeeds.view.renders.ReactionData
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Maybe
 import javax.inject.Inject
 
@@ -24,6 +25,10 @@ class FeedRepository @Inject constructor() {
                 .text(description)
                 .build()
                 .post()
+    }
+
+    fun getPost(postId: String): Flowable<EkoPost> {
+        return EkoClient.newFeedRepository().getPost(postId)
     }
 
     fun editPost(postId: String, description: String): Completable {
