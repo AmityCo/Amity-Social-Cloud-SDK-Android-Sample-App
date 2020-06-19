@@ -6,9 +6,6 @@
         dist:instant="false"
         dist:onDemand="true"
         dist:title="@string/title_social_feature">
-        <dist:delivery>
-            <dist:on-demand />
-        </dist:delivery>
         <dist:fusing dist:include="true" />
     </dist:module>
 
