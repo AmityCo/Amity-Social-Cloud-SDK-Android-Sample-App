@@ -16,7 +16,7 @@ class ReactionsAdapter(private val context: Context,
                        private val viewModel: MessagesViewModel) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_reaction, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_chat_reaction, parent, false)
         return ReactionViewHolder(view)
     }
 

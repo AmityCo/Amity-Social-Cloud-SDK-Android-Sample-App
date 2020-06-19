@@ -4,7 +4,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.core.base.list.BaseViewHolder
-import kotlinx.android.synthetic.main.item_reaction.view.*
+import kotlinx.android.synthetic.main.item_chat_reaction.view.*
 
 class ReactionViewHolder(itemView: View) : BaseViewHolder<Int>(itemView) {
 

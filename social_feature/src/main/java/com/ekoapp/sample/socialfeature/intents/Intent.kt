@@ -10,6 +10,8 @@ import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
 import com.ekoapp.sample.socialfeature.reactions.view.ReactionsSummaryFeedsActivity
 import com.ekoapp.sample.socialfeature.search.SearchUsersActivity
+import com.ekoapp.sample.socialfeature.userfeeds.data.FeedsData
+import com.ekoapp.sample.socialfeature.userfeeds.view.BodyUserFeedsActivity
 import com.ekoapp.sample.socialfeature.userfeeds.view.UserFeedsActivity
 import com.ekoapp.sample.socialfeature.users.data.UserData
 import com.ekoapp.sample.socialfeature.users.view.SeeAllUsersActivity
@@ -22,6 +24,12 @@ fun Fragment.openCreateFeedsPage(data: UserData?) {
 
 fun Fragment.openEditFeedsPage(data: EditUserFeedsData?) {
     val intent = Intent(requireContext(), EditFeedsActivity::class.java)
+    intent.putExtra(EXTRA_EDIT_FEEDS, data)
+    startActivityForResult(intent, REQUEST_CODE_EDIT_FEEDS)
+}
+
+fun AppCompatActivity.openEditFeedsPage(data: EditUserFeedsData?) {
+    val intent = Intent(this, EditFeedsActivity::class.java)
     intent.putExtra(EXTRA_EDIT_FEEDS, data)
     startActivityForResult(intent, REQUEST_CODE_EDIT_FEEDS)
 }
@@ -42,6 +50,12 @@ fun Fragment.openReactionsSummaryFeedsPage(data: UserReactionData?) {
     startActivityForResult(intent, REQUEST_CODE_REACTIONS_SUMMARY)
 }
 
+fun AppCompatActivity.openReactionsSummaryFeedsPage(data: UserReactionData?) {
+    val intent = Intent(this, ReactionsSummaryFeedsActivity::class.java)
+    intent.putExtra(EXTRA_USER_REACTION_DATA, data)
+    startActivityForResult(intent, REQUEST_CODE_REACTIONS_SUMMARY)
+}
+
 fun Fragment.openUserFeedsPage(data: UserData?) {
     val intent = Intent(requireContext(), UserFeedsActivity::class.java)
     intent.putExtra(EXTRA_USER_DATA, data)
@@ -51,5 +65,11 @@ fun Fragment.openUserFeedsPage(data: UserData?) {
 fun AppCompatActivity.openUserFeedsPage(data: UserData?) {
     val intent = Intent(this, UserFeedsActivity::class.java)
     intent.putExtra(EXTRA_USER_DATA, data)
+    startActivityForResult(intent, REQUEST_CODE_USER_FEEDS)
+}
+
+fun Fragment.openFeedsById(data: FeedsData?) {
+    val intent = Intent(requireContext(), BodyUserFeedsActivity::class.java)
+    intent.putExtra(EXTRA_EKO_POST, data)
     startActivityForResult(intent, REQUEST_CODE_USER_FEEDS)
 }

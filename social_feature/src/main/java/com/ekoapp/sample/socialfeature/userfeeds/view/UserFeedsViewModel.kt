@@ -9,6 +9,7 @@ import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.ekosdk.internal.data.model.EkoPostReaction
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
+import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
@@ -22,6 +23,9 @@ import javax.inject.Inject
 
 class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRepository,
                                              private val userRepository: UserRepository) : DisposableViewModel() {
+
+    private val feedsByIdActionRelay = SingleLiveData<FeedsData>()
+    private val deleteFeedsRelay = MutableLiveData<Unit>()
     private lateinit var userDataIntent: UserData
     private lateinit var feedsDataIntent: FeedsData
 
@@ -36,10 +40,12 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
 
     fun observeCreateFeedsPage(): SingleLiveData<UserData> = createFeedsActionRelay
     fun observeEditFeedsPage(): SingleLiveData<EditUserFeedsData> = editFeedsActionRelay
+    fun observeFeedsByIdPage(): SingleLiveData<FeedsData> = feedsByIdActionRelay
     fun observeFindUsersPage(): SingleLiveData<Unit> = findUsersActionRelay
     fun observeUserPage(): SingleLiveData<UserData> = usersActionRelay
     fun observeSeeAllUsersPage(): SingleLiveData<Unit> = seeAllUsersActionRelay
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
+    fun observeDeleteFeeds(): LiveData<Unit> = deleteFeedsRelay
     fun observeMyReaction(): LiveData<EkoPostReaction> = myReactionRelay
 
     fun setupIntent(data: UserData?) {
@@ -60,13 +66,22 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
         return feedsDataIntent
     }
 
+    fun renderFeedsById(data: FeedsData) {
+        feedsByIdActionRelay.postValue(data)
+    }
+
     fun bindUserFeeds(data: UserData): LiveData<PagedList<EkoPost>> = feedRepository.getUserFeed(data)
 
     fun bindUsers(): LiveData<PagedList<EkoUser>> = userRepository.getAllUsers()
 
+    fun bindGetPost(data: FeedsData): LiveData<EkoPost> = feedRepository.getPost(data.postId).toLiveData()
+
     fun bindDeletePost(item: EkoPost) {
         feedRepository
                 .deletePost(item)
+                .doOnComplete {
+                    deleteFeedsRelay.postValue(Unit)
+                }
                 .subscribe()
     }
 
