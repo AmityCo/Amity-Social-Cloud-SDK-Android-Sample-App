@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.FileData
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.data.ReactionData
 import kotlinx.android.synthetic.main.component_file_message.view.*
 
 class FileMessageComponent : ConstraintLayout {
@@ -20,23 +21,24 @@ class FileMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setMessage(item: EkoMessage, action: (EkoMessage) -> Unit) {
+    fun setMessage(item: EkoMessage, items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit) {
         item.getData(FileData::class.java).apply {
             text_message_url.text = url
             setFileName()
             setCaption()
-
-            view_message.setOnLongClickListener {
-                image_reply.visibility = View.VISIBLE
-                recycler_reactions_file.visibility = View.VISIBLE
-                return@setOnLongClickListener true
-            }
-            image_reply.setOnClickListener {
-                recycler_reactions_file.visibility = View.GONE
-                image_reply.visibility = View.GONE
-                action.invoke(item)
-            }
+            popupReactionAndReply(items, reply, item)
         }
+    }
+
+    private fun popupReactionAndReply(items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit, item: EkoMessage) {
+        view_message.setOnLongClickListener {
+            reaction_and_reply.visibility = View.VISIBLE
+            return@setOnLongClickListener true
+        }
+        reaction_and_reply.setupView(items, actionReply = {
+            reaction_and_reply.visibility = View.GONE
+            reply.invoke(item)
+        })
     }
 
     private fun FileData.setFileName() {

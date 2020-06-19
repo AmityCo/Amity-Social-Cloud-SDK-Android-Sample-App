@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.ImageData
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.data.ReactionData
 import kotlinx.android.synthetic.main.component_image_message.view.*
 
 class ImageMessageComponent : ConstraintLayout {
@@ -21,21 +22,22 @@ class ImageMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setMessage(item: EkoMessage, action: (EkoMessage) -> Unit) {
+    fun setMessage(item: EkoMessage, items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit) {
         Glide.with(context).load(item.getData(ImageData::class.java).url)
                 .placeholder(R.drawable.ic_placeholder_file)
                 .into(image_message_content)
+        popupReactionAndReply(items, reply, item)
+    }
 
+    private fun popupReactionAndReply(items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit, item: EkoMessage) {
         image_message_content.setOnLongClickListener {
-            image_reply.visibility = View.VISIBLE
-            recycler_reactions_image.visibility = View.VISIBLE
+            reaction_and_reply.visibility = View.VISIBLE
             return@setOnLongClickListener true
         }
-        image_reply.setOnClickListener {
-            image_reply.visibility = View.GONE
-            recycler_reactions_image.visibility = View.GONE
-            action.invoke(item)
-        }
+        reaction_and_reply.setupView(items, actionReply = {
+            reaction_and_reply.visibility = View.GONE
+            reply.invoke(item)
+        })
     }
 
     fun Boolean.showOrHideAvatar() {

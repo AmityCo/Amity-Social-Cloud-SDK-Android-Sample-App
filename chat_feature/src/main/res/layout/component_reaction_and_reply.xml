@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/defaultColorBackground"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+
+    <ImageView
+        android:id="@+id/image_reply"
+        android:layout_width="@dimen/material_component_button_height"
+        android:layout_height="@dimen/material_component_button_height"
+        android:layout_marginStart="@dimen/md_listitem_control_margin"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:padding="@dimen/material_component_button_corner_radius"
+        android:src="@drawable/ic_reply_oval"
+        app:layout_constraintBottom_toBottomOf="@id/recycler_reactions"
+        app:layout_constraintStart_toEndOf="@id/recycler_reactions"
+        app:layout_constraintTop_toTopOf="@id/recycler_reactions"
+        tools:ignore="PrivateResource" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_reactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/default_button"
+        android:backgroundTint="@color/material_light_white"
+        android:elevation="@dimen/cardview_default_elevation"
+        app:layout_constraintBottom_toTopOf="@id/avatar"
+        app:layout_constraintEnd_toEndOf="@id/image_share"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PrivateResource" />
+</merge>

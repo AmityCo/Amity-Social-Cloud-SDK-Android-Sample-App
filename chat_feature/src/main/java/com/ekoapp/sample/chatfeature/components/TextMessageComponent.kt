@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.TextData
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.data.ReactionData
 import kotlinx.android.synthetic.main.component_text_message.view.*
 
 class TextMessageComponent : ConstraintLayout {
@@ -20,19 +21,20 @@ class TextMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setMessage(item: EkoMessage, action: (EkoMessage) -> Unit) {
+    fun setMessage(item: EkoMessage, items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit) {
         text_message_content.text = item.getData(TextData::class.java).text
+        popupReactionAndReply(items, reply, item)
+    }
 
+    private fun popupReactionAndReply(items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit, item: EkoMessage) {
         text_message_content.setOnLongClickListener {
-            image_reply.visibility = View.VISIBLE
-            recycler_reactions_text.visibility = View.VISIBLE
+            reaction_and_reply.visibility = View.VISIBLE
             return@setOnLongClickListener true
         }
-        image_reply.setOnClickListener {
-            image_reply.visibility = View.GONE
-            recycler_reactions_text.visibility = View.GONE
-            action.invoke(item)
-        }
+        reaction_and_reply.setupView(items, actionReply = {
+            reaction_and_reply.visibility = View.GONE
+            reply.invoke(item)
+        })
     }
 
     fun Boolean.showOrHideAvatar() {

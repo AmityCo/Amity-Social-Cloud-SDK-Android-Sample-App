@@ -9,11 +9,15 @@ import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.sample.chatfeature.components.FileMessageComponent
 import com.ekoapp.sample.chatfeature.components.ImageMessageComponent
 import com.ekoapp.sample.chatfeature.components.TextMessageComponent
+import com.ekoapp.sample.chatfeature.data.ReactionData
 import com.ekoapp.sample.chatfeature.messages.seals.MessageSealed
 import com.ekoapp.sample.core.utils.getTimeAgo
 
 
-data class MessageRenderData(val context: Context, val item: EkoMessage, val iAMSender: Boolean)
+data class MessageRenderData(val context: Context,
+                             val item: EkoMessage,
+                             val iAMSender: Boolean,
+                             val reactions: ArrayList<ReactionData>)
 
 fun EkoMessage.getMessageSealed(): MessageSealed {
     return when {
@@ -39,7 +43,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(item, eventReply::invoke)
+                setMessage(item, reactions, eventReply::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -49,7 +53,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             textMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             imageMessage.apply {
-                setMessage(item, eventReply::invoke)
+                setMessage(item, reactions, eventReply::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -59,7 +63,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             textMessage.visibility = View.GONE
             imageMessage.visibility = View.GONE
             fileMessage.apply {
-                setMessage(item, eventReply::invoke)
+                setMessage(item, reactions, eventReply::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -69,7 +73,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(item, eventReply::invoke)
+                setMessage(item, reactions, eventReply::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }

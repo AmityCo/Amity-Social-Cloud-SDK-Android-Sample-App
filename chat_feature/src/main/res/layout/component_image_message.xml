@@ -21,6 +21,18 @@
         tools:ignore="PrivateResource"
         tools:src="@tools:sample/backgrounds/scenic" />
 
+    <com.ekoapp.sample.chatfeature.components.ReactionAndReplyComponent
+        android:id="@+id/reaction_and_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="@dimen/message_image_max_height"
+        android:paddingBottom="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/image_share"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <ImageView
         android:id="@+id/image_share"
         android:layout_width="@dimen/md_icon_size"
@@ -32,37 +44,6 @@
         app:layout_constraintStart_toEndOf="@id/image_message_content"
         app:layout_constraintTop_toTopOf="@id/image_message_content"
         tools:ignore="PrivateResource" />
-
-    <ImageView
-        android:id="@+id/image_reply"
-        android:layout_width="@dimen/material_component_button_height"
-        android:layout_height="@dimen/material_component_button_height"
-        android:layout_marginStart="@dimen/md_listitem_control_margin"
-        android:elevation="@dimen/cardview_default_elevation"
-        android:padding="@dimen/material_component_button_corner_radius"
-        android:src="@drawable/ic_reply_oval"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/recycler_reactions_image"
-        app:layout_constraintStart_toEndOf="@id/recycler_reactions_image"
-        app:layout_constraintTop_toTopOf="@id/recycler_reactions_image"
-        tools:ignore="PrivateResource"
-        tools:visibility="visible" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_reactions_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/material_component_grid_lists_padding_big"
-        android:background="@drawable/default_button"
-        android:backgroundTint="@color/material_light_white"
-        android:elevation="@dimen/cardview_default_elevation"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/avatar"
-        app:layout_constraintEnd_toEndOf="@id/image_share"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/image_message_content"
-        tools:ignore="PrivateResource"
-        tools:visibility="visible" />
 
     <com.github.siyamed.shapeimageview.CircularImageView
         android:id="@+id/avatar"

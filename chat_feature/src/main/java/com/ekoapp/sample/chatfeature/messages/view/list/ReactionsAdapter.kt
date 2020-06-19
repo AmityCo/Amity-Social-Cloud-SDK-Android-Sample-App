@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.ReactionData
-import com.ekoapp.sample.chatfeature.messages.view.MessagesViewModel
 import com.ekoapp.sample.chatfeature.messages.view.list.viewholder.ReactionViewHolder
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 
 class ReactionsAdapter(private val context: Context,
-                       private val items: ArrayList<ReactionData>,
-                       private val viewModel: MessagesViewModel) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+                       private val items: ArrayList<ReactionData>) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val view = LayoutInflater.from(context).inflate(R.layout.item_chat_reaction, parent, false)
