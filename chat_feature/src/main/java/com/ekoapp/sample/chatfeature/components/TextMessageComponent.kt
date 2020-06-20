@@ -9,6 +9,8 @@ import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.TextData
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.ReactionData
+import com.ekoapp.sample.chatfeature.messages.view.list.ReactionsAdapter
+import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.rx.into
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.component_text_message.view.*
@@ -25,6 +27,8 @@ class TextMessageComponent : ConstraintLayout {
 
     fun setMessage(item: EkoMessage, items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit) {
         text_message_content.text = item.getData(TextData::class.java).text
+        val reactions = item.reactions.flatMap { result -> items.filter { result.key == it.name } }
+        reactions.renderReactions()
         popupReactionAndReply(items, reply, item)
     }
 
@@ -42,6 +46,17 @@ class TextMessageComponent : ConstraintLayout {
                     reaction_and_reply.visibility = View.GONE
                     reply.invoke(item)
                 })
+    }
+
+    private fun List<ReactionData>.renderReactions() {
+        if (isNotEmpty()) {
+            val adapter = ReactionsAdapter(context, this)
+            RecyclerBuilder(context, recycler_reactions, size)
+                    .builder()
+                    .build(adapter)
+        } else {
+            recycler_reactions.visibility = View.GONE
+        }
     }
 
     fun Boolean.showOrHideAvatar() {

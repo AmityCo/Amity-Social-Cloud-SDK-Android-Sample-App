@@ -16,7 +16,7 @@
         android:maxWidth="@dimen/message_text_max_width"
         android:padding="@dimen/material_component_bottom_sheet_edge_top_bottom_margins"
         android:textColor="@color/material_light_white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintStart_toEndOf="@id/avatar"
         tools:ignore="PrivateResource"
         tools:text="@tools:sample/lorem/random" />
@@ -50,6 +50,16 @@
         android:layout_width="@dimen/avatar_medium"
         android:layout_height="@dimen/avatar_medium"
         android:src="@drawable/ic_avatar_oval"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recycler_reactions"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_reactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/default_button"
+        android:backgroundTint="@color/material_grey_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/text_message_content"
+        app:layout_constraintTop_toBottomOf="@id/text_message_content" />
 </merge>

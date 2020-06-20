@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import io.reactivex.processors.PublishProcessor
-import kotlinx.android.synthetic.main.item_chat_reaction.view.*
+import kotlinx.android.synthetic.main.item_select_reaction.view.*
 
 class ReactionViewHolder(itemView: View) : BaseViewHolder<Int>(itemView) {
 

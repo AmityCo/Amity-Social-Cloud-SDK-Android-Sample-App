@@ -14,7 +14,7 @@
         android:layout_margin="@dimen/md_listitem_control_margin"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:siShape="@drawable/default_background_message"
         app:siSquare="true"
@@ -50,6 +50,16 @@
         android:layout_width="@dimen/avatar_medium"
         android:layout_height="@dimen/avatar_medium"
         android:src="@drawable/ic_avatar_oval"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recycler_reactions"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_reactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/default_button"
+        android:backgroundTint="@color/material_grey_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/image_message_content"
+        app:layout_constraintTop_toBottomOf="@id/image_message_content" />
 </merge>

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.ReactionData
-import com.ekoapp.sample.chatfeature.messages.view.list.ReactionsAdapter
+import com.ekoapp.sample.chatfeature.messages.view.list.SelectReactionsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import kotlinx.android.synthetic.main.component_reaction_and_reply.view.*
 
@@ -26,8 +26,8 @@ class ReactionAndReplyComponent : ConstraintLayout {
     }
 
     private fun ArrayList<ReactionData>.renderSelectReactions(actionSelectedReaction: (String) -> Unit) {
-        val adapter = ReactionsAdapter(context, this, actionSelectedReaction::invoke)
-        RecyclerBuilder(context, recycler_reactions, size)
+        val adapter = SelectReactionsAdapter(context, this, actionSelectedReaction::invoke)
+        RecyclerBuilder(context, recycler_select_reactions, size)
                 .builder()
                 .build(adapter)
     }
