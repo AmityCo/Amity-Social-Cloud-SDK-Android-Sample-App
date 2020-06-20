@@ -35,6 +35,7 @@ class TextMessageComponent : ConstraintLayout {
         }
         reaction_and_reply.setupView(items,
                 selectedReaction = {
+                    reaction_and_reply.visibility = View.GONE
                     item.react().addReaction(it).subscribe() into CompositeDisposable()
                 },
                 actionReply = {
