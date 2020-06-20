@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.ekoapp.ekosdk.adapter.EkoMessageAdapter
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.messages.view.MessagesViewModel
 import com.ekoapp.sample.chatfeature.messages.view.list.viewholder.MessageViewData
 import com.ekoapp.sample.chatfeature.messages.view.list.viewholder.MessageViewHolder
@@ -23,6 +24,9 @@ class MainMessageAdapter(private val context: Context, val viewModel: MessagesVi
             is MessageViewHolder -> {
                 getItem(position)?.let {
                     holder.bind(MessageViewData(it, viewModel))
+                    holder.clickViewReply {
+                        viewModel.renderViewReply(MessageData(channelId = it.channelId, parentId = it.messageId))
+                    }
                 }
             }
             else -> throw IllegalArgumentException()

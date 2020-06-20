@@ -21,31 +21,53 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/date/hhmm" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_view_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/material_layout_button_height"
+        android:layout_marginTop="@dimen/md_listitem_control_margin"
+        android:background="@drawable/default_button"
+        android:backgroundTint="@color/material_grey_900"
+        android:gravity="center"
+        android:text="@string/temporarily_view_reply"
+        android:textAllCaps="false"
+        android:textColor="@color/material_light_white"
+        android:textSize="@dimen/material_typography_caption"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_time"
+        tools:ignore="PrivateResource"
+        tools:visibility="visible" />
+
     <com.ekoapp.sample.chatfeature.components.TextMessageComponent
         android:id="@+id/text_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_listitem_control_margin"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_time"
+        app:layout_constraintTop_toBottomOf="@id/button_view_reply"
         tools:visibility="visible" />
 
     <com.ekoapp.sample.chatfeature.components.ImageMessageComponent
         android:id="@+id/image_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_listitem_control_margin"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_time"
+        app:layout_constraintTop_toBottomOf="@id/button_view_reply"
         tools:visibility="visible" />
 
     <com.ekoapp.sample.chatfeature.components.FileMessageComponent
         android:id="@+id/file_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/md_listitem_control_margin"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_time"
+        app:layout_constraintTop_toBottomOf="@id/button_view_reply"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

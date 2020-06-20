@@ -7,3 +7,4 @@ const val REQUEST_CODE_MESSAGES = 2
 
 const val EXTRA_CHANNEL_SETTINGS = "channelSettings"
 const val EXTRA_CHANNEL_MESSAGES = "channelMessages"
+const val EXTRA_REPLY_MESSAGES = "replyMessages"

@@ -7,9 +7,11 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.constants.EXTRA_CHANNEL_MESSAGES
+import com.ekoapp.sample.chatfeature.constants.EXTRA_REPLY_MESSAGES
 import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
+import com.ekoapp.sample.chatfeature.intents.openReplyMessagesPage
 import com.ekoapp.sample.chatfeature.messages.view.list.MainMessageAdapter
 import com.ekoapp.sample.chatfeature.toolbars.MessageToolbarMenu
 import com.ekoapp.sample.core.base.components.toolbar.ToolbarMenu
@@ -49,10 +51,13 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     }
 
     override fun bindViewModel(viewModel: MessagesViewModel) {
-        val item = intent.extras?.getParcelable<ChannelData>(EXTRA_CHANNEL_MESSAGES)
-        viewModel.setupIntent(item)
+        val channelMessage = intent.extras?.getParcelable<ChannelData>(EXTRA_CHANNEL_MESSAGES)
+        val replyMessage = intent.extras?.getParcelable<MessageData>(EXTRA_REPLY_MESSAGES)
+        viewModel.setupIntent(channelMessage)
+        viewModel.setupIntent(replyMessage)
         setupAppBar(viewModel)
         renderList(viewModel)
+        setupEvent(viewModel)
     }
 
     private fun renderList(viewModel: MessagesViewModel) {
@@ -67,6 +72,14 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
                         recyclerBuilder.afterSent(viewModel, items)
                     })
             it.renderSendMessage(viewModel)
+        }
+        viewModel.getIntentMessageData {
+            viewModel.bindGetMessageCollectionByTags(it)
+                    .observeNotNull(this, { items ->
+                        adapter.submitList(items)
+                        recyclerBuilder.afterSent(viewModel, items)
+                    })
+            ChannelData(channelId = it.channelId, parentId = it.parentId).renderSendMessage(viewModel)
         }
     }
 
@@ -86,10 +99,17 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         })
     }
 
+    private fun setupEvent(viewModel: MessagesViewModel) {
+        viewModel.observeViewReply().observeNotNull(this, this::openReplyMessagesPage)
+    }
+
     private fun setupAppBar(viewModel: MessagesViewModel) {
         appbar_message.setup(this, true)
         viewModel.getIntentChannelData {
             appbar_message.setTitle(it.channelId)
+        }
+        viewModel.getIntentMessageData {
+            appbar_message.setTitle(String.format(getString(R.string.temporarily_replied_to, it.parentId)))
         }
     }
 

@@ -69,6 +69,8 @@
     </string-array>
     <string name="temporarily_send_message_hint">Aa</string>
     <string name="temporarily_replying_to">Replying to %s</string>
+    <string name="temporarily_replied_to">Replied to %s</string>
+    <string name="temporarily_view_reply">View Reply</string>
     <string name="temporarily_yourself">yourself</string>
     <string name="temporarily_photo">Photo</string>
     <string name="temporarily_attachment">Attachment</string>

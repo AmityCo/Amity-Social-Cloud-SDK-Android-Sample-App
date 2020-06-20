@@ -23,9 +23,14 @@ class MessageViewHolder(itemView: View) : BaseViewHolder<MessageViewData>(itemVi
                 reactions = item.viewModel.getReactions())
                 .renderMessage(
                         itemView.text_time,
+                        itemView.button_view_reply,
                         itemView.text_message,
                         itemView.image_message,
                         itemView.file_message,
                         item.viewModel::renderReplying)
+    }
+
+    fun clickViewReply(action: () -> Unit) {
+        itemView.button_view_reply.setOnClickListener { action.invoke() }
     }
 }

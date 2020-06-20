@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ChannelData(val channelId: String) : Parcelable
+data class ChannelData(val channelId: String, val parentId: String? = null) : Parcelable

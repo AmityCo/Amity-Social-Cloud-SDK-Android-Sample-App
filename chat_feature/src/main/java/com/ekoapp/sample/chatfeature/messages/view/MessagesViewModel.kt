@@ -14,6 +14,7 @@ import com.ekoapp.sample.chatfeature.repositories.UserRepository
 import com.ekoapp.sample.core.base.list.UPPERMOST
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.rx.into
+import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.ekoapp.sample.core.utils.stringToSet
 import io.reactivex.Flowable
@@ -30,15 +31,22 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     private val textRelay = MutableLiveData<SendMessageData>()
     private val replyingRelay = MutableLiveData<EkoMessage>()
     private val afterSentRelay = MutableLiveData<Unit>()
+    private val viewReplyRelay = SingleLiveData<MessageData>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
+    private var messageDataIntent: MessageData? = null
 
     fun observeMessage(): LiveData<SendMessageData> = textRelay
     fun observeReplying(): LiveData<EkoMessage> = replyingRelay
     fun observeAfterSent(): LiveData<Unit> = afterSentRelay
+    fun observeViewReply(): SingleLiveData<MessageData> = viewReplyRelay
 
     init {
         getIntentChannelData {
+            textRelay.postValue(SendMessageData(channelId = it.channelId, text = ""))
+        }
+
+        getIntentMessageData {
             textRelay.postValue(SendMessageData(channelId = it.channelId, text = ""))
         }
     }
@@ -47,12 +55,24 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         channelDataIntent?.let(actionRelay::invoke)
     }
 
+    fun getIntentMessageData(actionRelay: (MessageData) -> Unit) {
+        messageDataIntent?.let(actionRelay::invoke)
+    }
+
     fun setupIntent(data: ChannelData?) {
         channelDataIntent = data
     }
 
+    fun setupIntent(data: MessageData?) {
+        messageDataIntent = data
+    }
+
     fun renderReplying(item: EkoMessage) {
         replyingRelay.postValue(item)
+    }
+
+    fun renderViewReply(item: MessageData) {
+        viewReplyRelay.postValue(item)
     }
 
     fun initMessage(item: Flowable<SendMessageData>) {

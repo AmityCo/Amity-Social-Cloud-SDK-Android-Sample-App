@@ -3,12 +3,14 @@ package com.ekoapp.sample.chatfeature.messages.view.list.renders
 import android.content.Context
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.sample.chatfeature.components.FileMessageComponent
 import com.ekoapp.sample.chatfeature.components.ImageMessageComponent
 import com.ekoapp.sample.chatfeature.components.TextMessageComponent
+import com.ekoapp.sample.chatfeature.constants.ZERO_COUNT
 import com.ekoapp.sample.chatfeature.data.ReactionData
 import com.ekoapp.sample.chatfeature.messages.seals.MessageSealed
 import com.ekoapp.sample.core.utils.getTimeAgo
@@ -30,12 +32,19 @@ fun EkoMessage.getMessageSealed(): MessageSealed {
 }
 
 fun MessageRenderData.renderMessage(textTime: TextView,
+                                    buttonViewReply: AppCompatButton,
                                     textMessage: TextMessageComponent,
                                     imageMessage: ImageMessageComponent,
                                     fileMessage: FileMessageComponent,
                                     eventReply: (EkoMessage) -> Unit) {
 
     textTime.text = item.createdAt.toDate().getTimeAgo()
+
+    if (item.childrenNumber != ZERO_COUNT) {
+        buttonViewReply.visibility = View.VISIBLE
+    } else {
+        buttonViewReply.visibility = View.GONE
+    }
 
     when (item.getMessageSealed()) {
         is MessageSealed.Text -> {
