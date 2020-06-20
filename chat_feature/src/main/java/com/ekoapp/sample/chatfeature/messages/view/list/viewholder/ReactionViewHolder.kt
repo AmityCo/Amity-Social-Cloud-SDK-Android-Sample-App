@@ -13,9 +13,15 @@ import android.view.animation.DecelerateInterpolator
 import com.bumptech.glide.Glide
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.core.base.list.BaseViewHolder
+import io.reactivex.processors.PublishProcessor
 import kotlinx.android.synthetic.main.item_chat_reaction.view.*
 
 class ReactionViewHolder(itemView: View) : BaseViewHolder<Int>(itemView) {
+
+    private val selectedReactionRelay = PublishProcessor.create<Int>()
+
+    fun selectedReaction() = selectedReactionRelay
+
     // Hold a reference to the current animator,
     // so that it can be canceled mid-way.
     private var currentAnimator: Animator? = null
@@ -131,6 +137,8 @@ class ReactionViewHolder(itemView: View) : BaseViewHolder<Int>(itemView) {
         // to the original bounds and show the thumbnail instead of
         // the expanded image.
         itemView.expanded_image.setOnClickListener {
+            selectedReactionRelay.onNext(imageResId)
+
             currentAnimator?.cancel()
 
             // Animate the four positioning/sizing properties in parallel,

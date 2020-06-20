@@ -9,6 +9,8 @@ import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.FileData
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.ReactionData
+import com.ekoapp.sample.core.rx.into
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.component_file_message.view.*
 
 class FileMessageComponent : ConstraintLayout {
@@ -35,10 +37,14 @@ class FileMessageComponent : ConstraintLayout {
             reaction_and_reply.visibility = View.VISIBLE
             return@setOnLongClickListener true
         }
-        reaction_and_reply.setupView(items, actionReply = {
-            reaction_and_reply.visibility = View.GONE
-            reply.invoke(item)
-        })
+        reaction_and_reply.setupView(items,
+                selectedReaction = {
+                    item.react().addReaction(it).subscribe() into CompositeDisposable()
+                },
+                actionReply = {
+                    reaction_and_reply.visibility = View.GONE
+                    reply.invoke(item)
+                })
     }
 
     private fun FileData.setFileName() {

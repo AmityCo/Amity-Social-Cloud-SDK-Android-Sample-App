@@ -20,13 +20,13 @@ class ReactionAndReplyComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(items: ArrayList<ReactionData>, actionReply: () -> Unit) {
+    fun setupView(items: ArrayList<ReactionData>, selectedReaction: (String) -> Unit, actionReply: () -> Unit) {
         image_reply.setOnClickListener { actionReply.invoke() }
-        items.renderSelectReactions()
+        items.renderSelectReactions(selectedReaction)
     }
 
-    private fun ArrayList<ReactionData>.renderSelectReactions() {
-        val adapter = ReactionsAdapter(context, this)
+    private fun ArrayList<ReactionData>.renderSelectReactions(actionSelectedReaction: (String) -> Unit) {
+        val adapter = ReactionsAdapter(context, this, actionSelectedReaction::invoke)
         RecyclerBuilder(context, recycler_reactions, size)
                 .builder()
                 .build(adapter)
