@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/image_reaction"
-        android:layout_width="@dimen/material_layout_button_height"
-        android:layout_height="@dimen/material_layout_button_height"
-        android:layout_marginEnd="@dimen/material_component_lists_right_padding"
+        android:layout_width="@dimen/material_layout_avatar"
+        android:layout_height="@dimen/material_layout_avatar"
         android:contentDescription="@string/temporarily_emoji_smile"
-        android:padding="@dimen/material_component_grid_lists_padding_small"
+        android:padding="@dimen/material_component_grid_lists_padding_big"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource"
@@ -21,9 +21,11 @@
 
     <ImageView
         android:id="@+id/expanded_image"
-        android:layout_width="@dimen/material_layout_avatar"
-        android:layout_height="@dimen/material_layout_avatar"
+        android:layout_width="@dimen/message_reaction_expand_icon"
+        android:layout_height="@dimen/message_reaction_expand_icon"
+        android:padding="@dimen/material_component_grid_lists_padding_small"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

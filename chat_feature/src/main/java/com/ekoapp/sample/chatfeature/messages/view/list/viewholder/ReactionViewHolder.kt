@@ -8,6 +8,7 @@ import android.graphics.Point
 import android.graphics.Rect
 import android.graphics.RectF
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import com.bumptech.glide.Glide
 import com.ekoapp.sample.chatfeature.R
@@ -32,6 +33,7 @@ class ReactionViewHolder(itemView: View) : BaseViewHolder<Int>(itemView) {
 
         itemView.image_reaction.setOnClickListener {
             zoomImageFromThumb(itemView.image_reaction, item)
+            itemView.expanded_image.startAnimation(AnimationUtils.loadAnimation(context, R.anim.shake))
         }
     }
 
