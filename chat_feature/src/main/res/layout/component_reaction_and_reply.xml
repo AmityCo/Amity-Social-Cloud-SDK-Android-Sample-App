@@ -15,21 +15,37 @@
         android:elevation="@dimen/cardview_default_elevation"
         android:padding="@dimen/material_component_button_corner_radius"
         android:src="@drawable/ic_reply_oval"
-        app:layout_constraintBottom_toBottomOf="@id/recycler_reactions"
-        app:layout_constraintStart_toEndOf="@id/recycler_reactions"
-        app:layout_constraintTop_toTopOf="@id/recycler_reactions"
+        app:layout_constraintBottom_toBottomOf="@id/view_background_reactions"
+        app:layout_constraintStart_toEndOf="@id/view_background_reactions"
+        app:layout_constraintTop_toTopOf="@id/view_background_reactions"
         tools:ignore="PrivateResource" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_background_reactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="@dimen/message_image_max_width"
+            android:layout_height="@dimen/material_component_button_height"
+            android:background="@drawable/default_button"
+            android:elevation="@dimen/material_component_dialogs_elevation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_reactions"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/default_button"
-        android:backgroundTint="@color/material_light_white"
-        android:elevation="@dimen/cardview_default_elevation"
-        app:layout_constraintBottom_toTopOf="@id/avatar"
-        app:layout_constraintEnd_toEndOf="@id/image_share"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@null"
+        android:paddingStart="@dimen/material_component_dialogs_padding_around_buttons"
+        android:paddingEnd="@dimen/material_component_dialogs_padding_around_buttons"
+        app:layout_constraintEnd_toEndOf="@id/view_background_reactions"
+        app:layout_constraintStart_toStartOf="@id/view_background_reactions"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />
 </merge>
