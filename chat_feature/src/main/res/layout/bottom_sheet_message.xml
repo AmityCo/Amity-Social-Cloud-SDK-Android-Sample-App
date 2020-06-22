@@ -13,21 +13,6 @@
     tools:ignore="PrivateResource">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/text_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_edit"
-        android:drawablePadding="@dimen/material_layout_app_bar_icon_padding"
-        android:gravity="center_vertical"
-        android:padding="@dimen/material_layout_app_bar_icon_padding"
-        android:text="@string/temporarily_bottom_sheet_edit_post"
-        android:textColor="@color/material_grey_50"
-        android:textSize="@dimen/material_typography_body1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="PrivateResource" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +23,8 @@
         android:text="@string/general_delete"
         android:textColor="@color/material_grey_50"
         android:textSize="@dimen/material_typography_body1"
-        app:layout_constraintTop_toBottomOf="@id/text_edit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

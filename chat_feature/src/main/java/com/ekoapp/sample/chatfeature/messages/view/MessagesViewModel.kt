@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.*
 import com.ekoapp.sample.chatfeature.repositories.ChannelRepository
@@ -159,6 +160,36 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                     notificationRelay.onNext(NotificationData(data.channelId, !data.isAllowed))
                 }
                 .subscribe()
+    }
+
+    fun renderDeleteMessage(message: EkoMessage) {
+        when (DataType.from(message.type)) {
+            DataType.TEXT -> {
+                message.textMessageEditor?.run {
+                    delete().subscribe()
+                }
+            }
+            DataType.IMAGE -> {
+                message.imageMessageEditor?.run {
+                    delete().subscribe()
+                }
+            }
+            DataType.FILE -> {
+                message.fileMessageEditor?.run {
+                    delete().subscribe()
+                }
+            }
+            DataType.CUSTOM -> {
+                message.customMessageEditor?.run {
+                    delete().subscribe()
+                }
+            }
+            else -> {
+                message.textMessageEditor?.run {
+                    delete().subscribe()
+                }
+            }
+        }
     }
 
     fun bindUnFlagMessage(messageId: String) {

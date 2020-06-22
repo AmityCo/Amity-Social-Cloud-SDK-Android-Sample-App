@@ -4,11 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.messaging.data.TextData
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.ReactionData
+import com.ekoapp.sample.chatfeature.dialogs.MessageBottomSheetFragment
 import com.ekoapp.sample.chatfeature.messages.view.list.ReactionsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.rx.into
@@ -25,11 +27,12 @@ class TextMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setMessage(item: EkoMessage, items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit) {
+    fun setMessage(item: EkoMessage, items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit, delete: (Boolean) -> Unit) {
         text_message_content.text = item.getData(TextData::class.java).text
         val reactions = item.reactions.flatMap { result -> items.filter { result.key == it.name } }
         reactions.renderReactions()
         popupReactionAndReply(items, reply, item)
+        renderMessageBottomSheet(delete)
     }
 
     private fun popupReactionAndReply(items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit, item: EkoMessage) {
@@ -56,6 +59,19 @@ class TextMessageComponent : ConstraintLayout {
                     .build(adapter)
         } else {
             recycler_reactions.visibility = View.GONE
+        }
+    }
+
+    private fun renderMessageBottomSheet(delete: (Boolean) -> Unit) {
+        image_more.setOnClickListener {
+            val messageBottomSheet = MessageBottomSheetFragment()
+            messageBottomSheet.show((context as AppCompatActivity).supportFragmentManager, messageBottomSheet.tag)
+
+            messageBottomSheet.renderDelete {
+                //TODO Show Confirm Dialog
+                delete.invoke(it)
+                messageBottomSheet.dialog?.cancel()
+            }
         }
     }
 

@@ -9,4 +9,6 @@
     <string name="general_save">Save</string>
     <string name="general_send">Send</string>
     <string name="general_menu">Menu</string>
+    <string name="general_delete">Delete</string>
+    <string name="general_deleted">Deleted</string>
 </resources>

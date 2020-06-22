@@ -32,13 +32,16 @@ fun EkoMessage.getMessageSealed(): MessageSealed {
 }
 
 fun MessageRenderData.renderMessage(textTime: TextView,
+                                    textMessageDeleted: TextView,
                                     buttonViewReply: AppCompatButton,
                                     textMessage: TextMessageComponent,
                                     imageMessage: ImageMessageComponent,
                                     fileMessage: FileMessageComponent,
-                                    eventReply: (EkoMessage) -> Unit) {
+                                    eventReply: (EkoMessage) -> Unit,
+                                    eventDelete: (EkoMessage) -> Unit) {
 
     textTime.text = item.createdAt.toDate().getTimeAgo()
+    textMessageDeleted.visibility = View.GONE
 
     if (item.childrenNumber != ZERO_COUNT) {
         buttonViewReply.visibility = View.VISIBLE
@@ -52,7 +55,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(item, reactions, eventReply::invoke)
+                setMessage(item, reactions, eventReply::invoke) { eventDelete.invoke(item) }
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -62,7 +65,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             textMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             imageMessage.apply {
-                setMessage(item, reactions, eventReply::invoke)
+                setMessage(item, reactions, eventReply::invoke) { eventDelete.invoke(item) }
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -72,7 +75,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             textMessage.visibility = View.GONE
             imageMessage.visibility = View.GONE
             fileMessage.apply {
-                setMessage(item, reactions, eventReply::invoke)
+                setMessage(item, reactions, eventReply::invoke) { eventDelete.invoke(item) }
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -82,11 +85,29 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(item, reactions, eventReply::invoke)
+                setMessage(item, reactions, eventReply::invoke) { eventDelete.invoke(item) }
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
         }
+    }
+
+    item.isDeleted.renderMessageDeleted(textTime, textMessageDeleted, buttonViewReply, textMessage, imageMessage, fileMessage)
+}
+
+private fun Boolean.renderMessageDeleted(textTime: TextView,
+                                         textMessageDeleted: TextView,
+                                         buttonViewReply: AppCompatButton,
+                                         textMessage: TextMessageComponent,
+                                         imageMessage: ImageMessageComponent,
+                                         fileMessage: FileMessageComponent) {
+    if (this) {
+        textMessageDeleted.visibility = View.VISIBLE
+        textTime.visibility = View.GONE
+        buttonViewReply.visibility = View.GONE
+        textMessage.visibility = View.GONE
+        imageMessage.visibility = View.GONE
+        fileMessage.visibility = View.GONE
     }
 }
 
