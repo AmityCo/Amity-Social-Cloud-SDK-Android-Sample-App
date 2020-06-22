@@ -162,7 +162,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                 .subscribe()
     }
 
-    fun renderDeleteMessage(message: EkoMessage) {
+    fun bindDeleteMessage(message: EkoMessage) {
         when (DataType.from(message.type)) {
             DataType.TEXT -> {
                 message.textMessageEditor?.run {

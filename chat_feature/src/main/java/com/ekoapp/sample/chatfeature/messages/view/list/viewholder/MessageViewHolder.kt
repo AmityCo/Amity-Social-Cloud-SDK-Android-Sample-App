@@ -29,7 +29,7 @@ class MessageViewHolder(itemView: View) : BaseViewHolder<MessageViewData>(itemVi
                         itemView.image_message,
                         itemView.file_message,
                         item.viewModel::renderReplying,
-                        item.viewModel::renderDeleteMessage)
+                        item.viewModel::bindDeleteMessage)
     }
 
     fun clickViewReply(action: () -> Unit) {
