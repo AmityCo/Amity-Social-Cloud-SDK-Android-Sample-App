@@ -1,5 +1,6 @@
 package com.ekoapp.sample.chatfeature.components
 
+import android.Manifest
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -13,7 +14,14 @@ import com.ekoapp.sample.chatfeature.data.ReactionData
 import com.ekoapp.sample.chatfeature.dialogs.MessageBottomSheetFragment
 import com.ekoapp.sample.chatfeature.messages.view.list.ReactionsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
+import com.ekoapp.sample.core.file.FileManager
 import com.ekoapp.sample.core.rx.into
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.component_file_message.view.*
 
@@ -32,10 +40,31 @@ class FileMessageComponent : ConstraintLayout {
             text_message_url.text = url
             setFileName()
             setCaption()
+            renderOpenFile(item)
             val reactions = item.reactions.flatMap { result -> items.filter { result.key == it.name } }
             reactions.renderReactions()
             popupReactionAndReply(items, reply, item)
             renderMessageBottomSheet(delete)
+        }
+    }
+
+    private fun renderOpenFile(item: EkoMessage) {
+        view_message.setOnClickListener {
+            Dexter.withContext(context)
+                    .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .withListener(object : PermissionListener {
+                        override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                            FileManager.openFile(context, item)
+                        }
+
+                        override fun onPermissionDenied(response: PermissionDeniedResponse) {
+
+                        }
+
+                        override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest, token: PermissionToken) {
+                            token.continuePermissionRequest()
+                        }
+                    }).check()
         }
     }
 
