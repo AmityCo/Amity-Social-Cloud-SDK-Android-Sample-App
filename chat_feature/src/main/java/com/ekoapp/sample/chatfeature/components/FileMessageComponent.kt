@@ -108,6 +108,7 @@ class FileMessageComponent : ConstraintLayout {
             RecyclerBuilder(context, recycler_reactions, size)
                     .builder()
                     .build(adapter)
+            recycler_reactions.visibility = View.VISIBLE
         } else {
             recycler_reactions.visibility = View.GONE
         }
