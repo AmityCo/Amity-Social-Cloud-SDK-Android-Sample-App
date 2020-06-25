@@ -1,6 +1,6 @@
 ```
 
-fun getTotalUnreadCount(): Flowable<Int> {
+    fun getTotalUnreadCount(): Flowable<Int> {
         return EkoClient.newChannelRepository().totalUnreadCount
     }
 
