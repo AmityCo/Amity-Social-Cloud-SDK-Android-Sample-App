@@ -1,4 +1,5 @@
-``
+```
+
 fun getTotalUnreadCount(): Flowable<Int> {
         return EkoClient.newChannelRepository().totalUnreadCount
     }
@@ -54,4 +55,5 @@ fun getTotalUnreadCount(): Flowable<Int> {
     fun startReading(channelId: String) = EkoClient.newChannelRepository().membership(channelId).startReading()
 
     fun stopReading(channelId: String) = EkoClient.newChannelRepository().membership(channelId).stopReading()
-``
+    
+```
