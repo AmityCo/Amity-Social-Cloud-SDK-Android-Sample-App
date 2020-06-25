@@ -46,11 +46,11 @@ class ChannelsFragment : SingleViewModelFragment<ChannelsViewModel>() {
                             channel = this::openChannelSettingsPage)
                 })
         header_channels.createStandardChannel(childFragmentManager) {
-            viewModel.bindCreateChannel(it)
+            viewModel.bindCreateStandardChannel(it)
             recyclerBuilder.smoothScrollToPosition(delay = IMMEDIATELY_SCROLL)
         }
         header_channels.createPrivateChannel(childFragmentManager) {
-            viewModel.bindCreateChannel(it)
+            viewModel.bindCreatePrivateChannel(it)
             recyclerBuilder.smoothScrollToPosition(delay = IMMEDIATELY_SCROLL)
         }
 

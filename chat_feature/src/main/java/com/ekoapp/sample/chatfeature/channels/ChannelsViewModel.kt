@@ -67,8 +67,17 @@ class ChannelsViewModel @Inject constructor(private val context: Context,
 
     fun bindTotalUnreadCount(): LiveData<Int> = channelRepository.getTotalUnreadCount().toLiveData()
 
-    fun bindCreateChannel(item: CreateChannelData) {
-        channelRepository.createChannel(item.id, item.type)
+    fun bindCreateStandardChannel(item: CreateChannelData) {
+        channelRepository.createStandardChannel(item.id)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    joinChannelRelay.postValue(it.channelId)
+                }
+                .subscribe()
+    }
+
+    fun bindCreatePrivateChannel(item: CreateChannelData) {
+        channelRepository.createPrivateChannel(item.id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess {
                     joinChannelRelay.postValue(it.channelId)

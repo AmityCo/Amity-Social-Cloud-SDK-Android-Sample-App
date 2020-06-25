@@ -25,17 +25,34 @@ class ChannelRepository @Inject constructor() {
             EkoChannelFilter.NOT_MEMBER)
 
     fun getTotalUnreadCount(): Flowable<Int> {
-        return EkoClient.newChannelRepository().totalUnreadCount
+        return EkoClient.newChannelRepository().getTotalUnreadCount()
     }
 
-    fun createChannel(channelId: String, type: String): Single<EkoChannel> {
-        return EkoClient.newChannelRepository().createChannel(channelId,
-                EkoChannel.CreationType.fromJson(type),
-                EkoChannel.CreateOption.none())
+    fun createStandardChannel(channelId: String): Single<EkoChannel> {
+        return EkoClient.newChannelRepository()
+                .createChannel()
+                .standardType()
+                .withChannelId(channelId)
+                .build()
+                .create()
+    }
+
+    fun createPrivateChannel(channelId: String): Single<EkoChannel> {
+        return EkoClient.newChannelRepository()
+                .createChannel()
+                .privateType()
+                .withChannelId(channelId)
+                .build()
+                .create()
     }
 
     fun createConversation(userId: String): Single<EkoChannel> {
-        return EkoClient.newChannelRepository().createConversation(userId)
+        return EkoClient.newChannelRepository()
+                .createChannel()
+                .conversationType()
+                .withUserId(userId)
+                .build()
+                .create()
     }
 
     fun joinChannel(channelId: String): Completable {
@@ -51,7 +68,7 @@ class ChannelRepository @Inject constructor() {
                           includingTags: EkoTags,
                           excludingTags: EkoTags): LiveData<PagedList<EkoChannel>> {
 
-        return EkoClient.newChannelRepository().channelCollection
+        return EkoClient.newChannelRepository().getChannelCollection()
                 .byTypes()
                 .types(types)
                 .filter(filter)
