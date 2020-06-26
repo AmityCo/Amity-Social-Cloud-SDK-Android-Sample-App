@@ -2,6 +2,7 @@ package com.ekoapp.sample.socialfeature.userfeeds.view.renders
 
 import android.view.View
 import com.ekoapp.ekosdk.EkoPost
+import com.ekoapp.sample.core.seals.ReportSealType
 import com.ekoapp.sample.socialfeature.components.BodyFeedsComponent
 import com.ekoapp.sample.socialfeature.components.FooterFeedsComponent
 import com.ekoapp.sample.socialfeature.components.HeaderFeedsComponent
@@ -22,9 +23,10 @@ fun EkoUserFeedsRenderData.userFeedRender(header: HeaderFeedsComponent,
                                           eventReactionsSummary: () -> Unit,
                                           eventLike: (Boolean) -> Unit,
                                           eventEdit: (EditUserFeedsData) -> Unit,
-                                          eventDelete: (Boolean) -> Unit) {
+                                          eventDelete: (Boolean) -> Unit,
+                                          eventReport: (ReportSealType) -> Unit) {
 
-    renderHeader(header, eventViewProfile, eventFavorite, eventEdit, body, eventDelete)
+    renderHeader(header, eventViewProfile, eventFavorite, eventEdit, body, eventDelete, eventReport)
     renderBody(body)
     renderReactionsSummary(reactionsSummary, eventReactionsSummary)
     renderFooter(footer, eventLike)
@@ -56,18 +58,24 @@ private fun EkoUserFeedsRenderData.renderHeader(header: HeaderFeedsComponent,
                                                 eventFavorite: (Boolean) -> Unit,
                                                 eventEdit: (EditUserFeedsData) -> Unit,
                                                 body: BodyFeedsComponent,
-                                                eventDelete: (Boolean) -> Unit) {
+                                                eventDelete: (Boolean) -> Unit,
+                                                eventReport: (ReportSealType) -> Unit) {
     header.setupView(item)
     header.onClickFullName {
         eventViewProfile.invoke(UserData(item.postedUserId))
     }
     header.favoriteFeeds(eventFavorite::invoke)
-    header.editFeeds {
-        eventEdit.invoke(
-                EditUserFeedsData(
-                        userData = UserData(userId = item.postedUserId),
-                        postId = item.postId,
-                        description = body.getDescription()))
+
+    header.apply {
+        item.setMoreHorizView(
+                edit = {
+                    eventEdit.invoke(
+                            EditUserFeedsData(
+                                    userData = UserData(userId = item.postedUserId),
+                                    postId = item.postId,
+                                    description = body.getDescription()))
+                },
+                delete = eventDelete::invoke,
+                report = eventReport::invoke)
     }
-    header.deleteFeeds(eventDelete::invoke)
 }

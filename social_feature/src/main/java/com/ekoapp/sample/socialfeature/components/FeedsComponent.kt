@@ -44,6 +44,7 @@ class FeedsComponent : ConstraintLayout {
                 eventEdit = viewModel.editFeedsActionRelay::postValue,
                 eventDelete = {
                     viewModel.bindDeletePost(item)
-                })
+                },
+                eventReport = viewModel::initReportPost)
     }
 }

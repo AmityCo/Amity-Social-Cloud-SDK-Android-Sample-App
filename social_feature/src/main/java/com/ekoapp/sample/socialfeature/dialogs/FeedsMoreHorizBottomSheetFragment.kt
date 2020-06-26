@@ -1,23 +1,34 @@
 package com.ekoapp.sample.socialfeature.dialogs
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.ekosdk.EkoPost
+import com.ekoapp.sample.core.enums.ReportTypes
+import com.ekoapp.sample.core.preferences.PreferenceHelper
+import com.ekoapp.sample.core.preferences.PreferenceHelper.report
+import com.ekoapp.sample.core.seals.ReportSealType
+import com.ekoapp.sample.core.seals.ReportSealType.FLAG
+import com.ekoapp.sample.core.seals.ReportSealType.UNFLAG
 import com.ekoapp.sample.socialfeature.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_user_feeds_more_horiz.*
 
-class FeedsMoreHorizBottomSheetFragment : BottomSheetDialogFragment() {
-
+class FeedsMoreHorizBottomSheetFragment(mContext: Context, val item: EkoPost) : BottomSheetDialogFragment() {
+    private val prefs: SharedPreferences = PreferenceHelper.defaultPreference(mContext)
     private var fragmentView: View? = null
 
     lateinit var callbackEdit: (Boolean) -> Unit
     lateinit var callbackDelete: (Boolean) -> Unit
+    lateinit var callbackReport: (ReportSealType) -> Unit
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentView = inflater.inflate(R.layout.bottom_sheet_user_feeds_more_horiz, container, false)
@@ -40,17 +51,51 @@ class FeedsMoreHorizBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initView()
+        setupView()
+        setupEvent()
     }
 
-    private fun initView() {
+    private fun setupView() {
+        renderReportView()
+        if (item.postedUserId != EkoClient.getUserId()) {
+            renderMoreOtherPost()
+        } else {
+            renderMoreMyPost()
+        }
+    }
+
+    private fun renderReportView() {
+        when {
+            prefs.report.toString() == ReportTypes.UNFLAG.text -> {
+                text_report.text = getString(R.string.post_report)
+            }
+            prefs.report.toString() == ReportTypes.FLAG.text -> {
+                text_report.text = getString(R.string.post_cancel_report)
+            }
+        }
+    }
+
+    private fun setupEvent() {
         text_edit.setOnClickListener {
             //TODO Show Confirm Dialog
             callbackEdit(true)
         }
+
         text_delete.setOnClickListener {
             //TODO Show Confirm Dialog
             callbackDelete(true)
+        }
+
+        text_report.setOnClickListener {
+            //TODO Show Confirm Dialog
+            when {
+                prefs.report.toString() == ReportTypes.UNFLAG.text -> {
+                    callbackReport(FLAG(item))
+                }
+                prefs.report.toString() == ReportTypes.FLAG.text -> {
+                    callbackReport(UNFLAG(item))
+                }
+            }
         }
     }
 
@@ -60,5 +105,21 @@ class FeedsMoreHorizBottomSheetFragment : BottomSheetDialogFragment() {
 
     fun renderDelete(callbackDelete: (Boolean) -> Unit) {
         this.callbackDelete = callbackDelete
+    }
+
+    fun renderReport(callbackReport: (ReportSealType) -> Unit) {
+        this.callbackReport = callbackReport
+    }
+
+    private fun renderMoreMyPost() {
+        text_edit.visibility = View.VISIBLE
+        text_delete.visibility = View.VISIBLE
+        text_report.visibility = View.VISIBLE
+    }
+
+    private fun renderMoreOtherPost() {
+        text_edit.visibility = View.GONE
+        text_delete.visibility = View.GONE
+        text_report.visibility = View.VISIBLE
     }
 }

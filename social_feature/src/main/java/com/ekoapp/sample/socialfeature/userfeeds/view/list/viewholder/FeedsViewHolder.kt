@@ -41,7 +41,8 @@ class FeedsViewHolder(itemView: View) : BaseViewHolder<FeedsViewData>(itemView) 
                     eventEdit = viewModel.editFeedsActionRelay::postValue,
                     eventDelete = {
                         viewModel.bindDeletePost(this.item)
-                    })
+                    },
+                    eventReport = viewModel::initReportPost)
         }
     }
 }

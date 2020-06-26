@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoPost
+import com.ekoapp.sample.core.seals.ReportSealType
 import com.ekoapp.sample.core.utils.getTimeAgo
 import com.ekoapp.sample.core.utils.setTint
 import com.ekoapp.sample.socialfeature.R
@@ -21,11 +20,9 @@ import kotlinx.android.synthetic.main.component_header_feeds.view.*
 class HeaderFeedsComponent : ConstraintLayout {
 
     private var isFavorited = false
-    private var feedsMoreHorizBottomSheet: FeedsMoreHorizBottomSheetFragment
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_header_feeds, this, true)
-        feedsMoreHorizBottomSheet = FeedsMoreHorizBottomSheetFragment()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle)
@@ -40,8 +37,6 @@ class HeaderFeedsComponent : ConstraintLayout {
         val match = item.myReactions.filter { ReactionTypes.FAVORITE.text.contains(it, ignoreCase = true) }
         isFavorited = match.contains(ReactionTypes.FAVORITE.text)
         selectorFavorite(isFavorited)
-
-        setMoreHorizView(item)
     }
 
     private fun selectorFavorite(isFavorite: Boolean) = if (isFavorite) favoritedView() else favoriteView()
@@ -63,30 +58,43 @@ class HeaderFeedsComponent : ConstraintLayout {
         image_favorite.setTint(ContextCompat.getColor(context, R.color.colorFavorited))
     }
 
-    private fun setMoreHorizView(item: EkoPost) {
-        if (item.postedUserId != EkoClient.getUserId()) {
-            image_more_horiz.visibility = View.GONE
-        } else {
-            image_more_horiz.visibility = View.VISIBLE
+    fun EkoPost.setMoreHorizView(edit: (Boolean) -> Unit,
+                                 delete: (Boolean) -> Unit,
+                                 report: (ReportSealType) -> Unit) {
+        image_more_horiz.setOnClickListener {
+            renderBottomSheet(edit, delete, report)
         }
-        image_more_horiz.setOnClickListener { context.renderBottomSheet() }
     }
 
-    private fun Context.renderBottomSheet() {
-        feedsMoreHorizBottomSheet.show((this as AppCompatActivity).supportFragmentManager, feedsMoreHorizBottomSheet.tag)
+    private fun EkoPost.renderBottomSheet(edit: (Boolean) -> Unit,
+                                          delete: (Boolean) -> Unit,
+                                          report: (ReportSealType) -> Unit) {
+        val feedsMoreHorizBottomSheet = FeedsMoreHorizBottomSheetFragment(context, this)
+        feedsMoreHorizBottomSheet.show((context as AppCompatActivity).supportFragmentManager, feedsMoreHorizBottomSheet.tag)
+
+        feedsMoreHorizBottomSheet.editFeeds(edit)
+        feedsMoreHorizBottomSheet.deleteFeeds(delete)
+        feedsMoreHorizBottomSheet.reportFeeds(report)
     }
 
-    fun editFeeds(edit: (Boolean) -> Unit) {
-        feedsMoreHorizBottomSheet.renderEdit {
+    private fun FeedsMoreHorizBottomSheetFragment.editFeeds(edit: (Boolean) -> Unit) {
+        renderEdit {
             edit.invoke(it)
-            feedsMoreHorizBottomSheet.dialog?.cancel()
+            dialog?.cancel()
         }
     }
 
-    fun deleteFeeds(delete: (Boolean) -> Unit) {
-        feedsMoreHorizBottomSheet.renderDelete {
+    private fun FeedsMoreHorizBottomSheetFragment.deleteFeeds(delete: (Boolean) -> Unit) {
+        renderDelete {
             delete.invoke(it)
-            feedsMoreHorizBottomSheet.dialog?.cancel()
+            dialog?.cancel()
+        }
+    }
+
+    private fun FeedsMoreHorizBottomSheetFragment.reportFeeds(report: (ReportSealType) -> Unit) {
+        renderReport {
+            report.invoke(it)
+            dialog?.cancel()
         }
     }
 

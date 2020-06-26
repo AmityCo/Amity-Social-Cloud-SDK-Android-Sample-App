@@ -11,4 +11,6 @@
     <string name="general_menu">Menu</string>
     <string name="general_delete">Delete</string>
     <string name="general_deleted">Deleted</string>
+    <string name="general_report">Report</string>
+    <string name="general_cancel_report">Cancel Report</string>
 </resources>

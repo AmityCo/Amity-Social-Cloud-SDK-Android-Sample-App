@@ -26,4 +26,6 @@
     <string name="temporarily_cover">Acquaintances</string>
     <string name="general_default_zero_count">0</string>
     <string name="temporarily_app_bar_reactions_summary">People who reacted</string>
+    <string name="post_report">Report</string>
+    <string name="post_cancel_report">Cancel Report</string>
 </resources>

@@ -42,6 +42,16 @@ class FeedRepository @Inject constructor() {
                 .delete()
     }
 
+    fun reportPost(item: EkoPost): Completable {
+        return EkoClient.newFeedRepository().report(item.postId)
+                .flag()
+    }
+
+    fun cancelReportPost(item: EkoPost): Completable {
+        return EkoClient.newFeedRepository().report(item.postId)
+                .unflag()
+    }
+
     fun getPostReactionCollection(postId: String): LiveData<PagedList<EkoPostReaction>> {
         return EkoClient.newFeedRepository().getPostReactionCollection(postId)
     }
