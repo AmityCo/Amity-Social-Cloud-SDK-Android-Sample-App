@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.ekoapp.ekosdk.EkoChannelFilter
-import com.ekoapp.sample.core.enums.ReportTypes
 
 object PreferenceHelper {
 
@@ -84,14 +83,6 @@ object PreferenceHelper {
         set(value) {
             editMe {
                 it.putStringSet(PREF_SETTINGS_EXCLUDE_TAGS, value)
-            }
-        }
-
-    var SharedPreferences.report
-        get() = getString(PREF_REPORT_POST, ReportTypes.UNFLAG.text)
-        set(value) {
-            editMe {
-                it.putString(PREF_REPORT_POST, value)
             }
         }
 

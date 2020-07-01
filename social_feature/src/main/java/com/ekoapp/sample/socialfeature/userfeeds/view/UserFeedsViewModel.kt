@@ -1,7 +1,5 @@
 package com.ekoapp.sample.socialfeature.userfeeds.view
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -10,9 +8,6 @@ import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.ekosdk.internal.data.model.EkoPostReaction
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
-import com.ekoapp.sample.core.enums.ReportTypes
-import com.ekoapp.sample.core.preferences.PreferenceHelper
-import com.ekoapp.sample.core.preferences.PreferenceHelper.report
 import com.ekoapp.sample.core.seals.ReportSealType
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.ui.extensions.toLiveData
@@ -27,11 +22,9 @@ import com.ekoapp.sample.socialfeature.users.data.UserData
 import timber.log.Timber
 import javax.inject.Inject
 
-class UserFeedsViewModel @Inject constructor(private val context: Context,
-                                             private val feedRepository: FeedRepository,
+class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRepository,
                                              private val userRepository: UserRepository) : DisposableViewModel() {
 
-    private val prefs: SharedPreferences = PreferenceHelper.defaultPreference(context)
     private val feedsByIdActionRelay = SingleLiveData<FeedsData>()
     private val deleteFeedsRelay = MutableLiveData<Unit>()
     private lateinit var userDataIntent: UserData
@@ -107,14 +100,12 @@ class UserFeedsViewModel @Inject constructor(private val context: Context,
     private fun bindReportPost(item: EkoPost) {
         feedRepository
                 .reportPost(item)
-                .doOnComplete { prefs.report = ReportTypes.FLAG.text }
                 .subscribe()
     }
 
     private fun bindCancelReportPost(item: EkoPost) {
         feedRepository
                 .cancelReportPost(item)
-                .doOnComplete { prefs.report = ReportTypes.UNFLAG.text }
                 .subscribe()
     }
 

@@ -11,9 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoPost
-import com.ekoapp.sample.core.enums.ReportTypes
 import com.ekoapp.sample.core.preferences.PreferenceHelper
-import com.ekoapp.sample.core.preferences.PreferenceHelper.report
 import com.ekoapp.sample.core.seals.ReportSealType
 import com.ekoapp.sample.core.seals.ReportSealType.FLAG
 import com.ekoapp.sample.core.seals.ReportSealType.UNFLAG
@@ -65,13 +63,10 @@ class FeedsMoreHorizBottomSheetFragment(mContext: Context, val item: EkoPost) : 
     }
 
     private fun renderReportView() {
-        when {
-            prefs.report.toString() == ReportTypes.UNFLAG.text -> {
-                text_report.text = getString(R.string.post_report)
-            }
-            prefs.report.toString() == ReportTypes.FLAG.text -> {
-                text_report.text = getString(R.string.post_cancel_report)
-            }
+        if (!item.isFlaggedByMe) {
+            text_report.text = getString(R.string.post_report)
+        } else {
+            text_report.text = getString(R.string.post_cancel_report)
         }
     }
 
@@ -88,13 +83,10 @@ class FeedsMoreHorizBottomSheetFragment(mContext: Context, val item: EkoPost) : 
 
         text_report.setOnClickListener {
             //TODO Show Confirm Dialog
-            when {
-                prefs.report.toString() == ReportTypes.UNFLAG.text -> {
-                    callbackReport(FLAG(item))
-                }
-                prefs.report.toString() == ReportTypes.FLAG.text -> {
-                    callbackReport(UNFLAG(item))
-                }
+            if (!item.isFlaggedByMe) {
+                callbackReport(FLAG(item))
+            } else {
+                callbackReport(UNFLAG(item))
             }
         }
     }
