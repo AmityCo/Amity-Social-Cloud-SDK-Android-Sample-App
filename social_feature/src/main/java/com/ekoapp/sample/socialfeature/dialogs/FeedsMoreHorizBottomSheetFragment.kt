@@ -1,9 +1,7 @@
 package com.ekoapp.sample.socialfeature.dialogs
 
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoPost
-import com.ekoapp.sample.core.preferences.PreferenceHelper
 import com.ekoapp.sample.core.seals.ReportSealType
 import com.ekoapp.sample.core.seals.ReportSealType.FLAG
 import com.ekoapp.sample.core.seals.ReportSealType.UNFLAG
@@ -20,8 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_user_feeds_more_horiz.*
 
-class FeedsMoreHorizBottomSheetFragment(mContext: Context, val item: EkoPost) : BottomSheetDialogFragment() {
-    private val prefs: SharedPreferences = PreferenceHelper.defaultPreference(mContext)
+class FeedsMoreHorizBottomSheetFragment(val item: EkoPost) : BottomSheetDialogFragment() {
     private var fragmentView: View? = null
 
     lateinit var callbackEdit: (Boolean) -> Unit

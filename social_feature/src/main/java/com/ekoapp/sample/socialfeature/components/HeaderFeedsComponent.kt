@@ -69,7 +69,7 @@ class HeaderFeedsComponent : ConstraintLayout {
     private fun EkoPost.renderBottomSheet(edit: (Boolean) -> Unit,
                                           delete: (Boolean) -> Unit,
                                           report: (ReportSealType) -> Unit) {
-        val feedsMoreHorizBottomSheet = FeedsMoreHorizBottomSheetFragment(context, this)
+        val feedsMoreHorizBottomSheet = FeedsMoreHorizBottomSheetFragment(this)
         feedsMoreHorizBottomSheet.show((context as AppCompatActivity).supportFragmentManager, feedsMoreHorizBottomSheet.tag)
 
         feedsMoreHorizBottomSheet.editFeeds(edit)

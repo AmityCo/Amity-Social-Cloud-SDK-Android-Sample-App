@@ -13,4 +13,5 @@
     <string name="general_deleted">Deleted</string>
     <string name="general_report">Report</string>
     <string name="general_cancel_report">Cancel Report</string>
+    <string name="general_ok">OK</string>
 </resources>

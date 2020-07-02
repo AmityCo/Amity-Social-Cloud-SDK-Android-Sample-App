@@ -4,6 +4,7 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.base.viewmodel.SingleViewModelFragment
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
+import com.ekoapp.sample.core.utils.SnackBarUtil
 import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.constants.EXTRA_USER_DATA
 import com.ekoapp.sample.socialfeature.di.DaggerSocialFragmentComponent
@@ -37,6 +38,7 @@ class UserFeedsFragment : SingleViewModelFragment<UserFeedsViewModel>() {
         viewModel.observeReactionsSummaryPage().observeNotNull(viewLifecycleOwner, this::openReactionsSummaryFeedsPage)
         viewModel.observeUserPage().observeNotNull(viewLifecycleOwner, this::openUserFeedsPage)
         viewModel.observeFeedsByIdPage().observeNotNull(viewLifecycleOwner, this::openFeedsById)
+        viewModel.observeReport().observeNotNull(viewLifecycleOwner, SnackBarUtil(fragmentActivity = requireActivity())::info)
     }
 
     private fun renderList(viewModel: UserFeedsViewModel) {

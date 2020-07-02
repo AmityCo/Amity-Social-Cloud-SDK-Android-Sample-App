@@ -28,4 +28,7 @@
     <string name="temporarily_app_bar_reactions_summary">People who reacted</string>
     <string name="post_report">Report</string>
     <string name="post_cancel_report">Cancel Report</string>
+    <string name="temporarily_flag_success">You have reported successfully</string>
+    <string name="temporarily_unflag_success">Your report was canceled successfully</string>
+    <string name="temporarily_error">Error</string>
 </resources>

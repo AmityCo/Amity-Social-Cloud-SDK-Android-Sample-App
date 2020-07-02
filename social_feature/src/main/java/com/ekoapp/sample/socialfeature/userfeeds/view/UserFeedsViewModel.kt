@@ -1,5 +1,6 @@
 package com.ekoapp.sample.socialfeature.userfeeds.view
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -12,6 +13,7 @@ import com.ekoapp.sample.core.seals.ReportSealType
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
+import com.ekoapp.sample.socialfeature.R
 import com.ekoapp.sample.socialfeature.editfeeds.data.EditUserFeedsData
 import com.ekoapp.sample.socialfeature.reactions.data.UserReactionData
 import com.ekoapp.sample.socialfeature.repositories.FeedRepository
@@ -22,11 +24,13 @@ import com.ekoapp.sample.socialfeature.users.data.UserData
 import timber.log.Timber
 import javax.inject.Inject
 
-class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRepository,
+class UserFeedsViewModel @Inject constructor(private val context: Context,
+                                             private val feedRepository: FeedRepository,
                                              private val userRepository: UserRepository) : DisposableViewModel() {
 
     private val feedsByIdActionRelay = SingleLiveData<FeedsData>()
     private val deleteFeedsRelay = MutableLiveData<Unit>()
+    private val reportActionRelay = MutableLiveData<CharSequence>()
     private lateinit var userDataIntent: UserData
     private lateinit var feedsDataIntent: FeedsData
 
@@ -48,6 +52,7 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
     fun observeDeleteFeeds(): LiveData<Unit> = deleteFeedsRelay
     fun observeMyReaction(): LiveData<EkoPostReaction> = myReactionRelay
+    fun observeReport(): LiveData<CharSequence> = reportActionRelay
 
     fun setupIntent(data: UserData?) {
         userDataIntent = data ?: UserData(userId = EkoClient.getUserId())
@@ -100,12 +105,24 @@ class UserFeedsViewModel @Inject constructor(private val feedRepository: FeedRep
     private fun bindReportPost(item: EkoPost) {
         feedRepository
                 .reportPost(item)
+                .doOnComplete {
+                    reportActionRelay.postValue(context.getString(R.string.temporarily_flag_success))
+                }
+                .doOnError {
+                    reportActionRelay.postValue(context.getString(R.string.temporarily_error))
+                }
                 .subscribe()
     }
 
     private fun bindCancelReportPost(item: EkoPost) {
         feedRepository
                 .cancelReportPost(item)
+                .doOnComplete {
+                    reportActionRelay.postValue(context.getString(R.string.temporarily_unflag_success))
+                }
+                .doOnError {
+                    reportActionRelay.postValue(context.getString(R.string.temporarily_error))
+                }
                 .subscribe()
     }
 
