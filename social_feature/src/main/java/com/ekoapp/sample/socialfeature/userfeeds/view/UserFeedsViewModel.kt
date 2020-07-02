@@ -30,7 +30,7 @@ class UserFeedsViewModel @Inject constructor(private val context: Context,
 
     private val feedsByIdActionRelay = SingleLiveData<FeedsData>()
     private val deleteFeedsRelay = MutableLiveData<Unit>()
-    private val reportActionRelay = MutableLiveData<CharSequence>()
+    private val reportActionRelay = SingleLiveData<CharSequence>()
     private lateinit var userDataIntent: UserData
     private lateinit var feedsDataIntent: FeedsData
 
@@ -52,7 +52,7 @@ class UserFeedsViewModel @Inject constructor(private val context: Context,
     fun observeReactionsSummaryPage(): SingleLiveData<UserReactionData> = reactionsSummaryActionRelay
     fun observeDeleteFeeds(): LiveData<Unit> = deleteFeedsRelay
     fun observeMyReaction(): LiveData<EkoPostReaction> = myReactionRelay
-    fun observeReport(): LiveData<CharSequence> = reportActionRelay
+    fun observeReport(): SingleLiveData<CharSequence> = reportActionRelay
 
     fun setupIntent(data: UserData?) {
         userDataIntent = data ?: UserData(userId = EkoClient.getUserId())
