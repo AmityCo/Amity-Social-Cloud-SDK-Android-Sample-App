@@ -22,7 +22,9 @@ import com.ekoapp.sample.core.intent.IntentRequestCode
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.core.ui.extensions.observeOnce
+import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import kotlinx.android.synthetic.main.activity_messages.*
+import timber.log.Timber
 
 
 class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
@@ -85,10 +87,23 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     private fun ChannelData.renderSendMessage(viewModel: MessagesViewModel) {
         main_send_message.renderTextSending(channelId = channelId)
+        viewModel.getIntentMessageData {
+            main_send_message.renderTextSending(channelId = channelId, parentId = it.parentId)
+        }
+
         main_send_message.renderSelectPhoto(fm = supportFragmentManager)
         main_send_message.renderSelectFile()
 
-        viewModel.observeReplying().observeNotNull(this@MessagesActivity, main_send_message::renderReplying)
+        viewModel.observeReplying().observeNotNull(this@MessagesActivity, {
+            main_send_message.renderReplying(item = it, cancelAction = {
+                main_send_message.renderTextSending(channelId = channelId, parentId = null)
+                viewModel.getIntentMessageData { data ->
+                    main_send_message.renderTextSending(channelId = channelId, parentId = data.parentId)
+                }
+            })
+            main_send_message.renderTextSending(channelId = channelId, parentId = it.messageId)
+        })
+
         viewModel.initMessage(main_send_message.message())
         viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendMessage)
     }
@@ -147,19 +162,20 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_TAKE_PHOTO) {
             viewModel?.getIntentChannelData {
-                main_send_message.renderImageSending(it.channelId)
+                main_send_message.renderImageSending(channelId = it.channelId)
             }
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_SELECT_PHOTO) {
             viewModel?.getIntentChannelData {
-                main_send_message.renderImageSending(it.channelId, data?.data)
+                Timber.d("${getCurrentClassAndMethodNames()} channelData : $it ,image : ${data?.data}")
+                main_send_message.renderImageSending(channelId = it.channelId, uri = data?.data)
             }
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == PICKFILE_REQUEST_CODE) {
             viewModel?.getIntentChannelData {
-                main_send_message.renderAttachSending(it.channelId, data?.data)
+                main_send_message.renderAttachSending(channelId = it.channelId, uri = data?.data)
             }
         }
     }

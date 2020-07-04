@@ -16,13 +16,8 @@ import io.reactivex.processors.PublishProcessor
 import kotlinx.android.synthetic.main.component_main_send_message.view.*
 
 class MainSendMessageComponent : ConstraintLayout {
-    private var currentPhotoPath: String = ""
-
-    companion object {
-        var parentId: String? = null
-    }
-
     private val textRelay = PublishProcessor.create<SendMessageData>()
+    private var currentPhotoPath: String = ""
 
     fun message() = textRelay
 
@@ -34,17 +29,16 @@ class MainSendMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun renderTextSending(channelId: String) {
+    fun renderTextSending(channelId: String, parentId: String? = null) {
         send_message.textMessage {
             hideReplying()
             textRelay.onNext(SendMessageData(channelId = channelId, parentId = parentId, text = it))
-            parentId = null
         }
     }
 
     fun renderSelectPhoto(fm: FragmentManager) = send_message.imageMessage(fm) { currentPhotoPath = it }
 
-    fun renderImageSending(channelId: String, uri: Uri? = null) {
+    fun renderImageSending(channelId: String, parentId: String? = null, uri: Uri? = null) {
         if (uri != null) currentPhotoPath = RealPathUtil.getRealPath(context, uri)
         send_image.visibility = View.VISIBLE
         send_image.setupView(currentPhotoPath) {
@@ -54,7 +48,7 @@ class MainSendMessageComponent : ConstraintLayout {
         }
     }
 
-    fun renderAttachSending(channelId: String, uri: Uri? = null) {
+    fun renderAttachSending(channelId: String, parentId: String? = null, uri: Uri? = null) {
         if (uri != null) currentPhotoPath = RealPathUtil.getRealPath(context, uri)
         send_image.visibility = View.VISIBLE
         send_image.setupView(currentPhotoPath) {
@@ -66,12 +60,11 @@ class MainSendMessageComponent : ConstraintLayout {
 
     fun renderSelectFile() = send_message.attachMessage()
 
-    fun renderReplying(item: EkoMessage) {
-        parentId = item.messageId
+    fun renderReplying(item: EkoMessage, cancelAction: () -> Unit) {
         replying_to.visibility = View.VISIBLE
         replying_to.setView(item)
         replying_to.cancelReplying {
-            parentId = null
+            cancelAction.invoke()
             hideReplying()
         }
     }
