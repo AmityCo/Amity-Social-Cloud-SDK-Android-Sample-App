@@ -19,7 +19,7 @@ class SelectedPhotoComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setupView(path: String, action: () -> Unit) {
+    fun setupView(path: String, sent: () -> Unit) {
         Glide.with(this).clear(image_selected_photo)
         BitmapFactory.decodeFile(path)?.also { bitmap ->
             Glide.with(this)
@@ -28,6 +28,6 @@ class SelectedPhotoComponent : ConstraintLayout {
                     .into(image_selected_photo)
         }
 
-        button_send.setOnClickListener { action.invoke() }
+        button_send.setOnClickListener { sent.invoke() }
     }
 }

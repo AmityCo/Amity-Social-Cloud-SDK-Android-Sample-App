@@ -10,6 +10,7 @@ import com.ekoapp.sample.chatfeature.constants.EXTRA_CHANNEL_MESSAGES
 import com.ekoapp.sample.chatfeature.constants.EXTRA_REPLY_MESSAGES
 import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.data.MessageData
+import com.ekoapp.sample.chatfeature.data.ReplyingStateData
 import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
 import com.ekoapp.sample.chatfeature.intents.openReplyMessagesPage
 import com.ekoapp.sample.chatfeature.messages.view.list.MainMessageAdapter
@@ -22,9 +23,7 @@ import com.ekoapp.sample.core.intent.IntentRequestCode
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.core.ui.extensions.observeOnce
-import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
 import kotlinx.android.synthetic.main.activity_messages.*
-import timber.log.Timber
 
 
 class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
@@ -73,7 +72,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
                         adapter.submitList(items)
                         recyclerBuilder.afterSent(viewModel, items)
                     })
-            it.renderSendMessage(viewModel)
+            it.renderSendMessage(false, viewModel)
         }
         viewModel.getIntentMessageData {
             viewModel.bindGetMessageCollectionByTags(it)
@@ -81,28 +80,24 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
                         adapter.submitList(items)
                         recyclerBuilder.afterSent(viewModel, items)
                     })
-            ChannelData(channelId = it.channelId, parentId = it.parentId).renderSendMessage(viewModel)
+            ChannelData(channelId = it.channelId, parentId = it.parentId).renderSendMessage(true, viewModel)
         }
     }
 
-    private fun ChannelData.renderSendMessage(viewModel: MessagesViewModel) {
-        main_send_message.renderTextSending(channelId = channelId)
+    private fun ChannelData.renderSendMessage(isReplyPage: Boolean, viewModel: MessagesViewModel) {
+        main_send_message.renderTextSending(ReplyingStateData(channelId = channelId, parentId = parentId, isReplyPage = isReplyPage))
         viewModel.getIntentMessageData {
-            main_send_message.renderTextSending(channelId = channelId, parentId = it.parentId)
-        }
+            main_send_message.renderTextSending(ReplyingStateData(channelId = it.channelId, parentId = it.parentId, isReplyPage = isReplyPage))
 
+        }
         main_send_message.renderSelectPhoto(fm = supportFragmentManager)
         main_send_message.renderSelectFile()
 
+        viewModel.initReplyingState(main_send_message.replyingState())
         viewModel.observeReplying().observeNotNull(this@MessagesActivity, {
-            main_send_message.renderReplying(item = it, cancelAction = {
-                main_send_message.renderTextSending(channelId = channelId, parentId = null)
-                viewModel.getIntentMessageData { data ->
-                    main_send_message.renderTextSending(channelId = channelId, parentId = data.parentId)
-                }
-            })
-            main_send_message.renderTextSending(channelId = channelId, parentId = it.messageId)
+            main_send_message.renderReplying(it, isReplyPage)
         })
+        viewModel.observeReplyingState().observeNotNull(this@MessagesActivity, main_send_message::renderTextSending)
 
         viewModel.initMessage(main_send_message.message())
         viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendMessage)
@@ -162,14 +157,15 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_TAKE_PHOTO) {
             viewModel?.getIntentChannelData {
-                main_send_message.renderImageSending(channelId = it.channelId)
+                main_send_message.renderImageSending(ReplyingStateData(channelId = it.channelId, isReplyPage = false))
             }
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_SELECT_PHOTO) {
             viewModel?.getIntentChannelData {
-                Timber.d("${getCurrentClassAndMethodNames()} channelData : $it ,image : ${data?.data}")
-                main_send_message.renderImageSending(channelId = it.channelId, uri = data?.data)
+                main_send_message.renderImageSending(
+                        ReplyingStateData(channelId = it.channelId, isReplyPage = false),
+                        uri = data?.data)
             }
         }
 

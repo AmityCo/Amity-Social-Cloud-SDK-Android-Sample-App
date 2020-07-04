@@ -31,6 +31,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
 
     private val textRelay = MutableLiveData<SendMessageData>()
     private val replyingRelay = MutableLiveData<EkoMessage>()
+    private val replyingStateRelay = MutableLiveData<ReplyingStateData>()
     private val afterSentRelay = MutableLiveData<Unit>()
     private val viewReplyRelay = SingleLiveData<MessageData>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
@@ -39,6 +40,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
 
     fun observeMessage(): LiveData<SendMessageData> = textRelay
     fun observeReplying(): LiveData<EkoMessage> = replyingRelay
+    fun observeReplyingState(): LiveData<ReplyingStateData> = replyingStateRelay
     fun observeAfterSent(): LiveData<Unit> = afterSentRelay
     fun observeViewReply(): SingleLiveData<MessageData> = viewReplyRelay
 
@@ -80,6 +82,12 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         item.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(textRelay::postValue) into disposables
+    }
+
+    fun initReplyingState(item: Flowable<ReplyingStateData>) {
+        item.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(replyingStateRelay::postValue) into disposables
     }
 
     fun observeNotification() = notificationRelay.toLiveData()

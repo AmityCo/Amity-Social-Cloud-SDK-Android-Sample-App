@@ -51,9 +51,9 @@ class SendMessageComponent : ConstraintLayout {
         })
     }
 
-    fun textMessage(action: (String) -> Unit) {
+    fun textMessage(sent: (String) -> Unit) {
         image_send.setOnClickListener {
-            action.invoke(edit_text_message.text.toString())
+            sent.invoke(edit_text_message.text.toString())
             edit_text_message.setText("")
             edit_text_message.clearComposingText()
         }
