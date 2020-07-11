@@ -38,7 +38,8 @@ fun MessageRenderData.renderMessage(textTime: TextView,
                                     imageMessage: ImageMessageComponent,
                                     fileMessage: FileMessageComponent,
                                     eventReply: (EkoMessage) -> Unit,
-                                    eventDelete: (EkoMessage) -> Unit) {
+                                    eventDelete: (EkoMessage) -> Unit,
+                                    eventReactions: () -> Unit) {
 
     textTime.text = item.createdAt.toDate().getTimeAgo()
     textMessageDeleted.visibility = View.GONE
@@ -55,7 +56,12 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(item, reactions, eventReply::invoke) { eventDelete.invoke(item) }
+                setMessage(
+                        item,
+                        reactions,
+                        reply = eventReply::invoke,
+                        delete = { eventDelete.invoke(item) },
+                        reactionsOfUsers = eventReactions::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -65,7 +71,12 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             textMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             imageMessage.apply {
-                setMessage(item, reactions, eventReply::invoke) { eventDelete.invoke(item) }
+                setMessage(
+                        item,
+                        reactions,
+                        reply = eventReply::invoke,
+                        delete = { eventDelete.invoke(item) },
+                        reactionsOfUsers = eventReactions::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -75,7 +86,12 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             textMessage.visibility = View.GONE
             imageMessage.visibility = View.GONE
             fileMessage.apply {
-                setMessage(item, reactions, eventReply::invoke) { eventDelete.invoke(item) }
+                setMessage(
+                        item,
+                        reactions,
+                        reply = eventReply::invoke,
+                        delete = { eventDelete.invoke(item) },
+                        reactionsOfUsers = eventReactions::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -85,7 +101,12 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(item, reactions, eventReply::invoke) { eventDelete.invoke(item) }
+                setMessage(
+                        item,
+                        reactions,
+                        reply = eventReply::invoke,
+                        delete = { eventDelete.invoke(item) },
+                        reactionsOfUsers = { eventReactions.invoke() })
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }

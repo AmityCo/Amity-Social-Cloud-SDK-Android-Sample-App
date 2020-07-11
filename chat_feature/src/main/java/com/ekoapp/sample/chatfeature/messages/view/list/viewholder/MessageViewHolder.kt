@@ -1,15 +1,22 @@
 package com.ekoapp.sample.chatfeature.messages.view.list.viewholder
 
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoMessage
+import com.ekoapp.sample.chatfeature.dialogs.UsersWithReactionsBottomSheetFragment
 import com.ekoapp.sample.chatfeature.messages.view.MessagesViewModel
 import com.ekoapp.sample.chatfeature.messages.view.list.renders.MessageRenderData
 import com.ekoapp.sample.chatfeature.messages.view.list.renders.renderMessage
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 import kotlinx.android.synthetic.main.item_main_message.view.*
 
-data class MessageViewData(val item: EkoMessage, val viewModel: MessagesViewModel)
+
+data class MessageViewData(val item: EkoMessage,
+                           val lifecycleOwner: LifecycleOwner,
+                           val viewModel: MessagesViewModel)
 
 class MessageViewHolder(itemView: View) : BaseViewHolder<MessageViewData>(itemView) {
     private val context = itemView.context
@@ -29,7 +36,17 @@ class MessageViewHolder(itemView: View) : BaseViewHolder<MessageViewData>(itemVi
                         itemView.image_message,
                         itemView.file_message,
                         item.viewModel::renderReplying,
-                        item.viewModel::bindDeleteMessage)
+                        item.viewModel::bindDeleteMessage) {
+                    item.item.renderUsersWithReactions(
+                            (context as AppCompatActivity).supportFragmentManager,
+                            item.lifecycleOwner,
+                            item.viewModel)
+                }
+    }
+
+    private fun EkoMessage.renderUsersWithReactions(fm: FragmentManager, lifecycleOwner: LifecycleOwner, viewModel: MessagesViewModel) {
+        val usersWithReactionsBottomSheet = UsersWithReactionsBottomSheetFragment(this, lifecycleOwner, viewModel)
+        usersWithReactionsBottomSheet.show(fm, usersWithReactionsBottomSheet.tag)
     }
 
     fun clickViewReply(action: () -> Unit) {

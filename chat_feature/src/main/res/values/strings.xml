@@ -86,4 +86,5 @@
     <string name="temporarily_emoji_sad">sad</string>
     <string name="temporarily_emoji_sleep">sleep</string>
     <string name="temporarily_emoji_smile">smile</string>
+    <string name="temporarily_reactions">Reactions</string>
 </resources>

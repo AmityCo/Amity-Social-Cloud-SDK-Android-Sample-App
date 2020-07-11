@@ -11,7 +11,8 @@ import com.ekoapp.sample.chatfeature.messages.view.list.viewholder.ViewReactionV
 import com.ekoapp.sample.core.base.list.BaseViewHolder
 
 class ReactionsAdapter(private val context: Context,
-                       private val items: List<ReactionData>) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+                       private val items: List<ReactionData>,
+                       private val reactionsOfUsers: () -> Unit) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
         val view = LayoutInflater.from(context).inflate(R.layout.item_view_reaction, parent, false)
@@ -22,6 +23,7 @@ class ReactionsAdapter(private val context: Context,
         when (holder) {
             is ViewReactionViewHolder -> {
                 holder.bind(items[position].icon)
+                holder.itemView.setOnClickListener { reactionsOfUsers.invoke() }
             }
             else -> throw IllegalArgumentException()
         }

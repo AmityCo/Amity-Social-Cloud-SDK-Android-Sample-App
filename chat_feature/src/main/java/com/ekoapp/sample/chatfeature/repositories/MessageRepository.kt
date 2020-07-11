@@ -5,6 +5,7 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.ekosdk.internal.data.model.EkoMessageReaction
 import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.data.SendMessageData
 import com.google.gson.JsonObject
@@ -29,6 +30,10 @@ class MessageRepository @Inject constructor() {
                     excludingTags,
                     stackFromEnd)
         }
+    }
+
+    fun getMessageReactionCollection(messageId: String): LiveData<PagedList<EkoMessageReaction>> {
+        return EkoClient.newMessageRepository().getMessageReactionCollection(messageId)
     }
 
     fun textMessage(data: SendMessageData): Completable {

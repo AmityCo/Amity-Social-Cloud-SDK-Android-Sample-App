@@ -62,7 +62,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     }
 
     private fun renderList(viewModel: MessagesViewModel) {
-        adapter = MainMessageAdapter(this, viewModel)
+        adapter = MainMessageAdapter(this, this, viewModel)
         val recyclerBuilder = RecyclerBuilder(context = this, recyclerView = recycler_message)
                 .stackFromEnd(true)
                 .build(adapter)

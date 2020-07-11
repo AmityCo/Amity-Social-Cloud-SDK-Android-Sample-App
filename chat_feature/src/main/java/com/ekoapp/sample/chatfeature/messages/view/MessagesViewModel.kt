@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.ekosdk.internal.data.model.EkoMessageReaction
 import com.ekoapp.ekosdk.messaging.data.DataType
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.*
@@ -228,6 +229,10 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         channelRepository.leaveChannel(channelId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
+    }
+
+    fun bindGetMessageReactionCollection(messageId: String): LiveData<PagedList<EkoMessageReaction>> {
+        return messageRepository.getMessageReactionCollection(messageId)
     }
 
     fun getReactions(): ArrayList<ReactionData> {

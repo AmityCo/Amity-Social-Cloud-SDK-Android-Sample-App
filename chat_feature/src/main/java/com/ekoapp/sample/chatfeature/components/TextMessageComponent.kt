@@ -27,10 +27,14 @@ class TextMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun setMessage(item: EkoMessage, items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit, delete: (Boolean) -> Unit) {
+    fun setMessage(item: EkoMessage,
+                   items: ArrayList<ReactionData>,
+                   reply: (EkoMessage) -> Unit,
+                   delete: (Boolean) -> Unit,
+                   reactionsOfUsers: () -> Unit) {
         text_message_content.text = item.getData(TextData::class.java).text
         val reactions = item.reactions.flatMap { result -> items.filter { result.key == it.name } }
-        reactions.renderReactions()
+        reactions.renderReactions(reactionsOfUsers)
         popupReactionAndReply(items, reply, item)
         renderMessageBottomSheet(delete)
     }
@@ -51,9 +55,9 @@ class TextMessageComponent : ConstraintLayout {
                 })
     }
 
-    private fun List<ReactionData>.renderReactions() {
+    private fun List<ReactionData>.renderReactions(reactionsOfUsers: () -> Unit) {
         if (isNotEmpty()) {
-            val adapter = ReactionsAdapter(context, this)
+            val adapter = ReactionsAdapter(context, this, reactionsOfUsers)
             RecyclerBuilder(context, recycler_reactions, size)
                     .builder()
                     .build(adapter)
