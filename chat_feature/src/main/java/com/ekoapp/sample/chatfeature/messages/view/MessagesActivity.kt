@@ -23,6 +23,7 @@ import com.ekoapp.sample.core.intent.IntentRequestCode
 import com.ekoapp.sample.core.ui.extensions.coreComponent
 import com.ekoapp.sample.core.ui.extensions.observeNotNull
 import com.ekoapp.sample.core.ui.extensions.observeOnce
+import com.ekoapp.sample.core.utils.SnackBarUtil
 import kotlinx.android.synthetic.main.activity_messages.*
 
 
@@ -111,6 +112,8 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     private fun setupEvent(viewModel: MessagesViewModel) {
         viewModel.observeViewReply().observeNotNull(this, this::openReplyMessagesPage)
+        viewModel.observeReportMessage().observeNotNull(this, SnackBarUtil(fragmentActivity = this)::info)
+        viewModel.observeReportSender().observeNotNull(this, SnackBarUtil(fragmentActivity = this)::info)
     }
 
     private fun setupAppBar(viewModel: MessagesViewModel) {

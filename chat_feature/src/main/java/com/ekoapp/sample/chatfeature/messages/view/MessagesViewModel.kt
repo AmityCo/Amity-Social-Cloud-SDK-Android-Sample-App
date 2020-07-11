@@ -37,6 +37,8 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     private val replyingStateRelay = MutableLiveData<ReplyingStateData>()
     private val afterSentRelay = MutableLiveData<Unit>()
     private val viewReplyRelay = SingleLiveData<MessageData>()
+    private val reportMessageActionRelay = SingleLiveData<CharSequence>()
+    private val reportSenderActionRelay = SingleLiveData<CharSequence>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
     private var messageDataIntent: MessageData? = null
@@ -46,6 +48,8 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     fun observeReplyingState(): LiveData<ReplyingStateData> = replyingStateRelay
     fun observeAfterSent(): LiveData<Unit> = afterSentRelay
     fun observeViewReply(): SingleLiveData<MessageData> = viewReplyRelay
+    fun observeReportMessage(): SingleLiveData<CharSequence> = reportMessageActionRelay
+    fun observeReportSender(): SingleLiveData<CharSequence> = reportSenderActionRelay
 
     init {
         getIntentChannelData {
@@ -217,35 +221,59 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     private fun bindCancelReportMessage(messageId: String) {
         messageRepository.unFlag(messageId)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    reportMessageActionRelay.postValue(context.getString(R.string.temporarily_unflag_message_success))
+                }
+                .doOnError {
+                    reportMessageActionRelay.postValue(context.getString(R.string.temporarily_error))
+                }
                 .subscribe()
     }
 
     private fun bindReportMessage(messageId: String) {
         messageRepository.flag(messageId)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    reportMessageActionRelay.postValue(context.getString(R.string.temporarily_flag_message_success))
+                }
+                .doOnError {
+                    reportMessageActionRelay.postValue(context.getString(R.string.temporarily_error))
+                }
                 .subscribe()
     }
 
     fun initReportSender(type: ReportSenderSealType) {
         when (type) {
             is ReportSenderSealType.FLAG -> {
-                bindReportUser(type.item.userId)
+                bindReportSender(type.item.userId)
             }
             is ReportSenderSealType.UNFLAG -> {
-                bindCancelReportUser(type.item.userId)
+                bindCancelReportSender(type.item.userId)
             }
         }
     }
 
-    private fun bindCancelReportUser(userId: String) {
+    private fun bindCancelReportSender(userId: String) {
         userRepository.unFlag(userId)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    reportSenderActionRelay.postValue(context.getString(R.string.temporarily_unflag_sender_success))
+                }
+                .doOnError {
+                    reportSenderActionRelay.postValue(context.getString(R.string.temporarily_error))
+                }
                 .subscribe()
     }
 
-    private fun bindReportUser(userId: String) {
+    private fun bindReportSender(userId: String) {
         userRepository.flag(userId)
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    reportSenderActionRelay.postValue(context.getString(R.string.temporarily_flag_sender_success))
+                }
+                .doOnError {
+                    reportSenderActionRelay.postValue(context.getString(R.string.temporarily_error))
+                }
                 .subscribe()
     }
 

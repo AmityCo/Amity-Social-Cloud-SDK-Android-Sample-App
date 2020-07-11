@@ -91,4 +91,9 @@
     <string name="temporarily_cancel_report_message">Cancel report message</string>
     <string name="temporarily_report_sender">Report Sender</string>
     <string name="temporarily_cancel_report_sender">Cancel report sender</string>
+    <string name="temporarily_flag_message_success">You have reported message successfully</string>
+    <string name="temporarily_unflag_message_success">Your report message was canceled successfully</string>
+    <string name="temporarily_flag_sender_success">You have reported sender successfully</string>
+    <string name="temporarily_unflag_sender_success">Your report sender was canceled successfully</string>
+    <string name="temporarily_error">Error</string>
 </resources>
