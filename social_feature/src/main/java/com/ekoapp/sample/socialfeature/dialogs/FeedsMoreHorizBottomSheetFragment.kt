@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoPost
-import com.ekoapp.sample.core.seals.ReportSealType
-import com.ekoapp.sample.core.seals.ReportSealType.FLAG
-import com.ekoapp.sample.core.seals.ReportSealType.UNFLAG
+import com.ekoapp.sample.core.seals.ReportPostSealType
+import com.ekoapp.sample.core.seals.ReportPostSealType.FLAG
+import com.ekoapp.sample.core.seals.ReportPostSealType.UNFLAG
 import com.ekoapp.sample.socialfeature.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -22,7 +22,7 @@ class FeedsMoreHorizBottomSheetFragment(val item: EkoPost) : BottomSheetDialogFr
 
     lateinit var callbackEdit: (Boolean) -> Unit
     lateinit var callbackDelete: (Boolean) -> Unit
-    lateinit var callbackReport: (ReportSealType) -> Unit
+    lateinit var callbackReport: (ReportPostSealType) -> Unit
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentView = inflater.inflate(R.layout.bottom_sheet_user_feeds_more_horiz, container, false)
@@ -95,7 +95,7 @@ class FeedsMoreHorizBottomSheetFragment(val item: EkoPost) : BottomSheetDialogFr
         this.callbackDelete = callbackDelete
     }
 
-    fun renderReport(callbackReport: (ReportSealType) -> Unit) {
+    fun renderReport(callbackReport: (ReportPostSealType) -> Unit) {
         this.callbackReport = callbackReport
     }
 

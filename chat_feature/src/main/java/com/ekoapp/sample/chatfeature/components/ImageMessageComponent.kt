@@ -15,6 +15,8 @@ import com.ekoapp.sample.chatfeature.dialogs.MessageBottomSheetFragment
 import com.ekoapp.sample.chatfeature.messages.view.list.ReactionsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.rx.into
+import com.ekoapp.sample.core.seals.ReportMessageSealType
+import com.ekoapp.sample.core.seals.ReportSenderSealType
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.component_image_message.view.*
 
@@ -32,14 +34,16 @@ class ImageMessageComponent : ConstraintLayout {
                    items: ArrayList<ReactionData>,
                    reply: (EkoMessage) -> Unit,
                    delete: (Boolean) -> Unit,
-                   reactionsOfUsers: () -> Unit) {
+                   reactionsOfUsers: () -> Unit,
+                   reportMessage: (ReportMessageSealType) -> Unit,
+                   reportSender: (ReportSenderSealType) -> Unit) {
         Glide.with(context).load(item.getData(ImageData::class.java).url)
                 .placeholder(R.drawable.ic_placeholder_file)
                 .into(image_message_content)
         val reactions = item.reactions.flatMap { result -> items.filter { result.key == it.name } }
         reactions.renderReactions(reactionsOfUsers)
         popupReactionAndReply(items, reply, item)
-        renderMessageBottomSheet(delete)
+        renderMessageBottomSheet(item, delete, reportMessage, reportSender)
     }
 
     private fun popupReactionAndReply(items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit, item: EkoMessage) {
@@ -70,13 +74,24 @@ class ImageMessageComponent : ConstraintLayout {
         }
     }
 
-    private fun renderMessageBottomSheet(delete: (Boolean) -> Unit) {
+    private fun renderMessageBottomSheet(item: EkoMessage,
+                                         delete: (Boolean) -> Unit,
+                                         reportMessage: (ReportMessageSealType) -> Unit,
+                                         reportSender: (ReportSenderSealType) -> Unit) {
         image_more.setOnClickListener {
-            val messageBottomSheet = MessageBottomSheetFragment()
+            val messageBottomSheet = MessageBottomSheetFragment(item)
             messageBottomSheet.show((context as AppCompatActivity).supportFragmentManager, messageBottomSheet.tag)
 
             messageBottomSheet.renderDelete {
                 delete.invoke(it)
+                messageBottomSheet.dialog?.cancel()
+            }
+            messageBottomSheet.renderReportMessage {
+                reportMessage.invoke(it)
+                messageBottomSheet.dialog?.cancel()
+            }
+            messageBottomSheet.renderReportSender {
+                reportSender.invoke(it)
                 messageBottomSheet.dialog?.cancel()
             }
         }

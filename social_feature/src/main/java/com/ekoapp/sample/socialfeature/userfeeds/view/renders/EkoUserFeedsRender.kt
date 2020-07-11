@@ -2,7 +2,7 @@ package com.ekoapp.sample.socialfeature.userfeeds.view.renders
 
 import android.view.View
 import com.ekoapp.ekosdk.EkoPost
-import com.ekoapp.sample.core.seals.ReportSealType
+import com.ekoapp.sample.core.seals.ReportPostSealType
 import com.ekoapp.sample.socialfeature.components.BodyFeedsComponent
 import com.ekoapp.sample.socialfeature.components.FooterFeedsComponent
 import com.ekoapp.sample.socialfeature.components.HeaderFeedsComponent
@@ -24,7 +24,7 @@ fun EkoUserFeedsRenderData.userFeedRender(header: HeaderFeedsComponent,
                                           eventLike: (Boolean) -> Unit,
                                           eventEdit: (EditUserFeedsData) -> Unit,
                                           eventDelete: (Boolean) -> Unit,
-                                          eventReport: (ReportSealType) -> Unit) {
+                                          eventReport: (ReportPostSealType) -> Unit) {
 
     renderHeader(header, eventViewProfile, eventFavorite, eventEdit, body, eventDelete, eventReport)
     renderBody(body)
@@ -59,7 +59,7 @@ private fun EkoUserFeedsRenderData.renderHeader(header: HeaderFeedsComponent,
                                                 eventEdit: (EditUserFeedsData) -> Unit,
                                                 body: BodyFeedsComponent,
                                                 eventDelete: (Boolean) -> Unit,
-                                                eventReport: (ReportSealType) -> Unit) {
+                                                eventReport: (ReportPostSealType) -> Unit) {
     header.setupView(item)
     header.onClickFullName {
         eventViewProfile.invoke(UserData(item.postedUserId))

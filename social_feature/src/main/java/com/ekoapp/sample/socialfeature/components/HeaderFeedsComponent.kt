@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.ekoapp.ekosdk.EkoPost
-import com.ekoapp.sample.core.seals.ReportSealType
+import com.ekoapp.sample.core.seals.ReportPostSealType
 import com.ekoapp.sample.core.utils.getTimeAgo
 import com.ekoapp.sample.core.utils.setTint
 import com.ekoapp.sample.socialfeature.R
@@ -60,7 +60,7 @@ class HeaderFeedsComponent : ConstraintLayout {
 
     fun EkoPost.setMoreHorizView(edit: (Boolean) -> Unit,
                                  delete: (Boolean) -> Unit,
-                                 report: (ReportSealType) -> Unit) {
+                                 report: (ReportPostSealType) -> Unit) {
         image_more_horiz.setOnClickListener {
             renderBottomSheet(edit, delete, report)
         }
@@ -68,7 +68,7 @@ class HeaderFeedsComponent : ConstraintLayout {
 
     private fun EkoPost.renderBottomSheet(edit: (Boolean) -> Unit,
                                           delete: (Boolean) -> Unit,
-                                          report: (ReportSealType) -> Unit) {
+                                          report: (ReportPostSealType) -> Unit) {
         val feedsMoreHorizBottomSheet = FeedsMoreHorizBottomSheetFragment(this)
         feedsMoreHorizBottomSheet.show((context as AppCompatActivity).supportFragmentManager, feedsMoreHorizBottomSheet.tag)
 
@@ -91,7 +91,7 @@ class HeaderFeedsComponent : ConstraintLayout {
         }
     }
 
-    private fun FeedsMoreHorizBottomSheetFragment.reportFeeds(report: (ReportSealType) -> Unit) {
+    private fun FeedsMoreHorizBottomSheetFragment.reportFeeds(report: (ReportPostSealType) -> Unit) {
         renderReport {
             report.invoke(it)
             dialog?.cancel()

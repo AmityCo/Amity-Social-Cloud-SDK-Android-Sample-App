@@ -13,6 +13,8 @@ import com.ekoapp.sample.chatfeature.components.TextMessageComponent
 import com.ekoapp.sample.chatfeature.constants.ZERO_COUNT
 import com.ekoapp.sample.chatfeature.data.ReactionData
 import com.ekoapp.sample.chatfeature.messages.seals.MessageSealed
+import com.ekoapp.sample.core.seals.ReportMessageSealType
+import com.ekoapp.sample.core.seals.ReportSenderSealType
 import com.ekoapp.sample.core.utils.getTimeAgo
 
 
@@ -39,7 +41,9 @@ fun MessageRenderData.renderMessage(textTime: TextView,
                                     fileMessage: FileMessageComponent,
                                     eventReply: (EkoMessage) -> Unit,
                                     eventDelete: (EkoMessage) -> Unit,
-                                    eventReactions: () -> Unit) {
+                                    eventReactions: () -> Unit,
+                                    reportMessage: (ReportMessageSealType) -> Unit,
+                                    reportSender: (ReportSenderSealType) -> Unit) {
 
     textTime.text = item.createdAt.toDate().getTimeAgo()
     textMessageDeleted.visibility = View.GONE
@@ -61,7 +65,9 @@ fun MessageRenderData.renderMessage(textTime: TextView,
                         reactions,
                         reply = eventReply::invoke,
                         delete = { eventDelete.invoke(item) },
-                        reactionsOfUsers = eventReactions::invoke)
+                        reactionsOfUsers = eventReactions::invoke,
+                        reportMessage = reportMessage::invoke,
+                        reportSender = reportSender::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -76,7 +82,9 @@ fun MessageRenderData.renderMessage(textTime: TextView,
                         reactions,
                         reply = eventReply::invoke,
                         delete = { eventDelete.invoke(item) },
-                        reactionsOfUsers = eventReactions::invoke)
+                        reactionsOfUsers = eventReactions::invoke,
+                        reportMessage = reportMessage::invoke,
+                        reportSender = reportSender::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -91,7 +99,9 @@ fun MessageRenderData.renderMessage(textTime: TextView,
                         reactions,
                         reply = eventReply::invoke,
                         delete = { eventDelete.invoke(item) },
-                        reactionsOfUsers = eventReactions::invoke)
+                        reactionsOfUsers = eventReactions::invoke,
+                        reportMessage = reportMessage::invoke,
+                        reportSender = reportSender::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }
@@ -106,7 +116,9 @@ fun MessageRenderData.renderMessage(textTime: TextView,
                         reactions,
                         reply = eventReply::invoke,
                         delete = { eventDelete.invoke(item) },
-                        reactionsOfUsers = { eventReactions.invoke() })
+                        reactionsOfUsers = { eventReactions.invoke() },
+                        reportMessage = reportMessage::invoke,
+                        reportSender = reportSender::invoke)
                 renderLayoutSenderAndReceiver(iAMSender)
                 iAMSender.showOrHideAvatar()
             }

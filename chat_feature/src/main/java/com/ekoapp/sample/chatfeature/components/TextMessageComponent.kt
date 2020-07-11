@@ -14,6 +14,8 @@ import com.ekoapp.sample.chatfeature.dialogs.MessageBottomSheetFragment
 import com.ekoapp.sample.chatfeature.messages.view.list.ReactionsAdapter
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.rx.into
+import com.ekoapp.sample.core.seals.ReportMessageSealType
+import com.ekoapp.sample.core.seals.ReportSenderSealType
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.component_text_message.view.*
 
@@ -31,12 +33,14 @@ class TextMessageComponent : ConstraintLayout {
                    items: ArrayList<ReactionData>,
                    reply: (EkoMessage) -> Unit,
                    delete: (Boolean) -> Unit,
-                   reactionsOfUsers: () -> Unit) {
+                   reactionsOfUsers: () -> Unit,
+                   reportMessage: (ReportMessageSealType) -> Unit,
+                   reportSender: (ReportSenderSealType) -> Unit) {
         text_message_content.text = item.getData(TextData::class.java).text
         val reactions = item.reactions.flatMap { result -> items.filter { result.key == it.name } }
         reactions.renderReactions(reactionsOfUsers)
         popupReactionAndReply(items, reply, item)
-        renderMessageBottomSheet(delete)
+        renderMessageBottomSheet(item, delete, reportMessage, reportSender)
     }
 
     private fun popupReactionAndReply(items: ArrayList<ReactionData>, reply: (EkoMessage) -> Unit, item: EkoMessage) {
@@ -67,14 +71,25 @@ class TextMessageComponent : ConstraintLayout {
         }
     }
 
-    private fun renderMessageBottomSheet(delete: (Boolean) -> Unit) {
+    private fun renderMessageBottomSheet(item: EkoMessage,
+                                         delete: (Boolean) -> Unit,
+                                         reportMessage: (ReportMessageSealType) -> Unit,
+                                         reportSender: (ReportSenderSealType) -> Unit) {
         image_more.setOnClickListener {
-            val messageBottomSheet = MessageBottomSheetFragment()
+            val messageBottomSheet = MessageBottomSheetFragment(item)
             messageBottomSheet.show((context as AppCompatActivity).supportFragmentManager, messageBottomSheet.tag)
 
             messageBottomSheet.renderDelete {
                 //TODO Show Confirm Dialog
                 delete.invoke(it)
+                messageBottomSheet.dialog?.cancel()
+            }
+            messageBottomSheet.renderReportMessage {
+                reportMessage.invoke(it)
+                messageBottomSheet.dialog?.cancel()
+            }
+            messageBottomSheet.renderReportSender {
+                reportSender.invoke(it)
                 messageBottomSheet.dialog?.cancel()
             }
         }

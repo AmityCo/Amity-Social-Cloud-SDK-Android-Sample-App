@@ -9,7 +9,7 @@ import com.ekoapp.ekosdk.EkoPost
 import com.ekoapp.ekosdk.EkoUser
 import com.ekoapp.ekosdk.internal.data.model.EkoPostReaction
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
-import com.ekoapp.sample.core.seals.ReportSealType
+import com.ekoapp.sample.core.seals.ReportPostSealType
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.ekoapp.sample.core.utils.getCurrentClassAndMethodNames
@@ -91,12 +91,12 @@ class UserFeedsViewModel @Inject constructor(private val context: Context,
                 .subscribe()
     }
 
-    fun initReportPost(type: ReportSealType) {
+    fun initReportPost(type: ReportPostSealType) {
         when (type) {
-            is ReportSealType.FLAG -> {
+            is ReportPostSealType.FLAG -> {
                 bindReportPost(type.item)
             }
-            is ReportSealType.UNFLAG -> {
+            is ReportPostSealType.UNFLAG -> {
                 bindCancelReportPost(type.item)
             }
         }

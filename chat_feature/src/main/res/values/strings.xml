@@ -87,4 +87,8 @@
     <string name="temporarily_emoji_sleep">sleep</string>
     <string name="temporarily_emoji_smile">smile</string>
     <string name="temporarily_reactions">Reactions</string>
+    <string name="temporarily_report_message">Report Message</string>
+    <string name="temporarily_cancel_report_message">Cancel report message</string>
+    <string name="temporarily_report_sender">Report Sender</string>
+    <string name="temporarily_cancel_report_sender">Cancel report sender</string>
 </resources>

@@ -36,12 +36,15 @@ class MessageViewHolder(itemView: View) : BaseViewHolder<MessageViewData>(itemVi
                         itemView.image_message,
                         itemView.file_message,
                         item.viewModel::renderReplying,
-                        item.viewModel::bindDeleteMessage) {
-                    item.item.renderUsersWithReactions(
-                            (context as AppCompatActivity).supportFragmentManager,
-                            item.lifecycleOwner,
-                            item.viewModel)
-                }
+                        item.viewModel::bindDeleteMessage,
+                        {
+                            item.item.renderUsersWithReactions(
+                                    (context as AppCompatActivity).supportFragmentManager,
+                                    item.lifecycleOwner,
+                                    item.viewModel)
+                        },
+                        item.viewModel::initReportMessage,
+                        item.viewModel::initReportSender)
     }
 
     private fun EkoMessage.renderUsersWithReactions(fm: FragmentManager, lifecycleOwner: LifecycleOwner, viewModel: MessagesViewModel) {

@@ -16,6 +16,8 @@ import com.ekoapp.sample.chatfeature.repositories.UserRepository
 import com.ekoapp.sample.core.base.list.UPPERMOST
 import com.ekoapp.sample.core.base.viewmodel.DisposableViewModel
 import com.ekoapp.sample.core.rx.into
+import com.ekoapp.sample.core.seals.ReportMessageSealType
+import com.ekoapp.sample.core.seals.ReportSenderSealType
 import com.ekoapp.sample.core.ui.extensions.SingleLiveData
 import com.ekoapp.sample.core.ui.extensions.toLiveData
 import com.ekoapp.sample.core.utils.stringToSet
@@ -201,25 +203,47 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         }
     }
 
-    fun bindUnFlagMessage(messageId: String) {
+    fun initReportMessage(type: ReportMessageSealType) {
+        when (type) {
+            is ReportMessageSealType.FLAG -> {
+                bindReportMessage(type.item.messageId)
+            }
+            is ReportMessageSealType.UNFLAG -> {
+                bindCancelReportMessage(type.item.messageId)
+            }
+        }
+    }
+
+    private fun bindCancelReportMessage(messageId: String) {
         messageRepository.unFlag(messageId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
     }
 
-    fun bindFlagMessage(messageId: String) {
+    private fun bindReportMessage(messageId: String) {
         messageRepository.flag(messageId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
     }
 
-    fun bindUnFlagUser(userId: String) {
+    fun initReportSender(type: ReportSenderSealType) {
+        when (type) {
+            is ReportSenderSealType.FLAG -> {
+                bindReportUser(type.item.userId)
+            }
+            is ReportSenderSealType.UNFLAG -> {
+                bindCancelReportUser(type.item.userId)
+            }
+        }
+    }
+
+    private fun bindCancelReportUser(userId: String) {
         userRepository.unFlag(userId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
     }
 
-    fun bindFlagUser(userId: String) {
+    private fun bindReportUser(userId: String) {
         userRepository.flag(userId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()

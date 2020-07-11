@@ -27,4 +27,32 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PrivateResource" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_report_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_report"
+        android:drawablePadding="@dimen/material_layout_app_bar_icon_padding"
+        android:gravity="center_vertical"
+        android:padding="@dimen/material_layout_app_bar_icon_padding"
+        android:text="@string/temporarily_report_message"
+        android:textColor="@color/material_grey_50"
+        android:textSize="@dimen/material_typography_body1"
+        app:layout_constraintTop_toBottomOf="@id/text_delete"
+        tools:ignore="PrivateResource" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_report_sender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_report"
+        android:drawablePadding="@dimen/material_layout_app_bar_icon_padding"
+        android:gravity="center_vertical"
+        android:padding="@dimen/material_layout_app_bar_icon_padding"
+        android:text="@string/temporarily_report_sender"
+        android:textColor="@color/material_grey_50"
+        android:textSize="@dimen/material_typography_body1"
+        app:layout_constraintTop_toBottomOf="@id/text_report_message"
+        tools:ignore="PrivateResource" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
