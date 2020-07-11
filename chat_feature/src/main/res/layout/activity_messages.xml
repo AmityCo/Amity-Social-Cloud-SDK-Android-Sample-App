@@ -17,8 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/material_component_lists_padding_above_list"
-        android:isScrollContainer="false"
-        android:nestedScrollingEnabled="false"
         app:layout_constraintBottom_toTopOf="@id/main_send_message"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar_message" />

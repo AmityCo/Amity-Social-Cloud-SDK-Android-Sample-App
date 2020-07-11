@@ -121,8 +121,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/default_button"
         android:backgroundTint="@color/material_grey_700"
-        android:isScrollContainer="false"
-        android:nestedScrollingEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/view_message"
         app:layout_constraintTop_toBottomOf="@id/view_message" />
