@@ -7,6 +7,7 @@
     android:background="@drawable/default_bottom_sheet"
     android:backgroundTint="@color/material_grey_900"
     android:orientation="vertical"
+    android:padding="@dimen/material_component_dialogs_padding_around_buttons"
     app:behavior_hideable="true"
     app:behavior_peekHeight="@dimen/material_component_bottom_sheet_list_item_height"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
@@ -18,8 +19,9 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/material_component_text_fields_floating_label_padding_below_text_divider"
         android:text="@string/temporarily_reactions"
-        android:textColor="@color/material_light_white"
-        android:textSize="@dimen/material_typography_subheading" />
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/material_typography_subheading"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_users_reactions"
