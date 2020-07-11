@@ -2,10 +2,7 @@ package com.ekoapp.sample.chatfeature.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
-import com.ekoapp.ekosdk.EkoChannel
-import com.ekoapp.ekosdk.EkoChannelFilter
-import com.ekoapp.ekosdk.EkoClient
-import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.ekosdk.*
 import com.ekoapp.sample.chatfeature.data.NotificationData
 import com.google.common.collect.ImmutableSet
 import io.reactivex.Completable
@@ -96,5 +93,11 @@ class ChannelRepository @Inject constructor() {
     fun startReading(channelId: String) = EkoClient.newChannelRepository().membership(channelId).startReading()
 
     fun stopReading(channelId: String) = EkoClient.newChannelRepository().membership(channelId).stopReading()
+
+    fun getMembership(channelId: String): LiveData<PagedList<EkoChannelMembership>> {
+        return EkoClient.newChannelRepository()
+                .membership(channelId)
+                .collection
+    }
 
 }

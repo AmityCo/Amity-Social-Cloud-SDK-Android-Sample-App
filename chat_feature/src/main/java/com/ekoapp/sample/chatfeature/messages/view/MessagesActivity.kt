@@ -12,6 +12,7 @@ import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.chatfeature.data.ReplyingStateData
 import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
+import com.ekoapp.sample.chatfeature.intents.openMembershipPage
 import com.ekoapp.sample.chatfeature.intents.openReplyMessagesPage
 import com.ekoapp.sample.chatfeature.messages.view.list.MainMessageAdapter
 import com.ekoapp.sample.chatfeature.toolbars.MessageToolbarMenu
@@ -42,7 +43,8 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
                     }
                 },
                 eventMember = {
-
+                    viewModel?.getIntentChannelData(this::openMembershipPage)
+                    viewModel?.getIntentMessageData { openMembershipPage(ChannelData(it.channelId)) }
                 },
                 eventNotification = {
                     viewModel?.settingNotification()

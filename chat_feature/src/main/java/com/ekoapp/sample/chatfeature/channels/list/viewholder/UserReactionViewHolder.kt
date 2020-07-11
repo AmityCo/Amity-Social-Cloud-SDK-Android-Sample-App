@@ -7,7 +7,7 @@ import com.ekoapp.ekosdk.internal.data.model.EkoMessageReaction
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.ReactionData
 import com.ekoapp.sample.core.base.list.BaseViewHolder
-import kotlinx.android.synthetic.main.item_user_reaction.view.*
+import kotlinx.android.synthetic.main.item_user_message_reaction.view.*
 
 class UserReactionViewHolder(itemView: View) : BaseViewHolder<EkoMessageReaction>(itemView) {
 

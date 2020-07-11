@@ -21,6 +21,7 @@
     <application>
         <activity android:name=".settings.ChannelSettingsActivity" />
         <activity android:name=".messages.view.MessagesActivity" />
+        <activity android:name=".membership.view.MembershipActivity" />
 
         <activity android:name=".messagelist.ParentMessageListActivity" />
         <activity android:name=".messagelist.ChildMessageListActivity" />

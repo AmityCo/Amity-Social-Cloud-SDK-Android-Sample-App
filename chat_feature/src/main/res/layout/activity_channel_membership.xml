@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/material_light_black"
+    android:orientation="vertical"
+    tools:ignore="PrivateResource">
+
+    <com.ekoapp.sample.core.base.components.toolbar.UIKitAppbar
+        android:id="@+id/appbar_membership"
+        style="@style/AppTheme.Appbar"
+        android:background="@color/material_light_black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.ekoapp.sample.chatfeature.components.HeaderChannelMembershipComponent
+        android:id="@+id/header_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/material_component_lists_padding_above_list" />
+
+    <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+        android:id="@+id/recycler_users"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/material_component_lists_padding_above_list"
+        app:shimmer_demo_angle="20"
+        app:shimmer_demo_child_count="100"
+        app:shimmer_demo_grid_child_count="1"
+        app:shimmer_demo_layout="@layout/default_shimmer_channel_membership"
+        app:shimmer_demo_layout_manager_type="grid"
+        app:shimmer_demo_shimmer_color="@color/demo_light_transparent" />
+
+</LinearLayout>

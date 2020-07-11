@@ -98,4 +98,6 @@
     <string name="temporarily_error">Error</string>
     <string name="temporarily_allow_notification">Allow Notification</string>
     <string name="temporarily_do_not_allow_notification">Don\'t allow Notification</string>
+    <string name="temporarily_full_name">Anonymous</string>
+    <string name="temporarily_total_members">%s members</string>
 </resources>

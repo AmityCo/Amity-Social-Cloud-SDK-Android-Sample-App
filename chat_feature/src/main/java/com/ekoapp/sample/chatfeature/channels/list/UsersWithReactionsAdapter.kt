@@ -14,7 +14,7 @@ import com.ekoapp.sample.core.base.list.BaseViewHolder
 class UsersWithReactionsAdapter(private val context: Context, val items: ArrayList<ReactionData>) : EkoMessageReactionAdapter<BaseViewHolder<*>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> {
-        val view = LayoutInflater.from(context).inflate(R.layout.item_user_reaction, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_user_message_reaction, parent, false)
         return UserReactionViewHolder(view)
     }
 

@@ -9,6 +9,7 @@ import com.ekoapp.sample.chatfeature.constants.REQUEST_CODE_CHANNEL_SETTINGS
 import com.ekoapp.sample.chatfeature.constants.REQUEST_CODE_MESSAGES
 import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.data.MessageData
+import com.ekoapp.sample.chatfeature.membership.view.MembershipActivity
 import com.ekoapp.sample.chatfeature.messages.view.MessagesActivity
 import com.ekoapp.sample.chatfeature.settings.ChannelSettingsActivity
 
@@ -26,5 +27,11 @@ fun Fragment.openMessagesPage(data: ChannelData) {
 fun AppCompatActivity.openReplyMessagesPage(data: MessageData?) {
     val intent = Intent(this, MessagesActivity::class.java)
     intent.putExtra(EXTRA_REPLY_MESSAGES, data)
+    startActivityForResult(intent, REQUEST_CODE_MESSAGES)
+}
+
+fun AppCompatActivity.openMembershipPage(data: ChannelData) {
+    val intent = Intent(this, MembershipActivity::class.java)
+    intent.putExtra(EXTRA_CHANNEL_MESSAGES, data)
     startActivityForResult(intent, REQUEST_CODE_MESSAGES)
 }
