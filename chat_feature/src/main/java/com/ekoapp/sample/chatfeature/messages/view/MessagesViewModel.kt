@@ -39,6 +39,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     private val viewReplyRelay = SingleLiveData<MessageData>()
     private val reportMessageActionRelay = SingleLiveData<CharSequence>()
     private val reportSenderActionRelay = SingleLiveData<CharSequence>()
+    private val notificationTitleRelay = MutableLiveData<String>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
     private var messageDataIntent: MessageData? = null
@@ -50,6 +51,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
     fun observeViewReply(): SingleLiveData<MessageData> = viewReplyRelay
     fun observeReportMessage(): SingleLiveData<CharSequence> = reportMessageActionRelay
     fun observeReportSender(): SingleLiveData<CharSequence> = reportSenderActionRelay
+    fun observeNotificationTitle(): LiveData<String> = notificationTitleRelay
 
     init {
         getIntentChannelData {
@@ -154,7 +156,16 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                 .subscribe()
     }
 
-    fun bindNotification(channelId: String) {
+    fun settingNotification() {
+        getIntentChannelData {
+            bindGetSettingNotification(it.channelId)
+        }
+        getIntentMessageData {
+            bindGetSettingNotification(it.channelId)
+        }
+    }
+
+    private fun bindGetSettingNotification(channelId: String) {
         channelRepository.notification(channelId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -162,19 +173,40 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                 .subscribe()
     }
 
-    fun bindSetNotification(data: NotificationData) {
-        channelRepository.setNotification(data.channelId, data.isAllowed)
+    fun setTitleNotification() {
+        getIntentChannelData {
+            bindGetNotificationTitle(it.channelId)
+        }
+        getIntentMessageData {
+            bindGetNotificationTitle(it.channelId)
+        }
+    }
+
+    private fun bindGetNotificationTitle(channelId: String) {
+        channelRepository.notification(channelId)
                 .subscribeOn(Schedulers.io())
-                .doOnSubscribe {
-                    notificationRelay.onNext(NotificationData(data.channelId, data.isAllowed))
-                }
-                .doOnComplete {
-                    notificationRelay.onNext(NotificationData(data.channelId, data.isAllowed))
-                }
-                .doOnError {
-                    notificationRelay.onNext(NotificationData(data.channelId, !data.isAllowed))
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess {
+                    titleNotification(it.isAllowed)
                 }
                 .subscribe()
+    }
+
+    fun bindSetNotification(data: NotificationData) {
+        channelRepository.setNotification(data.channelId, !data.isAllowed)
+                .subscribeOn(Schedulers.io())
+                .doOnComplete {
+                    titleNotification(!data.isAllowed)
+                }
+                .subscribe()
+    }
+
+    private fun titleNotification(isAllowed: Boolean) {
+        if (isAllowed) {
+            notificationTitleRelay.postValue(context.getString(R.string.temporarily_do_not_allow_notification))
+        } else {
+            notificationTitleRelay.postValue(context.getString(R.string.temporarily_allow_notification))
+        }
     }
 
     fun bindDeleteMessage(message: EkoMessage) {

@@ -88,9 +88,9 @@ class ChannelRepository @Inject constructor() {
                 .map { NotificationData(channelId, it) }
     }
 
-    fun setNotification(channelId: String, isArrowed: Boolean): Completable {
+    fun setNotification(channelId: String, isAllowed: Boolean): Completable {
         return EkoClient.newChannelRepository().notification(channelId)
-                .setAllowed(isArrowed)
+                .setAllowed(isAllowed)
     }
 
     fun startReading(channelId: String) = EkoClient.newChannelRepository().membership(channelId).startReading()

@@ -32,12 +32,20 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     private lateinit var adapter: MainMessageAdapter
 
     override fun getToolbar(): ToolbarMenu? {
+        viewModel?.setTitleNotification()
         return MessageToolbarMenu(
+                notificationMenu = { menu ->
+                    viewModel?.apply {
+                        observeNotificationTitle().observeNotNull(this@MessagesActivity, {
+                            menu.title = it
+                        })
+                    }
+                },
                 eventMember = {
 
                 },
                 eventNotification = {
-
+                    viewModel?.settingNotification()
                 },
                 eventLeaveChannel = {
                     viewModel?.getIntentChannelData {
@@ -57,6 +65,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         val replyMessage = intent.extras?.getParcelable<MessageData>(EXTRA_REPLY_MESSAGES)
         viewModel.setupIntent(channelMessage)
         viewModel.setupIntent(replyMessage)
+        viewModel.observeNotification().observeNotNull(this, viewModel::bindSetNotification)
         setupAppBar(viewModel)
         renderList(viewModel)
         setupEvent(viewModel)
