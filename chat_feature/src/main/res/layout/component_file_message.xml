@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/md_listitem_control_margin"
         android:background="@drawable/default_background_message"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintStart_toEndOf="@id/avatar"
         tools:ignore="PrivateResource">
