@@ -21,6 +21,7 @@ class MainSendMessageComponent : ConstraintLayout {
     private val textRelay = PublishProcessor.create<SendMessageData>()
     private val replyingStateRelay = PublishProcessor.create<ReplyingStateData>()
     private var currentPhotoPath: String = ""
+    private var replyingStateData: ReplyingStateData? = null
 
     fun message() = textRelay
     fun replyingState() = replyingStateRelay
@@ -48,23 +49,28 @@ class MainSendMessageComponent : ConstraintLayout {
         })
     }
 
-    fun renderSelectPhoto(fm: FragmentManager) = send_message.imageMessage(fm) { currentPhotoPath = it }
+    fun renderSelectPhoto(replyingStateData: ReplyingStateData, fm: FragmentManager) {
+        this.replyingStateData = replyingStateData
+        send_message.imageMessage(fm) { currentPhotoPath = it }
+    }
 
-    fun renderImageSending(item: ReplyingStateData, uri: Uri? = null) {
+    fun renderImageSending(uri: Uri? = null) {
         if (uri != null) currentPhotoPath = RealPathUtil.getRealPath(context, uri)
         send_image.visibility = View.VISIBLE
         send_image.setupView(currentPhotoPath, sent = {
             send_image.visibility = View.GONE
-            if (item.isNotCancel) {
-                textRelay.onNext(
-                        SendMessageData(channelId = item.channelId, parentId = item.parentId, image = currentPhotoPath.getRealUri()))
-            } else {
-                if (item.isReplyPage) {
+            replyingStateData?.apply {
+                if (isNotCancel) {
                     textRelay.onNext(
-                            SendMessageData(channelId = item.channelId, parentId = item.parentId, image = currentPhotoPath.getRealUri()))
+                            SendMessageData(channelId = channelId, parentId = parentId, image = currentPhotoPath.getRealUri()))
                 } else {
-                    textRelay.onNext(
-                            SendMessageData(channelId = item.channelId, parentId = null, image = currentPhotoPath.getRealUri()))
+                    if (isReplyPage) {
+                        textRelay.onNext(
+                                SendMessageData(channelId = channelId, parentId = parentId, image = currentPhotoPath.getRealUri()))
+                    } else {
+                        textRelay.onNext(
+                                SendMessageData(channelId = channelId, parentId = null, image = currentPhotoPath.getRealUri()))
+                    }
                 }
             }
         })

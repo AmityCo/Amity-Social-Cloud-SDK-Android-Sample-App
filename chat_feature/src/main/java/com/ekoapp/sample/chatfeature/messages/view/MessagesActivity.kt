@@ -97,19 +97,24 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     }
 
     private fun ChannelData.renderSendMessage(isReplyPage: Boolean, viewModel: MessagesViewModel) {
-        main_send_message.renderTextSending(ReplyingStateData(channelId = channelId, parentId = parentId, isReplyPage = isReplyPage))
-        viewModel.getIntentMessageData {
-            main_send_message.renderTextSending(ReplyingStateData(channelId = it.channelId, parentId = it.parentId, isReplyPage = isReplyPage))
-
-        }
-        main_send_message.renderSelectPhoto(fm = supportFragmentManager)
-        main_send_message.renderSelectFile()
-
-        viewModel.initReplyingState(main_send_message.replyingState())
         viewModel.observeReplying().observeNotNull(this@MessagesActivity, {
             main_send_message.renderReplying(it, isReplyPage)
         })
-        viewModel.observeReplyingState().observeNotNull(this@MessagesActivity, main_send_message::renderTextSending)
+        viewModel.initReplyingState(main_send_message.replyingState())
+
+
+        main_send_message.renderTextSending(ReplyingStateData(channelId = channelId, parentId = parentId, isReplyPage = isReplyPage))
+        viewModel.getIntentMessageData {
+            main_send_message.renderTextSending(ReplyingStateData(channelId = it.channelId, parentId = it.parentId, isReplyPage = isReplyPage))
+        }
+        main_send_message.renderSelectPhoto(
+                replyingStateData = ReplyingStateData(channelId = channelId, parentId = parentId, isReplyPage = isReplyPage),
+                fm = supportFragmentManager)
+        main_send_message.renderSelectFile()
+        viewModel.observeReplyingState().observeNotNull(this@MessagesActivity, {
+            main_send_message.renderTextSending(it)
+            main_send_message.renderSelectPhoto(replyingStateData = it, fm = supportFragmentManager)
+        })
 
         viewModel.initMessage(main_send_message.message())
         viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendMessage)
@@ -171,15 +176,13 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_TAKE_PHOTO) {
             viewModel?.getIntentChannelData {
-                main_send_message.renderImageSending(ReplyingStateData(channelId = it.channelId, isReplyPage = false))
+                main_send_message.renderImageSending()
             }
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_SELECT_PHOTO) {
             viewModel?.getIntentChannelData {
-                main_send_message.renderImageSending(
-                        ReplyingStateData(channelId = it.channelId, isReplyPage = false),
-                        uri = data?.data)
+                main_send_message.renderImageSending(uri = data?.data)
             }
         }
 
