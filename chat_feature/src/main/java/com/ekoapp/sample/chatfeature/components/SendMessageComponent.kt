@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
+import com.ekoapp.sample.chatfeature.dialogs.CustomMessageBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.SelectPhotoBottomSheetFragment
 import com.ekoapp.sample.core.utils.dispatchSearchFileIntent
 import com.ekoapp.sample.core.utils.dispatchSearchImageFileIntent
@@ -63,6 +64,11 @@ class SendMessageComponent : ConstraintLayout {
         image_camera.setOnClickListener {
             renderSelectPhoto(fm, path)
         }
+    }
+
+    fun customMessage(fm: FragmentManager) {
+        val customMessageBottomSheet = CustomMessageBottomSheetFragment()
+        customMessageBottomSheet.show(fm, customMessageBottomSheet.tag)
     }
 
     fun attachMessage() {

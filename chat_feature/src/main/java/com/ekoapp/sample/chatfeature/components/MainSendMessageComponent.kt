@@ -59,6 +59,7 @@ class MainSendMessageComponent : ConstraintLayout {
         send_image.visibility = View.VISIBLE
         send_image.setupView(currentPhotoPath, sent = {
             send_image.visibility = View.GONE
+            hideReplying()
             replyingStateData?.apply {
                 if (isNotCancel) {
                     textRelay.onNext(
