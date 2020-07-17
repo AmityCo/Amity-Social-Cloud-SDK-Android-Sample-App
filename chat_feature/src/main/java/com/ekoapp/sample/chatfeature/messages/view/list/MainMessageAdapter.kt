@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import com.ekoapp.ekosdk.adapter.EkoMessageAdapter
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.chatfeature.data.MessageData
+import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.messages.view.MessagesViewModel
 import com.ekoapp.sample.chatfeature.messages.view.list.viewholder.MessageViewData
 import com.ekoapp.sample.chatfeature.messages.view.list.viewholder.MessageViewHolder
@@ -28,7 +28,7 @@ class MainMessageAdapter(private val context: Context,
                 getItem(position)?.let {
                     holder.bind(MessageViewData(it, lifecycleOwner, viewModel))
                     holder.clickViewReply {
-                        viewModel.renderViewReply(MessageData(channelId = it.channelId, parentId = it.messageId))
+                        viewModel.renderViewReply(ChannelData(channelId = it.channelId, parentId = it.messageId))
                     }
                 }
             }

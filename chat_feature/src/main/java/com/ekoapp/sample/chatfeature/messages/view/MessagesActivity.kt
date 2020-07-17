@@ -7,10 +7,7 @@ import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.constants.EXTRA_CHANNEL_MESSAGES
-import com.ekoapp.sample.chatfeature.constants.EXTRA_REPLY_MESSAGES
 import com.ekoapp.sample.chatfeature.data.ChannelData
-import com.ekoapp.sample.chatfeature.data.MessageData
-import com.ekoapp.sample.chatfeature.data.ReplyingStateData
 import com.ekoapp.sample.chatfeature.di.DaggerChatActivityComponent
 import com.ekoapp.sample.chatfeature.intents.openMembershipPage
 import com.ekoapp.sample.chatfeature.intents.openReplyMessagesPage
@@ -44,7 +41,6 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
                 },
                 eventMember = {
                     viewModel?.getIntentChannelData(this::openMembershipPage)
-                    viewModel?.getIntentMessageData { openMembershipPage(ChannelData(it.channelId)) }
                 },
                 eventNotification = {
                     viewModel?.settingNotification()
@@ -64,9 +60,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
 
     override fun bindViewModel(viewModel: MessagesViewModel) {
         val channelMessage = intent.extras?.getParcelable<ChannelData>(EXTRA_CHANNEL_MESSAGES)
-        val replyMessage = intent.extras?.getParcelable<MessageData>(EXTRA_REPLY_MESSAGES)
         viewModel.setupIntent(channelMessage)
-        viewModel.setupIntent(replyMessage)
         viewModel.observeNotification().observeNotNull(this, viewModel::bindSetNotification)
         setupAppBar(viewModel)
         renderList(viewModel)
@@ -79,44 +73,24 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
                 .stackFromEnd(true)
                 .build(adapter)
         viewModel.getIntentChannelData {
-            viewModel.bindGetMessageCollectionByTags(MessageData(channelId = it.channelId))
-                    .observeNotNull(this, { items ->
-                        adapter.submitList(items)
-                        recyclerBuilder.afterSent(viewModel, items)
-                    })
-            it.renderSendMessage(false, viewModel)
-        }
-        viewModel.getIntentMessageData {
             viewModel.bindGetMessageCollectionByTags(it)
                     .observeNotNull(this, { items ->
                         adapter.submitList(items)
                         recyclerBuilder.afterSent(viewModel, items)
                     })
-            ChannelData(channelId = it.channelId, parentId = it.parentId).renderSendMessage(true, viewModel)
+            it.renderSendMessage(viewModel)
         }
     }
 
-    private fun ChannelData.renderSendMessage(isReplyPage: Boolean, viewModel: MessagesViewModel) {
-        viewModel.observeReplying().observeNotNull(this@MessagesActivity, {
-            main_send_message.renderReplying(it, isReplyPage)
-        })
-        viewModel.initReplyingState(main_send_message.replyingState())
-
-
-        main_send_message.renderTextSending(ReplyingStateData(channelId = channelId, parentId = parentId, isReplyPage = isReplyPage))
-        viewModel.getIntentMessageData {
-            main_send_message.renderTextSending(ReplyingStateData(channelId = it.channelId, parentId = it.parentId, isReplyPage = isReplyPage))
-        }
-        main_send_message.renderSelectPhoto(
-                replyingStateData = ReplyingStateData(channelId = channelId, parentId = parentId, isReplyPage = isReplyPage),
-                fm = supportFragmentManager)
+    private fun ChannelData.renderSendMessage(viewModel: MessagesViewModel) {
+        main_send_message.renderTextSending()
+        main_send_message.renderSelectPhoto(fm = supportFragmentManager)
         main_send_message.renderSelectFile()
-        viewModel.observeReplyingState().observeNotNull(this@MessagesActivity, {
-            main_send_message.renderTextSending(it)
-            main_send_message.renderSelectPhoto(replyingStateData = it, fm = supportFragmentManager)
+        viewModel.observeClickReply().observeNotNull(this@MessagesActivity, {
+            main_send_message.renderReplyingView(it) { messageId -> viewModel.replyMessageId = messageId }
         })
 
-        viewModel.initMessage(main_send_message.message())
+        viewModel.initMessage(this, main_send_message.message())
         viewModel.observeMessage().observeNotNull(this@MessagesActivity, viewModel::bindSendMessage)
     }
 
@@ -127,7 +101,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     }
 
     private fun setupEvent(viewModel: MessagesViewModel) {
-        viewModel.observeViewReply().observeNotNull(this, this::openReplyMessagesPage)
+        viewModel.observeClickViewReply().observeNotNull(this, this::openReplyMessagesPage)
         viewModel.observeReportMessage().observeNotNull(this, SnackBarUtil(fragmentActivity = this)::info)
         viewModel.observeReportSender().observeNotNull(this, SnackBarUtil(fragmentActivity = this)::info)
     }
@@ -135,10 +109,11 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     private fun setupAppBar(viewModel: MessagesViewModel) {
         appbar_message.setup(this, true)
         viewModel.getIntentChannelData {
-            appbar_message.setTitle(it.channelId)
-        }
-        viewModel.getIntentMessageData {
-            appbar_message.setTitle(String.format(getString(R.string.temporarily_replied_to, it.parentId)))
+            if (it.parentId == null) {
+                appbar_message.setTitle(it.channelId)
+            } else {
+                appbar_message.setTitle(String.format(getString(R.string.temporarily_replied_to, it.parentId)))
+            }
         }
     }
 
@@ -175,21 +150,15 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_TAKE_PHOTO) {
-            viewModel?.getIntentChannelData {
-                main_send_message.renderImageSending()
-            }
+            main_send_message.renderImageSending()
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == IntentRequestCode.REQUEST_SELECT_PHOTO) {
-            viewModel?.getIntentChannelData {
-                main_send_message.renderImageSending(uri = data?.data)
-            }
+            main_send_message.renderImageSending(uri = data?.data)
         }
 
         if (resultCode == Activity.RESULT_OK && requestCode == PICKFILE_REQUEST_CODE) {
-            viewModel?.getIntentChannelData {
-                main_send_message.renderAttachSending(channelId = it.channelId, uri = data?.data)
-            }
+            main_send_message.renderAttachSending(uri = data?.data)
         }
     }
 }

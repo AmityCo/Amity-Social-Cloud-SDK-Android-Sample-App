@@ -8,6 +8,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class SendMessageData(val channelId: String,
                            val parentId: String? = null,
+                           val messageId: String? = null,
                            val text: String? = null,
                            val image: Uri? = null,
                            val file: Uri? = null,

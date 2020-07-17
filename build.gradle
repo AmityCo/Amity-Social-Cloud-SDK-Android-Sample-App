@@ -3,7 +3,7 @@
 buildscript {
     ext {
         kotlin_version = '1.3.72'
-        eko_sdk_version = '3.8.4-beta1'
+        eko_sdk_version = '3.8.4-beta2'
         nav_version = '2.3.0-beta01'
         dagger_version = '2.26'
         glide_version = '4.10.0'

@@ -10,21 +10,16 @@ import androidx.fragment.app.FragmentManager
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.internal.util.RealPathUtil
 import com.ekoapp.sample.chatfeature.R
-import com.ekoapp.sample.chatfeature.data.ReplyingStateData
-import com.ekoapp.sample.chatfeature.data.SendMessageData
+import com.ekoapp.sample.chatfeature.data.MessageData
 import com.ekoapp.sample.core.utils.getRealUri
 import io.reactivex.processors.PublishProcessor
 import kotlinx.android.synthetic.main.component_main_send_message.view.*
 
-
 class MainSendMessageComponent : ConstraintLayout {
-    private val textRelay = PublishProcessor.create<SendMessageData>()
-    private val replyingStateRelay = PublishProcessor.create<ReplyingStateData>()
-    private var currentPhotoPath: String = ""
-    private var replyingStateData: ReplyingStateData? = null
+    private val messageRelay = PublishProcessor.create<MessageData>()
+    private var currentPath: String = ""
 
-    fun message() = textRelay
-    fun replyingState() = replyingStateRelay
+    fun message() = messageRelay
 
     init {
         LayoutInflater.from(context).inflate(R.layout.component_main_send_message, this, true)
@@ -34,84 +29,48 @@ class MainSendMessageComponent : ConstraintLayout {
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
 
-    fun renderTextSending(item: ReplyingStateData) {
+    fun renderTextSending() {
         send_message.textMessage(sent = {
             hideReplying()
-            if (item.isNotCancel) {
-                textRelay.onNext(SendMessageData(channelId = item.channelId, parentId = item.parentId, text = it))
-            } else {
-                if (item.isReplyPage) {
-                    textRelay.onNext(SendMessageData(channelId = item.channelId, parentId = item.parentId, text = it))
-                } else {
-                    textRelay.onNext(SendMessageData(channelId = item.channelId, parentId = null, text = it))
-                }
-            }
+            messageRelay.onNext(MessageData(text = it))
         })
     }
 
-    fun renderSelectPhoto(replyingStateData: ReplyingStateData, fm: FragmentManager) {
-        this.replyingStateData = replyingStateData
-        send_message.imageMessage(fm) { currentPhotoPath = it }
+    fun renderSelectPhoto(fm: FragmentManager) {
+        send_message.imageMessage(fm) { currentPath = it }
     }
 
     fun renderImageSending(uri: Uri? = null) {
-        if (uri != null) currentPhotoPath = RealPathUtil.getRealPath(context, uri)
+        if (uri != null) currentPath = RealPathUtil.getRealPath(context, uri)
         send_image.visibility = View.VISIBLE
-        send_image.setupView(currentPhotoPath, sent = {
+        send_image.setupView(currentPath, sent = {
             send_image.visibility = View.GONE
             hideReplying()
-            replyingStateData?.apply {
-                if (isNotCancel) {
-                    textRelay.onNext(
-                            SendMessageData(channelId = channelId, parentId = parentId, image = currentPhotoPath.getRealUri()))
-                } else {
-                    if (isReplyPage) {
-                        textRelay.onNext(
-                                SendMessageData(channelId = channelId, parentId = parentId, image = currentPhotoPath.getRealUri()))
-                    } else {
-                        textRelay.onNext(
-                                SendMessageData(channelId = channelId, parentId = null, image = currentPhotoPath.getRealUri()))
-                    }
-                }
-            }
+            messageRelay.onNext(MessageData(image = currentPath.getRealUri()))
         })
     }
 
-    fun renderAttachSending(channelId: String, parentId: String? = null, uri: Uri? = null) {
-        if (uri != null) currentPhotoPath = RealPathUtil.getRealPath(context, uri)
+    fun renderSelectFile() {
+        send_message.attachMessage()
+    }
+
+    fun renderAttachSending(uri: Uri? = null) {
+        if (uri != null) currentPath = RealPathUtil.getRealPath(context, uri)
         send_image.visibility = View.VISIBLE
-        send_image.setupView(currentPhotoPath, sent = {
+        send_image.setupView(currentPath, sent = {
             send_image.visibility = View.GONE
-            textRelay.onNext(
-                    SendMessageData(channelId = channelId, parentId = parentId, file = currentPhotoPath.getRealUri()))
+            hideReplying()
+            messageRelay.onNext(MessageData(file = currentPath.getRealUri()))
         })
     }
 
-    fun renderSelectFile() = send_message.attachMessage()
-
-    fun renderReplying(item: EkoMessage, isReplyPage: Boolean) {
+    fun renderReplyingView(item: EkoMessage, replyingAction: (String?) -> Unit) {
         replying_to.visibility = View.VISIBLE
         replying_to.setView(item)
-        replyingStateRelay.onNext(ReplyingStateData(
-                channelId = item.channelId,
-                parentId = item.messageId,
-                isNotCancel = true,
-                isReplyPage = isReplyPage))
+        replyingAction.invoke(item.messageId)
         replying_to.cancelReplying {
             hideReplying()
-            if (isReplyPage) {
-                replyingStateRelay.onNext(ReplyingStateData(
-                        channelId = item.channelId,
-                        parentId = item.parentId,
-                        isNotCancel = false,
-                        isReplyPage = isReplyPage))
-            } else {
-                replyingStateRelay.onNext(ReplyingStateData(
-                        channelId = item.channelId,
-                        parentId = null,
-                        isNotCancel = false,
-                        isReplyPage = isReplyPage))
-            }
+            replyingAction.invoke(null)
         }
     }
 

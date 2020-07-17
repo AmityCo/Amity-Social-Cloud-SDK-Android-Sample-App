@@ -6,7 +6,7 @@ import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.ekosdk.internal.data.model.EkoMessageReaction
-import com.ekoapp.sample.chatfeature.data.MessageData
+import com.ekoapp.sample.chatfeature.data.ChannelData
 import com.ekoapp.sample.chatfeature.data.SendMessageData
 import com.google.gson.JsonObject
 import io.reactivex.Completable
@@ -22,9 +22,10 @@ class MessageRepository @Inject constructor() {
         return EkoClient.newMessageRepository().setTags(messageId, tags)
     }
 
-    fun getMessageCollectionByTags(data: MessageData): LiveData<PagedList<EkoMessage>> {
+    fun getMessageCollectionByTags(data: ChannelData): LiveData<PagedList<EkoMessage>> {
         data.apply {
-            return EkoClient.newMessageRepository().getMessageCollectionByTags(channelId,
+            return EkoClient.newMessageRepository().getMessageCollectionByTags(
+                    channelId,
                     parentId,
                     includingTags,
                     excludingTags,
@@ -40,7 +41,7 @@ class MessageRepository @Inject constructor() {
         data.apply {
             return EkoClient.newMessageRepository().createMessage(channelId)
                     .text(text)
-                    .parentId(parentId)
+                    .parentId(data.messageId)
                     .build()
                     .send()
         }
@@ -52,7 +53,7 @@ class MessageRepository @Inject constructor() {
             custom?.map { metadata.addProperty(it.key, it.value); }
             return EkoClient.newMessageRepository().createMessage(channelId)
                     .custom(metadata)
-                    .parentId(parentId)
+                    .parentId(data.messageId)
                     .build()
                     .send()
         }
@@ -62,7 +63,7 @@ class MessageRepository @Inject constructor() {
         data.apply {
             return EkoClient.newMessageRepository().createMessage(channelId)
                     .file(file)
-                    .parentId(parentId)
+                    .parentId(data.messageId)
                     .build()
                     .send()
         }
@@ -72,7 +73,7 @@ class MessageRepository @Inject constructor() {
         data.apply {
             return EkoClient.newMessageRepository().createMessage(channelId)
                     .image(image)
-                    .parentId(parentId)
+                    .parentId(data.messageId)
                     .build()
                     .send()
         }

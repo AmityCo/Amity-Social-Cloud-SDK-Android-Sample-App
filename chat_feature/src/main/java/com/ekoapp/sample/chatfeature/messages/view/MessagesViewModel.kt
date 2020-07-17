@@ -32,34 +32,28 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                                             private val messageRepository: MessageRepository,
                                             private val userRepository: UserRepository) : DisposableViewModel() {
 
-    private val textRelay = MutableLiveData<SendMessageData>()
-    private val replyingRelay = MutableLiveData<EkoMessage>()
-    private val replyingStateRelay = MutableLiveData<ReplyingStateData>()
+    private val messageRelay = MutableLiveData<SendMessageData>()
+    private val clickReplyRelay = MutableLiveData<EkoMessage>()
+    private val clickViewReplyRelay = SingleLiveData<ChannelData>()
     private val afterSentRelay = MutableLiveData<Unit>()
-    private val viewReplyRelay = SingleLiveData<MessageData>()
     private val reportMessageActionRelay = SingleLiveData<CharSequence>()
     private val reportSenderActionRelay = SingleLiveData<CharSequence>()
     private val notificationTitleRelay = MutableLiveData<String>()
     private val notificationRelay = PublishProcessor.create<NotificationData>()
     private var channelDataIntent: ChannelData? = null
-    private var messageDataIntent: MessageData? = null
+    var replyMessageId: String? = null
 
-    fun observeMessage(): LiveData<SendMessageData> = textRelay
-    fun observeReplying(): LiveData<EkoMessage> = replyingRelay
-    fun observeReplyingState(): LiveData<ReplyingStateData> = replyingStateRelay
+    fun observeMessage(): LiveData<SendMessageData> = messageRelay
+    fun observeClickReply(): LiveData<EkoMessage> = clickReplyRelay
+    fun observeClickViewReply(): SingleLiveData<ChannelData> = clickViewReplyRelay
     fun observeAfterSent(): LiveData<Unit> = afterSentRelay
-    fun observeViewReply(): SingleLiveData<MessageData> = viewReplyRelay
     fun observeReportMessage(): SingleLiveData<CharSequence> = reportMessageActionRelay
     fun observeReportSender(): SingleLiveData<CharSequence> = reportSenderActionRelay
     fun observeNotificationTitle(): LiveData<String> = notificationTitleRelay
 
     init {
         getIntentChannelData {
-            textRelay.postValue(SendMessageData(channelId = it.channelId, text = ""))
-        }
-
-        getIntentMessageData {
-            textRelay.postValue(SendMessageData(channelId = it.channelId, text = ""))
+            messageRelay.postValue(SendMessageData(channelId = it.channelId, text = ""))
         }
     }
 
@@ -67,36 +61,32 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         channelDataIntent?.let(actionRelay::invoke)
     }
 
-    fun getIntentMessageData(actionRelay: (MessageData) -> Unit) {
-        messageDataIntent?.let(actionRelay::invoke)
-    }
-
     fun setupIntent(data: ChannelData?) {
         channelDataIntent = data
     }
 
-    fun setupIntent(data: MessageData?) {
-        messageDataIntent = data
-    }
-
     fun renderReplying(item: EkoMessage) {
-        replyingRelay.postValue(item)
+        clickReplyRelay.postValue(item)
     }
 
-    fun renderViewReply(item: MessageData) {
-        viewReplyRelay.postValue(item)
+    fun renderViewReply(item: ChannelData) {
+        clickViewReplyRelay.postValue(item)
     }
 
-    fun initMessage(item: Flowable<SendMessageData>) {
-        item.subscribeOn(Schedulers.io())
+    fun initMessage(item: ChannelData, message: Flowable<MessageData>) {
+        message.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(textRelay::postValue) into disposables
-    }
-
-    fun initReplyingState(item: Flowable<ReplyingStateData>) {
-        item.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(replyingStateRelay::postValue) into disposables
+                .map {
+                    SendMessageData(
+                            channelId = item.channelId,
+                            parentId = item.parentId,
+                            messageId = replyMessageId,
+                            text = it.text,
+                            image = it.image,
+                            file = it.file,
+                            custom = it.custom)
+                }
+                .subscribe(messageRelay::postValue) into disposables
     }
 
     fun observeNotification() = notificationRelay.toLiveData()
@@ -105,7 +95,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
 
     fun bindStopReading(channelId: String) = channelRepository.stopReading(channelId)
 
-    fun bindGetMessageCollectionByTags(data: MessageData): LiveData<PagedList<EkoMessage>> {
+    fun bindGetMessageCollectionByTags(data: ChannelData): LiveData<PagedList<EkoMessage>> {
         return messageRepository.getMessageCollectionByTags(data)
     }
 
@@ -142,6 +132,7 @@ class MessagesViewModel @Inject constructor(private val context: Context,
                         .subscribe()
             }
         }
+        replyMessageId = null
     }
 
     fun bindSetTagsChannel(channelId: String, tags: String) {
@@ -160,9 +151,6 @@ class MessagesViewModel @Inject constructor(private val context: Context,
         getIntentChannelData {
             bindGetSettingNotification(it.channelId)
         }
-        getIntentMessageData {
-            bindGetSettingNotification(it.channelId)
-        }
     }
 
     private fun bindGetSettingNotification(channelId: String) {
@@ -175,9 +163,6 @@ class MessagesViewModel @Inject constructor(private val context: Context,
 
     fun setTitleNotification() {
         getIntentChannelData {
-            bindGetNotificationTitle(it.channelId)
-        }
-        getIntentMessageData {
             bindGetNotificationTitle(it.channelId)
         }
     }

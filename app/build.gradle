@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def eko_sdk_version = '3.8.4-beta1'
+def eko_sdk_version = '3.8.4-beta2'
 
 android {
     compileSdkVersion 29
