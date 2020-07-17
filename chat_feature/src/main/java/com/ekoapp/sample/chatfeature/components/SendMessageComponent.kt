@@ -67,8 +67,10 @@ class SendMessageComponent : ConstraintLayout {
     }
 
     fun customMessage(fm: FragmentManager) {
-        val customMessageBottomSheet = CustomMessageBottomSheetFragment()
-        customMessageBottomSheet.show(fm, customMessageBottomSheet.tag)
+        image_code.setOnClickListener {
+            val customMessageBottomSheet = CustomMessageBottomSheetFragment()
+            customMessageBottomSheet.show(fm, customMessageBottomSheet.tag)
+        }
     }
 
     fun attachMessage() {

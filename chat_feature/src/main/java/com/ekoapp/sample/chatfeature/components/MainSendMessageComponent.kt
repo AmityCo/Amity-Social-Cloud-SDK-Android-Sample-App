@@ -64,6 +64,10 @@ class MainSendMessageComponent : ConstraintLayout {
         })
     }
 
+    fun renderCustomSending(fm: FragmentManager) {
+        send_message.customMessage(fm)
+    }
+
     fun renderReplyingView(item: EkoMessage, replyingAction: (String?) -> Unit) {
         replying_to.visibility = View.VISIBLE
         replying_to.setView(item)

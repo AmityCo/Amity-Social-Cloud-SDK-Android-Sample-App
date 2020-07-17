@@ -86,6 +86,7 @@ class MessagesActivity : SingleViewModelActivity<MessagesViewModel>() {
         main_send_message.renderTextSending()
         main_send_message.renderSelectPhoto(fm = supportFragmentManager)
         main_send_message.renderSelectFile()
+        main_send_message.renderCustomSending(fm = supportFragmentManager)
         viewModel.observeClickReply().observeNotNull(this@MessagesActivity, {
             main_send_message.renderReplyingView(it) { messageId -> viewModel.replyMessageId = messageId }
         })

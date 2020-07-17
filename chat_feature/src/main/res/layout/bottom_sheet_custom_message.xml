@@ -17,17 +17,10 @@
         android:id="@+id/text_custom_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/material_component_text_fields_floating_label_padding_below_text_divider"
         android:text="@string/temporarily_developer_mode"
         android:textColor="@color/material_light_white"
         android:textSize="@dimen/material_typography_subheading"
         android:textStyle="bold" />
-
-    <com.ekoapp.sample.chatfeature.components.ReplyingToComponent
-        android:id="@+id/replying_to"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/material_layout_app_bar_height"
-        android:padding="@dimen/material_component_text_fields_floating_label_padding_below_text_divider" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edit_text_key"
@@ -41,7 +34,8 @@
         android:paddingStart="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
         android:paddingEnd="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
         android:textColor="@color/material_light_white"
-        android:textColorHint="@color/material_light_white" />
+        android:textColorHint="@color/material_light_white"
+        android:textSize="@dimen/material_typography_button" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/edit_text_value"
@@ -55,7 +49,8 @@
         android:paddingStart="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
         android:paddingEnd="@dimen/material_layout_vertical_spacing_right_side_icons_margin"
         android:textColor="@color/material_light_white"
-        android:textColorHint="@color/material_light_white" />
+        android:textColorHint="@color/material_light_white"
+        android:textSize="@dimen/material_typography_button" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_send"
@@ -64,7 +59,7 @@
         android:layout_marginTop="@dimen/material_component_button_dense_height"
         android:background="@drawable/default_button"
         android:backgroundTint="@color/colorPrimary"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:paddingStart="@dimen/material_component_button_text_left_and_right_padding"
         android:paddingEnd="@dimen/material_component_button_text_left_and_right_padding"
         android:text="@string/general_send"
