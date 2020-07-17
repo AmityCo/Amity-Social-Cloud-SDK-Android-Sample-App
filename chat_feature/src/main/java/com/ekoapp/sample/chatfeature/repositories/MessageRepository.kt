@@ -38,17 +38,15 @@ class MessageRepository @Inject constructor() {
     }
 
     fun textMessage(data: SendMessageData): Completable {
-        if (data.messageId == null) {
-            data.apply {
-                return EkoClient.newMessageRepository().createMessage(channelId)
+        data.apply {
+            return if (data.messageId == null) {
+                EkoClient.newMessageRepository().createMessage(channelId)
                         .text(text)
                         .parentId(data.parentId)
                         .build()
                         .send()
-            }
-        } else {
-            data.apply {
-                return EkoClient.newMessageRepository().createMessage(channelId)
+            } else {
+                EkoClient.newMessageRepository().createMessage(channelId)
                         .text(text)
                         .parentId(data.messageId)
                         .build()
