@@ -59,31 +59,55 @@ class MessageRepository @Inject constructor() {
         val metadata = JsonObject()
         data.apply {
             custom?.map { metadata.addProperty(it.key, it.value); }
-            return EkoClient.newMessageRepository().createMessage(channelId)
-                    .custom(metadata)
-                    .parentId(data.messageId)
-                    .build()
-                    .send()
+            return if (data.messageId == null) {
+                EkoClient.newMessageRepository().createMessage(channelId)
+                        .custom(metadata)
+                        .parentId(data.parentId)
+                        .build()
+                        .send()
+            } else {
+                EkoClient.newMessageRepository().createMessage(channelId)
+                        .custom(metadata)
+                        .parentId(data.messageId)
+                        .build()
+                        .send()
+            }
         }
     }
 
     fun fileMessage(data: SendMessageData): Completable {
         data.apply {
-            return EkoClient.newMessageRepository().createMessage(channelId)
-                    .file(file)
-                    .parentId(data.messageId)
-                    .build()
-                    .send()
+            return if (data.messageId == null) {
+                EkoClient.newMessageRepository().createMessage(channelId)
+                        .file(file)
+                        .parentId(data.parentId)
+                        .build()
+                        .send()
+            } else {
+                EkoClient.newMessageRepository().createMessage(channelId)
+                        .file(file)
+                        .parentId(data.messageId)
+                        .build()
+                        .send()
+            }
         }
     }
 
     fun imageMessage(data: SendMessageData): Completable {
         data.apply {
-            return EkoClient.newMessageRepository().createMessage(channelId)
-                    .image(image)
-                    .parentId(data.messageId)
-                    .build()
-                    .send()
+            return if (data.messageId == null) {
+                EkoClient.newMessageRepository().createMessage(channelId)
+                        .image(image)
+                        .parentId(data.parentId)
+                        .build()
+                        .send()
+            } else {
+                EkoClient.newMessageRepository().createMessage(channelId)
+                        .image(image)
+                        .parentId(data.messageId)
+                        .build()
+                        .send()
+            }
         }
     }
 
