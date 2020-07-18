@@ -16,8 +16,10 @@ import com.ekoapp.sample.core.base.list.RecyclerBuilder
 import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.seals.ReportMessageSealType
 import com.ekoapp.sample.core.seals.ReportSenderSealType
+import com.ekoapp.sample.core.utils.jsonFormat
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.component_text_message.view.*
+
 
 class TextMessageComponent : ConstraintLayout {
 
@@ -37,6 +39,20 @@ class TextMessageComponent : ConstraintLayout {
                    reportMessage: (ReportMessageSealType) -> Unit,
                    reportSender: (ReportSenderSealType) -> Unit) {
         text_message_content.text = item.getData(TextData::class.java).text
+        val reactions = item.reactions.flatMap { result -> items.filter { result.key == it.name } }
+        reactions.renderReactions(reactionsOfUsers)
+        popupReactionAndReply(items, reply, item)
+        renderMessageBottomSheet(item, delete, reportMessage, reportSender)
+    }
+
+    fun setCustomMessage(item: EkoMessage,
+                         items: ArrayList<ReactionData>,
+                         reply: (EkoMessage) -> Unit,
+                         delete: (Boolean) -> Unit,
+                         reactionsOfUsers: () -> Unit,
+                         reportMessage: (ReportMessageSealType) -> Unit,
+                         reportSender: (ReportSenderSealType) -> Unit) {
+        text_message_content.text = item.data.toString().jsonFormat()
         val reactions = item.reactions.flatMap { result -> items.filter { result.key == it.name } }
         reactions.renderReactions(reactionsOfUsers)
         popupReactionAndReply(items, reply, item)

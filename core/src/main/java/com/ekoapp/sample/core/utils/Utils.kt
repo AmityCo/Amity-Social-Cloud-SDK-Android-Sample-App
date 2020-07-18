@@ -71,3 +71,24 @@ fun String.stringToSet(): Set<String> {
 }
 
 fun EditText.isEmpty(): Boolean = text.toString().trim { it <= ' ' }.isEmpty()
+
+fun String.jsonFormat(): String {
+    val json = StringBuilder()
+    var indentString = ""
+    for (element in this) {
+        when (element) {
+            '{', '[' -> {
+                json.append(indentString).append(element).append("\n")
+                indentString += "\t"
+                json.append(indentString)
+            }
+            '}', ']' -> {
+                indentString = indentString.replaceFirst("\t".toRegex(), "")
+                json.append("\n").append(indentString).append(element)
+            }
+            ',' -> json.append(element).append("\n").append(indentString)
+            else -> json.append(element)
+        }
+    }
+    return json.toString()
+}

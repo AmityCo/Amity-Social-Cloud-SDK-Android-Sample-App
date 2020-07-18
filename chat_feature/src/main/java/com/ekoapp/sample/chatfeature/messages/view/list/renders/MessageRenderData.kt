@@ -111,7 +111,7 @@ fun MessageRenderData.renderMessage(textTime: TextView,
             imageMessage.visibility = View.GONE
             fileMessage.visibility = View.GONE
             textMessage.apply {
-                setMessage(
+                setCustomMessage(
                         item,
                         reactions,
                         reply = eventReply::invoke,

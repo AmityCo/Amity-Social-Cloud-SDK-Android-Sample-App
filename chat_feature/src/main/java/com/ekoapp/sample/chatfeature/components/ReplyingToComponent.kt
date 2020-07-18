@@ -57,7 +57,7 @@ class ReplyingToComponent : ConstraintLayout {
             }
             is MessageSealed.Custom -> {
                 image_replying.visibility = View.INVISIBLE
-                text_replying_subtitle.text = getData(TextData::class.java).text
+                text_replying_subtitle.text = data.toString()
             }
         }
     }
