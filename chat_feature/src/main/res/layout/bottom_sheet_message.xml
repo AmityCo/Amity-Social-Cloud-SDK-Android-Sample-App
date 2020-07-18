@@ -45,7 +45,7 @@
         android:id="@+id/text_report_sender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_report"
+        android:drawableStart="@drawable/ic_report_user"
         android:drawablePadding="@dimen/material_layout_app_bar_icon_padding"
         android:gravity="center_vertical"
         android:padding="@dimen/material_layout_app_bar_icon_padding"
