@@ -2,6 +2,7 @@ package com.ekoapp.sample.core.utils
 
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.core.widget.ImageViewCompat
@@ -68,3 +69,5 @@ fun String.stringToSet(): Set<String> {
     }
     return set
 }
+
+fun EditText.isEmpty(): Boolean = text.toString().trim { it <= ' ' }.isEmpty()

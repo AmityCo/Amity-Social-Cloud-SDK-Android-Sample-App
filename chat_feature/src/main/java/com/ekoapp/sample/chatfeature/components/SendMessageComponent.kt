@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.dialogs.CustomMessageBottomSheetFragment
 import com.ekoapp.sample.chatfeature.dialogs.SelectPhotoBottomSheetFragment
+import com.ekoapp.sample.core.data.Metadata
 import com.ekoapp.sample.core.utils.dispatchSearchFileIntent
 import com.ekoapp.sample.core.utils.dispatchSearchImageFileIntent
 import com.ekoapp.sample.core.utils.dispatchTakePictureIntent
@@ -66,10 +67,14 @@ class SendMessageComponent : ConstraintLayout {
         }
     }
 
-    fun customMessage(fm: FragmentManager) {
+    fun customMessage(fm: FragmentManager, sent: (Metadata) -> Unit) {
         image_code.setOnClickListener {
             val customMessageBottomSheet = CustomMessageBottomSheetFragment()
             customMessageBottomSheet.show(fm, customMessageBottomSheet.tag)
+            customMessageBottomSheet.sendCustomMessage {
+                sent.invoke(it)
+                customMessageBottomSheet.dialog?.cancel()
+            }
         }
     }
 
@@ -90,12 +95,6 @@ class SendMessageComponent : ConstraintLayout {
                             token.continuePermissionRequest()
                         }
                     }).check()
-        }
-    }
-
-    fun customMessage(action: (String) -> Unit) {
-        image_code.setOnClickListener {
-
         }
     }
 

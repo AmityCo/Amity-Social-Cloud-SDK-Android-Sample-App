@@ -11,6 +11,7 @@ import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.internal.util.RealPathUtil
 import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.MessageData
+import com.ekoapp.sample.core.data.Metadata
 import com.ekoapp.sample.core.utils.getRealUri
 import io.reactivex.processors.PublishProcessor
 import kotlinx.android.synthetic.main.component_main_send_message.view.*
@@ -65,7 +66,12 @@ class MainSendMessageComponent : ConstraintLayout {
     }
 
     fun renderCustomSending(fm: FragmentManager) {
-        send_message.customMessage(fm)
+        send_message.customMessage(fm, sent = {
+            hideReplying()
+            val metadata = ArrayList<Metadata>()
+            metadata.add(it)
+            messageRelay.onNext(MessageData(custom = metadata))
+        })
     }
 
     fun renderReplyingView(item: EkoMessage, replyingAction: (String?) -> Unit) {
