@@ -13,11 +13,10 @@ import com.ekoapp.sample.chatfeature.R
 import com.ekoapp.sample.chatfeature.data.ReactionData
 import com.ekoapp.sample.chatfeature.dialogs.MessageBottomSheetFragment
 import com.ekoapp.sample.chatfeature.messages.view.list.ReactionsAdapter
+import com.ekoapp.sample.chatfeature.utils.toggleReaction
 import com.ekoapp.sample.core.base.list.RecyclerBuilder
-import com.ekoapp.sample.core.rx.into
 import com.ekoapp.sample.core.seals.ReportMessageSealType
 import com.ekoapp.sample.core.seals.ReportSenderSealType
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.component_image_message.view.*
 
 class ImageMessageComponent : ConstraintLayout {
@@ -54,7 +53,7 @@ class ImageMessageComponent : ConstraintLayout {
         reaction_and_reply.setupView(items,
                 selectedReaction = {
                     reaction_and_reply.visibility = View.GONE
-                    item.react().addReaction(it).subscribe() into CompositeDisposable()
+                    item.toggleReaction(it)
                 },
                 actionReply = {
                     reaction_and_reply.visibility = View.GONE
