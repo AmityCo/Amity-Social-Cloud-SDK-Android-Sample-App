@@ -444,6 +444,12 @@ abstract class MessageListActivity : BaseActivity() {
 
         adapter = MessageListAdapter()
         messageListRecyclerView?.adapter = adapter
+        adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                val lastPosition = adapter!!.itemCount - 1
+                messageListRecyclerView?.scrollToPosition(lastPosition)
+            }
+        })
 
         disposable.clear()
 
@@ -501,27 +507,8 @@ abstract class MessageListActivity : BaseActivity() {
                                 500)
                     }
                 }
-                .doOnComplete {
-                    scrollToBottom()
-                }
                 .subscribe()
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
-            scrollToBottom()
-        }
-
-    }
-
-    private fun scrollToBottom() {
-        messageListRecyclerView?.postDelayed({
-            val lastPosition = adapter?.itemCount!! - 1
-            messageListRecyclerView?.scrollToPosition(lastPosition)
-        }, 10)
     }
 
     private fun openFile(message: EkoMessage) {
