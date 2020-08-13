@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">SimpleChat</string>
+    <string name="change_api_key">Change API Key</string>
     <string name="change_display_name">Change DisplayName</string>
     <string name="change_metadata">Change Metadata</string>
-    <string name="join_channel">Join Channel</string>
-    <string name="change_api_key">Change API Key</string>
+    <string name="change_user_id">Change User Id</string>
     <string name="create_channel">Create Channel</string>
     <string name="create_conversation">Create Conversation</string>
     <string name="edit_text_message">Edit text message</string>
     <string name="edit_custom_message">Edit custom message</string>
+    <string name="join_channel">Join Channel</string>
     <string name="leave_channel">Leave Channel</string>
     <string name="member">Member</string>
     <string name="notification_for_current_user">Notification Settings</string>

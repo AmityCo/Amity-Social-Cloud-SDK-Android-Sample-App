@@ -70,6 +70,7 @@ class ChannelListActivity : AppCompatActivity() {
                 })
 
         observeChannelCollection()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -138,7 +139,7 @@ class ChannelListActivity : AppCompatActivity() {
                 val userId = input.toString()
                 channelRepository.createConversation(userId)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnComplete { Toast.makeText(this, String.format("conversation created with %s", userId), Toast.LENGTH_SHORT).show() }
+                        .doOnSuccess { Toast.makeText(this, String.format("conversation created with %s", userId), Toast.LENGTH_SHORT).show() }
                         .subscribe()
             })
             return true
@@ -218,6 +219,7 @@ class ChannelListActivity : AppCompatActivity() {
         displayQueryOptions()
         channels = getChannelsLiveData()
         channels?.observe(this, Observer<PagedList<EkoChannel>> { adapter.submitList(it) })
+        
     }
 
     private fun getChannelsLiveData(): LiveData<PagedList<EkoChannel>> {
