@@ -26,6 +26,7 @@ import com.ekoapp.ekosdk.EkoChannel
 import com.ekoapp.ekosdk.EkoChannelFilter
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.ekosdk.internal.api.EkoEndpoint
 import com.ekoapp.ekosdk.sdk.BuildConfig
 import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.SimplePreferences
@@ -53,7 +54,7 @@ class ChannelListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_channel_list)
         val appName = getString(R.string.app_name)
         toolbar.title = String.format("%s %s: %s", appName, "Eko SDK", BuildConfig.VERSION_NAME)
-        toolbar.subtitle = String.format("%s", BuildConfig.EKO_HTTP_URL)
+        toolbar.subtitle = String.format("env: %s", getString(R.string.sdk_environment))
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
