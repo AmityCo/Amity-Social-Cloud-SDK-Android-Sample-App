@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_create_comment"
+        android:orderInCategory="100"
+        android:title="@string/create_comment"
+        app:showAsAction="never" />
+
+</menu>

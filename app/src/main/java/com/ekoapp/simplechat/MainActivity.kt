@@ -11,6 +11,7 @@ import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sdk.common.extensions.showDialog
 import com.ekoapp.sdk.common.extensions.showToast
 import com.ekoapp.simplechat.channellist.ChannelListActivity
+import com.ekoapp.simplechat.intent.OpenCommentContentListIntent
 import com.ekoapp.simplechat.myuser.MyUserActivity
 import com.ekoapp.simplechat.userlist.UserListActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -93,6 +94,9 @@ class MainActivity : AppCompatActivity() {
             PageListType.MY_USER -> {
                 startActivity(Intent(this, MyUserActivity::class.java))
             }
+            PageListType.COMMENT_CONTENT -> {
+                startActivity(OpenCommentContentListIntent(this, "androidContentId"))
+            }
             else -> {
             }
         }
@@ -118,7 +122,8 @@ class MainActivity : AppCompatActivity() {
     enum class PageListType(val value: String) {
         CHANNEL_LIST("Channel list"),
         USER_LIST("User list"),
-        MY_USER("My User");
+        MY_USER("My User"),
+        COMMENT_CONTENT("Comment Content");
 
         companion object {
             fun enumOf(value: String): PageListType? = values().find { it.value == value }
