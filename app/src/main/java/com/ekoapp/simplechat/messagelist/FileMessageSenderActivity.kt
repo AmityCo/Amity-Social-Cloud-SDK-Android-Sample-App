@@ -1,6 +1,7 @@
 package com.ekoapp.simplechat.messagelist
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -23,6 +24,7 @@ class FileMessageSenderActivity : AppCompatActivity() {
 
     private var currentFileUri: Uri? = null
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,12 +44,11 @@ class FileMessageSenderActivity : AppCompatActivity() {
         val rxPermissions = RxPermissions(this)
         findViewById<View>(R.id.file_button).clicks()
                 .compose(rxPermissions.ensure<Unit>(Manifest.permission.READ_EXTERNAL_STORAGE))
-                .subscribe({ granted ->
+                .subscribe { granted ->
                     if (granted) {
                         dispatchSearchFileIntent()
                     }
-                })
-
+                }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -92,18 +93,12 @@ class FileMessageSenderActivity : AppCompatActivity() {
         val channelId = OpenFileMessageSenderIntent.getChannelId(intent) ?: ""
         val parentId = OpenFileMessageSenderIntent.getParentId(intent)
 
-        if (parentId != null) {
-            return messageRepository.createMessage(channelId)
-                    .file(currentFileUri)
-                    .parentId(parentId)
-                    .build()
-                    .send()
-        } else {
-            return messageRepository.createMessage(channelId)
-                    .file(currentFileUri)
-                    .build()
-                    .send()
-        }
+        return messageRepository.createMessage(channelId)
+                .parentId(parentId)
+                .with()
+                .file(currentFileUri)
+                .build()
+                .send()
 
     }
 

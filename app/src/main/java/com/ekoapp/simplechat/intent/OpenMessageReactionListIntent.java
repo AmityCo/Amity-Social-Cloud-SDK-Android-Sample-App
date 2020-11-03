@@ -5,18 +5,18 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.ekoapp.ekosdk.message.EkoMessage;
 import com.ekoapp.simplechat.messagereactionlist.MessageReactionListActivity;
 
 public class OpenMessageReactionListIntent extends BaseIntent {
+    private static final String EXTRA_PARCEL_MESSAGE = EXTRA + "message";
 
-    private static final String EXTRA_MESSAGE_ID = EXTRA + "message.id";
-
-    public OpenMessageReactionListIntent(@NonNull Context context, @NonNull String messageId) {
+    public OpenMessageReactionListIntent(@NonNull Context context, @NonNull EkoMessage message) {
         super(context, MessageReactionListActivity.class);
-        putExtra(EXTRA_MESSAGE_ID, messageId);
+        putExtra(EXTRA_PARCEL_MESSAGE, message);
     }
 
-    public static String getMessageId(Intent intent) {
-        return intent.getStringExtra(EXTRA_MESSAGE_ID);
+    public static EkoMessage getMessage(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_PARCEL_MESSAGE);
     }
 }

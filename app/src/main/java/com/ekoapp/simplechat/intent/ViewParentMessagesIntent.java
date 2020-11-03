@@ -5,20 +5,18 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.ekoapp.ekosdk.channel.EkoChannel;
 import com.ekoapp.simplechat.messagelist.ParentMessageListActivity;
 
 public class ViewParentMessagesIntent extends BaseIntent {
+    private static final String EXTRA_CHANNEL = EXTRA + "channel";
 
-    private static final String EXTRA_CHANNEL_ID = EXTRA + "channel.id";
-
-
-    public ViewParentMessagesIntent(@NonNull Context context, @NonNull String channelId) {
+    public ViewParentMessagesIntent(@NonNull Context context, @NonNull EkoChannel channel) {
         super(context, ParentMessageListActivity.class);
-        putExtra(EXTRA_CHANNEL_ID, channelId);
+        putExtra(EXTRA_CHANNEL, channel);
     }
 
-
-    public static String getChannelId(Intent intent) {
-        return intent.getStringExtra(EXTRA_CHANNEL_ID);
+    public static EkoChannel getChannel(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_CHANNEL);
     }
 }

@@ -35,21 +35,14 @@ class CustomMessageSenderActivity : KeyValueInputActivity() {
         val data = JsonObject();
         data.addProperty(key_edittext.text.toString().trim(), value_edittext.text.toString().trim());
 
-        if (parentId != null) {
-            return messageRepository
-                    .createMessage(channelId)
-                    .custom(data)
-                    .parentId(parentId)
-                    .build()
-                    .send()
+        return messageRepository
+                .createMessage(channelId)
+                .parentId(parentId)
+                .with()
+                .custom(data)
+                .build()
+                .send()
 
-        } else {
-            return messageRepository
-                    .createMessage(channelId)
-                    .custom(data)
-                    .build()
-                    .send()
-        }
     }
 
 }

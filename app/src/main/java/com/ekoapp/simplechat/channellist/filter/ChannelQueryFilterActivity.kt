@@ -9,6 +9,7 @@ import com.ekoapp.simplechat.channellist.filter.channeltype.ChannelTypeFilterFra
 import com.ekoapp.simplechat.channellist.filter.channeltype.ChannelTypeFilterViewModel
 import com.ekoapp.simplechat.channellist.filter.excludetags.ExcludeTagFilterFragment
 import com.ekoapp.simplechat.channellist.filter.excludetags.ExcludeTagFilterViewModel
+import com.ekoapp.simplechat.channellist.filter.includedeleted.IncludedDeletedFilterViewModel
 import com.ekoapp.simplechat.channellist.filter.includetags.IncludeTagFilterFragment
 import com.ekoapp.simplechat.channellist.filter.includetags.IncludeTagFilterViewModel
 import com.ekoapp.simplechat.channellist.filter.membership.MembershipFilterFragment
@@ -37,13 +38,14 @@ class ChannelQueryFilterActivity : BaseActivity(), ChannelQueryFilterContract.Vi
         val membershipFilterViewModel = ViewModelProviders.of(this).get(MembershipFilterViewModel::class.java)
         val includeTagFilterViewModel = ViewModelProviders.of(this).get(IncludeTagFilterViewModel::class.java)
         val excludeTagFilterViewModel = ViewModelProviders.of(this).get(ExcludeTagFilterViewModel::class.java)
+        val includedDeletedFilterViewModel = ViewModelProviders.of(this).get(IncludedDeletedFilterViewModel::class.java)
 
         presenter = ChannelQueryFilterPresenter(this,
                 channelTypeFilterViewModel,
                 membershipFilterViewModel,
                 includeTagFilterViewModel,
-                excludeTagFilterViewModel)
-
+                excludeTagFilterViewModel,
+                includedDeletedFilterViewModel)
     }
 
     private fun attachFragments() {

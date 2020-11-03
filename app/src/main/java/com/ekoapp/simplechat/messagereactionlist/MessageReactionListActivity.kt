@@ -1,35 +1,15 @@
 package com.ekoapp.simplechat.messagereactionlist
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.paging.PagedList
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.ekoapp.ekosdk.EkoClient
-import com.ekoapp.ekosdk.EkoMessageRepository
-import com.ekoapp.ekosdk.internal.data.model.EkoMessageReaction
-import com.ekoapp.simplechat.R
+import com.ekoapp.ekosdk.reaction.EkoReaction
 import com.ekoapp.simplechat.intent.OpenMessageReactionListIntent
-import kotlinx.android.synthetic.main.activity_message_reaction_list.*
+import io.reactivex.Flowable
 
-class MessageReactionListActivity : AppCompatActivity() {
-    lateinit var messageRepository: EkoMessageRepository
+class MessageReactionListActivity : ReactionListActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_message_reaction_list)
-
-        val adapter = MessageReactionListAdapter()
-        val layoutManager = LinearLayoutManager(this)
-
-        reaction_recyclerview.layoutManager = layoutManager
-        reaction_recyclerview.adapter = adapter
-
-        val messageId = OpenMessageReactionListIntent.getMessageId(intent)
-
-        messageRepository = EkoClient.newMessageRepository();
-        messageRepository.getMessageReactionCollection(messageId)
-                .observe(this, Observer<PagedList<EkoMessageReaction>> { adapter.submitList(it) })
-
+    override fun getReactionCollection(): Flowable<PagedList<EkoReaction>> {
+        val message = OpenMessageReactionListIntent.getMessage(intent)
+        return EkoClient.newMessageRepository().getReactionCollection(message.getMessageId()).build().query()
     }
 }
