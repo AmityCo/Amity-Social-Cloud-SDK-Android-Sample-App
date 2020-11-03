@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ekoapp.ekosdk.adapter.EkoMessageReactionAdapter
+import com.ekoapp.ekosdk.adapter.EkoReactionAdapter
 import com.ekoapp.simplechat.R
 import kotlinx.android.synthetic.main.item_message_reaction.view.*
 
-class MessageReactionListAdapter : EkoMessageReactionAdapter<MessageReactionListAdapter.EkoMessageReactionViewHolder>() {
+class MessageReactionListAdapter : EkoReactionAdapter<MessageReactionListAdapter.EkoMessageReactionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EkoMessageReactionViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -20,11 +20,11 @@ class MessageReactionListAdapter : EkoMessageReactionAdapter<MessageReactionList
     override fun onBindViewHolder(holder: EkoMessageReactionViewHolder, position: Int) {
         getItem(position)?.let { messageReaction ->
 
-            val userDisplayName = if(messageReaction.userDisplayName.isNullOrEmpty()) messageReaction.userId else messageReaction.userDisplayName
+            val userDisplayName = if (messageReaction.getUserDisplayName().isEmpty()) messageReaction.getUserId() else messageReaction.getUserDisplayName()
             val displayText = String.format("%s", userDisplayName)
             holder.userDisplayNameTextView.text = displayText
-            holder.reactionNameTextView.text = messageReaction.reactionName
-            holder.timestampTextView.text = String.format("%s", messageReaction.createdAt)
+            holder.reactionNameTextView.text = messageReaction.getReactionName()
+            holder.timestampTextView.text = String.format("%s", messageReaction.getCreatedAt())
         }
     }
 

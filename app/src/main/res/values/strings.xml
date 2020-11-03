@@ -28,4 +28,8 @@
     <string name="user_list">User list</string>
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
+    <string name="channel_list">Channel list</string>
+    <string name="edit_channel">Edit Channel</string>
+    <string name="role">Role</string>
+    <string name="create_comment">Create Comment</string>
 </resources>

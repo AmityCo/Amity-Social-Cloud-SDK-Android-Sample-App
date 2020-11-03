@@ -1,38 +1,39 @@
 package com.ekoapp.simplechat.userlist
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.InputCallback
-import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
 import com.ekoapp.ekosdk.EkoClient
-import com.ekoapp.ekosdk.EkoUser
-import com.ekoapp.ekosdk.EkoUserSortOption
+import com.ekoapp.ekosdk.user.EkoUser
+import com.ekoapp.ekosdk.user.query.EkoUserSortOption
+import com.ekoapp.sdk.common.extensions.showDialog
 import com.ekoapp.simplechat.R
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_user_list.*
 import java.util.*
 
 class UserListActivity : AppCompatActivity() {
 
-    private var users: LiveData<PagedList<EkoUser>>? = null
-
     private val userRepository = EkoClient.newUserRepository()
-
     private var keyword = ""
     private var sortBy: EkoUserSortOption = EkoUserSortOption.DISPLAYNAME
+    private val adapter = UserListAdapter()
+    private var compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         setContentView(R.layout.activity_user_list)
         observeUserCollection()
+        setUpListeners()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -43,10 +44,10 @@ class UserListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.action_search) {
-            showDialog(R.string.search, "keyword", keyword, true, { dialog, input ->
+            showDialog(R.string.search, "keyword", keyword, true) { _, input ->
                 keyword = input.toString()
                 observeUserCollection()
-            })
+            }
             return true
         } else if (id == R.id.action_sort) {
             val sortingOptions = ArrayList<String>()
@@ -58,7 +59,7 @@ class UserListActivity : AppCompatActivity() {
 
             MaterialDialog(this).show {
                 listItems(items = sortingOptions) { dialog, index, text ->
-                    when(text.toString()) {
+                    when (text.toString()) {
                         "Displayname" -> {
                             sortBy = EkoUserSortOption.DISPLAYNAME
                         }
@@ -78,23 +79,42 @@ class UserListActivity : AppCompatActivity() {
     }
 
     private fun observeUserCollection() {
-        users?.removeObservers(this)
-        val adapter = UserListAdapter()
         user_list_recyclerview.adapter = adapter
-
-        users = getUsersLiveData()
-        users?.observe(this, Observer<PagedList<EkoUser>> { adapter.submitList(it) })
+        compositeDisposable.dispose()
+        compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(getUsers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ adapter.submitList(it) }, {})
+        )
     }
 
-    private fun getUsersLiveData(): LiveData<PagedList<EkoUser>> {
-        return userRepository.searchUserByDisplayName(keyword, sortBy)
+    private fun getUsers(): Flowable<PagedList<EkoUser>> {
+        return userRepository.getAllUsers()
+                        .sortBy(sortBy)
+                        .build()
+                        .query()
     }
 
-    private fun showDialog(@StringRes title: Int, hint: CharSequence, prefill: CharSequence, allowEmptyInput: Boolean, callback: InputCallback) {
-        MaterialDialog(this).show {
-            title(title)
-            input(inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, hint = hint.toString(), prefill = prefill, allowEmpty = allowEmptyInput, callback = callback)
-        }
+    @SuppressLint("CheckResult")
+    private fun setUpListeners() {
+        adapter.onClickFlowable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+
+                }, { })
+
+        adapter.onLongClickFlowable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+
+                }, { })
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
 }
