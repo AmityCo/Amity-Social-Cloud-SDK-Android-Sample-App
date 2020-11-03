@@ -3,11 +3,9 @@ package com.ekoapp.simplechat.channellist
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -15,14 +13,11 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.InputCallback
-import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.ekosdk.channel.EkoChannel
 import com.ekoapp.ekosdk.channel.query.EkoChannelFilter
-import com.ekoapp.ekosdk.sdk.BuildConfig
 import com.ekoapp.sdk.common.extensions.showDialog
 import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.SimplePreferences
@@ -32,8 +27,6 @@ import com.google.common.base.Joiner
 import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
-import kotlinx.android.synthetic.main.activity_channel_list.toolbar
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class ChannelListActivity : AppCompatActivity() {
@@ -155,15 +148,6 @@ class ChannelListActivity : AppCompatActivity() {
             observeChannelCollection()
         }
     }
-
-//    private fun showDialog(@StringRes title: Int, hint: CharSequence, prefill: CharSequence,
-//                           allowEmptyInput: Boolean, callback: InputCallback) {
-//        MaterialDialog(this).show {
-//            title(title)
-//            input(inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, hint = hint.toString(),
-//                    prefill = prefill, allowEmpty = allowEmptyInput, callback = callback)
-//        }
-//    }
 
     private fun createCommunityChannel(channelId: String) {
         channelRepository.createChannel()
