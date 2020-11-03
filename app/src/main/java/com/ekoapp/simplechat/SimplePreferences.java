@@ -3,8 +3,7 @@ package com.ekoapp.simplechat;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.ekoapp.ekosdk.EkoChannel;
-import com.ekoapp.ekosdk.EkoChannelFilter;
+import com.ekoapp.ekosdk.channel.query.EkoChannelFilter;
 import com.f2prateek.rx.preferences2.Preference;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
@@ -14,33 +13,44 @@ import java.util.Set;
 public class SimplePreferences {
 
     private static final String API_KEY_KEY = "API_KEY_KEY";
+    private static final String MY_USER_ID_KEY = "MY_USER_ID_KEY";
     private static final String CHANNEL_TYPE_OPTION_KEY = "CHANNEL_TYPE_OPTION_KEY";
     private static final String CHANNEL_MEMBERSHIP_OPTION_KEY = "CHANNEL_MEMBERSHIP_OPTION_KEY";
     private static final String INCLUDING_CHANNEL_TAGS_KEY = "INCLUDING_CHANNEL_TAGS_KEY";
     private static final String EXCLUDING_CHANNEL_TAGS_KEY = "EXCLUDING_CHANNEL_TAGS_KEY";
+    private static final String CHANNEL_INCLUDE_DELETED_OPTION_KEY = "CHANNEL_INCLUDE_DELETED_OPTION_KEY";
     private static final String STACK_FROM_END_KEY = "STACK_FROM_END_KEY";
     private static final String REVERT_LAYOUT_KEY = "REVERT_LAYOUT_KEY";
 
-    private static class SimplePreferencesHolder {
+    private static class SamplePreferencesHolder {
         private static final RxSharedPreferences INSTANCE = init();
     }
 
     private static RxSharedPreferences init() {
-        SharedPreferences preferences = SimpleChatApp.get()
-                .getSharedPreferences("simple_preferences", Context.MODE_PRIVATE);
+        SharedPreferences preferences = SampleApp.Companion.get()
+                .getSharedPreferences("sample_preferences", Context.MODE_PRIVATE);
         return RxSharedPreferences.create(preferences);
     }
 
     public static RxSharedPreferences get() {
-        return SimplePreferencesHolder.INSTANCE;
+        return SamplePreferencesHolder.INSTANCE;
     }
 
+
     public static Preference<String> getApiKey() {
-        return get().getString(API_KEY_KEY, SimpleConfig.DEFAULT_API_KEY);
+        return get().getString(API_KEY_KEY, SampleAPIKey.INSTANCE.get());
+    }
+
+    public static Preference<String> getMyUserId() {
+        return get().getString(MY_USER_ID_KEY, "androidVictim");
     }
 
     public static Preference<Set<String>> getChannelTypeOptions() {
         return get().getStringSet(CHANNEL_TYPE_OPTION_KEY, Collections.EMPTY_SET);
+    }
+
+    public static Preference<Boolean> getIncludeDeletedOptions() {
+        return get().getBoolean(CHANNEL_INCLUDE_DELETED_OPTION_KEY, true);
     }
 
     public static Preference<String> getChannelMembershipOption() {

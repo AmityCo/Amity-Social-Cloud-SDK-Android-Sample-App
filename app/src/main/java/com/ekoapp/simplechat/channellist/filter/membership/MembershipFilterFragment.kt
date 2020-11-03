@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import com.ekoapp.ekosdk.EkoChannelFilter
+import com.ekoapp.ekosdk.channel.query.EkoChannelFilter
 import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.SimplePreferences
 import com.ekoapp.simplechat.databinding.FragmentMembershipFilterBinding
@@ -37,9 +37,8 @@ class MembershipFilterFragment : Fragment() {
     }
 
     private fun setUpSpinner() {
-        val modes = mutableListOf(EkoChannelFilter.ALL.apiKey, EkoChannelFilter.MEMBER.getApiKey(), EkoChannelFilter.NOT_MEMBER.apiKey)
-
-        filter_spinner.adapter = ArrayAdapter(activity!!.baseContext,
+        val modes = mutableListOf(EkoChannelFilter.ALL.apiKey, EkoChannelFilter.MEMBER.apiKey, EkoChannelFilter.NOT_MEMBER.apiKey)
+        filter_spinner.adapter = ArrayAdapter(requireContext(),
                 android.R.layout.simple_spinner_dropdown_item,
                 modes)
 

@@ -5,32 +5,66 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.ekoapp.ekosdk.message.EkoMessage;
 import com.ekoapp.simplechat.messagelist.ChildMessageListActivity;
 
 public class ViewChildMessagesIntent extends BaseIntent {
 
-    private static final String EXTRA_CHANNEL_ID = EXTRA + "channel.id";
-    private static final String EXTRA_PARENT_ID = EXTRA + "parent.id";
-    private static final String EXTRA_DATA = EXTRA + "data";
+    private static final String EXTRA_MESSAGE = EXTRA + "message";
+    private static final String EXTRA_MESSAGE_DATA = EXTRA + "message.data";
 
-
-    public ViewChildMessagesIntent(@NonNull Context context, @NonNull String channelId, @NonNull String parentId, @NonNull String data) {
+    public ViewChildMessagesIntent(@NonNull Context context, @NonNull EkoMessage message, @NonNull EkoMessage.Data data) {
         super(context, ChildMessageListActivity.class);
-        putExtra(EXTRA_CHANNEL_ID, channelId);
-        putExtra(EXTRA_PARENT_ID, parentId);
-        putExtra(EXTRA_DATA, data);
+        putExtra(EXTRA_MESSAGE, message);
+        putExtra(EXTRA_MESSAGE_DATA, data);
+    }
+
+    public ViewChildMessagesIntent(@NonNull Context context, @NonNull EkoMessage message, @NonNull EkoMessage.Data.TEXT data) {
+        super(context, ChildMessageListActivity.class);
+        putExtra(EXTRA_MESSAGE, message);
+        putExtra(EXTRA_MESSAGE_DATA, data);
+    }
+
+    public ViewChildMessagesIntent(@NonNull Context context, @NonNull EkoMessage message, @NonNull EkoMessage.Data.IMAGE data) {
+        super(context, ChildMessageListActivity.class);
+        putExtra(EXTRA_MESSAGE, message);
+        putExtra(EXTRA_MESSAGE_DATA, data);
+    }
+
+    public ViewChildMessagesIntent(@NonNull Context context, @NonNull EkoMessage message, @NonNull EkoMessage.Data.FILE data) {
+        super(context, ChildMessageListActivity.class);
+        putExtra(EXTRA_MESSAGE, message);
+        putExtra(EXTRA_MESSAGE_DATA, data);
+    }
+
+    public ViewChildMessagesIntent(@NonNull Context context, @NonNull EkoMessage message, @NonNull EkoMessage.Data.CUSTOM data) {
+        super(context, ChildMessageListActivity.class);
+        putExtra(EXTRA_MESSAGE, message);
+        putExtra(EXTRA_MESSAGE_DATA, data);
+    }
+
+    public static EkoMessage getMessage(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_MESSAGE);
+    }
+
+    public static EkoMessage.Data getMessageData(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_MESSAGE_DATA);
+    }
+
+    public static EkoMessage.Data.TEXT getTextMessageData(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_MESSAGE_DATA);
+    }
+
+    public static EkoMessage.Data.IMAGE getImageMessageData(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_MESSAGE_DATA);
     }
 
 
-    public static String getChannelId(Intent intent) {
-        return intent.getStringExtra(EXTRA_CHANNEL_ID);
+    public static EkoMessage.Data.FILE getFileMessageData(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_MESSAGE_DATA);
     }
 
-    public static String getParentId(Intent intent) {
-        return intent.getStringExtra(EXTRA_PARENT_ID);
-    }
-
-    public static String getData(Intent intent) {
-        return intent.getStringExtra(EXTRA_DATA);
+    public static EkoMessage.Data.CUSTOM getCustomMessageData(Intent intent) {
+        return intent.getParcelableExtra(EXTRA_MESSAGE_DATA);
     }
 }

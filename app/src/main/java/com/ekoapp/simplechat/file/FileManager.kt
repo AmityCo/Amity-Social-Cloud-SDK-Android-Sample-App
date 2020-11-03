@@ -6,10 +6,9 @@ import android.content.pm.ResolveInfo
 import android.os.Environment
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import com.ekoapp.ekosdk.EkoMessage
 import com.ekoapp.ekosdk.internal.api.http.EkoOkHttp
-import com.ekoapp.ekosdk.messaging.data.FileData
-import com.ekoapp.simplechat.SimpleChatApp
+import com.ekoapp.ekosdk.message.EkoMessage
+import com.ekoapp.simplechat.SampleApp
 import com.tonyodev.fetch2.*
 import com.tonyodev.fetch2core.DownloadBlock
 import com.tonyodev.fetch2core.Func
@@ -19,15 +18,15 @@ import java.io.File
 
 class FileManager {
     companion object {
-        fun openFile(context: Context, message: EkoMessage) {
-            val url = message.getData(FileData::class.java).url
+        fun openFile(context: Context, fileMessage: EkoMessage.Data.FILE) {
+            val url = fileMessage.getUrl()
             val dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString()
-            val fileName = message.getData(FileData::class.java).fileName?: ""
-            val filePath = dirPath + "/" + fileName
+            val fileName = fileMessage.getFileName() ?: ""
+            val filePath = "$dirPath/$fileName"
 
             val client = EkoOkHttp.newBuilder().build()
 
-            val fetchConfiguration = FetchConfiguration.Builder(SimpleChatApp.get())
+            val fetchConfiguration = FetchConfiguration.Builder(SampleApp.get())
                     .setDownloadConcurrentLimit(10)
                     .enableLogging(true)
                     .setHttpDownloader(OkHttpDownloader(client))
@@ -60,7 +59,7 @@ class FileManager {
                         viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         viewIntent.data = uri
                         val activities: List<ResolveInfo> = context.packageManager.queryIntentActivities(viewIntent, 0)
-                        if(activities.isNotEmpty()) {
+                        if (activities.isNotEmpty()) {
                             val chooserIntent = Intent.createChooser(viewIntent, "Choose an application to open with:")
                             chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             context.startActivity(chooserIntent)
@@ -69,14 +68,14 @@ class FileManager {
                         }
                     }
 
-                    if(!fetch.isClosed) {
+                    if (!fetch.isClosed) {
                         fetch.close()
                     }
                 }
 
                 override fun onError(download: Download, error: Error, throwable: Throwable?) {
                     Timber.e(throwable, "download fail")
-                    if(!fetch.isClosed) {
+                    if (!fetch.isClosed) {
                         fetch.close()
                     }
                 }

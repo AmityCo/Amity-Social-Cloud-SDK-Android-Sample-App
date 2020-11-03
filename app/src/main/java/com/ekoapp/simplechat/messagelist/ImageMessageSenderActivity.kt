@@ -1,6 +1,7 @@
 package com.ekoapp.simplechat.messagelist
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -32,6 +33,7 @@ class ImageMessageSenderActivity : AppCompatActivity() {
     private var currentPhotoPath: String? = null
     private var currentPhotoUri: Uri? = null
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,20 +51,19 @@ class ImageMessageSenderActivity : AppCompatActivity() {
         val rxPermissions = RxPermissions(this)
         findViewById<View>(R.id.camera_button).clicks()
                 .compose(rxPermissions.ensure<Unit>(Manifest.permission.CAMERA))
-                .subscribe({ granted ->
+                .subscribe { granted ->
                     if (granted) {
                         dispatchTakePictureIntent()
                     }
-                })
+                }
 
         findViewById<View>(R.id.gallery_button).clicks()
                 .compose(rxPermissions.ensure<Unit>(Manifest.permission.READ_EXTERNAL_STORAGE))
-                .subscribe({ granted ->
+                .subscribe { granted ->
                     if (granted) {
                         dispatchSearchFileIntent()
                     }
-                })
-
+                }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -165,19 +166,12 @@ class ImageMessageSenderActivity : AppCompatActivity() {
         val channelId = OpenImageMessageSenderIntent.getChannelId(intent) ?: ""
         val parentId = OpenImageMessageSenderIntent.getParentId(intent)
 
-        if (parentId != null) {
-            return messageRepository.createMessage(channelId)
-                    .image(currentPhotoUri)
-                    .parentId(parentId)
-                    .build()
-                    .send()
-        } else {
-            return messageRepository.createMessage(channelId)
-                    .image(currentPhotoUri)
-                    .build()
-                    .send()
-        }
+        return messageRepository.createMessage(channelId)
+                .parentId(parentId)
+                .with()
+                .image(currentPhotoUri)
+                .build()
+                .send()
 
     }
-
 }

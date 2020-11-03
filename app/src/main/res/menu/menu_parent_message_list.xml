@@ -10,6 +10,12 @@
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_edit_channel"
+        android:orderInCategory="200"
+        android:title="@string/edit_channel"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_leave_channel"
         android:orderInCategory="200"
         android:title="@string/leave_channel"

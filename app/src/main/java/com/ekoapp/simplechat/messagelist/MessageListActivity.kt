@@ -1,11 +1,9 @@
 package com.ekoapp.simplechat.messagelist
 
 import android.Manifest
-import android.app.Activity
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.Menu
@@ -14,30 +12,28 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.StringRes
-import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.OnClick
-import butterknife.OnTextChanged
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.afollestad.materialdialogs.checkbox.isCheckPromptChecked
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
-import com.afollestad.materialdialogs.input.InputCallback
-import com.afollestad.materialdialogs.input.input
 import com.afollestad.materialdialogs.list.listItems
-import com.ekoapp.ekosdk.*
+import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.ekosdk.EkoTags
+import com.ekoapp.ekosdk.channel.EkoChannel
 import com.ekoapp.ekosdk.exception.EkoError
-import com.ekoapp.ekosdk.messaging.data.DataType
-import com.ekoapp.ekosdk.messaging.data.TextData
-import com.ekoapp.simplechat.BaseActivity
+import com.ekoapp.ekosdk.message.EkoMessage
+import com.ekoapp.ekosdk.user.EkoUser
+import com.ekoapp.sdk.common.extensions.showDialog
+import com.ekoapp.sdk.common.extensions.showToast
 import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.SimplePreferences
 import com.ekoapp.simplechat.file.FileManager
@@ -52,28 +48,10 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_message_list.*
 
-abstract class MessageListActivity : BaseActivity() {
-
-    @BindView(R.id.toolbar)
-    @JvmField
-    var toolbar: Toolbar? = null
-
-    @BindView(R.id.message_list_recyclerview)
-    @JvmField
-    var messageListRecyclerView: RecyclerView? = null
-
-    @BindView(R.id.message_edittext)
-    @JvmField
-    var messageEditText: EditText? = null
-
-    @BindView(R.id.message_send_button)
-    @JvmField
-    var sendButton: Button? = null
-
+abstract class MessageListActivity : AppCompatActivity() {
     private var messages: LiveData<PagedList<EkoMessage>>? = null
 
     private var adapter: MessageListAdapter? = null
@@ -114,11 +92,12 @@ abstract class MessageListActivity : BaseActivity() {
 
     protected abstract fun createTextMessage(text: String): Completable
 
+
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         setContentView(R.layout.activity_message_list)
 
-        toolbar?.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
 
         setTitleName()
@@ -151,116 +130,144 @@ abstract class MessageListActivity : BaseActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_channel_membership) {
-            startActivity(ViewChannelMembershipsIntent(this, getChannelId()))
-            return true
-        } else if (item.itemId == R.id.action_leave_channel) {
-            channelRepository.leaveChannel(getChannelId())
-                    .doOnComplete(Action { this.finish() })
-                    .subscribe()
-            return true
-        } else if (item.itemId == R.id.action_with_tags) {
-            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(includingTags), true, { dialog, input ->
-                includingTags.clear()
-                for (tag in input.toString().split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()) {
-                    if (tag.length > 0) {
-                        includingTags.add(tag)
-                    }
+        when (item.itemId) {
+            R.id.action_channel_membership -> {
+                startActivity(ViewChannelMembershipsIntent(this, getChannelId()))
+                return true
+            }
+            R.id.action_leave_channel -> {
+                channelRepository.leaveChannel(getChannelId())
+                        .doOnComplete { this.finish() }
+                        .subscribe()
+                return true
+            }
+            R.id.action_edit_channel -> {
+                showDialog(R.string.edit_channel, "displayName", "", false) { _, input ->
+                    channelRepository.updateChannel(getChannelId())
+                            .displayName(input.toString())
+                            .build()
+                            .update()
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe({
+                                finish()
+                            }, {
+                                showToast(message = "Update failed !")
+                            })
                 }
-                initialMessageCollection()
-                observeMessageCollection()
-            })
-            return true
-        } else if (item.itemId == R.id.action_without_tags) {
-            showDialog(R.string.with_tag, "bnk48,football,concert", Joiner.on(",").join(excludingTags), true, { dialog, input ->
-                excludingTags.clear()
-                for (tag in input.toString().split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()) {
-                    if (tag.length > 0) {
-                        excludingTags.add(tag)
-                    }
-                }
-                initialMessageCollection()
-                observeMessageCollection()
-            })
-            return true
-        } else if (item.itemId == R.id.action_set_tags) {
-            val liveData = channelRepository.getChannel(getChannelId())
-            liveData.observeForever(object : Observer<EkoChannel> {
-                override fun onChanged(channel: EkoChannel) {
-                    liveData.removeObserver(this)
-                    showDialog(R.string.set_tags, "bnk48,football,concert", Joiner.on(",").join(channel.tags), true, { dialog, input ->
-                        val set = Sets.newConcurrentHashSet<String>()
-                        for (tag in input.toString().split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()) {
-                            if (tag.length > 0) {
-                                set.add(tag)
-                            }
-                        }
-                        channelRepository.setTags(channel.channelId, EkoTags(set))
-                                .subscribeOn(Schedulers.io())
-                                .subscribe()
-                    })
-                }
-            })
-            return true
-        } else if (item.itemId == R.id.action_notification_for_current_channel) {
-            channelRepository.notification(getChannelId())
-                    .isAllowed
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSuccess { allowed ->
-                        MaterialDialog(this).show {
-                            checkBoxPrompt(text = "allow notification for current channel", isCheckedDefault = allowed, onToggle = null)
-                            positiveButton(text = "save changes") {
-                                channelRepository.notification(getChannelId())
-                                        .setAllowed(isCheckPromptChecked())
-                                        .subscribeOn(Schedulers.io())
-                                        .subscribe()
-                            }
-                            negativeButton(text = "discard")
-
+            }
+            R.id.action_with_tags -> {
+                showDialog(R.string.with_tag, "bnk48,football,concert",
+                        Joiner.on(",").join(includingTags), true) { _, input ->
+                    includingTags.clear()
+                    for (tag in input.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        if (tag.isNotEmpty()) {
+                            includingTags.add(tag)
                         }
                     }
-                    .subscribe()
-            return true
-        } else if (item.itemId == R.id.action_stack_from_end) {
-            MaterialDialog(this).show {
-                checkBoxPrompt(text = getString(R.string.stack_from_end), isCheckedDefault = stackFromEnd.get(), onToggle = null)
-                positiveButton(text = "save change") {
-                    stackFromEnd.set(isCheckPromptChecked())
                     initialMessageCollection()
                     observeMessageCollection()
                 }
-                negativeButton(text = "discard")
+                return true
             }
-
-            return true
-        } else if (item.itemId == R.id.action_revert_layout) {
-
-            MaterialDialog(this).show {
-                checkBoxPrompt(text = getString(R.string.revert_layout), isCheckedDefault = revertLayout.get(), onToggle = null)
-                positiveButton(text = "save change") {
-                    revertLayout.set(isCheckPromptChecked())
+            R.id.action_without_tags -> {
+                showDialog(R.string.with_tag, "bnk48,football,concert",
+                        Joiner.on(",").join(excludingTags), true) { _, input ->
+                    excludingTags.clear()
+                    for (tag in input.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        if (tag.isNotEmpty()) {
+                            excludingTags.add(tag)
+                        }
+                    }
                     initialMessageCollection()
                     observeMessageCollection()
                 }
-                negativeButton(text = "discard")
+                return true
             }
-            return true
+            R.id.action_set_tags -> {
+                val liveData = LiveDataReactiveStreams.fromPublisher(channelRepository.getChannel(getChannelId()))
+                liveData.observeForever(object : Observer<EkoChannel> {
+                    override fun onChanged(channel: EkoChannel) {
+                        liveData.removeObserver(this)
+                        showDialog(R.string.set_tags, "bnk48,football,concert",
+                                Joiner.on(",").join(channel.getTags()), true) { _, input ->
+                            val set = Sets.newConcurrentHashSet<String>()
+                            for (tag in input.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                                if (tag.isNotEmpty()) {
+                                    set.add(tag)
+                                }
+                            }
+                            channelRepository.setTags(channel.getChannelId(), EkoTags(set))
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe()
+                        }
+                    }
+                })
+                return true
+            }
+            R.id.action_notification_for_current_channel -> {
+                channelRepository.notification(getChannelId())
+                        .isAllowed()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSuccess { allowed ->
+                            MaterialDialog(this).show {
+                                checkBoxPrompt(text = "allow notification for current channel", isCheckedDefault = allowed, onToggle = null)
+                                positiveButton(text = "save changes") {
+                                    channelRepository.notification(getChannelId())
+                                            .setAllowed(isCheckPromptChecked())
+                                            .subscribeOn(Schedulers.io())
+                                            .subscribe()
+                                }
+                                negativeButton(text = "discard")
+
+                            }
+                        }
+                        .subscribe()
+                return true
+            }
+            R.id.action_stack_from_end -> {
+                MaterialDialog(this).show {
+                    checkBoxPrompt(text = getString(R.string.stack_from_end), isCheckedDefault = stackFromEnd.get(), onToggle = null)
+                    positiveButton(text = "save change") {
+                        stackFromEnd.set(isCheckPromptChecked())
+                        initialMessageCollection()
+                        observeMessageCollection()
+                    }
+                    negativeButton(text = "discard")
+                }
+
+                return true
+            }
+            R.id.action_revert_layout -> {
+
+                MaterialDialog(this).show {
+                    checkBoxPrompt(text = getString(R.string.revert_layout), isCheckedDefault = revertLayout.get(), onToggle = null)
+                    positiveButton(text = "save change") {
+                        revertLayout.set(isCheckPromptChecked())
+                        initialMessageCollection()
+                        observeMessageCollection()
+                    }
+                    negativeButton(text = "discard")
+                }
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     private fun setUpInputLayout() {
-        EkoClient.newChannelRepository().getChannel(getChannelId()).observe(this, Observer {
-            if(EkoChannel.Type.fromJson(it.channelType)  == EkoChannel.Type.BROADCAST) {
+        setUpSendButton()
+
+        LiveDataReactiveStreams.fromPublisher(EkoClient.newChannelRepository().getChannel(getChannelId())).observe(this, Observer {
+            if (it.getType() == EkoChannel.Type.BROADCAST) {
                 message_input_layout.visibility = View.GONE
             }
         })
     }
 
     private fun onLongClick(message: EkoMessage) {
-
-        if (message.isDeleted) {
+        if (message.isDeleted()) {
             return
         }
 
@@ -272,7 +279,7 @@ abstract class MessageListActivity : BaseActivity() {
                         flagMessage(message)
                     }
                     MessageOption.FLAG_SENDER -> {
-                        flagUser(message.user)
+                        flagUser(message.getUser())
                     }
                     MessageOption.SET_TAG -> {
                         setTags(message)
@@ -290,7 +297,7 @@ abstract class MessageListActivity : BaseActivity() {
                         deleteMessage(message)
                     }
                     MessageOption.OPEN_FILE -> {
-                        openFile(message)
+                        openFile(message.getData() as EkoMessage.Data.FILE)
                     }
                     MessageOption.REACTION_HISTORY -> {
                         showReactionHistory(message)
@@ -306,20 +313,19 @@ abstract class MessageListActivity : BaseActivity() {
         optionItems.add(MessageOption.FLAG_SENDER.value)
         optionItems.add(MessageOption.SET_TAG.value)
 
-        if (DataType.from(message.type) == DataType.FILE) {
+        if (message.getDataType() == EkoMessage.DataType.FILE) {
             optionItems.add(MessageOption.OPEN_FILE.value)
         }
 
-        if (message.userId == EkoClient.getUserId()) {
-            if (DataType.from(message.type) == DataType.TEXT
-                    || DataType.from(message.type) == DataType.CUSTOM) {
+        if (message.getUserId() == EkoClient.getUserId()) {
+            if (message.getDataType() == EkoMessage.DataType.TEXT || message.getDataType() == EkoMessage.DataType.CUSTOM) {
                 optionItems.add(MessageOption.EDIT.value)
             }
             optionItems.add(MessageOption.DELETE.value)
         }
 
         optionItems.add(MessageOption.ADD_REACTION.value)
-        if (message.myReactions.isNotEmpty()) {
+        if (message.getMyReactions().isNotEmpty()) {
             optionItems.add(MessageOption.REMOVE_REACTION.value)
         }
         optionItems.add(MessageOption.REACTION_HISTORY.value)
@@ -328,54 +334,35 @@ abstract class MessageListActivity : BaseActivity() {
     }
 
     private fun editMessage(message: EkoMessage) {
-        when (DataType.from(message.type)) {
-            DataType.TEXT -> {
-                showTextMessageEditor(message)
+        val data = message.getData()
+        when (data) {
+            is EkoMessage.Data.TEXT -> {
+                showTextMessageEditor(data)
             }
 
-            DataType.CUSTOM -> {
-                showCustomMessageEditor(message)
+            is EkoMessage.Data.CUSTOM -> {
+                showCustomMessageEditor(data)
             }
         }
     }
 
     private fun deleteMessage(message: EkoMessage) {
-        when (DataType.from(message.type)) {
-            DataType.TEXT -> {
-                message.textMessageEditor?.run {
-                    delete().subscribe()
-                }
-            }
-            DataType.IMAGE -> {
-                message.imageMessageEditor?.run {
-                    delete().subscribe()
-                }
-            }
-            DataType.FILE -> {
-                message.fileMessageEditor?.run {
-                    delete().subscribe()
-                }
-            }
-            DataType.CUSTOM -> {
-                message.customMessageEditor?.run {
-                    delete().subscribe()
-                }
-            }
-        }
+        message.delete().subscribe()
     }
 
     private fun flagMessage(message: EkoMessage) {
-        if (message.isFlaggedByMe) {
+        if (message.isFlaggedByMe()) {
             MaterialDialog(this).show {
                 title = "un-flag a message"
                 positiveButton(text = "un-flag a message") {
-                    disposable.add(messageRepository.report(message.messageId)
-                            .unflag()
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete {
-                                Toast.makeText(this@MessageListActivity, "successfully un-flagged a message", Toast.LENGTH_SHORT).show()
-                            }
-                            .subscribe())
+                    disposable.add(
+                            message.report()
+                                    .unflag()
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .doOnComplete {
+                                        Toast.makeText(this@MessageListActivity, "successfully un-flagged a message", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .subscribe())
                 }
             }
 
@@ -383,24 +370,25 @@ abstract class MessageListActivity : BaseActivity() {
             MaterialDialog(this).show {
                 title = "flag a message"
                 positiveButton(text = "flag") {
-                    disposable.add(messageRepository.report(message.messageId)
-                            .flag()
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .doOnComplete {
-                                Toast.makeText(this@MessageListActivity, "successfully flagged the a message", Toast.LENGTH_SHORT).show()
-                            }
-                            .subscribe())
+                    disposable.add(
+                            message.report()
+                                    .flag()
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .doOnComplete {
+                                        Toast.makeText(this@MessageListActivity, "successfully flagged the a message", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .subscribe())
                 }
             }
         }
     }
 
-    private fun flagUser(user: EkoUser) {
-        if (user.isFlaggedByMe) {
+    private fun flagUser(user: EkoUser?) {
+        if (user?.isFlaggedByMe() ?: false) {
             MaterialDialog(this).show {
                 title = "un-flag a sender"
                 positiveButton(text = "un-flag") {
-                    disposable.add(userRepository.report(user.userId)
+                    disposable.add(userRepository.report(user!!.getUserId())
                             .unflag()
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnComplete { Toast.makeText(this@MessageListActivity, "successfully un-flagged a sender", Toast.LENGTH_SHORT).show() }
@@ -412,7 +400,7 @@ abstract class MessageListActivity : BaseActivity() {
             MaterialDialog(this).show {
                 title = "flag a sender"
                 positiveButton(text = "flag") {
-                    disposable.add(userRepository.report(user.userId)
+                    disposable.add(userRepository.report(user!!.getUserId())
                             .flag()
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnComplete { Toast.makeText(this@MessageListActivity, "successfully flagged a sender", Toast.LENGTH_SHORT).show() }
@@ -423,45 +411,53 @@ abstract class MessageListActivity : BaseActivity() {
     }
 
     private fun setTags(message: EkoMessage) {
-        showDialog(R.string.set_tags, "bnk48,football,concert", Joiner.on(",").join(message.tags), true, { dialog, input ->
+        showDialog(R.string.set_tags, "bnk48,football,concert",
+                Joiner.on(",").join(message.getTags()), true) { _, input ->
             val set = Sets.newConcurrentHashSet<String>()
-            for (tag in input.toString().split(",".toRegex()).dropLastWhile({ it.isEmpty() }).toTypedArray()) {
-                if (tag.length > 0) {
+            for (tag in input.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                if (tag.isNotEmpty()) {
                     set.add(tag)
                 }
             }
-            messageRepository.setTags(message.messageId, EkoTags(set))
+            messageRepository.setTags(message.getMessageId(), EkoTags(set))
                     .subscribeOn(Schedulers.io())
                     .subscribe()
-        })
+        }
     }
 
     private fun initialMessageCollection() {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.stackFromEnd = stackFromEnd.get()
         layoutManager.reverseLayout = revertLayout.get()
-        messageListRecyclerView?.layoutManager = layoutManager
+        message_list_recyclerview.layoutManager = layoutManager
 
         adapter = MessageListAdapter()
-        messageListRecyclerView?.adapter = adapter
+        message_list_recyclerview.adapter = adapter
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
                 val lastPosition = adapter!!.itemCount - 1
-                messageListRecyclerView?.scrollToPosition(lastPosition)
+                if (positionStart == lastPosition) {
+                    message_list_recyclerview.scrollToPosition(lastPosition)
+                }
             }
         })
 
         disposable.clear()
 
         disposable.add(adapter!!.onLongClickFlowable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
-                    onLongClick(it)
+                    onLongClick(it!!)
                 }
                 .subscribe())
 
         disposable.add(adapter!!.onClickFlowable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
-                    onClick(it)
+                    onClick(it!!)
                 }
                 .subscribe())
     }
@@ -475,69 +471,68 @@ abstract class MessageListActivity : BaseActivity() {
         messages?.observe(this, Observer { adapter?.submitList(it) })
     }
 
+    private fun setUpSendButton() {
+        message_edittext.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                message_send_button.isEnabled = !TextUtils.isEmpty(s.toString())
+            }
 
-    private fun showDialog(@StringRes title: Int, hint: CharSequence, prefill: CharSequence, allowEmptyInput: Boolean, callback: InputCallback) {
-        MaterialDialog(this).show {
-            title(title)
-            input(inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS, hint = hint.toString(), prefill = prefill, allowEmpty = allowEmptyInput, callback = callback)
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // do nothing
+            }
+        })
+
+        message_send_button.setOnClickListener {
+            val text = message_edittext.text.toString().trim()
+            message_edittext.text = null
+            createTextMessage(text)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError { t ->
+                        val ekoError = EkoError.from(t)
+                        if (ekoError == EkoError.USER_IS_BANNED) {
+                            message_edittext.post {
+                                Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
+                            }
+                            message_edittext.postDelayed({ finish() }, 500)
+                        }
+                    }
+                    .subscribe()
+
         }
     }
 
-    @OnTextChanged(R.id.message_edittext)
-    internal fun onMessageTextChanged(input: CharSequence) {
-        val text = input.toString().trim { it <= ' ' }
-        sendButton!!.isEnabled = !TextUtils.isEmpty(text)
-    }
-
-    @OnClick(R.id.message_send_button)
-    internal fun onSendClick() {
-        val text = messageEditText?.text.toString().trim()
-        messageEditText?.text = null
-        createTextMessage(text)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnError { t ->
-                    val ekoError = EkoError.from(t)
-                    if (ekoError == EkoError.USER_IS_BANNED) {
-                        messageEditText?.post {
-                            Toast.makeText(this, t.message, Toast.LENGTH_SHORT).show()
-                        }
-                        messageEditText?.postDelayed({
-                            finish()
-                        },
-                                500)
-                    }
-                }
-                .subscribe()
-
-    }
-
-    private fun openFile(message: EkoMessage) {
+    @SuppressLint("CheckResult")
+    private fun openFile(data: EkoMessage.Data.FILE) {
         rxPermissions
                 .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .subscribe({ granted ->
+                .subscribe { granted ->
                     if (granted) {
-                        FileManager.openFile(getApplicationContext(), message)
+                        FileManager.openFile(this, data)
                     }
-                })
-    }
-
-    private fun showTextMessageEditor(message: EkoMessage) {
-        val currentText = message.getData(TextData::class.java).text
-        showDialog(R.string.edit_text_message, "enter text", currentText, false, { dialog, input ->
-            val modifiedText = input.toString()
-            if (modifiedText != currentText) {
-                message.textMessageEditor?.run {
-                    text(modifiedText)
-                            .subscribe()
                 }
-            }
-        })
     }
 
-    private fun showCustomMessageEditor(message: EkoMessage) {
+    private fun showTextMessageEditor(data: EkoMessage.Data.TEXT) {
+        showDialog(R.string.edit_text_message, "enter text", data.getText(), false) { dialog, input ->
+            val modifiedText = input.toString()
+            if (modifiedText != data.getText()) {
+                data.edit()
+                        .text(modifiedText)
+                        .build()
+                        .apply()
+                        .subscribe()
+            }
+        }
+    }
+
+    private fun showCustomMessageEditor(data: EkoMessage.Data.CUSTOM) {
         val dialog = MaterialDialog(this)
                 .title(text = "Edit custom message")
-                .customView(R.layout.view_edit_custom_message, scrollable = true)
+                .customView(R.layout.view_custom_message_editor, scrollable = true)
 
         val customView = dialog.getCustomView()
         val keyEditText = customView.findViewById<EditText>(R.id.key_edittext)
@@ -560,28 +555,29 @@ abstract class MessageListActivity : BaseActivity() {
 
         sendButton.setOnClickListener {
             it.isEnabled = false
-            sendEditCustomMessageRequest(message, keyEditText.text.toString().trim(), valueEditText.text.toString())
+            sendEditCustomMessageRequest(data, keyEditText.text.toString().trim(), valueEditText.text.toString())
             dialog.dismiss()
         }
 
         dialog.show()
     }
 
-    private fun sendEditCustomMessageRequest(message: EkoMessage, key: String, value: String) {
+    private fun sendEditCustomMessageRequest(data: EkoMessage.Data.CUSTOM, key: String, value: String) {
         val customData = JsonObject()
         customData.addProperty(key, value)
 
-        val editor = message.customMessageEditor
-        editor?.run {
-            custom(customData)
-                    .subscribe()
-        }
+        data.edit()
+                .data(customData)
+                .build()
+                .apply()
+                .subscribe()
+
     }
 
     private fun showAddReactionDialog(message: EkoMessage) {
         val reactionItems = mutableListOf<String>()
         ReactionOption.values().filter {
-            !message.myReactions.contains(it.value())
+            !message.getMyReactions().contains(it.value())
         }.forEach {
             reactionItems.add(it.value())
         }
@@ -600,9 +596,9 @@ abstract class MessageListActivity : BaseActivity() {
     }
 
     private fun showRemoveReactionDialog(message: EkoMessage) {
-        val reactionItems = message.myReactions
+        val reactionItems = message.getMyReactions()
         MaterialDialog(this).show {
-            listItems(items = reactionItems) { dialog, position, text ->
+            listItems(items = reactionItems) { _, _, text ->
                 message.react()
                         .removeReaction(text.toString())
                         .subscribe()
@@ -611,7 +607,6 @@ abstract class MessageListActivity : BaseActivity() {
     }
 
     private fun showReactionHistory(message: EkoMessage) {
-        startActivity(OpenMessageReactionListIntent(this, message.messageId))
+        startActivity(OpenMessageReactionListIntent(this, message))
     }
-
 }

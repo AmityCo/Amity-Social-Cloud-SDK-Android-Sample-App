@@ -6,19 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.ekoapp.simplechat.channellist.ChannelListActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="8dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     <TextView
         android:id="@+id/query_filter_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
+        android:layout_alignParentTop="true"
         android:padding="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         tools:text="filter options" />
