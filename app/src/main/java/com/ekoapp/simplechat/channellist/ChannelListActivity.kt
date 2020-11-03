@@ -32,6 +32,8 @@ import com.google.common.base.Joiner
 import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
+import kotlinx.android.synthetic.main.activity_channel_list.toolbar
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class ChannelListActivity : AppCompatActivity() {
@@ -56,6 +58,9 @@ class ChannelListActivity : AppCompatActivity() {
 
         observeChannelCollection()
 
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        setSupportActionBar(toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
