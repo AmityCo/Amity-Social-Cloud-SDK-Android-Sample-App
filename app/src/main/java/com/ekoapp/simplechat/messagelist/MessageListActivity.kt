@@ -14,9 +14,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -46,14 +43,15 @@ import com.google.common.collect.Sets
 import com.google.gson.JsonObject
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_message_list.*
 
 abstract class MessageListActivity : AppCompatActivity() {
-    private var messages: LiveData<PagedList<EkoMessage>>? = null
 
+    private var compositeDisposable = CompositeDisposable()
     private var adapter: MessageListAdapter? = null
 
     protected val channelRepository = EkoClient.newChannelRepository()
@@ -74,7 +72,7 @@ abstract class MessageListActivity : AppCompatActivity() {
 
     protected abstract fun getMenu(): Int
 
-    protected abstract fun getMessageCollection(): LiveData<PagedList<EkoMessage>>
+    protected abstract fun getMessageCollection(): Flowable<PagedList<EkoMessage>>
 
     protected abstract fun getDefaultStackFromEnd(): Boolean
 
@@ -185,24 +183,20 @@ abstract class MessageListActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_set_tags -> {
-                val liveData = LiveDataReactiveStreams.fromPublisher(channelRepository.getChannel(getChannelId()))
-                liveData.observeForever(object : Observer<EkoChannel> {
-                    override fun onChanged(channel: EkoChannel) {
-                        liveData.removeObserver(this)
-                        showDialog(R.string.set_tags, "bnk48,football,concert",
-                                Joiner.on(",").join(channel.getTags()), true) { _, input ->
-                            val set = Sets.newConcurrentHashSet<String>()
-                            for (tag in input.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
-                                if (tag.isNotEmpty()) {
-                                    set.add(tag)
-                                }
-                            }
-                            channelRepository.setTags(channel.getChannelId(), EkoTags(set))
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribe()
+                val channel = channelRepository.getChannel(getChannelId()).blockingFirst()
+                showDialog(R.string.set_tags, "bnk48,football,concert",
+                        Joiner.on(",").join(channel.getTags()), true) { _, input ->
+                    val set = Sets.newConcurrentHashSet<String>()
+                    for (tag in input.toString().split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
+                        if (tag.isNotEmpty()) {
+                            set.add(tag)
                         }
                     }
-                })
+                    channelRepository.setTags(channel.getChannelId(), EkoTags(set))
+                            .subscribeOn(Schedulers.io())
+                            .subscribe()
+                }
+
                 return true
             }
             R.id.action_notification_for_current_channel -> {
@@ -258,12 +252,11 @@ abstract class MessageListActivity : AppCompatActivity() {
 
     private fun setUpInputLayout() {
         setUpSendButton()
+        val channel = EkoClient.newChannelRepository().getChannel(getChannelId()).blockingFirst()
+        if (channel.getType() == EkoChannel.Type.BROADCAST) {
+            message_input_layout.visibility = View.GONE
+        }
 
-        LiveDataReactiveStreams.fromPublisher(EkoClient.newChannelRepository().getChannel(getChannelId())).observe(this, Observer {
-            if (it.getType() == EkoChannel.Type.BROADCAST) {
-                message_input_layout.visibility = View.GONE
-            }
-        })
     }
 
     private fun onLongClick(message: EkoMessage) {
@@ -463,12 +456,17 @@ abstract class MessageListActivity : AppCompatActivity() {
     }
 
     private fun observeMessageCollection() {
-        if (messages != null) {
-            messages?.removeObservers(this)
-        }
+        compositeDisposable.dispose()
+        compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(
+                getMessageCollection()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            adapter?.submitList(it)
+                        }, {})
 
-        messages = getMessageCollection()
-        messages?.observe(this, Observer { adapter?.submitList(it) })
+        )
     }
 
     private fun setUpSendButton() {
@@ -609,4 +607,6 @@ abstract class MessageListActivity : AppCompatActivity() {
     private fun showReactionHistory(message: EkoMessage) {
         startActivity(OpenMessageReactionListIntent(this, message))
     }
+
+
 }

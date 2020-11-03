@@ -6,8 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
@@ -16,20 +14,20 @@ import com.ekoapp.ekosdk.user.EkoUser
 import com.ekoapp.ekosdk.user.query.EkoUserSortOption
 import com.ekoapp.sdk.common.extensions.showDialog
 import com.ekoapp.simplechat.R
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_user_list.*
 import java.util.*
 
 class UserListActivity : AppCompatActivity() {
 
-    private var users: LiveData<PagedList<EkoUser>>? = null
-
     private val userRepository = EkoClient.newUserRepository()
-
     private var keyword = ""
     private var sortBy: EkoUserSortOption = EkoUserSortOption.DISPLAYNAME
     private val adapter = UserListAdapter()
+    private var compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
@@ -81,20 +79,21 @@ class UserListActivity : AppCompatActivity() {
     }
 
     private fun observeUserCollection() {
-        users?.removeObservers(this)
         user_list_recyclerview.adapter = adapter
-
-        users = getUsersLiveData()
-        users?.observe(this, Observer<PagedList<EkoUser>> { adapter.submitList(it) })
+        compositeDisposable.dispose()
+        compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(getUsers()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ adapter.submitList(it) }, {})
+        )
     }
 
-    private fun getUsersLiveData(): LiveData<PagedList<EkoUser>> {
-        return LiveDataReactiveStreams.fromPublisher(
-                userRepository.getAllUsers()
+    private fun getUsers(): Flowable<PagedList<EkoUser>> {
+        return userRepository.getAllUsers()
                         .sortBy(sortBy)
                         .build()
                         .query()
-        )
     }
 
     @SuppressLint("CheckResult")
@@ -112,5 +111,10 @@ class UserListActivity : AppCompatActivity() {
                 .subscribe({
 
                 }, { })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
     }
 }

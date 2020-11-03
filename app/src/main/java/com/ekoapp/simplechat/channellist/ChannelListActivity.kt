@@ -8,9 +8,6 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
@@ -25,35 +22,32 @@ import com.ekoapp.simplechat.channellist.filter.ChannelQueryFilterActivity
 import com.ekoapp.simplechat.intent.IntentRequestCode
 import com.google.common.base.Joiner
 import com.google.common.collect.FluentIterable
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_channel_list.*
 
 
 class ChannelListActivity : AppCompatActivity() {
 
-    private var channels: LiveData<PagedList<EkoChannel>>? = null
     private val channelRepository = EkoClient.newChannelRepository()
+    private var compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedState: Bundle?) {
         super.onCreate(savedState)
         setContentView(R.layout.activity_channel_list)
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
+        setSupportActionBar(toolbar)
 
         query_filter_textview.setOnClickListener {
             startActivityForResult(Intent(this, ChannelQueryFilterActivity::class.java),
                     IntentRequestCode.REQUEST_CHANNEL_FILTER_OPTION)
         }
 
-        LiveDataReactiveStreams.fromPublisher(channelRepository.getTotalUnreadCount())
-                .observe(this, Observer<Int> { totalUnreadCount ->
-                    val totalUnreadCountString = getString(R.string.total_unread_d, totalUnreadCount)
-                    total_unread_textview.text = totalUnreadCountString
-                })
-
         observeChannelCollection()
 
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
-        toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
-        setSupportActionBar(toolbar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -107,13 +101,18 @@ class ChannelListActivity : AppCompatActivity() {
         channel_list_recyclerview.adapter = adapter
         displayQueryOptions()
 
-        channels?.removeObservers(this)
-        channels = getChannelsLiveData()
-        channels?.observe(this, Observer<PagedList<EkoChannel>> { adapter.submitList(it) })
-
+        compositeDisposable.dispose()
+        compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(getChannels()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    adapter.submitList(it)
+                }, {})
+        )
     }
 
-    private fun getChannelsLiveData(): LiveData<PagedList<EkoChannel>> {
+    private fun getChannels(): Flowable<PagedList<EkoChannel>> {
         val types = FluentIterable.from(SimplePreferences.getChannelTypeOptions().get())
                 .transform {
                     EkoChannel.Type.enumOf(it)
@@ -123,14 +122,14 @@ class ChannelListActivity : AppCompatActivity() {
         val includingTags = EkoTags(SimplePreferences.getIncludingChannelTags().get())
         val excludingTags = EkoTags(SimplePreferences.getExcludingChannelTags().get())
 
-        return LiveDataReactiveStreams.fromPublisher(channelRepository
+        return channelRepository
                 .getChannelCollection()
                 .types(types)
                 .filter(filter)
                 .includingTags(includingTags)
                 .excludingTags(excludingTags)
                 .build()
-                .query())
+                .query()
     }
 
     private fun displayQueryOptions() {
@@ -183,4 +182,10 @@ class ChannelListActivity : AppCompatActivity() {
                 }
                 .subscribe()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+
 }

@@ -1,14 +1,13 @@
 package com.ekoapp.simplechat.messagelist
 
 import android.os.Bundle
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoTags
 import com.ekoapp.ekosdk.message.EkoMessage
 import com.ekoapp.simplechat.R
 import com.ekoapp.simplechat.intent.*
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import kotlinx.android.synthetic.main.activity_message_list.*
 
 class ParentMessageListActivity : MessageListActivity() {
@@ -33,16 +32,14 @@ class ParentMessageListActivity : MessageListActivity() {
         return R.menu.menu_parent_message_list
     }
 
-    override fun getMessageCollection(): LiveData<PagedList<EkoMessage>> {
-        return LiveDataReactiveStreams.fromPublisher(
-                messageRepository.getMessageCollection(getChannelId())
-                        .parentId(null)
-                        .includingTags(EkoTags(includingTags))
-                        .excludingTags(EkoTags(excludingTags))
-                        .stackFromEnd(stackFromEnd.get())
-                        .build()
-                        .query()
-        )
+    override fun getMessageCollection(): Flowable<PagedList<EkoMessage>> {
+        return messageRepository.getMessageCollection(getChannelId())
+                .parentId(null)
+                .includingTags(EkoTags(includingTags))
+                .excludingTags(EkoTags(excludingTags))
+                .stackFromEnd(stackFromEnd.get())
+                .build()
+                .query()
     }
 
     override fun getDefaultStackFromEnd(): Boolean {
