@@ -4,20 +4,19 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.sdk.BuildConfig
 import com.ekoapp.ekosdk.stream.EkoStream
 import com.ekoapp.simplechat.R
+import io.reactivex.Flowable
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_channel_list.toolbar
 import kotlinx.android.synthetic.main.activity_stream_list.*
 
 class StreamListActivity : AppCompatActivity() {
 
-    private var streams: LiveData<PagedList<EkoStream>>? = null
+    private var streamDisposable: Disposable? = null
     private val streamRepository = EkoClient.newStreamRepository()
 
     private var adapter: StreamListAdapter? = null
@@ -31,7 +30,9 @@ class StreamListActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        streams?.removeObservers(this)
+        if (streamDisposable?.isDisposed == false) {
+            streamDisposable?.dispose()
+        }
     }
 
     private fun setupToolbar() {
@@ -45,9 +46,8 @@ class StreamListActivity : AppCompatActivity() {
     private fun observeStreamCollection() {
         adapter = StreamListAdapter()
         stream_list_recyclerview.adapter = adapter
-        streams?.removeObservers(this)
-        streams = getStreamsLiveData()
-        streams?.observe(this, Observer { onCollectionUpdated(it) })
+        streamDisposable = getLiveStreams()
+                .subscribe({ onCollectionUpdated(it) }, { })
     }
 
     private fun onCollectionUpdated(pagedList: PagedList<EkoStream>) {
@@ -62,11 +62,10 @@ class StreamListActivity : AppCompatActivity() {
         }
     }
 
-    private fun getStreamsLiveData(): LiveData<PagedList<EkoStream>> {
-        return LiveDataReactiveStreams
-                .fromPublisher(streamRepository
-                        .getLiveStreamCollection()
-                        .build()
-                        .query())
+    private fun getLiveStreams(): Flowable<PagedList<EkoStream>> {
+        return streamRepository
+                .getLiveStreamCollection()
+                .build()
+                .query()
     }
 }
