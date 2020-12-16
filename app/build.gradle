@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def ekoSdkVersion = '4.1.0-rc1'
+def ekoSdkVersion = '4.2.0-beta01'
 
 android {
     compileSdkVersion 30
@@ -94,6 +94,10 @@ dependencies {
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-sdk:${ekoSdkVersion}"
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-fcm:${ekoSdkVersion}"
     implementation "com.github.EkoCommunications.EkoMessagingSDKAndroid:eko-push-baidu:${ekoSdkVersion}"
+
+    implementation "com.google.android.exoplayer:exoplayer:2.11.4"
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.11.4'
+    implementation 'com.google.android.exoplayer:extension-rtmp:2.11.4'
 
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
