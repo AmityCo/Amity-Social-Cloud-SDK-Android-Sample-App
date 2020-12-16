@@ -13,6 +13,7 @@ import com.ekoapp.sdk.common.extensions.showToast
 import com.ekoapp.simplechat.channellist.ChannelListActivity
 import com.ekoapp.simplechat.intent.OpenCommentContentListIntent
 import com.ekoapp.simplechat.myuser.MyUserActivity
+import com.ekoapp.simplechat.stream.StreamListActivity
 import com.ekoapp.simplechat.userlist.UserListActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -97,6 +98,9 @@ class MainActivity : AppCompatActivity() {
             PageListType.COMMENT_CONTENT -> {
                 startActivity(OpenCommentContentListIntent(this, "androidContentId"))
             }
+            PageListType.STREAM_LIST -> {
+                startActivity(Intent(this, StreamListActivity::class.java))
+            }
             else -> {
             }
         }
@@ -123,7 +127,8 @@ class MainActivity : AppCompatActivity() {
         CHANNEL_LIST("Channel list"),
         USER_LIST("User list"),
         MY_USER("My User"),
-        COMMENT_CONTENT("Comment Content");
+        COMMENT_CONTENT("Comment Content"),
+        STREAM_LIST("Stream list");
 
         companion object {
             fun enumOf(value: String): PageListType? = values().find { it.value == value }

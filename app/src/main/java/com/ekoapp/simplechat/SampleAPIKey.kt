@@ -12,7 +12,7 @@ object SampleAPIKey {
     private fun get(environment: String): String {
         return when (environment) {
             preprod -> {
-                "b3bab95b3edbf9661a368518045b4481d35cdfeaec35677d"
+                "b3baba5c38d2f6334c61de1a5b0e1680d05b8fb0b93c3925"
             }
             production -> {
                 ""
