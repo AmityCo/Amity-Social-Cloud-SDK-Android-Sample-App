@@ -84,7 +84,7 @@ class MessageListAdapter : EkoMessageAdapter<MessageListAdapter.MessageViewHolde
                     holder.itemView.data_textview.text =
                             String.format("data type: %s,\ndata: %s", type, "")
 
-                    val uri = data.getUri()
+                    val uri : String? = null
                     if (uri != null) {
                         Glide.with(holder.itemView.data_imageview.context)
                                 .load(uri)
@@ -99,7 +99,7 @@ class MessageListAdapter : EkoMessageAdapter<MessageListAdapter.MessageViewHolde
                                 .override(data.getWidth(), data.getHeight())
                                 .into(holder.itemView.data_imageview)
                     }
-                    val progress = data.getUploadProgressPercentage()
+                    val progress = 0
                     holder.itemView.progress_horizontal.setProgress(progress)
                     when (m.getState()) {
                         EkoMessage.State.CREATED -> {
@@ -127,7 +127,7 @@ class MessageListAdapter : EkoMessageAdapter<MessageListAdapter.MessageViewHolde
                     holder.itemView.data_imageview.visibility = View.GONE
                     holder.itemView.data_textview.text =
                             String.format("data type: %s, \ndata: %s", type, data.toString())
-                    val progress = data.getUploadProgressPercentage()
+                    val progress = 0
                     holder.itemView.progress_horizontal.setProgress(progress)
 
                     when (m.getState()) {
