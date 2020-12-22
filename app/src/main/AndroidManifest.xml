@@ -110,7 +110,13 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".stream.StreamListActivity"
+            android:name=".stream.LiveStreamListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".stream.RecordedStreamListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />

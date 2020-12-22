@@ -1,10 +1,13 @@
 package com.ekoapp.simplechat.stream
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ekoapp.ekosdk.adapter.EkoPagedListAdapter
 import com.ekoapp.ekosdk.stream.EkoStream
 import com.ekoapp.simplechat.R
@@ -31,13 +34,29 @@ class StreamListAdapter : EkoPagedListAdapter<EkoStream, StreamListAdapter.Strea
                     .append(stream.getTitle())
                     .append("\ndescription : ")
                     .append(stream.getDescription())
+                    .append("\nuser : ")
+                    .append(stream.getUser()?.getDisplayName() ?: "none")
+                    .append("\nrecordings size : ")
+                    .append(stream.getRecordings().size)
                     .append("\n-------------------------------------------------")
                     .toString()
             holder.stream = stream
             holder.itemView.stream_textview.text = text
+
+            stream.getThumbnailImage()?.getUrl()?.let { imageUrl ->
+                Glide.with(holder.itemView.context)
+                        .load(imageUrl)
+                        .placeholder(R.drawable.ic_launcher_background)
+                        .centerCrop()
+                        .into(holder.itemView.stream_imageview)
+            } ?: kotlin.run {
+                holder.itemView.stream_imageview.setImageDrawable(null)
+            }
+
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     class StreamViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var stream: EkoStream? = null
 

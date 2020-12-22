@@ -59,7 +59,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:context=".stream.StreamListActivity"
         tools:showIn="@layout/activity_stream_list" />
 
 

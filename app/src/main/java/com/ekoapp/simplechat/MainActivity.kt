@@ -10,10 +10,11 @@ import androidx.core.content.ContextCompat
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.sdk.common.extensions.showDialog
 import com.ekoapp.sdk.common.extensions.showToast
+import com.ekoapp.simplechat.stream.LiveStreamListActivity
+import com.ekoapp.simplechat.stream.RecordedStreamListActivity
 import com.ekoapp.simplechat.channellist.ChannelListActivity
 import com.ekoapp.simplechat.intent.OpenCommentContentListIntent
 import com.ekoapp.simplechat.myuser.MyUserActivity
-import com.ekoapp.simplechat.stream.StreamListActivity
 import com.ekoapp.simplechat.userlist.UserListActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -98,8 +99,11 @@ class MainActivity : AppCompatActivity() {
             PageListType.COMMENT_CONTENT -> {
                 startActivity(OpenCommentContentListIntent(this, "androidContentId"))
             }
-            PageListType.STREAM_LIST -> {
-                startActivity(Intent(this, StreamListActivity::class.java))
+            PageListType.LIVE_STREAM_LIST -> {
+                startActivity(Intent(this, LiveStreamListActivity::class.java))
+            }
+            PageListType.RECORDED_STREAM_LIST -> {
+                startActivity(Intent(this, RecordedStreamListActivity::class.java))
             }
             else -> {
             }
@@ -128,7 +132,8 @@ class MainActivity : AppCompatActivity() {
         USER_LIST("User list"),
         MY_USER("My User"),
         COMMENT_CONTENT("Comment Content"),
-        STREAM_LIST("Stream list");
+        LIVE_STREAM_LIST("Live Streaming list"),
+        RECORDED_STREAM_LIST("Recorded Streaming list");
 
         companion object {
             fun enumOf(value: String): PageListType? = values().find { it.value == value }
