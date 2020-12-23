@@ -63,9 +63,6 @@ open class StreamVideoPlayerActivity : AppCompatActivity() {
         }
         //If stream is not live, get video-recording urls from recordings
         else if (!stream.isLive() && stream.getRecordings().isNotEmpty()) {
-//            val url = stream.getRecordings()[0]?.getUrl(EkoRecordingData.Format.FLV)
-//            url?.let { prepareVideo(it) }
-
             showRecordingVideoList(stream.getRecordings())
         } else {
             Toast.makeText(this, "Sorry, no urls are available", Toast.LENGTH_SHORT).show()
