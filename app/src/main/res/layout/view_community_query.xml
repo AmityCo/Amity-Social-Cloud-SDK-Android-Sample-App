@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/edittext_keyword_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/view_border"
+        android:hint="Keyword"
+        android:padding="8dp" />
+
+    <EditText
+        android:id="@+id/edittext_tags_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/view_border"
+        android:hint="Tag: EkoTag, AmityTag, ..."
+        android:padding="8dp" />
+
+    <Spinner
+        android:id="@+id/spinner_filter_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/view_border"
+        android:entries="@array/filter_list"
+        android:padding="8dp" />
+
+    <Spinner
+        android:id="@+id/spinner_sort_by_query"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/view_border"
+        android:entries="@array/sort_by_list"
+        android:padding="8dp" />
+
+    <Button
+        android:id="@+id/button_get_community_collection"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:text="Get Community Collection"
+        android:textAllCaps="false" />
+
+</LinearLayout>

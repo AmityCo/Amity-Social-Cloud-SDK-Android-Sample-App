@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/create_community"
+        android:orderInCategory="100"
+        android:title="@string/create_community"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/create_community_by_admin"
+        android:orderInCategory="200"
+        android:title="@string/create_community_by_admin"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/get_community"
+        android:orderInCategory="500"
+        android:title="@string/get_community"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/sort_community"
+        android:orderInCategory="500"
+        android:title="@string/sort_community"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/include_deleted_community"
+        android:orderInCategory="500"
+        android:title="@string/include_deleted"
+        app:showAsAction="never" />
+</menu>

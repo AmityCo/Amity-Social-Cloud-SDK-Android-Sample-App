@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!--  sdk_environment options: production, preprod -->
-    <string name="sdk_environment">preprod</string>
-</resources>
