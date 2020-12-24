@@ -57,4 +57,10 @@
         android:title="@string/revert_layout"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_check_permission"
+        android:orderInCategory="900"
+        android:title="@string/check_permission"
+        app:showAsAction="never" />
+
 </menu>

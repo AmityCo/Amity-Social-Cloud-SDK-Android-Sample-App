@@ -1,1 +1,2 @@
+include ':sdk-versioning'
 include ':app'

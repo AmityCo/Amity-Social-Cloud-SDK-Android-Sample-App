@@ -5,7 +5,7 @@
 
         <variable
             name="model"
-            type="com.ekoapp.simplechat.channellist.filter.channeltype.ChannelTypeFilterViewModel" />
+            type="com.ekoapp.sdk.channellist.filter.channeltype.ChannelTypeFilterViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Channel types"/>
+            android:text="Channel types" />
 
         <CheckBox
             android:id="@+id/checkbox_standard"
@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:checked="@={model.isBroadcastTypeSelected}"
             android:text="Broadcast" />
+
         <CheckBox
             android:id="@+id/checkbox_conversation"
             android:layout_width="wrap_content"
@@ -45,10 +46,24 @@
             android:checked="@={model.isChatTypeSelected}"
             android:text="Conversation" />
 
+        <CheckBox
+            android:id="@+id/checkbox_community"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={model.isCommunityTypeSelected()}"
+            android:text="Community" />
+
+        <CheckBox
+            android:id="@+id/checkbox_live"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={model.isLiveTypeSelected()}"
+            android:text="Live" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="#3e3e3e"/>
+            android:background="#3e3e3e" />
 
     </LinearLayout>
 

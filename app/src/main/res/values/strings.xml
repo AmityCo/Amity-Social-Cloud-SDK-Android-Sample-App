@@ -1,16 +1,35 @@
 <resources>
-    <string name="app_name">SimpleChat</string>
+
+    <string name="app_name">EkoSDK</string>
+
     <string name="change_api_key">Change API Key</string>
     <string name="change_display_name">Change DisplayName</string>
     <string name="change_metadata">Change Metadata</string>
     <string name="change_user_id">Change User Id</string>
+    <string name="check_permission">Check Permission</string>
     <string name="create_channel">Create Channel</string>
+    <string name="create_community">Create Community</string>
+    <string name="create_community_by_admin">Create Community by admin</string>
     <string name="create_conversation">Create Conversation</string>
+    <string name="create_post">Create Post</string>
+    <string name="delete_post">Delete Post</string>
+    <string name="sort_feed">Sort Feed</string>
+    <string name="search_by_reaction_name">Search by reaction name</string>
     <string name="edit_text_message">Edit text message</string>
     <string name="edit_custom_message">Edit custom message</string>
+    <string name="excluding_tags">Excluding Tags</string>
+    <string name="get_community">Get Community</string>
+    <string name="sort_community">Sort Communities</string>
+    <string name="include_deleted">Include Deleted</string>
+    <string name="include_deleted_message">Do you want filter data by include deleted?</string>
+    <string name="including_tags">Including Tags</string>
     <string name="join_channel">Join Channel</string>
     <string name="leave_channel">Leave Channel</string>
+    <string name="edit_channel">Edit Channel</string>
     <string name="member">Member</string>
+    <string name="role">Role</string>
+    <string name="add_role">Add Role</string>
+    <string name="remove_role">Remove Role</string>
     <string name="notification_for_current_user">Notification Settings</string>
     <string name="notification_for_current_channel">Notification Settings</string>
     <string name="register">Register</string>
@@ -22,14 +41,35 @@
     <string name="set_tags">Set Tag(s)</string>
     <string name="stack_from_end">Stack From End</string>
     <string name="total_unread_d">Total unread: %d</string>
+    <string name="update_community">Update Community</string>
+    <string name="update_community_by_admin">Update Community by admin</string>
     <string name="unregister">Un-Register</string>
     <string name="unregister_push">Un-register Push</string>
     <string name="unregister_push_for_all">Un-register Push for All Users</string>
+    <string name="user_feeds">User Feeds</string>
     <string name="user_list">User list</string>
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
-    <string name="channel_list">Channel list</string>
-    <string name="edit_channel">Edit Channel</string>
-    <string name="role">Role</string>
+    <string name="select_item">Select item</string>
     <string name="create_comment">Create Comment</string>
+    <string name="edit_comment">Edit Comment</string>
+    <string name="add_user">Add User</string>
+    <string name="channel_id">Channel id</string>
+    <string name="display_name">Display name</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="user_id">User id</string>
+    <string name="choose_existing">Choose Existing</string>
+    <string name="take_photo">Take Photo</string>
+
+    <string-array name="sort_by_list">
+        <item>firstCreated</item>
+        <item>lastCreated</item>
+        <item>displayName</item>
+    </string-array>
+
+    <string-array name="filter_list">
+        <item>all</item>
+    </string-array>
+
 </resources>

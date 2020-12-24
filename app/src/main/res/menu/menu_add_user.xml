@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_add_user"
+        android:orderInCategory="100"
+        android:title="@string/add_user"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_role"
+        android:orderInCategory="100"
+        android:title="@string/role"
+        app:showAsAction="never" />
+
+</menu>
