@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_search_reaction_name"
+        android:orderInCategory="100"
+        android:title="@string/search_by_reaction_name"
+        app:showAsAction="never" />
+
+</menu>

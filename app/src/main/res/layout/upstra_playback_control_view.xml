@@ -6,14 +6,14 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="#81000000"
+        android:background="@color/color_sort_of_transparent_black"
         style="@style/ExoMediaButton.Play"/>
 
     <ImageButton android:id="@id/exo_pause"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="#81000000"
+        android:background="@color/color_sort_of_transparent_black"
         style="@style/ExoMediaButton.Pause"/>
 
 </FrameLayout>

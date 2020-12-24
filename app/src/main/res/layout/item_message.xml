@@ -42,17 +42,18 @@
             android:id="@+id/data_imageview"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            />
 
         <ProgressBar
             android:id="@+id/progress_horizontal"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:indeterminate="false"
-            android:indeterminateOnly="false"
             android:max="100"
-            android:progress="0" />
+            android:progress="0"
+            android:indeterminate="false"
+            android:indeterminateOnly="false"/>
 
     </LinearLayout>
 
@@ -63,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/image_layout"
         android:textSize="14sp"
-        tools:text="Reaction" />
+        tools:text="Reaction"/>
 
     <TextView
         android:id="@+id/comment_count_textview"
@@ -89,6 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tags_textview"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:maxLines="1"
         android:textSize="14sp"
         tools:text="synced" />
@@ -99,8 +101,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/sync_state_textview"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:maxLines="1"
         android:textSize="14sp"
         tools:text="13:37" />
+
 
 </RelativeLayout>
