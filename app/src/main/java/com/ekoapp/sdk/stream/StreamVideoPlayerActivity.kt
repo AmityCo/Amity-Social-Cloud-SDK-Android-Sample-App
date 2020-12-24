@@ -8,8 +8,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.ekosdk.stream.EkoRecordingData
+import com.ekoapp.ekosdk.stream.EkoStream
 import com.ekoapp.ekosdk.stream.EkoWatcherData
 import com.ekoapp.sdk.R
+import com.ekoapp.sdk.intent.StreamVideoPlayerIntent
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
@@ -110,7 +113,7 @@ open class StreamVideoPlayerActivity : AppCompatActivity() {
             recordings.forEach {
                 arrayAdapter.add(it?.getUrl(EkoRecordingData.Format.FLV) ?: "")
             }
-            builderSingle.setAdapter(arrayAdapter) { dialog, which ->
+            builderSingle.setAdapter(arrayAdapter) { _, which ->
                 val url = arrayAdapter.getItem(which) as String
                 prepareVideo(url)
             }
