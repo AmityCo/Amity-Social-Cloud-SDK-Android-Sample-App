@@ -11,44 +11,74 @@
         android:layout_alignParentBottom="true"
         android:padding="8dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/message_send_button"
-            android:layout_width="wrap_content"
-            android:layout_height="56dp"
-            android:layout_alignParentRight="true"
-            android:enabled="false"
-            android:text="Send" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/message_edittext"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/text_message_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/message_send_button"
-            android:maxLines="4" />
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/message_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/message_send_button"
+                android:maxLines="4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/message_send_button"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/message_send_button"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:enabled="false"
+                android:text="Send"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/message_edittext"
-            android:orientation="horizontal">
+            android:layout_below="@+id/text_message_layout"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/message_image_button"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:text="Image" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/message_file_button"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:text="File" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/message_image_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Image" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/message_custom_button"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:text="Custom" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/message_file_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="File" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/message_audio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Audio" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/message_custom_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Custom" />
+            </LinearLayout>
 
         </LinearLayout>
 

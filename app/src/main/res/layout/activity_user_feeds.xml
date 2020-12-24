@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+  <Button
+      android:id="@+id/button_flag_unflag"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Flag/UnFlag Post"/>
+
+  <Button
+      android:id="@+id/button_post_reaction"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Post Reaction"/>
+
+  <Button
+      android:id="@+id/button_add_reaction"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Add Post Reaction"/>
+
+  <Button
+      android:id="@+id/button_remove_reaction"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Remove Post Reaction"/>
+
+</LinearLayout>

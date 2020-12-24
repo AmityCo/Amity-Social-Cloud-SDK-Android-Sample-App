@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_default_button">#D3D3D3</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_black">#000000</color>
+    <color name="color_quite_black">#656565</color>
+    <color name="color_quite_grey">#CFCFCF</color>
+    <color name="color_quite_green">#62CA65</color>
+    <color name="color_sort_of_transparent_black">#81000000</color>
+
 </resources>
