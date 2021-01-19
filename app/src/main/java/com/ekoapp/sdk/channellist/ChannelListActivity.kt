@@ -46,7 +46,6 @@ class ChannelListActivity : AppCompatActivity(), ChannelInputsDialog.OnDialogLis
         setContentView(R.layout.activity_channel_list)
         val appName = getString(R.string.app_name)
         toolbar.title = String.format("%s %s: %s", appName, "Eko SDK", BuildConfig.VERSION_NAME)
-        toolbar.subtitle = String.format("%s", baseContext.getString(R.string.sdk_environment))
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)

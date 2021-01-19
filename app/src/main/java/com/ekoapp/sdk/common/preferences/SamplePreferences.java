@@ -41,7 +41,7 @@ public class SamplePreferences {
 
 
     public static Preference<String> getApiKey() {
-        return get().getString(API_KEY_KEY, SampleAPIKey.INSTANCE.get());
+        return get().getString(API_KEY_KEY, SampleAPIKey.INSTANCE.get(SampleApp.get()));
     }
 
     public static Preference<String> getMyUserId() {

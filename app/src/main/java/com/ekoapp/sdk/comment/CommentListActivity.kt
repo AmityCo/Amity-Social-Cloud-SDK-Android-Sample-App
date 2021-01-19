@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.PagedList
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ekoapp.ekosdk.EkoClient
@@ -34,7 +35,19 @@ class CommentListActivity : AppCompatActivity() {
 
         initView()
         initListeners()
+        getCommentCollection {}
+        pullToRefresh()
+    }
 
+    private fun pullToRefresh() {
+        swiperefresh.setOnRefreshListener {
+            swiperefresh.isRefreshing = true
+            adapter.submitList(null)
+            getCommentCollection { swiperefresh.isRefreshing = false }
+        }
+    }
+
+    private fun getCommentCollection(callback: (PagedList<EkoComment>) -> Unit = {}) {
         val disposable = repository
                 .getCommentCollection()
                 .post(postId)
@@ -44,8 +57,10 @@ class CommentListActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ commentEntityList ->
                     adapter.submitList(commentEntityList)
+                    callback.invoke(commentEntityList)
                 }, {
                     showToast(it.message ?: "Sorry, Get comments error !")
+                    it.printStackTrace()
                 })
         compositeDisposable.add(disposable)
     }
