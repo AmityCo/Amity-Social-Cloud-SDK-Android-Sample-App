@@ -3,9 +3,13 @@ package com.ekoapp.sdk.stream
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.ekosdk.stream.EkoRecordingData
+import com.ekoapp.ekosdk.stream.EkoStream
 import com.ekoapp.ekosdk.stream.EkoWatcherData
 import com.ekoapp.sdk.R
 import com.ekoapp.sdk.intent.StreamVideoPlayerIntent
@@ -48,17 +52,23 @@ open class StreamVideoPlayerActivity : AppCompatActivity() {
         val streamId = StreamVideoPlayerIntent.getStreamId(intent)
         urlDisposable = EkoClient.newStreamRepository()
                 .getStreamById(streamId)
-                .map { it.getWatcherData()?.getUrl(EkoWatcherData.Format.FLV) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(Consumer { startStreaming(it) }, URLErrorConsumer(this))
-
-
     }
 
-    private fun startStreaming(url: String?) {
-        initPlayer()
-        url?.let { prepareVideo(it) }
-
+    private fun startStreaming(stream: EkoStream) {
+        //If stream is still live, get live-stream url from watcherData
+        if (stream.isLive()) {
+            val url = stream.getWatcherData()?.getUrl(EkoWatcherData.Format.FLV)
+            url?.let { prepareVideo(it) }
+        }
+        //If stream is not live, get video-recording urls from recordings
+        else if (!stream.isLive() && stream.getRecordings().isNotEmpty()) {
+            showRecordingVideoList(stream.getRecordings())
+        } else {
+            Toast.makeText(this, "Sorry, no urls are available", Toast.LENGTH_SHORT).show()
+            finish()
+        }
     }
 
     private fun initPlayer() {
@@ -84,11 +94,33 @@ open class StreamVideoPlayerActivity : AppCompatActivity() {
     }
 
     private fun prepareVideo(url: String) {
+        initPlayer()
         val newUrl = url.replace("https", "http")
         video_viewer.requestFocus()
         val videoSource: MediaSource = ProgressiveMediaSource.Factory(getDataSourceFactory(), DefaultExtractorsFactory())
                 .createMediaSource(Uri.parse(newUrl))
         exoplayer?.prepare(videoSource)
+    }
+
+    private fun showRecordingVideoList(recordings: List<EkoRecordingData?>) {
+        if (recordings.size > 1) {
+            val builderSingle: AlertDialog.Builder = AlertDialog.Builder(this)
+            builderSingle.setTitle("Select recordings")
+            builderSingle.setCancelable(false)
+            builderSingle.setNegativeButton("cancel") { dialog, _ -> dialog.dismiss(); finish() }
+
+            val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice)
+            recordings.forEach {
+                arrayAdapter.add(it?.getUrl(EkoRecordingData.Format.FLV) ?: "")
+            }
+            builderSingle.setAdapter(arrayAdapter) { _, which ->
+                val url = arrayAdapter.getItem(which) as String
+                prepareVideo(url)
+            }
+            builderSingle.show()
+        } else {
+            prepareVideo(recordings[0]?.getUrl(EkoRecordingData.Format.FLV) ?: "")
+        }
     }
 
     open protected fun getDataSourceFactory(): DataSource.Factory {

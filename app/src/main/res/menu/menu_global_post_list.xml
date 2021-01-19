@@ -13,10 +13,4 @@
         android:title="@string/delete_post"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/menu_member"
-        android:orderInCategory="100"
-        android:title="@string/member"
-        app:showAsAction="never" />
-
 </menu>

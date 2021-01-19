@@ -34,39 +34,44 @@ class CommentListAdapter : EkoCommentAdapter<CommentListAdapter.CommentViewHolde
         if (comment == null) {
             holder.itemView.comment_id_textview.text = "loading..."
         } else {
-            comment?.let { commentNonNull ->
-                val data = commentNonNull.getData() as EkoComment.Data.TEXT
-                val text = StringBuilder()
-                        .append("id: ")
-                        .append(commentNonNull.getCommentId())
-                        .append("\nreferenceType: ")
-                        .append(getReferenceType(commentNonNull.getReference()))
-                        .append("\ndata comment: ")
-                        .append(data.getText())
-                        .append("\nuser id: ")
-                        .append(commentNonNull.getUser()?.getUserId() ?: "")
-                        .append("\nparent id: ")
-                        .append(commentNonNull.getParentId())
-                        .append("\ndata type: ")
-                        .append(commentNonNull.getDataType().apiKey)
-                        .append("\nchildren number: ")
-                        .append(commentNonNull.getChildrenNumber())
-                        .append("\nreactions: ")
-                        .append(commentNonNull.getReactionMap().toString())
-                        .append("\nmy reactions: ")
-                        .append(commentNonNull.getMyReactions().toString())
-                        .append("\ndeleted: ")
-                        .append(commentNonNull.isDeleted())
-                        .toString()
-                holder.itemView.comment_id_textview.text = text
+            if (comment.getState() == EkoComment.State.FAILED) {
+                holder.itemView.comment_id_textview.visibility = View.GONE
+            } else {
+                holder.itemView.comment_id_textview.visibility = View.VISIBLE
+                comment.let { commentNonNull ->
+                    val data = commentNonNull.getData() as EkoComment.Data.TEXT
+                    val text = StringBuilder()
+                            .append("id: ")
+                            .append(commentNonNull.getCommentId())
+                            .append("\nreferenceType: ")
+                            .append(getReferenceType(commentNonNull.getReference()))
+                            .append("\ndata comment: ")
+                            .append(data.getText())
+                            .append("\nuser id: ")
+                            .append(commentNonNull.getUser()?.getUserId() ?: "")
+                            .append("\nparent id: ")
+                            .append(commentNonNull.getParentId())
+                            .append("\ndata type: ")
+                            .append(commentNonNull.getDataType().apiKey)
+                            .append("\nchildren number: ")
+                            .append(commentNonNull.getChildrenNumber())
+                            .append("\nreactions: ")
+                            .append(commentNonNull.getReactionMap().toString())
+                            .append("\nmy reactions: ")
+                            .append(commentNonNull.getMyReactions().toString())
+                            .append("\ndeleted: ")
+                            .append(commentNonNull.isDeleted())
+                            .toString()
+                    holder.itemView.comment_id_textview.text = text
 
-                holder.itemView.setOnClickListener {
-                    onClickSubject.onNext(commentNonNull)
-                }
+                    holder.itemView.setOnClickListener {
+                        onClickSubject.onNext(commentNonNull)
+                    }
 
-                holder.itemView.setOnLongClickListener {
-                    onLongClickSubject.onNext(commentNonNull)
-                    true
+                    holder.itemView.setOnLongClickListener {
+                        onLongClickSubject.onNext(commentNonNull)
+                        true
+                    }
                 }
             }
         }
