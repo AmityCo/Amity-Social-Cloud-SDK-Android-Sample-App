@@ -8,8 +8,7 @@ Upstra SDK has sample app you can play along with it. It is written with Kotlin 
 Please build and sync the project once before running the app.
 
 ### Replace the api key
-Go to "SampleAPIKey.kt" class inside Sample Module and paste the api key inside `get(environment: String)` method.
-Replace your api key either on `preprod` or `production`.
+Go to "res/values/strings.xml" inside sdk-versioning Module and paste the api key inside `sdk_api_key` key name.
 
 ## License
 

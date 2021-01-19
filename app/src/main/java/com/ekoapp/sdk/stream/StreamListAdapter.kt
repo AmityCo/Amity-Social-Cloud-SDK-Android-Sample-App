@@ -37,6 +37,8 @@ class StreamListAdapter : EkoPagedListAdapter<EkoStream, StreamListAdapter.Strea
                     .append(stream.getDescription())
                     .append("\nuser : ")
                     .append(stream.getUser()?.getDisplayName() ?: "none")
+                    .append("\nrecordings size : ")
+                    .append(stream.getRecordings().size)
                     .append("\n-------------------------------------------------")
                     .toString()
             holder.stream = stream
@@ -48,6 +50,8 @@ class StreamListAdapter : EkoPagedListAdapter<EkoStream, StreamListAdapter.Strea
                         .placeholder(R.drawable.ic_launcher_background)
                         .centerCrop()
                         .into(holder.itemView.stream_imageview)
+            } ?: kotlin.run {
+                holder.itemView.stream_imageview.setImageDrawable(null)
             }
 
         }
