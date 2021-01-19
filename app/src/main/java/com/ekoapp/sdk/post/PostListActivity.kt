@@ -22,6 +22,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_post_list.*
+import java.util.*
 
 abstract class PostListActivity : AppCompatActivity() {
 
@@ -35,8 +36,24 @@ abstract class PostListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_post_list)
         post_list_recyclerview.adapter = adapter
         initListeners()
+        getPostCollection {}
+        pullToRefresh()
+    }
+
+    private fun pullToRefresh() {
+        swiperefresh.setOnRefreshListener {
+            swiperefresh.isRefreshing = true
+            adapter.submitList(null)
+            getPostCollection { swiperefresh.isRefreshing = false }
+        }
+    }
+
+    private fun getPostCollection(callback: (PagedList<EkoPost>) -> Unit = {}) {
         getPostCollection()
-                .doOnNext(adapter::submitList)
+                .doOnNext {
+                    adapter.submitList(it)
+                    callback.invoke(it)
+                }
                 .doOnError(Throwable::printStackTrace)
                 .subscribe()
     }

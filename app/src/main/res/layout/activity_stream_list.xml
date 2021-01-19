@@ -59,7 +59,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:context="com.ekoapp.sdk.stream.StreamListActivity"
+        tools:context="com.ekoapp.sdk.stream.LiveStreamListActivity"
         tools:showIn="@layout/activity_stream_list" />
 
 

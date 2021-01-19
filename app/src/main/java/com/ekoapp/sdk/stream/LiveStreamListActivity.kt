@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.sdk.BuildConfig
@@ -17,7 +14,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_channel_list.toolbar
 import kotlinx.android.synthetic.main.activity_stream_list.*
 
-class StreamListActivity : AppCompatActivity() {
+open class LiveStreamListActivity : AppCompatActivity() {
 
     private var streamDisposable: Disposable? = null
     private val streamRepository = EkoClient.newStreamRepository()
@@ -38,10 +35,13 @@ class StreamListActivity : AppCompatActivity() {
         }
     }
 
+    open protected fun isLive(): Boolean = true
+
+    open protected fun subtitle(): String = "Live Stream"
+
     private fun setupToolbar() {
         val appName = getString(R.string.app_name)
         toolbar.title = String.format("%s %s: %s", appName, "Eko SDK", BuildConfig.VERSION_NAME)
-        toolbar.subtitle = String.format("Stream : %s", baseContext.getString(R.string.sdk_environment))
         toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         toolbar.setSubtitleTextColor(ContextCompat.getColor(this, android.R.color.white))
         setSupportActionBar(toolbar)
@@ -68,7 +68,8 @@ class StreamListActivity : AppCompatActivity() {
 
     private fun getLiveStreams(): Flowable<PagedList<EkoStream>> {
         return streamRepository
-                .getLiveStreamCollection()
+                .getStreamCollection()
+                .setIsLive(isLive())
                 .build()
                 .query()
     }
