@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.ekosdk.EkoRoles
 import com.ekoapp.ekosdk.channel.membership.query.EkoChannelMembershipFilter
 import com.ekoapp.ekosdk.channel.membership.query.EkoChannelMembershipSortOption
 import com.ekoapp.sdk.R
@@ -77,11 +78,12 @@ class ChannelMembershipActivity : AppCompatActivity() {
     }
 
     private fun getMembershipsByRole(input: CharSequence) {
+        val roles = EkoRoles(input.toString().split(",").toSet())
         val disposable = EkoClient.newChannelRepository()
                 .membership(channelId)
                 .getCollection()
                 .filter(EkoChannelMembershipFilter.ALL)
-                .role(input.toString())
+                .roles(roles)
                 .sortBy(EkoChannelMembershipSortOption.LAST_CREATED)
                 .build()
                 .query()

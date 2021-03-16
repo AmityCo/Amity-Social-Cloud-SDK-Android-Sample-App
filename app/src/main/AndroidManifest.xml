@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -189,6 +190,11 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
+            android:name=".comment.ReplyCommentListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
             android:name=".comment.create.CreateCommentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -216,9 +222,16 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".stream.StreamVideoPlayerActivity"
+            android:name=".stream.StreamerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".stream.StreamEkoVideoPlayerActivity"
             android:configChanges="orientation"
             android:windowSoftInputMode="stateHidden" />
+
 
         <activity
             android:name=".stream.StreamVideoPlayerRMTPActivity"
@@ -230,7 +243,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".comment.CommentContentListActivity"
+            android:name=".comment.loader.CommentContentListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 

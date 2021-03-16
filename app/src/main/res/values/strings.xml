@@ -51,7 +51,7 @@
     <string name="with_tag">With Tag(s)</string>
     <string name="without_tag">Without Tag(s)</string>
     <string name="select_item">Select item</string>
-    <string name="create_comment">Create Comment</string>
+    <string name="create_comment">create Comment</string>
     <string name="edit_comment">Edit Comment</string>
     <string name="add_user">Add User</string>
     <string name="channel_id">Channel id</string>
@@ -61,6 +61,17 @@
     <string name="user_id">User id</string>
     <string name="choose_existing">Choose Existing</string>
     <string name="take_photo">Take Photo</string>
+    <string name="sort_by_last_created">sort by last created</string>
+    <string name="sort_by_first_created">sort by first created</string>
+
+    <string name="stop_streaming_title">Stop streaming</string>
+    <string name="stop_streaming_description">Are you sure you want to stop the stream?</string>
+    <string name="general_stop">Stop</string>
+    <string name="general_cancel">Cancel</string>
+    <string name="general_warning">Warning</string>
+    <string name="permission_error">Please grant us camera and audio permissions before start streaming</string>
+    <string name="understand">Ok, understand</string>
+
 
     <string-array name="sort_by_list">
         <item>firstCreated</item>

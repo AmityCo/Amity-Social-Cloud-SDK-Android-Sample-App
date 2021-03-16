@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ekoapp.ekosdk.adapter.EkoCommentAdapter
 import com.ekoapp.ekosdk.comment.EkoComment
 import com.ekoapp.ekosdk.comment.EkoCommentReference
 import com.ekoapp.sdk.R
@@ -13,9 +12,10 @@ import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_comment.view.*
 
-class CommentListAdapter : EkoCommentAdapter<CommentListAdapter.CommentViewHolder>() {
+class ReplyCommentListAdapter : RecyclerView.Adapter<ReplyCommentListAdapter.ReplyCommentViewHolder>() {
     private val onLongClickSubject = PublishSubject.create<EkoComment>()
     private val onClickSubject = PublishSubject.create<EkoComment>()
+    private var commentList: List<EkoComment>? = null
 
     val onLongClickFlowable: Flowable<EkoComment>
         get() = onLongClickSubject.toFlowable(BackpressureStrategy.BUFFER)
@@ -23,20 +23,44 @@ class CommentListAdapter : EkoCommentAdapter<CommentListAdapter.CommentViewHolde
     val onClickFlowable: Flowable<EkoComment>
         get() = onClickSubject.toFlowable(BackpressureStrategy.BUFFER)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReplyCommentViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_comment, parent, false)
-        return CommentViewHolder(view)
+        return ReplyCommentViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
-        val comment = getItem(position)
-        if (comment == null) {
-            holder.itemView.comment_id_textview.text = "loading..."
-        } else {
-            if (comment.getState() == EkoComment.State.FAILED) {
-                holder.itemView.comment_id_textview.visibility = View.GONE
+    override fun onBindViewHolder(holder: ReplyCommentViewHolder, position: Int) {
+        holder.bind(commentList?.get(position))
+    }
+
+    override fun getItemCount(): Int {
+        return commentList?.size ?: 0
+    }
+
+    private fun getReferenceType(reference: EkoCommentReference): String {
+        return when (reference) {
+            is EkoCommentReference.Content -> {
+                "Content"
+            }
+            is EkoCommentReference.Post -> {
+                "Post"
+            }
+            else -> {
+                "Unknown"
+            }
+        }
+    }
+
+    fun setComments(comment: List<EkoComment>?) {
+        this.commentList = comment
+        notifyDataSetChanged()
+    }
+
+    inner class ReplyCommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(comment: EkoComment?) {
+            if (comment == null) {
+                itemView.comment_id_textview.text = "loading..."
             } else {
-                holder.itemView.comment_id_textview.visibility = View.VISIBLE
+                itemView.comment_id_textview.visibility = View.VISIBLE
                 comment.let { commentNonNull ->
                     val data = commentNonNull.getData() as EkoComment.Data.TEXT
                     val text = StringBuilder()
@@ -63,35 +87,15 @@ class CommentListAdapter : EkoCommentAdapter<CommentListAdapter.CommentViewHolde
                             .append("\ncreated at: ")
                             .append(commentNonNull.getCreatedAt())
                             .toString()
-                    holder.itemView.comment_id_textview.text = text
-
-                    holder.itemView.setOnClickListener {
+                    itemView.comment_id_textview.text = text
+                    itemView.setOnClickListener {
                         onClickSubject.onNext(commentNonNull)
                     }
-
-                    holder.itemView.setOnLongClickListener {
+                    itemView.setOnLongClickListener {
                         onLongClickSubject.onNext(commentNonNull)
                         true
                     }
                 }
-            }
-        }
-    }
-
-    class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
-
-    private fun getReferenceType(reference: EkoCommentReference): String {
-        return when (reference) {
-            is EkoCommentReference.Content -> {
-                "Content"
-            }
-            is EkoCommentReference.Post -> {
-                "Post"
-            }
-            else -> {
-                "Unknown"
             }
         }
     }

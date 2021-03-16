@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ekoapp.ekosdk.EkoClient
+import com.ekoapp.ekosdk.EkoRoles
 import com.ekoapp.ekosdk.community.membership.EkoCommunityMembership
 import com.ekoapp.sdk.R
 import com.ekoapp.sdk.common.extensions.showDialog
@@ -184,11 +185,12 @@ class CommunityMembershipActivity : AppCompatActivity() {
     }
 
     private fun getMembershipsByRole(communityId: String, input: CharSequence) {
+        val roles = EkoRoles(input.toString().split(",").toSet())
         compositeDisposableMemberships.clear()
         val disposable = communityRepository
                 .membership(communityId)
                 .getCollection()
-                .roles(listOf(input.toString()))
+                .roles(roles)
                 .build()
                 .query()
                 .subscribeOn(Schedulers.io())
