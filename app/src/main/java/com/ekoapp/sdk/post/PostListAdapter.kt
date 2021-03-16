@@ -37,13 +37,19 @@ class PostListAdapter : EkoPostAdapter<PostListAdapter.PostViewHolder>() {
             post.let {
 
                 val postData = it.getData()
-                if (!(postData is EkoPost.Data.TEXT)) {
+                if (postData is EkoPost.Data.IMAGE || postData is EkoPost.Data.FILE) {
                     holder.itemView.post_textview.text = "incorrect type"
                     return
                 }
-                holder.itemView.post_textview.text = String.format("postId: %s\npostDataType: %s", post.getPostId(), post.getDataType().apiKey)
                 holder.itemView.sender_textview.text = String.format("userId: %s", post.getPostedUserId())
-                holder.itemView.data_textview.text = String.format("text: %s, children count: %s", postData.getText(), it.getChildren().size)
+                if (postData is EkoPost.Data.TEXT) {
+                    holder.itemView.post_textview.text = String.format("postId: %s\npostDataType: %s", post.getPostId(), "text")
+                    holder.itemView.data_textview.text = String.format("text: %s, children count: %s", postData.getText(), it.getChildren().size)
+                }else {
+                    holder.itemView.post_textview.text = String.format("postId: %s\npostDataType: %s", post.getPostId(), (postData as EkoPost.Data.CUSTOM).getDataType())
+                    holder.itemView.data_textview.text = postData.getRawJson()?.toString()
+                }
+
                 holder.itemView.deleted_textview.text = String.format("deleted: %s", post.isDeleted())
                 var childrenData = ""
                 for (child in it.getChildren()) {

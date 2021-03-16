@@ -10,9 +10,12 @@ import com.ekoapp.ekosdk.sdk.BuildConfig
 import com.ekoapp.ekosdk.stream.EkoStream
 import com.ekoapp.sdk.R
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_channel_list.toolbar
 import kotlinx.android.synthetic.main.activity_stream_list.*
+import java.util.concurrent.TimeUnit
 
 open class LiveStreamListActivity : AppCompatActivity() {
 
@@ -35,7 +38,7 @@ open class LiveStreamListActivity : AppCompatActivity() {
         }
     }
 
-    open protected fun isLive(): Boolean = true
+    open protected fun getStatus(): Array<EkoStream.Status> = arrayOf(EkoStream.Status.LIVE)
 
     open protected fun subtitle(): String = "Live Stream"
 
@@ -51,6 +54,8 @@ open class LiveStreamListActivity : AppCompatActivity() {
         adapter = StreamListAdapter()
         stream_list_recyclerview.adapter = adapter
         streamDisposable = getLiveStreams()
+                .throttleLatest(1, TimeUnit.SECONDS, Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ onCollectionUpdated(it) }, { })
     }
 
@@ -69,7 +74,7 @@ open class LiveStreamListActivity : AppCompatActivity() {
     private fun getLiveStreams(): Flowable<PagedList<EkoStream>> {
         return streamRepository
                 .getStreamCollection()
-                .setIsLive(isLive())
+                .setStatus(getStatus())
                 .build()
                 .query()
     }

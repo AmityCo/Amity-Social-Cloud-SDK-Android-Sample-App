@@ -1,14 +1,19 @@
-package com.ekoapp.sdk.comment
+package com.ekoapp.sdk.comment.loader
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ekoapp.ekosdk.EkoClient
 import com.ekoapp.ekosdk.comment.EkoComment
+import com.ekoapp.ekosdk.comment.option.EkoCommentSortOption
+import com.ekoapp.ekosdk.comment.query.EkoCommentLoader
 import com.ekoapp.sdk.R
 import com.ekoapp.sdk.comment.options.CommentOption
 import com.ekoapp.sdk.common.extensions.showToast
@@ -24,7 +29,8 @@ import kotlinx.android.synthetic.main.activity_comment_content_list.*
 
 class CommentContentListActivity : AppCompatActivity() {
     private val repository = EkoClient.newCommentRepository()
-    private val adapter = CommentListAdapter()
+    private val adapter = CommentAdapter(mutableListOf<EkoComment>())
+    private lateinit var loader : EkoCommentLoader
     private val compositeDisposable = CompositeDisposable()
 
     lateinit var contentId: String
@@ -36,19 +42,28 @@ class CommentContentListActivity : AppCompatActivity() {
 
         initView()
         initListeners()
-
-        val disposable = repository
+        loader = repository
                 .getCommentCollection()
                 .content(contentId)
+                .sortBy(EkoCommentSortOption.LAST_CREATED)
+                .includeDeleted(false)
                 .build()
-                .query()
+                .loader()
+
+
+        val disposable = loader
+                .getResult()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ commentEntityList ->
-                    adapter.submitList(commentEntityList)
+                    adapter.updateListItems(commentEntityList)
                 }, {
                     showToast(it.message ?: "Sorry, Get comments error !")
                 })
+
+        loader.load()
+                .subscribeOn(Schedulers.io())
+                .subscribe()
         compositeDisposable.add(disposable)
     }
 
@@ -73,6 +88,24 @@ class CommentContentListActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        val layoutManager = LinearLayoutManager(this)
+       content_comment_list_recyclerview.layoutManager = layoutManager
+        content_comment_list_recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(layoutManager.findLastVisibleItemPosition() == layoutManager.itemCount-1){
+                    if(loader.hasMore()) {
+                        loader.load()
+                                .subscribeOn(Schedulers.io())
+                                .subscribe()
+                    } else {
+                        Log.e("Comment manual load" ,"Last page reached")
+                    }
+                }
+
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
         content_comment_list_recyclerview.adapter = adapter
     }
 
@@ -190,4 +223,5 @@ class CommentContentListActivity : AppCompatActivity() {
     private fun showReactionHistory(comment: EkoComment) {
         startActivity(OpenCommentReactionListIntent(this, comment))
     }
+    
 }

@@ -5,7 +5,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.ekoapp.sdk.comment.CommentContentListActivity;
+import com.ekoapp.sdk.comment.loader.CommentContentListActivity;
 
 public class OpenCommentContentListIntent extends SampleIntent {
 

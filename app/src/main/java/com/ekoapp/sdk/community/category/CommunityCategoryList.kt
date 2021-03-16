@@ -19,6 +19,7 @@ class CommunityCategoryList : AppCompatActivity() {
         setUpRecycleView()
         LiveDataReactiveStreams.fromPublisher(
                 communityRepository.getAllCategories()
+                        .includeDeleted(false)
                         .build()
                         .query())
                 .observe(this, Observer {
