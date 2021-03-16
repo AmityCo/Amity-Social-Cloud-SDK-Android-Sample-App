@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_quite_black">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ekoapp.sdk.publisher.EkoCameraView
+            android:id="@+id/eko_camera"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,9:16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5">
+
+        </com.ekoapp.sdk.publisher.EkoCameraView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/live_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_corner_red"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingTop="10dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="10dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:text="LIVE  00:00"
+        tools:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/creation_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_sort_of_transparent_black">
+
+
+        <ImageView
+            android:id="@+id/icon_close"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:hapticFeedbackEnabled="true"
+            android:src="@drawable/ic_close"
+            app:tint="@color/color_white" />
+
+        <ImageView
+            android:id="@+id/toggle_settings"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="58dp"
+            android:src="@drawable/ic_settings"
+            app:tint="@color/color_white" />
+
+        <EditText
+            android:id="@+id/title_edittext"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginEnd="60dp"
+            android:textColorHint="@color/color_white"
+            android:textColor="@color/color_white"
+            android:background="@android:color/transparent"
+            android:textStyle="bold"
+            android:textSize="24dp"
+            android:hint="Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:layout_below="@+id/title_edittext"
+            android:id="@+id/description_edittext"
+            android:layout_marginStart="62dp"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/color_white"
+            android:textColor="@color/color_white"
+            android:background="@android:color/transparent"
+            android:textSize="16dp"
+            android:hapticFeedbackEnabled="true"
+            android:hint="Tell us more about your stream... (Optional)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/resolution_textview"
+            android:layout_marginBottom="100dp"
+            android:textColor="@color/color_white"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="Current Resolution : HD (720P)"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/toggle_camera"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_switch" />
+
+    <Button
+        android:id="@+id/toggle_publish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        android:text="Start Broadcasting" />
+
+</RelativeLayout>

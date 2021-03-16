@@ -21,6 +21,7 @@ import com.ekoapp.sdk.post.GlobalFeedActivity
 import com.ekoapp.sdk.post.MyFeedActivity
 import com.ekoapp.sdk.stream.LiveStreamListActivity
 import com.ekoapp.sdk.stream.RecordedStreamListActivity
+import com.ekoapp.sdk.stream.StreamerActivity
 import com.ekoapp.sdk.userlist.UserListActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -40,10 +41,12 @@ class MainActivity : AppCompatActivity() {
         const val commentContent = "Comment Content"
         const val liveStreaming = "Live Streaming List"
         const val recordedStreaming = "Recorded Streaming List"
+        const val streamPublisher = "Stream publisher"
     }
 
     private val menuItems = listOf(channelList, communityList, communityCategoryList,
-            userList, myFeed, globalFeed, myUser, notificationSettings, commentContent, liveStreaming, recordedStreaming)
+            userList, myFeed, globalFeed, myUser, notificationSettings, commentContent,
+            liveStreaming, recordedStreaming, streamPublisher)
     private val myUserId = SamplePreferences.getMyUserId()
     private var compositeDisposable = CompositeDisposable()
 
@@ -129,6 +132,9 @@ class MainActivity : AppCompatActivity() {
             }
             recordedStreaming -> {
                 startActivity(Intent(this, RecordedStreamListActivity::class.java))
+            }
+            streamPublisher -> {
+                startActivity(Intent(this, StreamerActivity::class.java))
             }
         }
     }

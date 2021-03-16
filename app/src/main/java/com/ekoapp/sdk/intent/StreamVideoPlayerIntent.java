@@ -6,7 +6,7 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.ekoapp.ekosdk.stream.EkoStream;
-import com.ekoapp.sdk.stream.StreamVideoPlayerActivity;
+import com.ekoapp.sdk.stream.StreamEkoVideoPlayerActivity;
 
 
 public class StreamVideoPlayerIntent extends SampleIntent {
@@ -15,12 +15,12 @@ public class StreamVideoPlayerIntent extends SampleIntent {
     private static final String EXTRA_STREAM_ID = EXTRA + "stream_id";
 
     public StreamVideoPlayerIntent(@NonNull Context context, @NonNull EkoStream stream) {
-        super(context, StreamVideoPlayerActivity.class);
+        super(context, StreamEkoVideoPlayerActivity.class);
         putExtra(EXTRA_STREAM, stream);
     }
 
     public StreamVideoPlayerIntent(@NonNull Context context, @NonNull String streamId) {
-        super(context, StreamVideoPlayerActivity.class);
+        super(context, StreamEkoVideoPlayerActivity.class);
         putExtra(EXTRA_STREAM_ID, streamId);
     }
 

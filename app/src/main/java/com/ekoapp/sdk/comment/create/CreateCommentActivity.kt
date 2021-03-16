@@ -16,12 +16,14 @@ class CreateCommentActivity : AppCompatActivity() {
     private val repository = EkoClient.newCommentRepository()
     private val compositeDisposable = CompositeDisposable()
 
-    lateinit var postId: String
+    private var postId: String = ""
+    private var commentId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_comment)
-        postId = OpenCreateCommentIntent.getPostId(intent)
+        postId = OpenCreateCommentIntent.getPostId(intent) ?: ""
+        commentId = OpenCreateCommentIntent.getCommentId(intent) ?: ""
 
         initView()
         initListeners()
@@ -38,8 +40,13 @@ class CreateCommentActivity : AppCompatActivity() {
     }
 
     private fun createComment() {
-        val disposable = repository.createComment()
-                .post(postId)
+        val commentCreation = repository.createComment().post(postId)
+
+        if (commentId.isNotEmpty()) {
+            commentCreation.parentId(commentId)
+        }
+
+        val disposable = commentCreation
                 .with()
                 .text(comment_edittext.text.toString())
                 .build()
