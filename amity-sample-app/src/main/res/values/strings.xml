@@ -1,0 +1,107 @@
+<resources>
+
+    <string name="app_name">ASC-SDK Sample app</string>
+
+
+    <string name="change_url">Change Url</string>
+    <string name="change_api_key">Change API Key</string>
+    <string name="change_display_name">Change DisplayName</string>
+    <string name="change_metadata">Change Metadata</string>
+    <string name="change_user_id">Change User Id</string>
+    <string name="check_permission">Check Permission</string>
+    <string name="create_channel">Create Channel</string>
+    <string name="create_community">Create Community</string>
+    <string name="create_conversation">Create Conversation</string>
+    <string name="create_post">Create Post</string>
+    <string name="delete_post">Delete Post</string>
+    <string name="sort_feed">Sort Feed</string>
+    <string name="search_by_reaction_name">Search by reaction name</string>
+    <string name="edit_text_message">Edit text message</string>
+    <string name="edit_custom_message">Edit custom message</string>
+    <string name="excluding_tags">Excluding Tags</string>
+    <string name="get_community">Get Community</string>
+    <string name="sort_community">Sort Communities</string>
+    <string name="include_deleted">Include Deleted</string>
+    <string name="include_deleted_message">Do you want filter data by include deleted?</string>
+    <string name="including_tags">Including Tags</string>
+    <string name="join_channel">Join Channel</string>
+    <string name="leave_channel">Leave Channel</string>
+    <string name="edit_channel">Edit Channel</string>
+    <string name="member">Member</string>
+    <string name="role">Role</string>
+    <string name="add_role">Add Role</string>
+    <string name="remove_role">Remove Role</string>
+    <string name="notification_setting">Notification Settings</string>
+    <string name="register">Register</string>
+    <string name="register_push">Register Push</string>
+    <string name="request_write_settings_permissions">Request Write Settings Permission</string>
+    <string name="revert_layout">Revert Layout</string>
+    <string name="search">Search</string>
+    <string name="sort_by">Sort by</string>
+    <string name="set_tags">Set Tag(s)</string>
+    <string name="stack_from_end">Stack From End</string>
+    <string name="total_unread_d">Total unread: %d</string>
+    <string name="update_community">Update Community</string>
+    <string name="update_community_by_admin">Update Community by admin</string>
+    <string name="unregister">Un-Register</string>
+    <string name="unregister_push">Un-register Push</string>
+    <string name="unregister_push_for_all">Un-register Push for All Users</string>
+    <string name="user_feeds">User Feeds</string>
+    <string name="user_list">User list</string>
+    <string name="with_tag">With Tag(s)</string>
+    <string name="without_tag">Without Tag(s)</string>
+    <string name="select_item">Select item</string>
+    <string name="create_comment">create Comment</string>
+    <string name="edit_comment">Edit Comment</string>
+    <string name="add_user">Add User</string>
+    <string name="channel_id">Channel id</string>
+    <string name="display_name">Display name</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="user_id">User id</string>
+    <string name="channel_channelid">Channel id = 1234</string>
+    <string name="channel_display_name">Display name = channel1</string>
+    <string name="channel_user_ids">User ids = 123,345,...</string>
+    <string name="channel_user_id">User id = 123</string>
+    <string name="choose_existing">Choose Existing</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="sort_by_last_created">sort by last created</string>
+    <string name="sort_by_first_created">sort by first created</string>
+
+    <string name="stop_streaming_title">Stop streaming</string>
+    <string name="stop_streaming_description">Are you sure you want to stop the stream?</string>
+    <string name="general_stop">Stop</string>
+    <string name="general_cancel">Cancel</string>
+    <string name="general_warning">Warning</string>
+    <string name="permission_error">Please grant us camera and audio permissions before start streaming</string>
+    <string name="understand">Ok, understand</string>
+
+    <string name="notification">Notifications</string>
+    <string name="notification_all_community_detail">Turn off, You won’t get any push notifications.</string>
+    <string name="notification_reacts_posts">Reacts Posts</string>
+    <string name="notification_reacts_comments">Reacts Comments</string>
+    <string name="notification_comments">Comments</string>
+    <string name="notification_replies">Replies</string>
+    <string name="notification_new_posts">New Posts</string>
+    <string name="notification_new_posts_option">New Posts - \nEveryone/Only moderator</string>
+    <string name="everyone">Everyone</string>
+    <string name="only_moderator">Only moderator</string>
+    <string name="update">Update</string>
+
+    <string name="chat">Chat</string>
+    <string name="video_streaming">Video-Streaming</string>
+    <string name="social">Social</string>
+    <string name="notification_moderator_option">Everyone/Only moderator</string>
+
+
+    <string-array name="sort_by_list">
+        <item>firstCreated</item>
+        <item>lastCreated</item>
+        <item>displayName</item>
+    </string-array>
+
+    <string-array name="filter_list">
+        <item>all</item>
+    </string-array>
+
+</resources>
