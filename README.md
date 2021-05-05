@@ -8,7 +8,7 @@ Amity Social Cloud SDK has sample app you can play along with it. It is written 
 Please build and sync the project once before running the app.
 
 ### Replace the api key
-Go to "res/values/strings.xml" inside sdk-versioning Module and paste the api key inside `sdk_api_key` key name.
+Go to "SampleAPIKey.kt" inside sdk-versioning Module and paste the api key inside `get().
 
 ## License
 
