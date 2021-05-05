@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  domain_key options: local, staging, preprod, production or prefix of client -->
+    <string name="domain_key">staging</string>
+</resources>
+
+

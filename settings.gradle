@@ -1,2 +1,2 @@
 include ':sdk-versioning'
-include ':app'
+include ':amity-sample-app'
