@@ -112,6 +112,9 @@ class MessageListAdapter : AmityMessageAdapter<MessageListAdapter.MessageViewHol
                                     val progress = it.getProgressPercentage()
                                     holder.itemView.progress_horizontal.progress = progress
                                     holder.itemView.progress_horizontal.visibility = View.VISIBLE
+                                    Glide.with(holder.itemView.data_imageview.context)
+                                            .load(it.getFilePath())
+                                            .into(holder.itemView.data_imageview)
                                 }
                                 .subscribe()
                         compositeDisposable.add(disposable)
