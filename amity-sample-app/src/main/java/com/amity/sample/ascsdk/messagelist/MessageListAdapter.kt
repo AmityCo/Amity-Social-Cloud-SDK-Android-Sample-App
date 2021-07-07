@@ -116,7 +116,6 @@ class MessageListAdapter : AmityMessageAdapter<MessageListAdapter.MessageViewHol
                                     Glide.with(holder.itemView.data_imageview.context)
                                         .load(it.getFilePath())
                                         .into(holder.itemView.data_imageview)
-
                                 }
                                 .subscribe()
                         compositeDisposable.add(disposable)
