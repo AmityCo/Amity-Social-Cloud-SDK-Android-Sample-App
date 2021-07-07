@@ -30,6 +30,7 @@ import com.amity.socialcloud.sdk.chat.channel.AmityChannelFilter
 import com.amity.socialcloud.sdk.core.AmityTags
 import com.amity.socialcloud.sdk.core.file.AmityImage
 import com.amity.socialcloud.sdk.core.file.AmityUploadResult
+import com.ekoapp.ekosdk.internal.AmityPagingDataRefresher
 import com.google.common.base.Joiner
 import com.google.common.collect.FluentIterable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -174,6 +175,7 @@ class ChannelListActivity : AppCompatActivity(), ChannelInputsDialog.OnDialogLis
         channels?.removeObservers(this)
         val adapter = ChannelListAdapter()
         channel_list_recyclerview.adapter = adapter
+        channel_list_recyclerview.addOnScrollListener(AmityPagingDataRefresher())
 
         displayQueryOptions()
         channels = getChannelsLiveData()

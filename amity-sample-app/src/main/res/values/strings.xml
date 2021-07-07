@@ -32,6 +32,7 @@
     <string name="add_role">Add Role</string>
     <string name="remove_role">Remove Role</string>
     <string name="notification_setting">Notification Settings</string>
+    <string name="pending_posts">Pending Posts</string>
     <string name="register">Register</string>
     <string name="register_push">Register Push</string>
     <string name="request_write_settings_permissions">Request Write Settings Permission</string>

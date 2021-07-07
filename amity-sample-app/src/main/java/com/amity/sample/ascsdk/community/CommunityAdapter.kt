@@ -4,11 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.amity.sample.ascsdk.R
 import com.amity.socialcloud.sdk.extension.adapter.AmityCommunityAdapter
 import com.amity.socialcloud.sdk.social.community.AmityCommunity
-import com.amity.sample.ascsdk.R
+import com.amity.socialcloud.sdk.social.feed.AmityFeedType
+import com.amity.socialcloud.sdk.social.feed.AmityPost
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_community.view.*
 
@@ -33,6 +37,7 @@ class CommunityAdapter : AmityCommunityAdapter<CommunityAdapter.AmityCommunityVi
         val community = getItem(position)
         if (community == null) {
             holder.itemView.community_id_textview.text = "loading..."
+            holder.itemView.post_count_textview.visibility = View.GONE
         } else {
             val text = StringBuilder()
                     .append("id: ")
@@ -57,8 +62,18 @@ class CommunityAdapter : AmityCommunityAdapter<CommunityAdapter.AmityCommunityVi
                     .append(community.getCategories())
                     .append("\nisDeleted: ")
                     .append(community.isDeleted())
+                    .append("\nisPostReviewEnabled: ")
+                    .append(community.isPostReviewEnabled())
                     .toString()
+
             holder.itemView.community_id_textview.text = text
+    
+            val defaultPostCount = 0
+            holder.itemView.post_count_textview.visibility = View.VISIBLE
+            holder.itemView.post_count_textview.text = "post count of reviewing: $defaultPostCount"
+            renderPostCount(community, AmityFeedType.REVIEWING) {
+                holder.itemView.post_count_textview.text = "post count of reviewing: $it"
+            }
 
             holder.itemView.setOnClickListener {
                 onClickSubject.onNext(community)
@@ -69,6 +84,14 @@ class CommunityAdapter : AmityCommunityAdapter<CommunityAdapter.AmityCommunityVi
                 true
             }
         }
+    }
+
+    private fun renderPostCount(community: AmityCommunity, feedType: AmityFeedType, callback: (Int) -> Unit) {
+        community.getPostCount(feedType)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(callback::invoke)
+                .subscribe()
     }
 
     class AmityCommunityViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {

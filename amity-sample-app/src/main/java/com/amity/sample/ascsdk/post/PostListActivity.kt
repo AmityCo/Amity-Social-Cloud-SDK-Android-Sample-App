@@ -6,19 +6,22 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.paging.PagedList
+import androidx.paging.PagingData
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
-import com.amity.socialcloud.sdk.social.AmitySocialClient
-import com.amity.socialcloud.sdk.social.feed.AmityFeedRepository
-import com.amity.socialcloud.sdk.social.feed.AmityPost
 import com.amity.sample.ascsdk.R
 import com.amity.sample.ascsdk.common.extensions.showDialog
 import com.amity.sample.ascsdk.common.extensions.showToast
 import com.amity.sample.ascsdk.intent.*
 import com.amity.sample.ascsdk.messagelist.option.ReactionOption
 import com.amity.sample.ascsdk.post.option.PostOption
+import com.amity.socialcloud.sdk.social.AmitySocialClient
+import com.amity.socialcloud.sdk.social.feed.AmityFeedRepository
+import com.amity.socialcloud.sdk.social.feed.AmityFeedType
+import com.amity.socialcloud.sdk.social.feed.AmityPost
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_post_list.*
@@ -28,6 +31,7 @@ abstract class PostListActivity : AppCompatActivity() {
 
     val feedRepository: AmityFeedRepository = AmitySocialClient.newFeedRepository()
     val adapter = PostListAdapter()
+    private val disposable = CompositeDisposable()
     abstract val targetType: String
     abstract val targetId: String
 
@@ -43,19 +47,18 @@ abstract class PostListActivity : AppCompatActivity() {
     private fun pullToRefresh() {
         swiperefresh.setOnRefreshListener {
             swiperefresh.isRefreshing = true
-            adapter.submitList(null)
             getPostCollection { swiperefresh.isRefreshing = false }
         }
     }
 
     private fun getPostCollection(callback: (PagedList<AmityPost>) -> Unit = {}) {
-        getPostCollection()
+        disposable.add(getPostCollection()
                 .doOnNext {
                     adapter.submitList(it)
                     callback.invoke(it)
                 }
                 .doOnError(Throwable::printStackTrace)
-                .subscribe()
+                .subscribe())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -84,7 +87,7 @@ abstract class PostListActivity : AppCompatActivity() {
             }
             R.id.menu_sort_feed -> {
                 selectSortOption {
-                    sortPostCollection(it)
+                    disposable.add(sortPostCollection(it)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnNext { pagedList ->
@@ -92,7 +95,7 @@ abstract class PostListActivity : AppCompatActivity() {
                                 adapter.submitList(pagedList)
                             }
                             .doOnError(Throwable::printStackTrace)
-                            .subscribe()
+                            .subscribe())
                 }
             }
             R.id.menu_member -> {
@@ -100,7 +103,7 @@ abstract class PostListActivity : AppCompatActivity() {
             }
             R.id.include_deleted_feed -> {
                 selectIncludeDeleted {
-                    getPostCollectionByIncludeDeleted(it)
+                    disposable.add(getPostCollectionByIncludeDeleted(it)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doOnNext { pagedList ->
@@ -108,7 +111,7 @@ abstract class PostListActivity : AppCompatActivity() {
                                 adapter.submitList(pagedList)
                             }
                             .doOnError(Throwable::printStackTrace)
-                            .subscribe()
+                            .subscribe())
                 }
             }
             R.id.action_check_permission -> {
@@ -116,6 +119,18 @@ abstract class PostListActivity : AppCompatActivity() {
             }
             R.id.notification_setting_community -> {
                 notificationSetting()
+            }
+            R.id.pending_posts -> {
+                disposable.clear()
+                disposable.add(getPostCollectionByFeedType(AmityFeedType.REVIEWING)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnNext { pagedList ->
+                        post_list_recyclerview.adapter = adapter
+                        adapter.submitList(pagedList)
+                    }
+                    .doOnError(Throwable::printStackTrace)
+                    .subscribe())
             }
         }
         return super.onOptionsItemSelected(item)
@@ -127,6 +142,7 @@ abstract class PostListActivity : AppCompatActivity() {
     abstract fun sortPostCollection(checkedItem: Int): Flowable<PagedList<AmityPost>>
     abstract fun selectIncludeDeleted(callback: (Boolean) -> Unit)
     abstract fun getPostCollectionByIncludeDeleted(isIncludeDeleted: Boolean): Flowable<PagedList<AmityPost>>
+    abstract fun getPostCollectionByFeedType(feedType: AmityFeedType): Flowable<PagedList<AmityPost>>
     abstract fun checkPermission()
     abstract fun notificationSetting()
 
@@ -177,6 +193,12 @@ abstract class PostListActivity : AppCompatActivity() {
                     PostOption.REACTION_HISTORY -> {
                         startActivity(OpenPostReactionActivityIntent(this@PostListActivity, post))
                     }
+                    PostOption.APPROVE_POST -> {
+                        approvePost(post)
+                    }
+                    PostOption.DECLINE_POST -> {
+                        declinePost(post)
+                    }
                 }
             }
         }
@@ -195,8 +217,12 @@ abstract class PostListActivity : AppCompatActivity() {
         startActivity(OpenCreateFilePostIntent(this, targetType, targetId))
     }
 
+    private fun goToCreateVideoPost() {
+        startActivity(OpenCreateVideoPostIntent(this, targetType, targetId))
+    }
+
     private fun showCreatePostDialog() {
-        val postTypes = listOf("text", "image", "file")
+        val postTypes = listOf("text", "image", "file", "video")
 
         MaterialDialog(this).show {
             listItems(items = postTypes) { dialog, position, text ->
@@ -209,6 +235,9 @@ abstract class PostListActivity : AppCompatActivity() {
                     }
                     "file" -> {
                         goToCreateFilePost()
+                    }
+                    "video" -> {
+                        goToCreateVideoPost()
                     }
                 }
             }
@@ -286,6 +315,39 @@ abstract class PostListActivity : AppCompatActivity() {
                         .subscribe()
             }
         }
+    }
+
+    private fun approvePost(post: AmityPost) {
+        disposable.add(AmitySocialClient.newFeedRepository().reviewPost(postId = post.getPostId())
+                .approve()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    showToast("Success approve post!")
+                }
+                .doOnError {
+                    showToast("Sorry! " + it.message.toString())
+                }
+                .subscribe())
+    }
+
+    private fun declinePost(post: AmityPost) {
+        disposable.add(AmitySocialClient.newFeedRepository().reviewPost(postId = post.getPostId())
+                .decline()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete {
+                    showToast("Success decline post!")
+                }
+                .doOnError {
+                    showToast("Sorry! " + it.message.toString())
+                }
+                .subscribe())
+    }
+    
+    override fun onDestroy() {
+        disposable.clear()
+        super.onDestroy()
     }
 
 }

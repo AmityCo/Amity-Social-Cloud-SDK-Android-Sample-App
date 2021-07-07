@@ -125,6 +125,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name="com.amity.sample.ascsdk.post.create.CreateVideoPostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name="com.amity.sample.ascsdk.post.SinglePostActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -197,6 +201,26 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.amity.sample.ascsdk.comment.create.CreateCommentContentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".userlist.UserFollowingListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".userlist.MyUserFollowingListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".userlist.MyUserFollowInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".userlist.MyUserFollowerListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".userlist.UserFollowerListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
