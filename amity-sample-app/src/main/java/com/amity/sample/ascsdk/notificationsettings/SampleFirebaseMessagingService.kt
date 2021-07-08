@@ -1,8 +1,8 @@
 package com.amity.sample.ascsdk.notificationsettings
 
 import android.util.Log
-import com.amity.socialcloud.sdk.push.AmityFcm
 import com.amity.sample.ascsdk.SampleApp
+import com.amity.socialcloud.sdk.push.AmityFcm
 import com.google.common.collect.Maps
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage

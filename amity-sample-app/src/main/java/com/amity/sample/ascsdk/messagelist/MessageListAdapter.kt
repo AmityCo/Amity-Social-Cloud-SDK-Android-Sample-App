@@ -35,6 +35,7 @@ class MessageListAdapter : AmityMessageAdapter<MessageListAdapter.MessageViewHol
                 && oldItem.getFlagCount() == newItem.getFlagCount()
                 && oldItem.getReactionCount() == newItem.getReactionCount()
                 && oldItem.getUser() == newItem.getUser()
+                && oldItem.getTags() == newItem.getTags()
     }
 }) {
     private val onLongClickSubject = PublishSubject.create<AmityMessage?>()
@@ -113,8 +114,8 @@ class MessageListAdapter : AmityMessageAdapter<MessageListAdapter.MessageViewHol
                                     holder.itemView.progress_horizontal.progress = progress
                                     holder.itemView.progress_horizontal.visibility = View.VISIBLE
                                     Glide.with(holder.itemView.data_imageview.context)
-                                            .load(it.getFilePath())
-                                            .into(holder.itemView.data_imageview)
+                                        .load(it.getFilePath())
+                                        .into(holder.itemView.data_imageview)
                                 }
                                 .subscribe()
                         compositeDisposable.add(disposable)

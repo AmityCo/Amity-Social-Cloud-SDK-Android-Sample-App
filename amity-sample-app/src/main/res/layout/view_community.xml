@@ -120,6 +120,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_community_official" />
 
+    <Switch
+        android:id="@+id/switch_community_post_review"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/view_border"
+        android:checked="false"
+        android:hint="Need approval on post creation"
+        android:lines="2"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_community_only_admin" />
+
     <Button
         android:id="@+id/button_submit"
         android:layout_width="200dp"
@@ -129,6 +143,6 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_community_only_admin" />
+        app:layout_constraintTop_toBottomOf="@+id/switch_community_post_review" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

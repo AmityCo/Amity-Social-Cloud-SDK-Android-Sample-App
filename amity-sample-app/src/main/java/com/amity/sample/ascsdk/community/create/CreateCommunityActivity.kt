@@ -24,6 +24,7 @@ class CreateCommunityActivity : CommunityFormActivity() {
         val creator = communityRepository
                 .createCommunity(getDisplayName())
                 .isPublic(isPublic())
+                .isPostReviewEnabled(isPostReviewEnabled())
 
         if (getDescription().isNotEmpty()) {
             creator.description(getDescription())

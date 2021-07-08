@@ -15,7 +15,12 @@ enum class PostOption(val value: String) {
 
     REMOVE_REACTION("remove reaction"),
 
-    REACTION_HISTORY("reaction history");
+    REACTION_HISTORY("reaction history"),
+
+    APPROVE_POST("approve post"),
+
+    DECLINE_POST("decline post");
+
 
     companion object {
         fun enumOf(value: String): PostOption? = PostOption.values().find { it.value == value }

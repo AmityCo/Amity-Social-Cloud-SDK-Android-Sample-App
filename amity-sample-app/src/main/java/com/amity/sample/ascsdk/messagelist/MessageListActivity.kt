@@ -43,6 +43,7 @@ import com.amity.socialcloud.sdk.core.error.AmityError
 import com.amity.socialcloud.sdk.core.permission.AmityPermission
 import com.amity.socialcloud.sdk.core.user.AmityUser
 import com.ekoapp.core.utils.getCurrentClassAndMethodNames
+import com.ekoapp.ekosdk.internal.AmityPagingDataRefresher
 import com.google.common.base.Joiner
 import com.google.common.collect.Sets
 import com.google.gson.JsonObject
@@ -478,6 +479,8 @@ abstract class MessageListActivity : AppCompatActivity() {
 
         adapter = MessageListAdapter()
         message_list_recyclerview.adapter = adapter
+        message_list_recyclerview.addOnScrollListener(AmityPagingDataRefresher(stackFromEnd.get()))
+
         adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)

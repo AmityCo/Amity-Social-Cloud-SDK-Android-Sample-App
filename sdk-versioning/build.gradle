@@ -73,7 +73,7 @@ dependencies {
     api 'com.google.firebase:firebase-core:17.3.0'
     api 'com.google.firebase:firebase-messaging:20.1.5'
 
-    def sdkVersion = '5.0.0'
+    def sdkVersion = '5.3.0'
     api "com.github.AmityCo.Amity-Social-Cloud-SDK-Android:amity-sdk:$sdkVersion"
     api "com.github.AmityCo.Amity-Social-Cloud-SDK-Android:amity-push-fcm:$sdkVersion"
     api "com.github.AmityCo.Amity-Social-Cloud-SDK-Android:amity-push-baidu:$sdkVersion"
