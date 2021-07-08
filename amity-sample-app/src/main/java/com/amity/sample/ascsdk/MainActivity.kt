@@ -14,6 +14,7 @@ import com.amity.sample.ascsdk.common.view.StringListAdapter
 import com.amity.sample.ascsdk.community.CommunityListActivity
 import com.amity.sample.ascsdk.community.category.CommunityCategoryList
 import com.amity.sample.ascsdk.intent.OpenCommentContentListIntent
+import com.amity.sample.ascsdk.intent.OpenMyUserFollowInfoIntent
 import com.amity.sample.ascsdk.myuser.MyUserActivity
 import com.amity.sample.ascsdk.notificationsettings.AmityStreamNotificationHandler
 import com.amity.sample.ascsdk.notificationsettings.NotificationSettingsActivity
@@ -24,6 +25,7 @@ import com.amity.sample.ascsdk.stream.RecordedStreamListActivity
 import com.amity.sample.ascsdk.stream.StreamerActivity
 import com.amity.sample.ascsdk.userlist.UserListActivity
 import com.amity.socialcloud.sdk.AmityCoreClient
+import com.amity.socialcloud.sdk.push.AmityBaidu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         const val myFeed = "My Feed"
         const val globalFeed = "Global Feed"
         const val myUser = "My User"
+        const val myFollowInfo = "My Follow Info"
         const val notificationSettings = "Notification Settings"
         const val commentContent = "Comment Content"
         const val liveStreaming = "Live Streaming List"
@@ -46,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val menuItems = listOf(channelList, communityList, communityCategoryList,
-            userList, myFeed, globalFeed, myUser, notificationSettings, commentContent,
+            userList, myFeed, globalFeed, myUser, myFollowInfo, notificationSettings, commentContent,
             liveStreaming, recordedStreaming, streamPublisher)
     private val myUserId = SamplePreferences.getMyUserId()
     private var compositeDisposable = CompositeDisposable()
@@ -102,7 +105,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        supportActionBar?.title = String.format("SDK version %s", AmityCoreClient.getAmityCoreSdkVersion())
+        supportActionBar?.subtitle = String.format("SDK version %s", AmityCoreClient.getAmityCoreSdkVersion())
         val adapter = StringListAdapter(menuItems, object : StringListAdapter.StringItemListener {
             override fun onClick(text: String) {
                 onMainMenuItemSelected(text)
@@ -133,6 +136,9 @@ class MainActivity : AppCompatActivity() {
             }
             myUser -> {
                 startActivity(Intent(this, MyUserActivity::class.java))
+            }
+            myFollowInfo -> {
+                startActivity(OpenMyUserFollowInfoIntent(this))
             }
             notificationSettings -> {
                 startActivity(Intent(this, NotificationSettingsActivity::class.java))
@@ -171,6 +177,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleVideoNotification() {
+        AmityBaidu.create(this)
+                .setup("VpbKEmdPGhxGb0Fc2gYXq96z")
+                .subscribe()
+
         if (intent?.extras?.get("videoStreamings") != null) {
             val data = intent?.extras?.get("videoStreamings")
             if (data is String) {

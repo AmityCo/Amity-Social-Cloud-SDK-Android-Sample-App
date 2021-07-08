@@ -10,12 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
-import com.amity.socialcloud.sdk.AmityCoreClient
-import com.amity.socialcloud.sdk.core.user.AmityUser
-import com.amity.socialcloud.sdk.core.user.AmityUserSortOption
 import com.amity.sample.ascsdk.R
 import com.amity.sample.ascsdk.common.extensions.showDialog
 import com.amity.sample.ascsdk.intent.OpenUserFeedIntent
+import com.amity.socialcloud.sdk.AmityCoreClient
+import com.amity.socialcloud.sdk.core.user.AmityUser
+import com.amity.socialcloud.sdk.core.user.AmityUserSortOption
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
@@ -47,10 +47,10 @@ class UserListActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.action_search) {
-            showDialog(R.string.search, "keyword", keyword, true, { dialog, input ->
+            showDialog(R.string.search, "keyword", keyword, true) { _, input ->
                 keyword = input.toString()
                 observeUserCollection()
-            })
+            }
             return true
         } else if (id == R.id.action_sort) {
             val sortingOptions = ArrayList<String>()
@@ -91,7 +91,7 @@ class UserListActivity : AppCompatActivity() {
 
     private fun getUsersLiveData(): LiveData<PagedList<AmityUser>> {
         return LiveDataReactiveStreams.fromPublisher(
-                userRepository.getUsers()
+                userRepository.searchUserByDisplayName(keyword)
                         .sortBy(sortBy)
                         .build()
                         .query()
@@ -109,11 +109,12 @@ class UserListActivity : AppCompatActivity() {
         adapter.onLongClickFlowable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(Consumer {
-
+                .subscribe(Consumer { user ->
+                    UserFollowInfoDialog
+                            .newInstance(user)
+                            .show(supportFragmentManager, "")
                 }, Consumer { })
     }
-
 }
 
 

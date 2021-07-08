@@ -8,7 +8,6 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_key_value_input.*
-import org.json.JSONObject
 
 
 class ChangeMetadataActivity : KeyValueInputActivity() {

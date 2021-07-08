@@ -20,10 +20,6 @@ import com.amity.sample.ascsdk.intent.IntentRequestCode
 import com.amity.sample.ascsdk.utils.dialog.AmityBottomSheetDialogFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.dialog_channel_inputs.*
-import kotlinx.android.synthetic.main.dialog_amity_inputs.channelIdEditText
-import kotlinx.android.synthetic.main.dialog_amity_inputs.leftButton
-import kotlinx.android.synthetic.main.dialog_amity_inputs.rightButton
-import kotlinx.android.synthetic.main.dialog_amity_inputs.displayNameInputEditText
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat

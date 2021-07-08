@@ -15,6 +15,7 @@ class UpdateCommunityActivity : CommunityFormActivity() {
         super.onCreate(savedInstanceState)
         switch_community_official.visibility = View.GONE
         switch_community_only_admin.visibility = View.GONE
+        edittext_user_ids.visibility = View.GONE
         textview_community_id.text = getCommunityId()
         button_submit.text = "Update Community"
         button_submit.setOnClickListener {
@@ -22,7 +23,7 @@ class UpdateCommunityActivity : CommunityFormActivity() {
         }
     }
 
-    fun getCommunityId(): String {
+    override fun getCommunityId(): String {
         return OpenUpdateCommunityIntent.getCommunityId(intent)
     }
 
@@ -30,6 +31,7 @@ class UpdateCommunityActivity : CommunityFormActivity() {
         val update = communityRepository
                 .updateCommunity(getCommunityId())
                 .isPublic(isPublic())
+                .isPostReviewEnabled(isPostReviewEnabled())
 
         if (getDisplayName().isNotEmpty()) {
             update.displayName(getDisplayName())
