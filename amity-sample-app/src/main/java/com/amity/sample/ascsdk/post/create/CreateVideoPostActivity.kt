@@ -64,7 +64,7 @@ class CreateVideoPostActivity : CreatePostActivity() {
     private fun createFilePost(): Single<AmityPost> {
         when {
             OpenCreateFilePostIntent.getTargetType(intent) == "community" -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetCommunity(OpenCreateFilePostIntent.getTargetId(intent))
                         .video(*videos.toTypedArray())
@@ -73,7 +73,7 @@ class CreateVideoPostActivity : CreatePostActivity() {
                         .post()
             }
             OpenCreateImagePostIntent.getTargetType(intent) == "myUser" -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetMe()
                         .video(*videos.toTypedArray())
@@ -82,7 +82,7 @@ class CreateVideoPostActivity : CreatePostActivity() {
                         .post()
             }
             else -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetUser(OpenCreateFilePostIntent.getTargetId(intent))
                         .video(*videos.toTypedArray())

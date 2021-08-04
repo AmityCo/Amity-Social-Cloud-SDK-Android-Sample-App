@@ -5,8 +5,8 @@ import android.content.SharedPreferences;
 
 import com.amity.socialcloud.sdk.chat.channel.AmityChannelFilter;
 import com.amity.sample.ascsdk.SampleApp;
-import com.ekoapp.sdk_versioning.SampleAPIKey;
-import com.ekoapp.sdk_versioning.SampleUrl;
+import com.amity.sdk_versioning.SampleAPIKey;
+import com.amity.sdk_versioning.SampleUrl;
 import com.f2prateek.rx.preferences2.Preference;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
@@ -44,15 +44,15 @@ public class SamplePreferences {
 
 
     public static Preference<String> getApiKey() {
-        return get().getString(API_KEY_KEY, SampleAPIKey.INSTANCE.get(SampleApp.get()));
+        return get().getString(API_KEY_KEY, SampleAPIKey.INSTANCE.get());
     }
 
     public static Preference<String> getHttpUrl() {
-        return get().getString(HTTP_URL_KEY, SampleUrl.INSTANCE.getHttpUrl(SampleApp.get()));
+        return get().getString(HTTP_URL_KEY, SampleUrl.INSTANCE.get());
     }
 
     public static Preference<String> getSocketUrl() {
-        return get().getString(SOCKET_URL_KEY, SampleUrl.INSTANCE.getSocketUrl(SampleApp.get()));
+        return get().getString(SOCKET_URL_KEY, SampleUrl.INSTANCE.get());
     }
 
     public static Preference<String> getMyUserId() {

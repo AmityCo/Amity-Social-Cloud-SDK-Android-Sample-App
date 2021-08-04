@@ -12,7 +12,7 @@
         android:required="true" />
 
     <application
-        android:name="com.amity.sample.ascsdk.SampleApp"
+        android:name=".SampleApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,8 +20,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.amity.sample.ascsdk.community.CommunityNotificationSettingActivity"></activity>
-        <activity android:name="com.amity.sample.ascsdk.MainActivity">
+
+        <activity android:name=".community.trending.CommunityTrendingActivity" />
+        <activity android:name=".community.recommended.CommunityRecommendedActivity" />
+        <activity android:name=".community.CommunityNotificationSettingActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,178 +32,194 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.amity.sample.ascsdk.channellist.ChannelListActivity"
+            android:name=".channellist.ChannelListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.messagelist.ParentMessageListActivity"
+            android:name=".messagelist.ParentMessageListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.messagelist.ChildMessageListActivity"
+            android:name=".messagelist.ChildMessageListActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.channellist.ChannelMembershipActivity"
+            android:name=".channellist.ChannelMembershipActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.messagelist.ImageMessageSenderActivity"
+            android:name=".messagelist.ImageMessageSenderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.messagelist.FileMessageSenderActivity"
+            android:name=".messagelist.FileMessageSenderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.messagelist.AudioMessageSenderActivity"
+            android:name=".messagelist.AudioMessageSenderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.messagelist.CustomMessageSenderActivity"
+            android:name=".messagelist.CustomMessageSenderActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.reaction.MessageReactionListActivity"
+            android:name=".reaction.MessageReactionListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.common.activity.ChangeMetadataActivity"
+            android:name=".common.activity.ChangeMetadataActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.channellist.filter.ChannelQueryFilterActivity"
+            android:name=".channellist.filter.ChannelQueryFilterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.userlist.UserListActivity"
+            android:name=".userlist.UserListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.myuser.MyUserActivity"
+            android:name=".myuser.MyUserActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.notificationsettings.NotificationSettingsActivity"
+            android:name=".notificationsettings.NotificationSettingsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.myuser.UserNotificationSettingActivity"
+            android:name=".myuser.UserNotificationSettingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.community.CommunityListActivity"
+            android:name=".community.CommunityListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.post.UserFeedActivity"
+            android:name=".post.UserFeedActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.post.MyFeedActivity"
+            android:name=".post.UserPostPagingActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.post.CommunityFeedActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.post.GlobalFeedActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.post.reaction.PostReactionActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.post.create.CreateTextPostActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.post.create.CreateImagePostActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.post.create.CreateFilePostActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.post.create.CreateVideoPostActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.post.SinglePostActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.community.create.CreateCommunityActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.community.update.UpdateCommunityActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.community.category.CommunityCategoryList"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.community.CommunityMembershipActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.comment.CommentListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.comment.ReplyCommentListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.comment.create.CreateCommentActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.comment.update.EditCommentActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.reaction.CommentReactionListActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.stream.LiveStreamListActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name="com.amity.sample.ascsdk.stream.RecordedStreamListActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name="com.amity.sample.ascsdk.stream.StreamerActivity"
+            android:name=".post.MyFeedActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.MyPostPagingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.CommunityFeedActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.CommunityPostPagingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.GlobalFeedActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.GlobalPostPagingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.reaction.PostReactionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.create.CreateTextPostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.create.CreateImagePostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.create.CreateFilePostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.create.CreateVideoPostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".post.SinglePostActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".community.create.CreateCommunityActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".community.update.UpdateCommunityActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".community.category.CommunityCategoryList"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".community.CommunityMembershipActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".comment.CommentListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".comment.ReplyCommentListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".comment.create.CreateCommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".comment.update.EditCommentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".reaction.CommentReactionListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".stream.LiveStreamListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.stream.StreamAmityVideoPlayerActivity"
+            android:name=".stream.RecordedStreamListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".stream.StreamerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".stream.StreamAmityVideoPlayerActivity"
             android:configChanges="orientation"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.stream.StreamVideoPlayerRMTPActivity"
+            android:name=".stream.StreamVideoPlayerRMTPActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.myuser.MyAvatarUpdateActivity"
+            android:name=".myuser.MyAvatarUpdateActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.comment.loader.CommentContentListActivity"
+            android:name=".comment.loader.CommentContentListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.amity.sample.ascsdk.comment.create.CreateCommentContentActivity"
+            android:name=".comment.create.CreateCommentContentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -225,7 +244,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <service
-            android:name="com.amity.sample.ascsdk.notificationsettings.SampleFirebaseMessagingService"
+            android:name=".notificationsettings.SampleFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

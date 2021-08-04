@@ -1,0 +1,58 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_create_post"
+        android:orderInCategory="1"
+        android:title="@string/create_post"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_delete_post"
+        android:orderInCategory="2"
+        android:title="@string/delete_post"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_sort_feed"
+        android:orderInCategory="3"
+        android:title="@string/sort_feed"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_member"
+        android:orderInCategory="4"
+        android:title="@string/member"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/include_deleted_feed"
+        android:orderInCategory="5"
+        android:title="@string/include_deleted"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_check_permission"
+        android:orderInCategory="6"
+        android:title="@string/check_permission"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/notification_setting_community"
+        android:orderInCategory="7"
+        android:title="@string/notification_setting"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/pending_posts"
+        android:orderInCategory="8"
+        android:title="@string/pending_posts"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_post_type_config"
+        android:orderInCategory="9"
+        android:title="@string/post_type_filter"
+        app:showAsAction="never" />
+
+</menu>

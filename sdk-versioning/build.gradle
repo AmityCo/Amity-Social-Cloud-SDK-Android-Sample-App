@@ -37,9 +37,9 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api 'androidx.core:core-ktx:1.3.2'
 
-    api 'com.google.android.material:material:1.3.0-alpha03'
-    api "androidx.activity:activity-ktx:1.2.0-alpha05"
-    api "androidx.fragment:fragment-ktx:1.3.0-alpha05"
+    api 'com.google.android.material:material:1.3.0'
+    api "androidx.activity:activity-ktx:1.2.0"
+    api "androidx.fragment:fragment-ktx:1.3.0"
     api 'androidx.appcompat:appcompat:1.2.0'
     api 'androidx.multidex:multidex:2.0.1'
     api 'androidx.appcompat:appcompat:1.1.0'
@@ -73,14 +73,14 @@ dependencies {
     api 'com.google.firebase:firebase-core:17.3.0'
     api 'com.google.firebase:firebase-messaging:20.1.5'
 
-    def sdkVersion = '5.3.0'
+    def sdkVersion = '5.4.0'
     api "com.github.AmityCo.Amity-Social-Cloud-SDK-Android:amity-sdk:$sdkVersion"
     api "com.github.AmityCo.Amity-Social-Cloud-SDK-Android:amity-push-fcm:$sdkVersion"
     api "com.github.AmityCo.Amity-Social-Cloud-SDK-Android:amity-push-baidu:$sdkVersion"
     api "com.github.AmityCo.Amity-Social-Cloud-SDK-Android:amity-video-publisher:$sdkVersion"
     api "com.github.AmityCo.Amity-Social-Cloud-SDK-Android:amity-video-player:$sdkVersion"
 
-    testImplementation 'junit:junit:4.+'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

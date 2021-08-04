@@ -6,6 +6,7 @@
     <string name="change_url">Change Url</string>
     <string name="change_api_key">Change API Key</string>
     <string name="change_display_name">Change DisplayName</string>
+    <string name="change_environment">Change Environment</string>
     <string name="change_metadata">Change Metadata</string>
     <string name="change_user_id">Change User Id</string>
     <string name="check_permission">Check Permission</string>
@@ -22,6 +23,7 @@
     <string name="get_community">Get Community</string>
     <string name="sort_community">Sort Communities</string>
     <string name="include_deleted">Include Deleted</string>
+    <string name="post_type_filter">Filter post types</string>
     <string name="include_deleted_message">Do you want filter data by include deleted?</string>
     <string name="including_tags">Including Tags</string>
     <string name="join_channel">Join Channel</string>

@@ -70,7 +70,7 @@ class CreateImagePostActivity : CreatePostActivity() {
     private fun createImagePost(): Single<AmityPost> {
         when {
             OpenCreateImagePostIntent.getTargetType(intent) == "community" -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetCommunity(OpenCreateImagePostIntent.getTargetId(intent))
                         .image(*files.toTypedArray())
@@ -80,7 +80,7 @@ class CreateImagePostActivity : CreatePostActivity() {
 
             }
             OpenCreateImagePostIntent.getTargetType(intent) == "myUser" -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetMe()
                         .image(*files.toTypedArray())
@@ -90,7 +90,7 @@ class CreateImagePostActivity : CreatePostActivity() {
 
             }
             else -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetUser(OpenCreateImagePostIntent.getTargetId(intent))
                         .image(*files.toTypedArray())
