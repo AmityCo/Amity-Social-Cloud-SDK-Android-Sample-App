@@ -1,17 +1,15 @@
 package com.amity.sample.ascsdk.post
 
-import android.content.Intent
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.PagedList
 import androidx.paging.PagingData
 import com.amity.sample.ascsdk.R
 import com.amity.socialcloud.sdk.AmityCoreClient
+import com.amity.socialcloud.sdk.social.AmitySocialClient
 import com.amity.socialcloud.sdk.social.feed.AmityFeedType
 import com.amity.socialcloud.sdk.social.feed.AmityPost
 import io.reactivex.Flowable
 
-@Deprecated("Legacy support")
-class GlobalFeedActivity : PostListActivity() {
+class GlobalPostPagingActivity : PostPagingActivity() {
 
     override val targetType: String
         get() = "user"
@@ -19,22 +17,30 @@ class GlobalFeedActivity : PostListActivity() {
     override val targetId: String
         get() = AmityCoreClient.getUserId()
 
-    override fun getPostsAsPagedList(): Flowable<PagedList<AmityPost>> {
-        return feedRepository.getGlobalFeed()
-                .build()
-                .query()
-    }
+    var globalPostQueryBuilder = AmitySocialClient.newFeedRepository()
+        .getGlobalFeed()
 
-    override fun usePagingDataAdapter() {
-        startActivity(Intent(
-            this, GlobalPostPagingActivity::class.java))
+
+    @ExperimentalPagingApi
+    override fun getPostsAsPagingData(): Flowable<PagingData<AmityPost>> {
+        return globalPostQueryBuilder
+            .build()
+            .getPagingData()
     }
 
     override fun selectSortOption(callback: (Int) -> Unit) {
         TODO("Not yet implemented")
     }
 
-    override fun sortPostCollection(checkedItem: Int): Flowable<PagedList<AmityPost>> {
+    override fun selectFilterOption(callback: (List<AmityPost.Type>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun sortPostCollection(checkedItem: Int): Flowable<PagingData<AmityPost>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun filterPostCollection(postTypes: List<AmityPost.Type>): Flowable<PagingData<AmityPost>> {
         TODO("Not yet implemented")
     }
 
@@ -42,11 +48,11 @@ class GlobalFeedActivity : PostListActivity() {
         TODO("Not yet implemented")
     }
 
-    override fun getPostCollectionByIncludeDeleted(isIncludeDeleted: Boolean): Flowable<PagedList<AmityPost>> {
+    override fun getPostCollectionByIncludeDeleted(isIncludeDeleted: Boolean): Flowable<PagingData<AmityPost>> {
         TODO("Not yet implemented")
     }
 
-    override fun getPostCollectionByFeedType(feedType: AmityFeedType): Flowable<PagedList<AmityPost>> {
+    override fun getPostCollectionByFeedType(feedType: AmityFeedType): Flowable<PagingData<AmityPost>> {
         TODO("Not yet implemented")
     }
 

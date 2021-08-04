@@ -10,6 +10,7 @@ import com.amity.sample.ascsdk.common.extensions.showDialog
 import com.amity.sample.ascsdk.common.extensions.showToast
 import com.amity.sample.ascsdk.intent.OpenCommunityFeedIntent
 import com.amity.sample.ascsdk.intent.OpenCommunityNotificationSettingIntent
+import com.amity.sample.ascsdk.intent.OpenCommunityPostPagingIntent
 import com.amity.socialcloud.sdk.AmityCoreClient
 import com.amity.socialcloud.sdk.core.permission.AmityPermission
 import com.amity.socialcloud.sdk.social.community.AmityCommunity
@@ -24,6 +25,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+@Deprecated("Legacy support")
 class CommunityFeedActivity : PostListActivity() {
 
     lateinit var community: AmityCommunity
@@ -44,6 +46,10 @@ class CommunityFeedActivity : PostListActivity() {
 
     override fun inflateMenu(menuRes: (Int) -> Unit) {
         menuRes.invoke(R.menu.menu_community_feed_list)
+    }
+
+    override fun usePagingDataAdapter() {
+        startActivity(OpenCommunityPostPagingIntent(this, community))
     }
 
     override fun checkPermission() {
@@ -68,8 +74,7 @@ class CommunityFeedActivity : PostListActivity() {
         }
     }
 
-    @ExperimentalPagingApi
-    override fun getPostCollection(): Flowable<PagedList<AmityPost>> {
+    override fun getPostsAsPagedList(): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getCommunityFeed(community.getCommunityId())
                 .build()
@@ -99,7 +104,6 @@ class CommunityFeedActivity : PostListActivity() {
                 .show()
     }
 
-    @ExperimentalPagingApi
     override fun sortPostCollection(checkedItem: Int): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getCommunityFeed(community.getCommunityId())
@@ -122,7 +126,6 @@ class CommunityFeedActivity : PostListActivity() {
                 }
     }
 
-    @ExperimentalPagingApi
     override fun getPostCollectionByIncludeDeleted(isIncludeDeleted: Boolean): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getCommunityFeed(community.getCommunityId())
@@ -130,8 +133,7 @@ class CommunityFeedActivity : PostListActivity() {
                 .build()
                 .query()
     }
-    
-    @ExperimentalPagingApi
+
     override fun getPostCollectionByFeedType(feedType: AmityFeedType): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getCommunityFeed(community.getCommunityId())

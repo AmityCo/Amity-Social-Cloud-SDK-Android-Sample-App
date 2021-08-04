@@ -1,5 +1,6 @@
 package com.amity.sample.ascsdk.post
 
+import android.content.Intent
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagedList
 import androidx.paging.PagingData
@@ -9,6 +10,7 @@ import com.amity.sample.ascsdk.common.extensions.showDialog
 import com.amity.sample.ascsdk.common.extensions.showToast
 import com.amity.socialcloud.sdk.AmityCoreClient
 import com.amity.socialcloud.sdk.core.permission.AmityPermission
+import com.amity.socialcloud.sdk.social.AmitySocialClient
 import com.amity.socialcloud.sdk.social.feed.AmityFeedType
 import com.amity.socialcloud.sdk.social.feed.AmityPost
 import com.amity.socialcloud.sdk.social.feed.AmityUserFeedSortOption
@@ -20,6 +22,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+@Deprecated("Legacy support")
 class MyFeedActivity : PostListActivity() {
 
     private var checkedItem = 1
@@ -36,12 +39,15 @@ class MyFeedActivity : PostListActivity() {
         menuRes.invoke(R.menu.menu_post_list)
     }
 
-    @ExperimentalPagingApi
-    override fun getPostCollection(): Flowable<PagedList<AmityPost>> {
+    override fun getPostsAsPagedList(): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getMyFeed()
                 .build()
                 .query()
+    }
+
+    override fun usePagingDataAdapter() {
+        startActivity(Intent(this, MyPostPagingActivity::class.java))
     }
 
     override fun selectSortOption(callback: (Int) -> Unit) {
@@ -59,7 +65,6 @@ class MyFeedActivity : PostListActivity() {
                 .show()
     }
 
-    @ExperimentalPagingApi
     override fun sortPostCollection(checkedItem: Int): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getMyFeed()
@@ -82,7 +87,6 @@ class MyFeedActivity : PostListActivity() {
                 }
     }
 
-    @ExperimentalPagingApi
     override fun getPostCollectionByIncludeDeleted(isIncludeDeleted: Boolean): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getMyFeed()
@@ -90,7 +94,7 @@ class MyFeedActivity : PostListActivity() {
                 .build()
                 .query()
     }
-    
+
     override fun getPostCollectionByFeedType(feedType: AmityFeedType): Flowable<PagedList<AmityPost>> {
         TODO("Not yet implemented")
     }

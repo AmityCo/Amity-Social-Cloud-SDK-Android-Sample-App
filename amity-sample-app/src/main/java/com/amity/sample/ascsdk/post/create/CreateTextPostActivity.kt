@@ -29,7 +29,7 @@ class CreateTextPostActivity : CreatePostActivity() {
     private fun createTextPost(): Single<AmityPost> {
         when {
             OpenCreateTextPostIntent.getTargetType(intent) == "community" -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetCommunity(OpenCreateTextPostIntent.getTargetId(intent))
                         .text(text.text.toString())
@@ -38,7 +38,7 @@ class CreateTextPostActivity : CreatePostActivity() {
 
             }
             OpenCreateImagePostIntent.getTargetType(intent) == "myUser" -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetMe()
                         .text(text.text.toString())
@@ -46,7 +46,7 @@ class CreateTextPostActivity : CreatePostActivity() {
                         .post()
             }
             else -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetUser(OpenCreateTextPostIntent.getTargetId(intent))
                         .text(text.text.toString())
