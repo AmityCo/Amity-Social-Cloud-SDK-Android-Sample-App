@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.ekoapp.sdk_versioning">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.amity.sdk_versioning">
 
+    <application>
+
+        <activity android:name="com.amity.sdk_versioning.EnvironmentActivity"/>
+
+    </application>
 </manifest>

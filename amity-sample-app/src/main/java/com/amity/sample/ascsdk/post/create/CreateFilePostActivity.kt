@@ -63,7 +63,7 @@ class CreateFilePostActivity : CreatePostActivity() {
     private fun createFilePost(): Single<AmityPost> {
         when {
             OpenCreateFilePostIntent.getTargetType(intent) == "community" -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetCommunity(OpenCreateFilePostIntent.getTargetId(intent))
                         .file(*files.toTypedArray())
@@ -72,7 +72,7 @@ class CreateFilePostActivity : CreatePostActivity() {
                         .post()
             }
             OpenCreateImagePostIntent.getTargetType(intent) == "myUser" -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetMe()
                         .file(*files.toTypedArray())
@@ -81,7 +81,7 @@ class CreateFilePostActivity : CreatePostActivity() {
                         .post()
             }
             else -> {
-                return AmitySocialClient.newFeedRepository()
+                return AmitySocialClient.newPostRepository()
                         .createPost()
                         .targetUser(OpenCreateFilePostIntent.getTargetId(intent))
                         .file(*files.toTypedArray())

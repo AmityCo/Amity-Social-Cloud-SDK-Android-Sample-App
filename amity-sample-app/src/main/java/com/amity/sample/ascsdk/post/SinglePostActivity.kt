@@ -22,15 +22,9 @@ class SinglePostActivity : AppCompatActivity() {
         setContentView(R.layout.item_post)
 
         val post = OpenSinglePostActivityIntent.getPost(intent)
-        val item = AmitySocialClient.newFeedRepository().getPost(postId = post.getPostId()).blockingFirst()
+        val item = AmitySocialClient.newPostRepository().getPost(postId = post.getPostId()).blockingFirst()
 
         item.let {
-            val postData = it.getData()
-            if (postData !is AmityPost.Data.TEXT) {
-                post_textview.text = "incorrect type"
-                return
-            }
-
             var rootPost = "postId: %s\n" +
                     "target: %s\n" +
                     "feedType: %s\n" +
@@ -66,7 +60,7 @@ class SinglePostActivity : AppCompatActivity() {
                     post.getPostId(),
                     if (post.getTarget() is AmityPost.Target.COMMUNITY) "community " + (post.getTarget() as AmityPost.Target.COMMUNITY).getCommunity()?.getCommunityId() else "user " + (post.getTarget() as AmityPost.Target.USER).getUser()?.getUserId(),
                     post.getFeedType().apiKey,
-                    post.getDataType().apiKey,
+                    post.getType().getApiKey(),
                     (post.getData() as? AmityPost.Data.TEXT)?.getText() ?: (post.getData() as? AmityPost.Data.IMAGE)?.getImage()?.getUrl() ?: (post.getData() as? AmityPost.Data.FILE)?.getFile()?.getUrl() ?: (post.getData() as? AmityPost.Data.CUSTOM)?.getRawData()?.toString() ?: (post.getData() as? AmityPost.Data.VIDEO)?.getThumbnailImage()?.getUrl() ?: "unknown",
                     post.getMyReactions(),
                     post.getReactionCount(),
@@ -84,7 +78,7 @@ class SinglePostActivity : AppCompatActivity() {
                         it.getParentPostId(),
                         if (it.getTarget() is AmityPost.Target.COMMUNITY) "community " + (it.getTarget() as AmityPost.Target.COMMUNITY).getCommunity()?.getCommunityId() else "user " + (it.getTarget() as AmityPost.Target.USER).getUser()?.getUserId(),
                         it.getFeedType().apiKey,
-                        it.getDataType().apiKey,
+                        it.getType().getApiKey(),
                         (it.getData() as? AmityPost.Data.TEXT)?.getText(),
                         it.getMyReactions(),
                         it.getReactionCount(),
@@ -103,6 +97,9 @@ class SinglePostActivity : AppCompatActivity() {
                     if(it.getData() is AmityPost.Data.VIDEO) {
                         showVideoChildrenPostList(post.getChildren())
                     }
+                }
+                if (post.getData() is AmityPost.Data.VIDEO) {
+                    showVideoChildrenPostList(listOf(post))
                 }
             }
         }

@@ -9,6 +9,7 @@ import com.amity.sample.ascsdk.R
 import com.amity.sample.ascsdk.common.extensions.showDialog
 import com.amity.sample.ascsdk.common.extensions.showToast
 import com.amity.sample.ascsdk.intent.OpenUserFeedIntent
+import com.amity.sample.ascsdk.intent.OpenUserPostPagingIntent
 import com.amity.socialcloud.sdk.AmityCoreClient
 import com.amity.socialcloud.sdk.core.permission.AmityPermission
 import com.amity.socialcloud.sdk.social.feed.AmityFeedType
@@ -22,6 +23,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
+@Deprecated("Legacy support")
 class UserFeedActivity : PostListActivity() {
 
     lateinit var userId: String
@@ -44,8 +46,11 @@ class UserFeedActivity : PostListActivity() {
         menuRes.invoke(R.menu.menu_post_list)
     }
 
-    @ExperimentalPagingApi
-    override fun getPostCollection(): Flowable<PagedList<AmityPost>> {
+    override fun usePagingDataAdapter() {
+        startActivity(OpenUserPostPagingIntent(this, userId))
+    }
+
+    override fun getPostsAsPagedList(): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getUserFeed(userId)
                 .sortBy(AmityUserFeedSortOption.LAST_CREATED)
@@ -68,7 +73,6 @@ class UserFeedActivity : PostListActivity() {
                 .show()
     }
 
-    @ExperimentalPagingApi
     override fun sortPostCollection(checkedItem: Int): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getUserFeed(userId)
@@ -91,7 +95,6 @@ class UserFeedActivity : PostListActivity() {
                 }
     }
 
-    @ExperimentalPagingApi
     override fun getPostCollectionByIncludeDeleted(isIncludeDeleted: Boolean): Flowable<PagedList<AmityPost>> {
         return feedRepository
                 .getUserFeed(userId)
@@ -99,7 +102,7 @@ class UserFeedActivity : PostListActivity() {
                 .build()
                 .query()
     }
-    
+
     override fun getPostCollectionByFeedType(feedType: AmityFeedType): Flowable<PagedList<AmityPost>> {
         TODO("Not yet implemented")
     }
